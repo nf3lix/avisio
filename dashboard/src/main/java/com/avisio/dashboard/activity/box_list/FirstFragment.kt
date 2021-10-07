@@ -14,19 +14,31 @@ import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 class FirstFragment : Fragment() {
 
     private lateinit var boxViewModel: AvisioBoxViewModel
+    private lateinit var boxAdapter: AvisioBoxListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setupRecyclerView()
         return inflater.inflate(R.layout.fragment_first, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupBoxList()
+    }
+
+    private fun setupBoxList() {
+        setupRecyclerView()
+        setupBoxViewModel()
     }
 
     private fun setupRecyclerView() {
         val boxListRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
-        val boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference())
+        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference())
         boxListRecyclerView?.adapter = boxAdapter
         boxListRecyclerView?.layoutManager = LinearLayoutManager(context)
-        boxViewModel = ViewModelProvider(this).get(AvisioBoxViewModel::class.java)
+    }
 
+    private fun setupBoxViewModel() {
+        boxViewModel = ViewModelProvider(this).get(AvisioBoxViewModel::class.java)
         boxViewModel.getBoxList().observe(this) { boxList ->
             boxAdapter.submitList(boxList)
         }
