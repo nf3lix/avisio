@@ -22,7 +22,7 @@ class AvisioBoxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val boxTextView: TextView = itemView.findViewById(R.id.box_text_view)
 
-    private fun bind(boxTitle: String) {
+    fun bind(boxTitle: String) {
         boxTextView.text = boxTitle
     }
 
