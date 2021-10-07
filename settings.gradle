@@ -1,3 +1,4 @@
 include ':dashboard'
+include ':dashboard'
 include ':app'
 rootProject.name = "avisio"
