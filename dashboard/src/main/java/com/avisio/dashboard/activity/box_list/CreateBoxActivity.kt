@@ -1,6 +1,10 @@
 package com.avisio.dashboard.activity.box_list
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
+import android.widget.EditText
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +17,16 @@ class CreateBoxActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_box)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        val boxNameInput = findViewById<EditText>(R.id.box_name_input)
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val resultIntent = Intent()
+            if(TextUtils.isEmpty(boxNameInput.text.toString())) {
+
+            } else {
+                resultIntent.putExtra("CREATE_REPLY", boxNameInput.text.toString())
+                setResult(RESULT_OK, resultIntent)
+                finish()
+            }
         }
     }
 }

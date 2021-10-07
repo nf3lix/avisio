@@ -1,5 +1,6 @@
 package com.avisio.dashboard.activity.box_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class BoxListFragment : Fragment() {
 
@@ -49,8 +51,14 @@ class BoxListFragment : Fragment() {
 
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab)?.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            startActivityForResult(Intent(view.context, CreateBoxActivity::class.java), 1)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1) {
+            boxViewModel.insert(AvisioBox(name = data!!.getStringExtra("CREATE_REPLY")!!, createDate = Date(System.currentTimeMillis())))
         }
     }
 
