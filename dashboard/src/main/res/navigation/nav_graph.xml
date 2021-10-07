@@ -15,6 +15,6 @@
             android:id="@+id/FirstFragment"
             android:name="com.avisio.dashboard.activity.box_list.BoxListFragment"
             android:label="@string/first_fragment_label"
-            tools:layout="@layout/fragment_first">
+            tools:layout="@layout/box_list_fragment">
     </fragment>
 </navigation>
