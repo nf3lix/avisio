@@ -17,4 +17,16 @@ class AvisioBoxListAdapter
         holder.bind(currentBox.name)
     }
 
+    class AvisioBoxDifference : DiffUtil.ItemCallback<AvisioBox>() {
+
+        override fun areItemsTheSame(oldItem: AvisioBox, newItem: AvisioBox): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: AvisioBox, newItem: AvisioBox): Boolean {
+            return false
+        }
+
+    }
+
 }
