@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.box_list.FirstFragment">
+        tools:context=".activity.box_list.BoxListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/box_list_recycler_view"

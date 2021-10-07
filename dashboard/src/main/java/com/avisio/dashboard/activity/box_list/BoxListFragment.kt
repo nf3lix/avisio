@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 
-class FirstFragment : Fragment() {
+class BoxListFragment : Fragment() {
 
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter

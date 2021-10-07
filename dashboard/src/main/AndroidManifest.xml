@@ -10,6 +10,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Avisio">
         <activity
+                android:name=".activity.box_list.CreateBoxActivity"
+                android:label="@string/title_activity_create_box"
+                android:theme="@style/Theme.Avisio.NoActionBar">
+        </activity>
+        <activity
                 android:name=".activity.box_list.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/Theme.Avisio.NoActionBar">
