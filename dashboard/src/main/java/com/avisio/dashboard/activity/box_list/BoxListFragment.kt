@@ -1,6 +1,5 @@
 package com.avisio.dashboard.activity.box_list
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +9,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 class BoxListFragment : Fragment() {
 
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter
+
+    lateinit var observer: CreateBoxResultObserver
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observer = CreateBoxResultObserver(this, requireActivity().activityResultRegistry)
+        lifecycle.addObserver(observer)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.box_list_fragment, container, false)
@@ -27,12 +32,12 @@ class BoxListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupView()
+        setupFab()
     }
 
     private fun setupView() {
         setupRecyclerView()
         setupBoxViewModel()
-        setupFab()
     }
 
     private fun setupRecyclerView() {
@@ -50,15 +55,8 @@ class BoxListFragment : Fragment() {
     }
 
     private fun setupFab() {
-        view?.findViewById<FloatingActionButton>(R.id.fab)?.setOnClickListener { view ->
-            startActivityForResult(Intent(view.context, CreateBoxActivity::class.java), 1)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1) {
-            boxViewModel.insert(AvisioBox(name = data!!.getStringExtra("CREATE_REPLY")!!, createDate = Date(System.currentTimeMillis())))
+        view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener { _ ->
+            observer.createBox()
         }
     }
 
