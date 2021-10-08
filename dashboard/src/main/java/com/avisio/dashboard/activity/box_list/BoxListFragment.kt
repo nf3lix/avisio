@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -17,7 +18,7 @@ class BoxListFragment : Fragment() {
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter
 
-    lateinit var observer: CreateBoxResultObserver
+    private lateinit var observer: CreateBoxResultObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,10 @@ class BoxListFragment : Fragment() {
         view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener { _ ->
             observer.createBox()
         }
+    }
+
+    fun newBoxReceived(avisioBox: AvisioBox) {
+        boxViewModel.insert(avisioBox)
     }
 
 }
