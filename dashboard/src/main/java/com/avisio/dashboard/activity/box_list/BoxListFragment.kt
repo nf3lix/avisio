@@ -1,6 +1,7 @@
 package com.avisio.dashboard.activity.box_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BoxListFragment : Fragment() {
+class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener {
 
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter
@@ -43,7 +44,7 @@ class BoxListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val boxListRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
-        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference())
+        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference(), this)
         boxListRecyclerView?.adapter = boxAdapter
         boxListRecyclerView?.layoutManager = LinearLayoutManager(context)
     }
@@ -63,6 +64,10 @@ class BoxListFragment : Fragment() {
 
     fun newBoxReceived(avisioBox: AvisioBox) {
         boxViewModel.insert(avisioBox)
+    }
+
+    override fun onClick(index: Int) {
+        // TODO: handle click
     }
 
 }

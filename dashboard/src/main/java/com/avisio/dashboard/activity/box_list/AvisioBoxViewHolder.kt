@@ -7,15 +7,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 
-class AvisioBoxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class AvisioBoxViewHolder(
+    itemView: View,
+    private val onClickListener: AvisioBoxListAdapter.BoxListOnClickListener
+) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     companion object {
 
-        fun create(parent: ViewGroup): AvisioBoxViewHolder {
-            val view: View = LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.box_list_item, parent, false)
-            return AvisioBoxViewHolder(view)
+        fun create(parent: ViewGroup, onClickListener: AvisioBoxListAdapter.BoxListOnClickListener): AvisioBoxViewHolder {
+            return AvisioBoxViewHolder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.box_list_item, parent, false), onClickListener)
         }
 
     }
@@ -24,6 +25,11 @@ class AvisioBoxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(boxTitle: String) {
         boxTextView.text = boxTitle
+        itemView.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        onClickListener.onClick(adapterPosition)
     }
 
 }

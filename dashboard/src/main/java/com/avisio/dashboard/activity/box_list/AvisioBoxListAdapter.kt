@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.avisio.dashboard.common.data.model.AvisioBox
 
-class AvisioBoxListAdapter
-    (diffCallback: DiffUtil.ItemCallback<AvisioBox>) : ListAdapter<AvisioBox, AvisioBoxViewHolder>(diffCallback) {
+class AvisioBoxListAdapter(
+    diffCallback: DiffUtil.ItemCallback<AvisioBox>,
+    private val onClickListener: BoxListOnClickListener
+) : ListAdapter<AvisioBox, AvisioBoxViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvisioBoxViewHolder {
-        return AvisioBoxViewHolder.create(parent)
+        return AvisioBoxViewHolder.create(parent, onClickListener)
     }
 
     override fun onBindViewHolder(holder: AvisioBoxViewHolder, position: Int) {
@@ -27,6 +29,10 @@ class AvisioBoxListAdapter
             return false
         }
 
+    }
+
+    interface BoxListOnClickListener {
+        fun onClick(index: Int)
     }
 
 }
