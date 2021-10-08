@@ -1,7 +1,6 @@
 package com.avisio.dashboard.activity.box_list
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
