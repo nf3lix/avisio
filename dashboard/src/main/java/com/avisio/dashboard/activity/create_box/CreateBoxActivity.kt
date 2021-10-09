@@ -1,4 +1,4 @@
-package com.avisio.dashboard.activity.box_list
+package com.avisio.dashboard.activity.create_box
 
 import android.content.Intent
 import android.os.Bundle

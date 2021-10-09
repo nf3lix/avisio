@@ -1,4 +1,4 @@
-package com.avisio.dashboard.activity.box_list
+package com.avisio.dashboard.activity.create_box
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.avisio.dashboard.activity.box_list.BoxListFragment
 import com.avisio.dashboard.common.data.model.AvisioBox
 import java.util.*
 

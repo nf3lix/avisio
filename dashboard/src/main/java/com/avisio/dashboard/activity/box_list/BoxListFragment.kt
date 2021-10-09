@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -67,7 +68,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     }
 
     override fun onClick(index: Int) {
-        // TODO: handle click
+        Log.d("test12345", boxAdapter.currentList[index].toString())
     }
 
 }
