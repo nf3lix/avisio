@@ -31,6 +31,15 @@ class AvisioBoxListAdapter(
 
     }
 
+    fun getBoxById(id: Long): AvisioBox? {
+        for(box in currentList) {
+            if(box.id == id) {
+                return box
+            }
+        }
+        return null
+    }
+
     interface BoxListOnClickListener {
         fun onClick(index: Int)
     }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
+import com.avisio.dashboard.activity.box_activity.BoxActivityResultObserver
 import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
@@ -23,12 +24,15 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter
 
-    private lateinit var observer: CreateBoxResultObserver
+    private lateinit var createBoxObserver: CreateBoxResultObserver
+    private lateinit var boxActivityObserver: BoxActivityResultObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observer = CreateBoxResultObserver(this, requireActivity().activityResultRegistry)
-        lifecycle.addObserver(observer)
+        createBoxObserver = CreateBoxResultObserver(this, requireActivity().activityResultRegistry)
+        boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry)
+        lifecycle.addObserver(createBoxObserver)
+        lifecycle.addObserver(boxActivityObserver)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,7 +66,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
 
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener { _ ->
-            observer.createBox()
+            createBoxObserver.createBox()
         }
     }
 
@@ -70,11 +74,14 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
         boxViewModel.insert(avisioBox)
     }
 
+    fun deleteBox(box: ParcelableAvisioBox) {
+        val boxToDelete = boxAdapter.getBoxById(box.boxId) ?: // TODO: box could not be found
+            return
+        boxViewModel.deleteBox(boxToDelete)
+    }
+
     override fun onClick(index: Int) {
-        // Log.d("test12345", boxAdapter.currentList[index].toString())
-        val intent = Intent(context, BoxActivity::class.java)
-        intent.putExtra("BOX_OBJECT", ParcelableAvisioBox.createFromEntity(boxAdapter.currentList[index]))
-        startActivity(intent)
+        boxActivityObserver.startBoxActivity(boxAdapter.currentList[index])
     }
 
 }

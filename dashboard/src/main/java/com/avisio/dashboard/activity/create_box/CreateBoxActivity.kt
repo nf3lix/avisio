@@ -12,7 +12,7 @@ import com.avisio.dashboard.R
 class CreateBoxActivity : AppCompatActivity() {
 
     companion object {
-        const val BOX_NAME_REPLY: String = "BOX_NAME_REPLY"
+        const val BOX_NAME_OBSERVER_REPLY: String = "BOX_NAME_REPLY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class CreateBoxActivity : AppCompatActivity() {
 
     private fun handleValidInput(boxNameInput: String) {
         val resultIntent = Intent()
-        resultIntent.putExtra(BOX_NAME_REPLY, boxNameInput)
+        resultIntent.putExtra(BOX_NAME_OBSERVER_REPLY, boxNameInput)
         setResult(RESULT_OK, resultIntent)
         finish()
     }

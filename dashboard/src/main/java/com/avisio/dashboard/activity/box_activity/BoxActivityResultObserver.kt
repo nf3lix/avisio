@@ -1,6 +1,6 @@
-package com.avisio.dashboard.activity.create_box
+package com.avisio.dashboard.activity.box_activity
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -10,15 +10,15 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.avisio.dashboard.activity.box_list.BoxListFragment
 import com.avisio.dashboard.common.data.model.AvisioBox
-import java.util.*
+import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 
-class CreateBoxResultObserver(
+class BoxActivityResultObserver(
     private val boxFragment: BoxListFragment,
     private val registry: ActivityResultRegistry
-    ): DefaultLifecycleObserver {
+): DefaultLifecycleObserver {
 
     companion object {
-        private const val OBSERVER_REGISTRY_KEY = "CREATE_BOX_RESULT_OBSERVER"
+        private const val OBSERVER_REGISTRY_KEY = "BOX_ACTIVITY_RESULT_OBSERVER"
     }
 
     private lateinit var content: ActivityResultLauncher<Intent>
@@ -30,17 +30,18 @@ class CreateBoxResultObserver(
     }
 
     private fun onResult(activityResult: ActivityResult) {
-        if(activityResult.resultCode == RESULT_OK) {
-            val box = AvisioBox(
-                name = activityResult.data!!.getStringExtra(CreateBoxActivity.BOX_NAME_OBSERVER_REPLY)!!,
-                createDate = Date(System.currentTimeMillis())
-            )
-            boxFragment.newBoxReceived(box)
+        if(activityResult.resultCode == Activity.RESULT_OK) {
+            val boxToDelete = activityResult.data?.getParcelableExtra<ParcelableAvisioBox>(BoxActivity.BOX_DELETE_OBSERVER_REPLY) ?:
+                // TODO: error: box could not be deleted
+                return
+            boxFragment.deleteBox(boxToDelete)
         }
     }
 
-    fun createBox() {
-        content.launch(Intent(boxFragment.context, CreateBoxActivity::class.java))
+    fun startBoxActivity(avisioBox: AvisioBox) {
+        val intent = Intent(boxFragment.context, BoxActivity::class.java)
+        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, ParcelableAvisioBox.createFromEntity(avisioBox))
+        content.launch(intent)
     }
 
 }

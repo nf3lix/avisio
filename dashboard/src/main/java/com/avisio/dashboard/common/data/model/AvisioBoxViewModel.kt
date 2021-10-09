@@ -18,4 +18,8 @@ class AvisioBoxViewModel(application: Application) : AndroidViewModel(applicatio
         repository.insert(box)
     }
 
+    fun deleteBox(box: AvisioBox) {
+        repository.deleteBox(box)
+    }
+
 }

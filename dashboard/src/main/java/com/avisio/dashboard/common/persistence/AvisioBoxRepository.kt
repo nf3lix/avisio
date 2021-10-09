@@ -28,4 +28,10 @@ class AvisioBoxRepository(application: Application) {
         }
     }
 
+    fun deleteBox(box: AvisioBox) {
+        GlobalScope.launch {
+            dao.deleteBox(box)
+        }
+    }
+
 }
