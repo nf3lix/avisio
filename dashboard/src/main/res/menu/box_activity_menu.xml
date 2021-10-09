@@ -3,12 +3,12 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.avisio.dashboard.activity.box_activity.BoxActivity">
 
-    <item android:id="@+id/action_edit_box"
+    <item android:id="@+id/menu_edit_box"
           android:title="@string/box_activity_menu_edit"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 
-    <item android:id="@+id/action_delete_box"
+    <item android:id="@+id/menu_delete_box"
           android:title="@string/box_activity_menu_delete"
           android:orderInCategory="100"
           app:showAsAction="never"/>

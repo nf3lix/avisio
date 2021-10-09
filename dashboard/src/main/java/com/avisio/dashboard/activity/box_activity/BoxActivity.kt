@@ -2,6 +2,7 @@ package com.avisio.dashboard.activity.box_activity
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
@@ -19,6 +20,13 @@ class BoxActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.box_activity_menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id. -> true
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

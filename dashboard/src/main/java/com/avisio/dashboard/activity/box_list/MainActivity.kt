@@ -21,9 +21,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+            R.id.menu_edit_box -> {
+                deleteBox()
+                true
+            }
+            R.id.menu_delete_box -> {
+                editBox()
+                true
+            }
+            else -> false
         }
+    }
+
+    private fun deleteBox() {
+
+    }
+
+    private fun editBox() {
+
     }
 
 }
