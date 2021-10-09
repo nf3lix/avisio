@@ -15,6 +15,7 @@ import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
+import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener {
@@ -71,7 +72,9 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
 
     override fun onClick(index: Int) {
         // Log.d("test12345", boxAdapter.currentList[index].toString())
-        startActivity(Intent(context, BoxActivity::class.java))
+        val intent = Intent(context, BoxActivity::class.java)
+        intent.putExtra("BOX_OBJECT", ParcelableAvisioBox.createFromEntity(boxAdapter.currentList[index]))
+        startActivity(intent)
     }
 
 }
