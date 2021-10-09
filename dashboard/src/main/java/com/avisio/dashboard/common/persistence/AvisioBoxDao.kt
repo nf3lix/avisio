@@ -1,10 +1,7 @@
 package com.avisio.dashboard.common.persistence
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.avisio.dashboard.common.data.model.AvisioBox
 
 @Dao
@@ -21,5 +18,8 @@ interface AvisioBoxDao {
 
     @Query("DELETE FROM box")
     fun deleteAll()
+
+    @Query("UPDATE box SET name = :name WHERE id = :boxId")
+    fun updateBox(boxId: Long, name: String)
 
 }

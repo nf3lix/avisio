@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,12 @@ class AvisioBoxRepository(application: Application) {
     fun deleteBox(box: AvisioBox) {
         GlobalScope.launch {
             dao.deleteBox(box)
+        }
+    }
+
+    fun updateBox(box: ParcelableAvisioBox) {
+        GlobalScope.launch {
+            dao.updateBox(box.boxId, box.boxName)
         }
     }
 
