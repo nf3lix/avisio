@@ -2,6 +2,7 @@ package com.avisio.dashboard.common.ui
 
 import android.app.AlertDialog
 import android.content.Context
+import com.avisio.dashboard.R
 
 class ConfirmDialog<T: Any>(
     private val context: Context,
@@ -11,14 +12,13 @@ class ConfirmDialog<T: Any>(
 ) {
 
     fun showDialog(data: T) {
-        // TODO: move strings to config
         AlertDialog.Builder(context)
             .setTitle(dialogTitle)
             .setMessage(dialogMessage)
-            .setPositiveButton("Ok") { _, _ ->
+            .setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ ->
                 listener.onConfirm(data)
             }
-            .setNegativeButton("Cancel") { _, _ ->
+            .setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ ->
                 listener.onCancel(data)
             }
             .show()
