@@ -1,12 +1,11 @@
 package com.avisio.dashboard.activity.edit_box
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
-import com.avisio.dashboard.common.persistence.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
