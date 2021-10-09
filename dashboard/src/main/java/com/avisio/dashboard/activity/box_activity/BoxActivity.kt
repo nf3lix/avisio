@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
+import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 
 class BoxActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class BoxActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_edit_box -> {
+                onEditSelected()
                 true
             }
             R.id.menu_delete_box -> {
@@ -42,7 +44,10 @@ class BoxActivity : AppCompatActivity() {
     }
 
     private fun onEditSelected() {
-
+        val intent = Intent(baseContext, EditBoxActivity::class.java)
+        intent.putExtra(PARCELABLE_BOX_KEY, parcelableBox)
+        startActivity(intent)
+        finish()
     }
 
     private fun onDeleteSelected() {
