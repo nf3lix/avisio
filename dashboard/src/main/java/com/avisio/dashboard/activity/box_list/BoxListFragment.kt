@@ -1,5 +1,6 @@
 package com.avisio.dashboard.activity.box_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
@@ -68,7 +70,8 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     }
 
     override fun onClick(index: Int) {
-        Log.d("test12345", boxAdapter.currentList[index].toString())
+        // Log.d("test12345", boxAdapter.currentList[index].toString())
+        startActivity(Intent(context, BoxActivity::class.java))
     }
 
 }
