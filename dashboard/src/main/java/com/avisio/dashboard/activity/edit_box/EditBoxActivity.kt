@@ -17,7 +17,8 @@ class EditBoxActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_box)
+        setContentView(R.layout.activity_edit_box)
+        setSupportActionBar(findViewById(R.id.toolbar))
         boxDao = AvisioBoxRepository(this.application)
         parcelableBox = intent.getParcelableExtra(BoxActivity.PARCELABLE_BOX_KEY)!!
         fillBoxInformation()
@@ -29,7 +30,7 @@ class EditBoxActivity : AppCompatActivity() {
     }
 
     private fun setupFab() {
-        findViewById<FloatingActionButton>(R.id.fab_new_box).setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.fab_edit_box).setOnClickListener {
             boxDao.updateBox(getUpdatedBox())
             finish()
         }

@@ -12,6 +12,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_create_box">CreateBoxActivity</string>
 
+    <string name="activity_edit_box">Edit box</string>
+
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
 
