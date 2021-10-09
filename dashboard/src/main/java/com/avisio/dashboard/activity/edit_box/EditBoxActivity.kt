@@ -1,5 +1,6 @@
 package com.avisio.dashboard.activity.edit_box
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,7 @@ class EditBoxActivity : AppCompatActivity() {
             if(boxChanged(updatedBox)) {
                 boxDao.updateBox(getUpdatedBox())
             }
-            finish()
+            startBoxActivity()
         }
     }
 
@@ -45,6 +46,13 @@ class EditBoxActivity : AppCompatActivity() {
 
     private fun boxChanged(updatedBox: ParcelableAvisioBox): Boolean {
         return parcelableBox.boxName != updatedBox.boxName
+    }
+
+    private fun startBoxActivity() {
+        val intent = Intent(baseContext, BoxActivity::class.java)
+        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, getUpdatedBox())
+        startActivity(intent)
+        finish()
     }
 
 }
