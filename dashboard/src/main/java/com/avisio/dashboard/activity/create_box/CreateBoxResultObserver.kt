@@ -15,7 +15,7 @@ import java.util.*
 class CreateBoxResultObserver(
     private val boxFragment: BoxListFragment,
     private val registry: ActivityResultRegistry
-    ): DefaultLifecycleObserver {
+): DefaultLifecycleObserver {
 
     companion object {
         private const val OBSERVER_REGISTRY_KEY = "CREATE_BOX_RESULT_OBSERVER"

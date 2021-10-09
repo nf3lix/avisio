@@ -17,4 +17,7 @@
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
 
+    <string name="delete_box_confirm_dialog_title">Delete Box</string>
+    <string name="delete_box_confirm_dialog_message">Are you sure you want to permanently delete this box?</string>
+
 </resources>

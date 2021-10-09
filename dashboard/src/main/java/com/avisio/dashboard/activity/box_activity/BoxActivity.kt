@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.ui.ConfirmDialog
 
-class BoxActivity : AppCompatActivity() {
+class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
 
     companion object {
         const val PARCELABLE_BOX_KEY = "BOX_OBJECT"
@@ -43,7 +44,7 @@ class BoxActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_delete_box -> {
-                onDeleteSelected()
+                confirmDeletion()
                 true
             }
             else -> false
@@ -57,11 +58,21 @@ class BoxActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun onDeleteSelected() {
-        val resultIntent = Intent()
-        resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
-        setResult(RESULT_OK, resultIntent)
-        finish()
+    private fun confirmDeletion() {
+        ConfirmDialog<ParcelableAvisioBox>(
+            this,
+            this,
+            baseContext.getString(R.string.delete_box_confirm_dialog_title),
+            baseContext.getString(R.string.delete_box_confirm_dialog_message))
+        .showDialog(parcelableBox)
+    }
+
+    override fun onConfirm(data: Any) {
+        // TODO("Not yet implemented")
+    }
+
+    override fun onCancel(data: Any) {
+        // TODO("Not yet implemented")
     }
 
 }
