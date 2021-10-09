@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class ParcelableAvisioBox(
-    private val boxId: Long = 0,
-    private val boxName: String = ""
+    val boxId: Long = 0,
+    val boxName: String = ""
 ): Parcelable {
 
     constructor(parcel: Parcel): this(
