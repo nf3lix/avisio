@@ -30,7 +30,10 @@ class EditBoxActivity : AppCompatActivity() {
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_edit_box).setOnClickListener {
-            boxDao.updateBox(getUpdatedBox())
+            val updatedBox = getUpdatedBox()
+            if(boxChanged(updatedBox)) {
+                boxDao.updateBox(getUpdatedBox())
+            }
             finish()
         }
     }
@@ -38,6 +41,10 @@ class EditBoxActivity : AppCompatActivity() {
     private fun getUpdatedBox(): ParcelableAvisioBox {
         val updatedName = findViewById<EditText>(R.id.box_name_input).text.toString()
         return ParcelableAvisioBox(parcelableBox.boxId, updatedName)
+    }
+
+    private fun boxChanged(updatedBox: ParcelableAvisioBox): Boolean {
+        return parcelableBox.boxName != updatedBox.boxName
     }
 
 }
