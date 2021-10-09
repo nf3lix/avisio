@@ -26,7 +26,7 @@ class ConfirmDialog<T: Any>(
 
     interface ConfirmDialogListener {
         fun onConfirm(data: Any)
-        fun onCancel(data: Any)
+        fun onCancel(data: Any) { }
     }
 
 }

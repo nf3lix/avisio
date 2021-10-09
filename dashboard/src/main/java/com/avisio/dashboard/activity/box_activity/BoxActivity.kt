@@ -68,11 +68,10 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
     }
 
     override fun onConfirm(data: Any) {
-        // TODO("Not yet implemented")
-    }
-
-    override fun onCancel(data: Any) {
-        // TODO("Not yet implemented")
+        val resultIntent = Intent()
+        resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 
 }
