@@ -14,6 +14,13 @@ class BoxActivity : AppCompatActivity() {
     companion object {
         const val PARCELABLE_BOX_KEY = "BOX_OBJECT"
         const val BOX_DELETE_OBSERVER_REPLY = "BOX_DELETE_REPLY"
+
+        fun startActivity(activity: AppCompatActivity, box: ParcelableAvisioBox) {
+            val intent = Intent(activity.baseContext, BoxActivity::class.java)
+            intent.putExtra(PARCELABLE_BOX_KEY, box)
+            activity.startActivity(intent)
+        }
+
     }
 
     private lateinit var parcelableBox: ParcelableAvisioBox
