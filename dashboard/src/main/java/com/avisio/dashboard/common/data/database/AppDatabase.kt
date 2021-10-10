@@ -12,7 +12,7 @@ import com.avisio.dashboard.common.persistence.AvisioBoxDao
         AvisioBox::class
     ]
 )
-@TypeConverters(Converter::class)
+@TypeConverters(DateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun boxDao(): AvisioBoxDao
@@ -30,7 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
-                .addTypeConverter(Converter())
+                .addTypeConverter(DateTimeConverter())
                 .build()
 
     }

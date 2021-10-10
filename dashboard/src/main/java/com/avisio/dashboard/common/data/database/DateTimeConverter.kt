@@ -5,7 +5,7 @@ import androidx.room.TypeConverter
 import java.util.*
 
 @ProvidedTypeConverter
-class Converter {
+class DateTimeConverter {
 
     @TypeConverter
     fun fromDateToLong(date: Date): Long {
