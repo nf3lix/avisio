@@ -5,7 +5,7 @@ name: Execute tests
 on:
   pull_request:
     branches:
-    - master
+    - main
     - develop
 
 ## 2
