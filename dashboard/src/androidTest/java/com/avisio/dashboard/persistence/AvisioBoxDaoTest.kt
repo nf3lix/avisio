@@ -80,6 +80,17 @@ class AvisioBoxDaoTest {
         assertEquals(fetchedBox?.size, 0)
     }
 
+    @Test
+    fun updateBoxTest() {
+        val box1 = AvisioBox(name = "BOX_NAME_1", createDate = Date(1600000000))
+        val box2 = AvisioBox(name = "BOX_NAME_2", createDate = Date(1600000000))
+        boxDao.insertBox(box1)
+        val boxToUpdate = boxDao.getBoxList().blockingObserve()?.get(0)!!
+        boxDao.updateBox(boxToUpdate.id, box2.name)
+        val updatedBox = boxDao.getBoxList().blockingObserve()?.get(0)!!
+        assertEquals(box2.name, updatedBox.name)
+    }
+
     // source: https://stackoverflow.com/questions/44270688/unit-testing-room-and-livedata
     private fun <T> LiveData<T>.blockingObserve(): T? {
         var value: T? = null
