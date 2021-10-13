@@ -39,7 +39,7 @@ class CreateBoxActivity : AppCompatActivity() {
     }
 
     private fun handleInvalidInput() {
-        Toast.makeText(this, "Please specify a name", Toast.LENGTH_LONG).show() // TODO: Replace text by config value
+        Toast.makeText(this, getString(R.string.create_box_no_name_specified), Toast.LENGTH_LONG).show()
     }
 
     private fun handleValidInput(boxNameInput: String) {

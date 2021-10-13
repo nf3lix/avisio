@@ -2,6 +2,7 @@ package com.avisio.dashboard.activity.box_activity
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -31,9 +32,7 @@ class BoxActivityResultObserver(
 
     private fun onResult(activityResult: ActivityResult) {
         if(activityResult.resultCode == Activity.RESULT_OK) {
-            val boxToDelete = activityResult.data?.getParcelableExtra<ParcelableAvisioBox>(BoxActivity.BOX_DELETE_OBSERVER_REPLY) ?:
-                // TODO: error: box could not be deleted
-                return
+            val boxToDelete = activityResult.data?.getParcelableExtra<ParcelableAvisioBox>(BoxActivity.BOX_DELETE_OBSERVER_REPLY)!!
             boxFragment.deleteBox(boxToDelete)
         }
     }
