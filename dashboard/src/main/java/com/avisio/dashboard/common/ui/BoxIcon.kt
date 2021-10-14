@@ -11,4 +11,17 @@ enum class BoxIcon(val iconId: Int) {
         return this.name
     }
 
+    companion object {
+
+        fun getBoxIcon(iconId: Int): BoxIcon {
+            for(boxIcon in values()) {
+                if(boxIcon.iconId == iconId) {
+                    return boxIcon
+                }
+            }
+            return DEFAULT
+        }
+
+    }
+
 }

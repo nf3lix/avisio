@@ -14,7 +14,7 @@ class BoxIconConverter {
 
     @TypeConverter
     fun toBox(boxId: Int): BoxIcon {
-        return BoxIcon.values()[boxId]
+        return BoxIcon.getBoxIcon(boxId)
     }
 
 }

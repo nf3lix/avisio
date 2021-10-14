@@ -14,13 +14,13 @@ data class AvisioBox(
     val id: Long = 0,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
 
     @ColumnInfo(name = "create_date")
-    val createDate: Date,
+    val createDate: Date = Date(System.currentTimeMillis()),
 
     @ColumnInfo(name = "icon")
-    val icon: BoxIcon
+    val icon: BoxIcon = BoxIcon.DEFAULT
 
 ) {
 

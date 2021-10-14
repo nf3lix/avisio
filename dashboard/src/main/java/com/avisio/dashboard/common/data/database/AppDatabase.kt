@@ -6,7 +6,7 @@ import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
 
 @Database(
-    version = 1,
+    version = 2,
     exportSchema = false,
     entities = [
         AvisioBox::class
