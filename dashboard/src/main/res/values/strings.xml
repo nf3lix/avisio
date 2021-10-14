@@ -17,6 +17,7 @@
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
 
+    <string name="create_box_app_bar_title">New box</string>
     <string name="create_box_no_name_specified">Please specify a name</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>

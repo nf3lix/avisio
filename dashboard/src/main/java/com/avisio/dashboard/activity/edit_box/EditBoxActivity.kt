@@ -3,8 +3,7 @@ package com.avisio.dashboard.activity.edit_box
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
@@ -28,10 +27,9 @@ class EditBoxActivity : AppCompatActivity() {
         val bundle = bundleOf(
             EditBoxFragment.BOX_OBJECT_KEY to parcelableBox,
             EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX.ordinal)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            add<EditBoxFragment>(R.id.fragment_container_view, args = bundle)
-        }
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.edit_fragment_container_view, EditBoxFragment::class.java, bundle)
+        transaction.commit()
     }
 
 }
