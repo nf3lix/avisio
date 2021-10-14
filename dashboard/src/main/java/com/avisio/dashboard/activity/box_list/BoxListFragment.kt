@@ -1,8 +1,6 @@
 package com.avisio.dashboard.activity.box_list
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.activity.box_activity.BoxActivityResultObserver
 import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
 import com.avisio.dashboard.common.data.model.AvisioBox
