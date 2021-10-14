@@ -49,5 +49,4 @@ class CreateBoxActivity : AppCompatActivity() {
         finish()
     }
 
-
 }

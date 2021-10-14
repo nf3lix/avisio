@@ -20,7 +20,7 @@ class EditBoxActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             val bundle = bundleOf(
                 EditBoxFragment.BOX_OBJECT_KEY to ParcelableAvisioBox(1, "TEST_NAME"),
-                EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX)
+                EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX.ordinal)
 
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
