@@ -1,13 +1,13 @@
 package com.avisio.dashboard.activity.edit_box
 
 import android.os.Bundle
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.avisio.dashboard.R
-import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EditBoxActivity : AppCompatActivity() {
 
@@ -17,39 +17,18 @@ class EditBoxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_box)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        boxDao = AvisioBoxRepository(this.application)
-        parcelableBox = intent.getParcelableExtra(BoxActivity.PARCELABLE_BOX_KEY)!!
-        fillBoxInformation()
-        setupFab()
-    }
+        if(savedInstanceState == null) {
+            val bundle = bundleOf(
+                EditBoxFragment.BOX_OBJECT_KEY to ParcelableAvisioBox(1, "TEST_NAME"),
+                EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX)
 
-    private fun fillBoxInformation() {
-        findViewById<EditText>(R.id.box_name_input).setText(parcelableBox.boxName)
-    }
-
-    private fun setupFab() {
-        findViewById<FloatingActionButton>(R.id.fab_edit_box).setOnClickListener {
-            val updatedBox = getUpdatedBox()
-            if(boxChanged(updatedBox)) {
-                boxDao.updateBox(getUpdatedBox())
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<EditBoxFragment>(R.id.fragment_container_view, args = bundle)
             }
-            startBoxActivity()
         }
     }
 
-    private fun getUpdatedBox(): ParcelableAvisioBox {
-        val updatedName = findViewById<EditText>(R.id.box_name_input).text.toString()
-        return ParcelableAvisioBox(parcelableBox.boxId, updatedName)
-    }
 
-    private fun boxChanged(updatedBox: ParcelableAvisioBox): Boolean {
-        return parcelableBox.boxName != updatedBox.boxName
-    }
-
-    private fun startBoxActivity() {
-        BoxActivity.startActivity(this, getUpdatedBox())
-        finish()
-    }
 
 }

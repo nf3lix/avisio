@@ -8,14 +8,10 @@
         tools:context=".activity.edit_box.EditBoxActivity">
 
     <include layout="@layout/app_bar_default"/>
-    <include layout="@layout/content_create_box"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_edit_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_check"/>
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
