@@ -1,5 +1,6 @@
-package com.avisio.dashboard.activity.edit_box
+package com.avisio.dashboard.common.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
+import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
@@ -25,6 +27,7 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
+    private lateinit var nameInput: EditText
     private lateinit var boxDao: AvisioBoxRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +45,13 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        nameInput = view?.findViewById(R.id.box_name_input)!!
         setupFab()
         fillBoxInformation()
     }
 
     private fun fillBoxInformation() {
-        view?.findViewById<EditText>(R.id.fragment_box_name_input)?.setText(parcelableBox.boxName)
+        nameInput.setText(parcelableBox.boxName)
     }
 
     private fun setupFab() {
@@ -57,7 +61,7 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun handleFabClicked() {
-        val boxNameInput = view?.findViewById<EditText>(R.id.fragment_box_name_input)?.text
+        val boxNameInput = nameInput.text
         when(TextUtils.isEmpty(boxNameInput)) {
             true -> {
                 handleInvalidInput()
@@ -84,7 +88,7 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
-        boxDao.insert(AvisioBox(name = view?.findViewById<EditText>(R.id.fragment_box_name_input)?.text.toString(), createDate = Date(System.currentTimeMillis())))
+        boxDao.insert(AvisioBox(name = nameInput.text.toString(), createDate = Date(System.currentTimeMillis())))
         activity?.finish()
     }
 
@@ -93,11 +97,14 @@ class EditBoxFragment : Fragment() {
         if(boxChanged(updatedBox)) {
             boxDao.updateBox(getUpdatedBox())
         }
+        val intent = Intent(context, BoxActivity::class.java)
+        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, updatedBox)
+        activity?.startActivity(intent)
         activity?.finish()
     }
 
     private fun getUpdatedBox(): ParcelableAvisioBox {
-        val updatedName = view?.findViewById<EditText>(R.id.fragment_box_name_input)?.text.toString()
+        val updatedName = nameInput.text.toString()
         return ParcelableAvisioBox(parcelableBox.boxId, updatedName)
     }
 

@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.32"
-    ext.jacocoVersion = '0.8.4'
+    ext.jacocoVersion = '0.8.7'
     repositories {
         google()
         jcenter()
