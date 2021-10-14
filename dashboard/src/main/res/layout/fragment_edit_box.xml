@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.edit_box.EditBoxFragment">
+        tools:context=".activity.edit_box.EditBoxActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/app_bar_default"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/box_name_input"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.183"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_edit_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_check"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
