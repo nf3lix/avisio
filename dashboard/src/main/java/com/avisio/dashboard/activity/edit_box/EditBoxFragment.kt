@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
@@ -26,6 +28,7 @@ class EditBoxFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        boxDao = AvisioBoxRepository(requireActivity().application)
         arguments?.let {
             parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
             fragmentMode = EditBoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
@@ -47,23 +50,25 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun setupFab() {
-        view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener {
+        view?.findViewById<FloatingActionButton>(R.id.fab_edit_box)?.setOnClickListener {
             handleFabClicked()
         }
     }
 
     private fun handleFabClicked() {
-        val boxNameInput = view?.findViewById<EditText>(R.id.box_name_input)?.text
+        val boxNameInput = view?.findViewById<EditText>(R.id.fragment_box_name_input)?.text
         when(TextUtils.isEmpty(boxNameInput)) {
-            true ->
+            true -> {
                 handleInvalidInput()
-            false ->
+            }
+            false -> {
                 handleValidInput()
+            }
         }
     }
 
     private fun handleInvalidInput() {
-        // TODO("Not yet implemented")
+        Toast.makeText(context, getString(R.string.create_box_no_name_specified), Toast.LENGTH_LONG).show()
     }
 
     private fun handleValidInput() {
@@ -78,14 +83,15 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
+
+    }
+
+    private fun updateBox() {
         val updatedBox = getUpdatedBox()
         if(boxChanged(updatedBox)) {
             boxDao.updateBox(getUpdatedBox())
         }
-    }
-
-    private fun updateBox() {
-        boxDao.updateBox(parcelableBox)
+        activity?.finish()
     }
 
     private fun getUpdatedBox(): ParcelableAvisioBox {

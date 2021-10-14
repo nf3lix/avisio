@@ -21,7 +21,6 @@ class EditBoxActivity : AppCompatActivity() {
             val bundle = bundleOf(
                 EditBoxFragment.BOX_OBJECT_KEY to ParcelableAvisioBox(1, "TEST_NAME"),
                 EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX.ordinal)
-
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add<EditBoxFragment>(R.id.fragment_container_view, args = bundle)
