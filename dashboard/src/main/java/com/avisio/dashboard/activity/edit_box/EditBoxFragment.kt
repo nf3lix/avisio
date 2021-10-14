@@ -9,9 +9,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 class EditBoxFragment : Fragment() {
 
@@ -82,7 +84,8 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
-
+        boxDao.insert(AvisioBox(name = view?.findViewById<EditText>(R.id.fragment_box_name_input)?.text.toString(), createDate = Date(System.currentTimeMillis())))
+        activity?.finish()
     }
 
     private fun updateBox() {

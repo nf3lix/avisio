@@ -1,13 +1,14 @@
 package com.avisio.dashboard.activity.create_box
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.widget.EditText
-import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.avisio.dashboard.R
+import com.avisio.dashboard.activity.edit_box.EditBoxFragment
+import com.avisio.dashboard.activity.edit_box.EditBoxFragmentMode
+import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 
 class CreateBoxActivity : AppCompatActivity() {
 
@@ -19,34 +20,20 @@ class CreateBoxActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_box)
         setSupportActionBar(findViewById(R.id.toolbar))
-        setupFab()
-    }
-
-    private fun setupFab() {
-        findViewById<FloatingActionButton>(R.id.fab_new_box).setOnClickListener {
-            handleFabClicked()
+        if(savedInstanceState == null) {
+            initFragment()
         }
     }
 
-    private fun handleFabClicked() {
-        val boxNameInput = findViewById<EditText>(R.id.box_name_input).text
-        when(TextUtils.isEmpty(boxNameInput)) {
-            true ->
-                handleInvalidInput()
-            false ->
-                handleValidInput(boxNameInput.toString())
+    private fun initFragment() {
+        val bundle = bundleOf(
+            EditBoxFragment.BOX_OBJECT_KEY to ParcelableAvisioBox(-1, ""),
+            EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.CREATE_BOX.ordinal)
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<EditBoxFragment>(R.id.fragment_container_view, args = bundle)
         }
     }
 
-    private fun handleInvalidInput() {
-        Toast.makeText(this, getString(R.string.create_box_no_name_specified), Toast.LENGTH_LONG).show()
-    }
-
-    private fun handleValidInput(boxNameInput: String) {
-        val resultIntent = Intent()
-        resultIntent.putExtra(BOX_NAME_OBSERVER_REPLY, boxNameInput)
-        setResult(RESULT_OK, resultIntent)
-        finish()
-    }
 
 }
