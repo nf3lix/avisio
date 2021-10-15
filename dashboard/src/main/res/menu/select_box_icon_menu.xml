@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/red"
+                android:icon="@drawable/box_icon_default"
+                android:title="" />
+        <item android:id="@+id/blue"
+                android:icon="@drawable/box_icon_language"
+                android:title="" />
+        <item android:id="@+id/blue2"
+                android:icon="@drawable/box_icon_language"
+                android:title="" />
+        <item android:id="@+id/blue3"
+                android:icon="@drawable/box_icon_language"
+                android:title="" />
+        <item android:id="@+id/blue4"
+                android:icon="@drawable/box_icon_language"
+                android:title="" />
+        <item android:id="@+id/blue5"
+                android:icon="@drawable/box_icon_language"
+                android:title="" />
+    </group>
+</menu>
