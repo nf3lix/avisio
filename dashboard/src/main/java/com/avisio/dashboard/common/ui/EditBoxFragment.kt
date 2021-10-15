@@ -3,6 +3,7 @@ package com.avisio.dashboard.common.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
+    private var updatedIcon = BoxIcon.DEFAULT
     private lateinit var nameInput: EditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxDao: AvisioBoxRepository
@@ -68,6 +70,11 @@ class EditBoxFragment : Fragment() {
 
     private fun showSelectIconPopup() {
         val popup = BoxIconSelectionPopup.createPopup(this, nameInput)
+        popup.setOnMenuItemClickListener { menuItem ->
+            iconImageView.setImageResource(menuItem.itemId)
+            updatedIcon = BoxIcon.getBoxIcon(menuItem.itemId)
+            true
+        }
         popup.show()
     }
 
@@ -105,7 +112,11 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
-        boxDao.insert(AvisioBox(name = nameInput.text.toString(), createDate = Date(System.currentTimeMillis())))
+        boxDao.insert(AvisioBox(
+            name = nameInput.text.toString(),
+            createDate = Date(System.currentTimeMillis()),
+            icon = updatedIcon
+        ))
         activity?.finish()
     }
 
@@ -120,11 +131,6 @@ class EditBoxFragment : Fragment() {
 
     private fun getUpdatedBox(): ParcelableAvisioBox {
         val updatedName = nameInput.text.toString()
-        return ParcelableAvisioBox(parcelableBox.boxId, updatedName, parcelableBox.boxIconId)
+        return ParcelableAvisioBox(parcelableBox.boxId, updatedName, updatedIcon.iconId)
     }
-
-    private fun boxChanged(updatedBox: ParcelableAvisioBox): Boolean {
-        return parcelableBox.boxName != updatedBox.boxName
-    }
-
 }
