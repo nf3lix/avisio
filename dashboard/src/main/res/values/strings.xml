@@ -20,6 +20,7 @@
     <string name="create_box_app_bar_title">New box</string>
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Please specify a name</string>
+    <string name="create_box_icon_image_content_description">box icon</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Cancel</string>
