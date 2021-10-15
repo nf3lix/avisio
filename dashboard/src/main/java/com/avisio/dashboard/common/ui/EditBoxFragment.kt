@@ -66,6 +66,7 @@ class EditBoxFragment : Fragment() {
         view?.findViewById<Button>(R.id.select_icon_button)?.setOnClickListener {
             showSelectIconPopup()
         }
+        iconImageView.setOnClickListener { showSelectIconPopup() }
     }
 
     private fun showSelectIconPopup() {
