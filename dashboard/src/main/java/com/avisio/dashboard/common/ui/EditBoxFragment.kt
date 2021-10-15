@@ -1,13 +1,16 @@
 package com.avisio.dashboard.common.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
@@ -16,6 +19,7 @@ import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.reflect.Method
 import java.util.*
 
 class EditBoxFragment : Fragment() {
@@ -48,6 +52,7 @@ class EditBoxFragment : Fragment() {
         super.onStart()
         nameInput = view?.findViewById(R.id.box_name_input)!!
         setupFab()
+        setupSelectIconButton()
         fillBoxInformation()
     }
 
@@ -62,7 +67,8 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun showSelectIconPopup() {
-        // TODO: select icon
+        val popup = BoxIconSelectionPopup.createPopup(this, nameInput)
+        popup.show()
     }
 
     private fun setupFab() {
