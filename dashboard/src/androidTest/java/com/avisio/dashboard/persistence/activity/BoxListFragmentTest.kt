@@ -18,7 +18,6 @@ import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*

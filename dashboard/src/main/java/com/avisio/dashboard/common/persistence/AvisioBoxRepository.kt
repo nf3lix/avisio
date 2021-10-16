@@ -37,7 +37,7 @@ class AvisioBoxRepository(application: Application) {
 
     fun updateBox(box: ParcelableAvisioBox) {
         GlobalScope.launch {
-            dao.updateBox(box.boxId, box.boxName)
+            dao.updateBox(box.boxId, box.boxName, box.boxIconId)
         }
     }
 

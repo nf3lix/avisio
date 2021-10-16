@@ -5,17 +5,20 @@ import android.os.Parcelable
 
 data class ParcelableAvisioBox(
     val boxId: Long = 0,
-    val boxName: String = ""
+    val boxName: String = "",
+    val boxIconId: Int
 ): Parcelable {
 
     constructor(parcel: Parcel): this(
         parcel.readLong(),
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.readInt()
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeLong(boxId)
         writeString(boxName)
+        writeInt(boxIconId)
     }
 
     override fun describeContents(): Int {
@@ -24,7 +27,7 @@ data class ParcelableAvisioBox(
 
     companion object CREATOR : Parcelable.Creator<ParcelableAvisioBox> {
         fun createFromEntity(avisioBox: AvisioBox): ParcelableAvisioBox {
-            return ParcelableAvisioBox(avisioBox.id, avisioBox.name)
+            return ParcelableAvisioBox(avisioBox.id, avisioBox.name, avisioBox.icon.iconId)
         }
 
         override fun createFromParcel(parcel: Parcel): ParcelableAvisioBox {
