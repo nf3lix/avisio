@@ -3,7 +3,6 @@ package com.avisio.dashboard.common.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,6 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
-    private var updatedIcon = BoxIcon.DEFAULT
     private lateinit var nameInput: EditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxDao: AvisioBoxRepository
@@ -58,8 +56,12 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun fillBoxInformation() {
-        nameInput.setText(parcelableBox.boxName)
-        iconImageView.setImageResource(parcelableBox.boxIconId)
+        if(fragmentMode == EditBoxFragmentMode.EDIT_BOX) {
+            nameInput.setText(parcelableBox.boxName)
+            updateBoxIcon(parcelableBox.boxIconId)
+            return
+        }
+        updateBoxIcon(BoxIcon.DEFAULT.iconId)
     }
 
     private fun setupSelectIconButton() {
@@ -72,8 +74,7 @@ class EditBoxFragment : Fragment() {
     private fun showSelectIconPopup() {
         val popup = BoxIconSelectionPopup.createPopup(this, nameInput)
         popup.setOnMenuItemClickListener { menuItem ->
-            iconImageView.setImageResource(menuItem.itemId)
-            updatedIcon = BoxIcon.getBoxIcon(menuItem.itemId)
+            updateBoxIcon(menuItem.itemId)
             true
         }
         popup.show()
@@ -116,7 +117,7 @@ class EditBoxFragment : Fragment() {
         boxDao.insert(AvisioBox(
             name = nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
-            icon = updatedIcon
+            icon = BoxIcon.getBoxIcon(iconImageView.tag as Int)
         ))
         activity?.finish()
     }
@@ -130,8 +131,13 @@ class EditBoxFragment : Fragment() {
         activity?.finish()
     }
 
+    private fun updateBoxIcon(boxIconId: Int) {
+        iconImageView.setImageResource(boxIconId)
+        iconImageView.tag = boxIconId
+    }
+
     private fun getUpdatedBox(): ParcelableAvisioBox {
         val updatedName = nameInput.text.toString()
-        return ParcelableAvisioBox(parcelableBox.boxId, updatedName, updatedIcon.iconId)
+        return ParcelableAvisioBox(parcelableBox.boxId, updatedName, iconImageView.tag as Int)
     }
 }

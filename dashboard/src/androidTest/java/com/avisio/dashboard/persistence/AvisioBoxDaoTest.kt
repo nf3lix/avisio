@@ -11,6 +11,7 @@ import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
+import com.avisio.dashboard.common.ui.BoxIcon
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -41,7 +42,7 @@ class AvisioBoxDaoTest {
 
     @Test
     fun getBoxListTest() {
-        val box1 = AvisioBox(name = "BOX_NAME_1", createDate = Date(1600000000))
+        val box1 = AvisioBox(name = "BOX_NAME_1", createDate = Date(1600000000), icon = BoxIcon.DEFAULT)
         val box2 = AvisioBox(name = "BOX_NAME_2", createDate = Date(1600003000))
         boxDao.insertBox(box1)
         boxDao.insertBox(box2)
@@ -53,7 +54,7 @@ class AvisioBoxDaoTest {
 
     @Test
     fun insertBoxTest() {
-        val box = AvisioBox(name = "BOX_NAME", createDate = Date(1600000000))
+        val box = AvisioBox(name = "BOX_NAME", createDate = Date(1600000000), icon = BoxIcon.DEFAULT)
         boxDao.insertBox(box)
         val fetchedBox = boxDao.getBoxList().blockingObserve()
         assertEquals(fetchedBox?.size, 1)
@@ -82,11 +83,11 @@ class AvisioBoxDaoTest {
 
     @Test
     fun updateBoxTest() {
-        val box1 = AvisioBox(name = "BOX_NAME_1", createDate = Date(1600000000))
-        val box2 = AvisioBox(name = "BOX_NAME_2", createDate = Date(1600000000))
+        val box1 = AvisioBox(name = "BOX_NAME_1", createDate = Date(1600000000), icon = BoxIcon.DEFAULT)
+        val box2 = AvisioBox(name = "BOX_NAME_2", createDate = Date(1600000000), icon = BoxIcon.LANGUAGE)
         boxDao.insertBox(box1)
         val boxToUpdate = boxDao.getBoxList().blockingObserve()?.get(0)!!
-        boxDao.updateBox(boxToUpdate.id, box2.name)
+        boxDao.updateBox(boxToUpdate.id, box2.name, box2.icon.iconId)
         val updatedBox = boxDao.getBoxList().blockingObserve()?.get(0)!!
         assertEquals(box2.name, updatedBox.name)
     }
