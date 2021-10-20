@@ -1,5 +1,6 @@
 package com.avisio.dashboard.index_card
 
+import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardQuestion
 import com.avisio.dashboard.common.data.model.card.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.CardQuestionTokenType
@@ -20,6 +21,17 @@ class IndexCardQuestionTest {
         println(question.toString())
         println(txt.toString())
         val t = gson.fromJson(txt, CardQuestion::class.java)
+        println(t.toString())
+    }
+
+    @Test
+    fun serializeAnswer() {
+        val answers = CardAnswer(arrayListOf("Test1", "Test2", "Test3"))
+        val gson = Gson()
+        val txt = gson.toJson(answers)
+        println(answers.toString())
+        println(txt.toString())
+        val t = gson.fromJson(txt, CardAnswer::class.java)
         println(t.toString())
     }
 

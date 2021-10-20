@@ -2,6 +2,9 @@ package com.avisio.dashboard.common.data.database
 
 import android.content.Context
 import androidx.room.*
+import com.avisio.dashboard.common.data.database.converters.BoxIconConverter
+import com.avisio.dashboard.common.data.database.converters.CardQuestionConverter
+import com.avisio.dashboard.common.data.database.converters.DateTimeConverter
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
 
@@ -12,7 +15,11 @@ import com.avisio.dashboard.common.persistence.AvisioBoxDao
         AvisioBox::class
     ]
 )
-@TypeConverters(DateTimeConverter::class, BoxIconConverter::class)
+@TypeConverters(
+    DateTimeConverter::class,
+    BoxIconConverter::class,
+    CardQuestionConverter::class
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun boxDao(): AvisioBoxDao
@@ -32,6 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
                 .addTypeConverter(DateTimeConverter())
                 .addTypeConverter(BoxIconConverter())
+                .addTypeConverter(CardQuestionConverter())
                 .build()
 
     }

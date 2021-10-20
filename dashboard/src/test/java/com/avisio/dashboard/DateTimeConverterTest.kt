@@ -1,6 +1,6 @@
 package com.avisio.dashboard
 
-import com.avisio.dashboard.common.data.database.DateTimeConverter
+import com.avisio.dashboard.common.data.database.converters.DateTimeConverter
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.data.database
+package com.avisio.dashboard.common.data.database.converters
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
