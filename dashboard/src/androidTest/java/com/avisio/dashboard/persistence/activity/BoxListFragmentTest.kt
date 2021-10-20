@@ -14,7 +14,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.activity.box_list.AvisioBoxViewHolder
 import com.avisio.dashboard.activity.box_list.BoxListFragment
-import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After
 import org.junit.Before

@@ -3,8 +3,8 @@ package com.avisio.dashboard.common.persistence
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

@@ -13,8 +13,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
@@ -114,11 +114,13 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
-        boxDao.insert(AvisioBox(
+        boxDao.insert(
+            AvisioBox(
             name = nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
             icon = BoxIcon.getBoxIcon(iconImageView.tag as Int)
-        ))
+        )
+        )
         activity?.finish()
     }
 

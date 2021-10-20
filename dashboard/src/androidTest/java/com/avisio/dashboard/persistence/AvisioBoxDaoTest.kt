@@ -6,10 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.avisio.dashboard.activity.box_list.AvisioBoxListAdapter
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
 import com.avisio.dashboard.common.ui.BoxIcon
 import org.junit.Assert.assertEquals

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.data.model
+package com.avisio.dashboard.common.data.model.box
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

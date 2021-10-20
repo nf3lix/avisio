@@ -12,7 +12,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.BoxIcon
 import com.avisio.dashboard.common.ui.EditBoxFragment
 import com.avisio.dashboard.common.ui.EditBoxFragmentMode

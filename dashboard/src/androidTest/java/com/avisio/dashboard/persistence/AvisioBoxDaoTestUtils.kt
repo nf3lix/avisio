@@ -1,6 +1,6 @@
 package com.avisio.dashboard.persistence
 
-import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 class AvisioBoxDaoTestUtils {
 

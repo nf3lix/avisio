@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.data.database
 
 import android.content.Context
 import androidx.room.*
-import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
 
 @Database(

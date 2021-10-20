@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog
 
 class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
