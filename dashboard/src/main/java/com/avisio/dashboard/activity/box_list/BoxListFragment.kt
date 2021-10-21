@@ -1,5 +1,6 @@
 package com.avisio.dashboard.activity.box_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivityResultObserver
-import com.avisio.dashboard.activity.create_box.CreateBoxResultObserver
+import com.avisio.dashboard.activity.create_box.CreateBoxActivity
 import com.avisio.dashboard.common.data.model.AvisioBox
 import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
 import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
@@ -22,14 +23,11 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     private lateinit var boxViewModel: AvisioBoxViewModel
     private lateinit var boxAdapter: AvisioBoxListAdapter
 
-    private lateinit var createBoxObserver: CreateBoxResultObserver
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        createBoxObserver = CreateBoxResultObserver(this, requireActivity().activityResultRegistry)
         boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry)
-        lifecycle.addObserver(createBoxObserver)
         lifecycle.addObserver(boxActivityObserver)
     }
 
@@ -64,7 +62,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
 
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener { _ ->
-            createBoxObserver.createBox()
+            startActivity(Intent(context, CreateBoxActivity::class.java))
         }
     }
 

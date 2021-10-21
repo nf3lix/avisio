@@ -19,7 +19,7 @@ interface AvisioBoxDao {
     @Query("DELETE FROM box")
     fun deleteAll()
 
-    @Query("UPDATE box SET name = :name WHERE id = :boxId")
-    fun updateBox(boxId: Long, name: String)
+    @Query("UPDATE box SET name = :name, icon = :iconId WHERE id = :boxId")
+    fun updateBox(boxId: Long, name: String, iconId: Int)
 
 }
