@@ -3,6 +3,7 @@ package com.avisio.dashboard.activity.box_activity
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 
 class CardListAdapter(
@@ -17,6 +18,18 @@ class CardListAdapter(
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentCard = getItem(position)
         holder.bind(currentCard)
+    }
+
+    class CardDifference : DiffUtil.ItemCallback<Card>() {
+
+        override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
+            return false
+        }
+
+        override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
+            return false
+        }
+
     }
 
     interface CardListOnClickListener {

@@ -4,13 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog
 
-class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
+class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, CardListAdapter.CardListOnClickListener {
 
     companion object {
         const val PARCELABLE_BOX_KEY = "BOX_OBJECT"
@@ -24,12 +29,19 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
 
     }
 
+    private lateinit var cardViewModel: CardViewModel
+    private lateinit var cardListAdapter: CardListAdapter
     private lateinit var parcelableBox: ParcelableAvisioBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parcelableBox = intent.getParcelableExtra(PARCELABLE_BOX_KEY)!!
         supportActionBar?.title = parcelableBox.boxName
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,6 +84,29 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
         resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+
+    private fun setupView() {
+        setupRecyclerView()
+        setupCardViewModel()
+    }
+
+    private fun setupRecyclerView() {
+        val cardListRecyclerView = findViewById<RecyclerView>(R.id.card_list_recycler_view)
+        cardListAdapter = CardListAdapter(CardListAdapter.CardDifference(), this)
+        cardListRecyclerView?.adapter = cardListAdapter
+        cardListRecyclerView?.layoutManager = LinearLayoutManager(this.baseContext)
+    }
+
+    private fun setupCardViewModel() {
+        cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, parcelableBox)).get(CardViewModel::class.java)
+        cardViewModel.getCardList().observe(this) { cardList ->
+            cardListAdapter.submitList(cardList)
+        }
+    }
+
+    override fun onClick(index: Int) {
+        // TODO("Not yet implemented")
     }
 
 }
