@@ -1,9 +1,7 @@
-package com.avisio.dashboard.persistence
+package com.avisio.dashboard.persistence.dao
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.avisio.dashboard.common.data.database.AppDatabase
@@ -17,11 +15,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
-class AvisioBoxDaoTest {
+class AvisioBoxDaoTest : DaoTest() {
 
     @Rule
     @JvmField
@@ -46,8 +42,8 @@ class AvisioBoxDaoTest {
         boxDao.insertBox(box2)
         val fetchedBox = boxDao.getBoxList().blockingObserve()
         assertEquals(fetchedBox?.size, 2)
-        assertTrue(AvisioBoxDaoTestUtils.contentEquals(fetchedBox?.get(0)!!, box1))
-        assertTrue(AvisioBoxDaoTestUtils.contentEquals(fetchedBox[1], box2))
+        assertTrue(DaoTestUtils.boxesEquals(fetchedBox?.get(0)!!, box1))
+        assertTrue(DaoTestUtils.boxesEquals(fetchedBox[1], box2))
     }
 
     @Test
@@ -90,17 +86,6 @@ class AvisioBoxDaoTest {
         assertEquals(box2.name, updatedBox.name)
     }
 
-    // source: https://stackoverflow.com/questions/44270688/unit-testing-room-and-livedata
-    private fun <T> LiveData<T>.blockingObserve(): T? {
-        var value: T? = null
-        val latch = CountDownLatch(1)
-        val observer = Observer<T> { t ->
-            value = t
-            latch.countDown()
-        }
-        observeForever(observer)
-        latch.await(2, TimeUnit.SECONDS)
-        return value
-    }
+
 
 }

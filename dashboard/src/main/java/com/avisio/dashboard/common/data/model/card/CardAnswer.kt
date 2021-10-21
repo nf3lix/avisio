@@ -16,4 +16,19 @@ class CardAnswer(private val answerList: ArrayList<String>) {
         return sb.toString()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if(other !is CardAnswer) {
+            return false
+        }
+        if(answerList.size != other.answerList.size) {
+            return false
+        }
+        for((index, answer) in answerList.withIndex()) {
+            if(answer != other.answerList[index]) {
+                return false
+            }
+        }
+        return true
+    }
+
 }

@@ -16,4 +16,20 @@ class CardQuestion(private val tokenList: ArrayList<CardQuestionToken>) {
         return sb.toString()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if(other !is CardQuestion) {
+            return false
+        }
+        if(tokenList.size != other.tokenList.size) {
+            return false
+        }
+        for((index, token) in tokenList.withIndex()) {
+            if(token.content != other.tokenList[index].content) {
+                return false
+            }
+        }
+        return true
+    }
+
+
 }
