@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.data.model.card
 
 import java.lang.StringBuilder
 
-class CardQuestion(private val tokenList: ArrayList<CardQuestionToken>) {
+class CardQuestion(val tokenList: ArrayList<CardQuestionToken>) {
 
     fun addToken(token: CardQuestionToken) {
         tokenList.add(token)
@@ -29,6 +29,10 @@ class CardQuestion(private val tokenList: ArrayList<CardQuestionToken>) {
             }
         }
         return true
+    }
+
+    override fun hashCode(): Int {
+        return tokenList.hashCode()
     }
 
 

@@ -4,6 +4,7 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardQuestion
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.google.gson.Gson
 
 @ProvidedTypeConverter
@@ -31,6 +32,17 @@ class CardConverter {
     fun stringToAnswer(serializedObject: String): CardAnswer {
         val gson = Gson()
         return gson.fromJson(serializedObject, CardAnswer::class.java)
+    }
+
+
+    @TypeConverter
+    fun enumToInt(type: CardType): Int {
+        return type.ordinal
+    }
+
+    @TypeConverter
+    fun intToEnum(ordinal: Int): CardType {
+        return CardType.values()[ordinal]
     }
 
 }

@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +33,7 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_box)
         parcelableBox = intent.getParcelableExtra(PARCELABLE_BOX_KEY)!!
         supportActionBar?.title = parcelableBox.boxName
     }

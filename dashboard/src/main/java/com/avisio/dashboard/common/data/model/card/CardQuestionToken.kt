@@ -5,4 +5,5 @@ data class CardQuestionToken(
     val content: String,
     private val tokenType: CardQuestionTokenType) {
 
+
 }

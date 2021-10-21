@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
+import java.lang.StringBuilder
 
 class CardViewHolder(
     itemView: View, private val
@@ -25,8 +26,16 @@ class CardViewHolder(
     private val cardTextView: TextView = itemView.findViewById(R.id.card_text_view)
 
     fun bind(card: Card) {
-        cardTextView.text = card.question.toString()
+        cardTextView.text = getCardStringRepresentation(card)
         itemView.setOnClickListener(this)
+    }
+
+    private fun getCardStringRepresentation(card: Card): String {
+        val sb = StringBuilder()
+        for(token in card.question.tokenList) {
+            sb.append(token.content + " ")
+        }
+        return sb.toString()
     }
 
     override fun onClick(v: View?) {
