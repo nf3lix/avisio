@@ -23,6 +23,8 @@
     <string name="create_box_no_name_specified">Please specify a name</string>
     <string name="create_box_icon_image_content_description">box icon</string>
 
+    <string name="create_card_type_spinner_content_description">select card type</string>
+
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Cancel</string>
 
