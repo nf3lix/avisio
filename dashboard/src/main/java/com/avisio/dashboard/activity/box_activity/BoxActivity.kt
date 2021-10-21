@@ -13,6 +13,7 @@ import com.avisio.dashboard.activity.create_card.CreateCardActivity
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, CardListAdapter.CardListOnClickListener {
 
@@ -42,6 +43,7 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
     override fun onStart() {
         super.onStart()
         setupView()
+        setupFab()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -89,6 +91,12 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
     private fun setupView() {
         setupRecyclerView()
         setupCardViewModel()
+    }
+
+    private fun setupFab() {
+        findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
+            startActivity(Intent(this, CreateCardActivity::class.java))
+        }
     }
 
     private fun setupRecyclerView() {
