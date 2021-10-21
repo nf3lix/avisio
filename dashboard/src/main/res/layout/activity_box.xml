@@ -7,14 +7,24 @@
         android:layout_height="match_parent"
         tools:context=".activity.box_activity.BoxActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/card_list_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_new_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_add_entry"
+            app:srcCompat="@drawable/ic_add_entry"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="32dp" android:layout_marginRight="32dp" android:layout_marginBottom="32dp"/>
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp" android:layout_marginBottom="32dp"
+            android:contentDescription="@string/box_activity_fab_content_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

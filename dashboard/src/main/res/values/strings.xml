@@ -16,6 +16,7 @@
 
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
+    <string name="box_activity_fab_content_description">Add card to box</string>
 
     <string name="create_box_app_bar_title">New box</string>
     <string name="create_box_select_icon">Select icon</string>

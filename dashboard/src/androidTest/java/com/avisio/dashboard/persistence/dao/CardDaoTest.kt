@@ -73,8 +73,8 @@ class CardDaoTest : DaoTest() {
 
     @Test
     fun deleteAllTest() {
-        cardDao.insert(getDefaultCard(cardId = 0))
-        cardDao.insert(getDefaultCard(cardId = 1))
+        cardDao.insert(getDefaultCard())
+        cardDao.insert(getDefaultCard())
         val fetchedCardsPre = cardDao.getAll().blockingObserve()
         Assert.assertEquals(fetchedCardsPre?.size, 2)
         cardDao.deleteAll()
@@ -111,9 +111,8 @@ class CardDaoTest : DaoTest() {
         Assert.assertTrue(DaoTestUtils.cardsEquals(card2, updatedBox))
     }
 
-    private fun getDefaultCard(cardId: Long = 1): Card {
+    private fun getDefaultCard(): Card {
         return Card(
-            id = cardId,
             boxId = 2,
             createDate = Date(1600003000),
             type = CardType.CLOZE_TEXT,
