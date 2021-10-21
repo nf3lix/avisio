@@ -22,7 +22,7 @@ class CardRepository(application: Application) {
         return cardList
     }
 
-    fun getCardsByBox(boxId: Int): LiveData<List<Card>> {
+    fun getCardsByBox(boxId: Long): LiveData<List<Card>> {
         return dao.getCardsByBox(boxId)
     }
 

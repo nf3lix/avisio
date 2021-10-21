@@ -11,7 +11,7 @@ interface CardDao {
     fun getAll(): LiveData<List<Card>>
 
     @Query("SELECT * FROM card WHERE boxId = :boxId")
-    fun getCardsByBox(boxId: Int): LiveData<List<Card>>
+    fun getCardsByBox(boxId: Long): LiveData<List<Card>>
 
     @Insert
     fun insert(card: Card)
