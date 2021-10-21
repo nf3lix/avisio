@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui
+package com.avisio.dashboard.common.ui.edit_box
 
 import android.os.Build
 import android.view.View

@@ -11,13 +11,13 @@ import com.google.gson.Gson
 class CardConverter {
 
     @TypeConverter
-    fun cardToString(question: CardQuestion): String {
+    fun questionToString(question: CardQuestion): String {
         val gson = Gson()
         return gson.toJson(question).toString()
     }
 
     @TypeConverter
-    fun stringToCard(serializedObject: String): CardQuestion {
+    fun stringToQuestion(serializedObject: String): CardQuestion {
         val gson = Gson()
         return gson.fromJson(serializedObject, CardQuestion::class.java)
     }

@@ -3,7 +3,7 @@ package com.avisio.dashboard.common.data.model.box
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.avisio.dashboard.common.ui.BoxIcon
+import com.avisio.dashboard.common.ui.edit_box.BoxIcon
 import java.util.*
 
 @Entity(tableName = "box")
