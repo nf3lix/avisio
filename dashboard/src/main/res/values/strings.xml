@@ -25,6 +25,7 @@
 
     <string name="create_card_type_spinner_content_description">select card type</string>
     <string name="create_card_question_text_field_hint">Question</string>
+    <string name="create_card_answer_text_field_hint">Answer</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>

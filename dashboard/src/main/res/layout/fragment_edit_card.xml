@@ -43,5 +43,24 @@
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer_text_input_layout"
+            android:layout_width="280dp"
+            android:layout_height="62dp"
+            android:hint="@string/create_card_answer_text_field_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/question_text_input_layout"
+            app:layout_constraintVertical_bias="0.173">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/card_answer_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
