@@ -15,28 +15,32 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/box_name_input"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="112dp"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintBottom_toTopOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.241" />
+            android:id="@+id/box_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/secondaryLightColor"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.241" />
 
         <Button
-                android:text="@string/create_box_select_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/select_icon_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="364dp" />
+            android:id="@+id/select_icon_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="364dp"
+            android:text="@string/create_box_select_icon"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.avisio.SmallComponent" />
 
         <ImageView
                 android:layout_width="80dp"
