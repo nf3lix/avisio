@@ -10,9 +10,9 @@ import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode
 
 class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
 
@@ -21,9 +21,11 @@ class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
     }
 
     private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
+    private lateinit var cardRepository: CardRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        cardRepository = CardRepository(requireActivity().application)
         arguments?.let {
             fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
         }

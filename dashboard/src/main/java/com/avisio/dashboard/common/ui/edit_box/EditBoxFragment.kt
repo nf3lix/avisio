@@ -31,11 +31,11 @@ class EditBoxFragment : Fragment() {
 
     private lateinit var nameInput: EditText
     private lateinit var iconImageView: ImageView
-    private lateinit var boxDao: AvisioBoxRepository
+    private lateinit var boxRepository: AvisioBoxRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        boxDao = AvisioBoxRepository(requireActivity().application)
+        boxRepository = AvisioBoxRepository(requireActivity().application)
         arguments?.let {
             parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
             fragmentMode = EditBoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
@@ -114,7 +114,7 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun createNewBox() {
-        boxDao.insert(
+        boxRepository.insert(
             AvisioBox(
             name = nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
@@ -126,7 +126,7 @@ class EditBoxFragment : Fragment() {
 
     private fun updateBox() {
         val updatedBox = getUpdatedBox()
-        boxDao.updateBox(getUpdatedBox())
+        boxRepository.updateBox(getUpdatedBox())
         val intent = Intent(context, BoxActivity::class.java)
         intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, updatedBox)
         activity?.startActivity(intent)
