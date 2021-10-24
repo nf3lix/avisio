@@ -19,11 +19,13 @@
     <string name="box_activity_fab_content_description">Add card to box</string>
 
     <string name="create_box_app_bar_title">New box</string>
+    <string name="create_box_fab_content_description">save box</string>
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Please specify a name</string>
     <string name="create_box_icon_image_content_description">box icon</string>
 
     <string name="create_card_type_spinner_content_description">select card type</string>
+    <string name="create_card_fab_content_description">save card</string>
     <string name="create_card_question_text_field_hint">Question</string>
     <string name="create_card_answer_text_field_hint">Answer</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
