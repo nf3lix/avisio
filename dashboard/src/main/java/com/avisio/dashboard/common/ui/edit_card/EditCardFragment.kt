@@ -11,8 +11,23 @@ import androidx.activity.OnBackPressedCallback
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
+import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode
 
 class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
+
+    companion object {
+        const val FRAGMENT_MODE_KEY: String = "EDIT_CARD_FRAGMENT_MODE"
+    }
+
+    private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
+        }
+    }
 
     override fun onStart() {
         super.onStart()
