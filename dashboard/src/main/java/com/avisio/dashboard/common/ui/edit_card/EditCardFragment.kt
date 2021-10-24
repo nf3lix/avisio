@@ -14,7 +14,7 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 
-class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
+class EditCardFragment : Fragment() {
 
     companion object {
         const val FRAGMENT_MODE_KEY: String = "EDIT_CARD_FRAGMENT_MODE"
@@ -35,6 +35,10 @@ class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
         }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_edit_card, container, false)
+    }
+
     override fun onStart() {
         super.onStart()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
@@ -51,21 +55,15 @@ class EditCardFragment : Fragment(), ConfirmDialog.ConfirmDialogListener {
     }
 
     fun onBackPressed() {
-        val dialog = ConfirmDialog<Boolean>(
+        val confirmDialog = ConfirmDialog(
             requireContext(),
-            this,
             getString(R.string.create_card_cancel_dialog_title),
-            getString(R.string.create_card_cancel_dialog_question)
+            getString(R.string.create_card_cancel_dialog_message)
         )
-        dialog.showDialog(true)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_edit_card, container, false)
-    }
-
-    override fun onConfirm(data: Any) {
-        activity?.finish()
+        confirmDialog.setOnConfirmListener {
+            activity?.finish()
+        }
+        confirmDialog.showDialog()
     }
 
 

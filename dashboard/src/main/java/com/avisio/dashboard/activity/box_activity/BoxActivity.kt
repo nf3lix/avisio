@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,7 @@ import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, CardListAdapter.CardListOnClickListener {
+class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener {
 
     companion object {
         const val PARCELABLE_BOX_KEY = "BOX_OBJECT"
@@ -75,19 +74,18 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
     }
 
     private fun confirmDeletion() {
-        ConfirmDialog<ParcelableAvisioBox>(
-            this,
+        val confirmDialog = ConfirmDialog(
             this,
             baseContext.getString(R.string.delete_box_confirm_dialog_title),
-            baseContext.getString(R.string.delete_box_confirm_dialog_message))
-        .showDialog(parcelableBox)
-    }
-
-    override fun onConfirm(data: Any) {
-        val resultIntent = Intent()
-        resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
-        setResult(RESULT_OK, resultIntent)
-        finish()
+            baseContext.getString(R.string.delete_box_confirm_dialog_message)
+        )
+        confirmDialog.setOnConfirmListener {
+            val resultIntent = Intent()
+            resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
+        confirmDialog.showDialog()
     }
 
     private fun setupView() {
