@@ -1,66 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".common.ui.edit_card.EditCardFragment">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.edit_box.EditBoxActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/app_bar_default"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+    <include layout="@layout/app_bar_default"/>
 
-    <Spinner
-        android:id="@+id/card_type_spinner"
-        android:layout_width="277dp"
-        android:layout_height="61dp"
-        android:contentDescription="@string/create_card_type_spinner_content_description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/question_text_input_layout"
-        android:layout_width="280dp"
-        android:layout_height="62dp"
-        android:hint="@string/create_card_question_text_field_hint"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/card_type_spinner"
-        app:layout_constraintVertical_bias="0.149">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/card_question_input"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/answer_text_input_layout"
-            android:layout_width="280dp"
-            android:layout_height="62dp"
-            android:hint="@string/create_card_answer_text_field_hint"
-            app:layout_constraintBottom_toBottomOf="@+id/include"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/question_text_input_layout"
-            app:layout_constraintVertical_bias="0.173">
+        <Spinner
+                android:id="@+id/card_type_spinner"
+                android:layout_width="277dp"
+                android:layout_height="61dp"
+                android:contentDescription="@string/create_card_type_spinner_content_description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.485"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.217" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/card_answer_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/question_text_input_layout"
+                android:layout_width="280dp"
+                android:layout_height="62dp"
+                android:hint="@string/create_card_question_text_field_hint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/card_type_spinner"
+                app:layout_constraintVertical_bias="0.149">
 
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/card_question_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/answer_text_input_layout"
+                android:layout_width="280dp"
+                android:layout_height="62dp"
+                android:hint="@string/create_card_answer_text_field_hint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/question_text_input_layout"
+                app:layout_constraintVertical_bias="0.173">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/card_answer_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
