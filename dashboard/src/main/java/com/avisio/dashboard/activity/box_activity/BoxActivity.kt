@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.avisio.dashboard.activity.create_card.CreateCardActivity
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, CardListAdapter.CardListOnClickListener {
@@ -95,7 +97,7 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
-            startActivity(Intent(this, CreateCardActivity::class.java))
+            startCreateCardActivity()
         }
     }
 
@@ -114,7 +116,13 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener, Ca
     }
 
     override fun onClick(index: Int) {
-        startActivity(Intent(this, CreateCardActivity::class.java))
+        startCreateCardActivity()
+    }
+
+    private fun startCreateCardActivity() {
+        val intent = Intent(this, CreateCardActivity::class.java)
+        intent.putExtra(EditCardFragment.BOX_OBJECT_KEY, parcelableBox)
+        startActivity(intent)
     }
 
 }
