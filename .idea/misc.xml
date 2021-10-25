@@ -4,14 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/font/roboto.xml" value="0.39076923076923076" />
-        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_box.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_create_box.xml" value="0.1" />
-        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_edit_box.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_box.xml" value="0.25" />
+        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_create_box.xml" value="0.25" />
+        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_edit_box.xml" value="0.21" />
         <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/activity_main.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/app_bar_default.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/box_list_fragment.xml" value="0.20364583333333333" />
         <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/box_list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/content_main.xml" value="0.17407407407407408" />
-        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/fragment_edit_box.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/Studium/StudioProjects/avisio/dashboard/src/main/res/layout/fragment_edit_box.xml" value="0.16" />
       </map>
     </option>
   </component>
