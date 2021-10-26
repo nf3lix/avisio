@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.activity.create_card.CreateCardActivity
+import com.avisio.dashboard.activity.crud_card.create_card.CreateCardActivity
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog

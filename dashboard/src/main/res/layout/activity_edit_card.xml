@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.crud_card.create_card.CreateCardActivity">
+    tools:context=".activity.crud_card.edit_card.EditCardActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/create_card_fragment_container_view"
+        android:id="@+id/edit_card_fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
