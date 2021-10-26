@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.crud_card.create_card.CreateCardActivity
+import com.avisio.dashboard.activity.crud_card.edit_card.EditCardActivity
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
+import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener {
@@ -95,7 +97,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
-            startCreateCardActivity()
+            startEditCardActivity(EditCardFragmentMode.CREATE_CARD)
         }
     }
 
@@ -114,11 +116,14 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     override fun onClick(index: Int) {
-        startCreateCardActivity()
+        startEditCardActivity(EditCardFragmentMode.EDIT_CARD)
     }
 
-    private fun startCreateCardActivity() {
-        val intent = Intent(this, CreateCardActivity::class.java)
+    private fun startEditCardActivity(fragmentMode: EditCardFragmentMode) {
+        val intent = when(fragmentMode) {
+            EditCardFragmentMode.CREATE_CARD -> Intent(this, CreateCardActivity::class.java)
+            EditCardFragmentMode.EDIT_CARD ->  Intent(this, EditCardActivity::class.java)
+        }
         intent.putExtra(EditCardFragment.BOX_OBJECT_KEY, parcelableBox)
         startActivity(intent)
     }

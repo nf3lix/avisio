@@ -24,7 +24,7 @@ class EditCardActivity : AppCompatActivity() {
 
     private fun initFragment() {
         val bundle = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD,
+            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
             EditCardFragment.BOX_OBJECT_KEY to parcelableBox)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.edit_card_fragment_container_view, EditCardFragment::class.java, bundle)
