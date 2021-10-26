@@ -25,6 +25,9 @@ class EditCardFragment : Fragment() {
         const val BOX_OBJECT_KEY: String = "EDIT_CARD_BOX_OBJECT"
     }
 
+    private lateinit var questionInput: AppCompatEditText
+    private lateinit var answerInput: AppCompatEditText
+
     private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
     private lateinit var parcelableBox: ParcelableAvisioBox
 
@@ -46,6 +49,8 @@ class EditCardFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFab()
+        questionInput = requireView().findViewById(R.id.card_question_input)!!
+        answerInput = requireView().findViewById(R.id.card_answer_input)
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         setOnBackPressedDispatcher()
@@ -78,8 +83,8 @@ class EditCardFragment : Fragment() {
     }
 
     private fun handleFabClicked() {
-        val question = view?.findViewById<AppCompatEditText>(R.id.card_question_input)?.text
-        val answer = view?.findViewById<AppCompatEditText>(R.id.card_answer_input)?.text
+        val question = questionInput.text
+        val answer = answerInput.text
         when(TextUtils.isEmpty(question) || TextUtils.isEmpty(answer)) {
             true -> {
                 handleInvalidInput()
@@ -106,9 +111,9 @@ class EditCardFragment : Fragment() {
 
     private fun saveNewCard() {
         // TODO: generic approach
-        val questionToken = CardQuestionToken(view?.findViewById<AppCompatEditText>(R.id.card_question_input)?.text.toString(), CardQuestionTokenType.TEXT)
+        val questionToken = CardQuestionToken(questionInput.text.toString(), CardQuestionTokenType.TEXT)
         val question = CardQuestion(arrayListOf(questionToken))
-        val answer = CardAnswer(arrayListOf(view?.findViewById<AppCompatEditText>(R.id.card_answer_input)?.text.toString()))
+        val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
         val card = Card(
             boxId = parcelableBox.boxId,
             createDate = Date(System.currentTimeMillis()),
