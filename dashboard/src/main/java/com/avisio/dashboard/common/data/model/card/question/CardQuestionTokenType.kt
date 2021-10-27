@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.data.model.card
+package com.avisio.dashboard.common.data.model.card.question
 
 enum class CardQuestionTokenType {
 

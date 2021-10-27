@@ -1,11 +1,17 @@
-package com.avisio.dashboard.common.data.model.card
-
-import java.lang.StringBuilder
+package com.avisio.dashboard.common.data.model.card.question
 
 class CardQuestion(val tokenList: ArrayList<CardQuestionToken>) {
 
     fun addToken(token: CardQuestionToken) {
         tokenList.add(token)
+    }
+
+    fun getStringRepresentation(): String {
+        val representation = StringBuilder()
+        for(token in tokenList) {
+            representation.append(token.content + " ")
+        }
+        return representation.toString().trim()
     }
 
     override fun toString(): String {

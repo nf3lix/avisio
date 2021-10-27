@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -128,8 +131,8 @@ class EditCardFragment : Fragment() {
     }
 
     private fun fillCardInformation() {
-        questionInput.setText(card.question.toString())
-        answerInput.setText(card.answer.toString())
+        questionInput.setText(card.question.getStringRepresentation())
+        answerInput.setText(card.answer.getStringRepresentation())
     }
 
     private fun Bundle.getCardObject(): Card? {

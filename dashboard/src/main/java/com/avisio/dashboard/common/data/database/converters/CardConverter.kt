@@ -3,7 +3,7 @@ package com.avisio.dashboard.common.data.database.converters
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.avisio.dashboard.common.data.model.card.CardAnswer
-import com.avisio.dashboard.common.data.model.card.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.google.gson.Gson
 

@@ -1,8 +1,8 @@
 package com.avisio.dashboard.index_card
 
-import com.avisio.dashboard.common.data.model.card.CardQuestion
-import com.avisio.dashboard.common.data.model.card.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import org.junit.Assert
 import org.junit.Test
 

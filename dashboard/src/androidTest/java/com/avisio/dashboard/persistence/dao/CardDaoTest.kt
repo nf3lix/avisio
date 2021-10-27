@@ -6,6 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.card.*
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.persistence.CardDao
 import org.junit.Assert
 import org.junit.Before

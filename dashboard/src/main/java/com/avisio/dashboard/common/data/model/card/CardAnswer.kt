@@ -8,6 +8,14 @@ class CardAnswer(private val answerList: ArrayList<String>) {
         answerList.add(answer)
     }
 
+    fun getStringRepresentation(): String {
+        val representation = StringBuilder()
+        for(answer in answerList) {
+            representation.append("$answer ")
+        }
+        return representation.toString().trim()
+    }
+
     override fun toString(): String {
         val sb = StringBuilder()
         for(token in answerList) {
@@ -29,6 +37,10 @@ class CardAnswer(private val answerList: ArrayList<String>) {
             }
         }
         return true
+    }
+
+    override fun hashCode(): Int {
+        return answerList.hashCode()
     }
 
 }

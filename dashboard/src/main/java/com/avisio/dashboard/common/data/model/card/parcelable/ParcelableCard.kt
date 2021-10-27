@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.avisio.dashboard.common.data.database.converters.CardConverter
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
-import com.avisio.dashboard.common.data.model.card.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.CardType
 import java.util.*
 
