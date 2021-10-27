@@ -73,8 +73,15 @@ data class ParcelableCard(
             return ParcelableCard(card.id, card.boxId, card.createDate, card.type, card.question, card.answer)
         }
 
-        fun createBlank(): ParcelableCard {
-            return ParcelableCard()
+        fun createEntity(card: ParcelableCard): Card {
+            return Card(
+                card.id,
+                card.boxId,
+                card.createDate,
+                card.type,
+                card.question,
+                card.answer
+            )
         }
 
         override fun createFromParcel(parcel: Parcel): ParcelableCard {

@@ -29,7 +29,7 @@ class EditCardFragment : Fragment() {
     private lateinit var answerInput: AppCompatEditText
 
     private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
-    private lateinit var parcelableCard: ParcelableCard
+    private lateinit var card: Card
 
     private lateinit var cardRepository: CardRepository
 
@@ -38,7 +38,7 @@ class EditCardFragment : Fragment() {
         cardRepository = CardRepository(requireActivity().application)
         arguments?.let {
             fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
-            parcelableCard = it.getParcelable(CARD_OBJECT_KEY)!!
+            card = it.getCardObject()!!
         }
     }
 
@@ -54,6 +54,9 @@ class EditCardFragment : Fragment() {
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         setOnBackPressedDispatcher()
+        if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
+            fillCardInformation()
+        }
     }
 
     private fun setOnBackPressedDispatcher() {
@@ -115,7 +118,7 @@ class EditCardFragment : Fragment() {
         val question = CardQuestion(arrayListOf(questionToken))
         val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
         val card = Card(
-            boxId = parcelableCard.boxId,
+            boxId = card.boxId,
             createDate = Date(System.currentTimeMillis()),
             type = CardType.STANDARD,
             question = question,
@@ -124,5 +127,15 @@ class EditCardFragment : Fragment() {
         cardRepository.insertCard(card)
     }
 
+    private fun fillCardInformation() {
+        questionInput.setText(card.question.toString())
+        answerInput.setText(card.answer.toString())
+    }
+
+    private fun Bundle.getCardObject(): Card? {
+        val parcelableCard = getParcelable<ParcelableCard>(CARD_OBJECT_KEY)
+            ?: return null
+        return ParcelableCard.createEntity(parcelableCard)
+    }
 
 }
