@@ -13,6 +13,8 @@ import com.avisio.dashboard.activity.crud_card.create_card.CreateCardActivity
 import com.avisio.dashboard.activity.crud_card.edit_card.EditCardActivity
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
@@ -97,7 +99,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
-            startEditCardActivity(EditCardFragmentMode.CREATE_CARD)
+            startEditCardActivity(EditCardFragmentMode.CREATE_CARD, Card(boxId = parcelableBox.boxId))
         }
     }
 
@@ -116,15 +118,16 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     override fun onClick(index: Int) {
-        startEditCardActivity(EditCardFragmentMode.EDIT_CARD)
+        startEditCardActivity(EditCardFragmentMode.EDIT_CARD, cardListAdapter.currentList[index])
     }
 
-    private fun startEditCardActivity(fragmentMode: EditCardFragmentMode) {
+    private fun startEditCardActivity(fragmentMode: EditCardFragmentMode, card: Card) {
         val intent = when(fragmentMode) {
             EditCardFragmentMode.CREATE_CARD -> Intent(this, CreateCardActivity::class.java)
             EditCardFragmentMode.EDIT_CARD ->  Intent(this, EditCardActivity::class.java)
         }
         intent.putExtra(EditCardFragment.BOX_OBJECT_KEY, parcelableBox)
+        intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(card))
         startActivity(intent)
     }
 
