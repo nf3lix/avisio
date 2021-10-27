@@ -3,9 +3,12 @@ package com.avisio.dashboard.activity.box_list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.ui.BoxIcon
 
 class AvisioBoxViewHolder(
     itemView: View,
@@ -22,10 +25,13 @@ class AvisioBoxViewHolder(
     }
 
     private val boxTextView: TextView = itemView.findViewById(R.id.box_text_view)
+    private val boxImageView: ImageView = itemView.findViewById(R.id.box_image_View)
 
-    fun bind(boxTitle: String) {
-        boxTextView.text = boxTitle
+    fun bind(box: AvisioBox) {
+        boxTextView.text = box.name
+        boxImageView.setImageResource(box.icon.iconId)
         itemView.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View?) {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.edit_box.EditBoxActivity
@@ -47,6 +48,12 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
                 confirmDeletion()
                 true
             }
+            R.id.menu_information_box -> {
+                //information()
+                Toast.makeText(applicationContext, "click", Toast.LENGTH_SHORT).show()
+                setContentView(R.layout.box_detail_view)
+                true
+            }
             else -> false
         }
     }
@@ -73,5 +80,10 @@ class BoxActivity : AppCompatActivity(), ConfirmDialog.ConfirmDialogListener {
         setResult(RESULT_OK, resultIntent)
         finish()
     }
+
+    /*override fun information(){
+        //layoutInflater.inflate(R.layout.box_detail_view, parent)
+        setContentView(R.layout.box_detail_view)
+    }*/
 
 }

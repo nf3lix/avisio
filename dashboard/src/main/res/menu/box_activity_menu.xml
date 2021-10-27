@@ -12,4 +12,10 @@
           android:title="@string/box_activity_menu_delete"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_information_box"
+        android:title="@string/box_information"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_information"/>
 </menu>

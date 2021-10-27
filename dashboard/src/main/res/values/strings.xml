@@ -30,5 +30,13 @@
     <string name="delete_box_error_occurred">Error: Box could not be deleted</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="envelope">envelope</string>
+    <string name="box_title">box_title</string>
+    <string name="box_name">Box_name</string>
+    <string name="erstelldatum">Erstelldatum</string>
+    <string name="box_datum">Box_datum</string>
+    <string name="karteikarten">Karteikarten</string>
+    <string name="anzahl_karteikarten">anzahl_karteikarten</string>
+    <string name="box_information">Box Information</string>
 
 </resources>
