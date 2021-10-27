@@ -38,4 +38,10 @@ class CardRepository(application: Application) {
         }
     }
 
+    fun updateCard(card: Card) {
+        GlobalScope.launch {
+            dao.updateCard(card)
+        }
+    }
+
 }

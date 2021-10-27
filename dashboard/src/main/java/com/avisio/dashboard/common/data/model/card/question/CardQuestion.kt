@@ -2,6 +2,12 @@ package com.avisio.dashboard.common.data.model.card.question
 
 class CardQuestion(val tokenList: ArrayList<CardQuestionToken>) {
 
+    companion object {
+        fun getFromStringRepresentation(representation: String): CardQuestion {
+            return CardQuestion(arrayListOf(CardQuestionToken(representation, CardQuestionTokenType.TEXT)))
+        }
+    }
+
     fun addToken(token: CardQuestionToken) {
         tokenList.add(token)
     }

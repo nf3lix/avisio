@@ -2,11 +2,13 @@ package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
@@ -111,8 +113,26 @@ class EditCardFragment : Fragment() {
                 requireActivity().finish()
             }
             EditCardFragmentMode.EDIT_CARD -> {
+                updateCard()
             }
         }
+    }
+
+    private fun updateCard() {
+        val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
+        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
+        if(card.question != updatedQuestion || card.answer != updatedAnswer) {
+            val updatedCard = Card(
+                card.id,
+                card.boxId,
+                card.createDate,
+                card.type,
+                updatedQuestion,
+                updatedAnswer
+            )
+            cardRepository.updateCard(updatedCard)
+        }
+        activity?.finish()
     }
 
     private fun saveNewCard() {

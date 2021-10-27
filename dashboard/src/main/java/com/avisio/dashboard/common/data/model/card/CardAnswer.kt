@@ -4,6 +4,12 @@ import java.lang.StringBuilder
 
 class CardAnswer(private val answerList: ArrayList<String>) {
 
+    companion object {
+        fun getFromStringRepresentation(representation: String): CardAnswer {
+            return CardAnswer(arrayListOf(representation))
+        }
+    }
+
     fun addToken(answer: String) {
         answerList.add(answer)
     }
