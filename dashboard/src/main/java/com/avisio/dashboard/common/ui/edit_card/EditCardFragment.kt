@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
@@ -23,7 +22,6 @@ class EditCardFragment : Fragment() {
 
     companion object {
         const val FRAGMENT_MODE_KEY: String = "EDIT_CARD_FRAGMENT_MODE"
-        const val BOX_OBJECT_KEY: String = "EDIT_CARD_BOX_OBJECT"
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
@@ -31,7 +29,6 @@ class EditCardFragment : Fragment() {
     private lateinit var answerInput: AppCompatEditText
 
     private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
-    private lateinit var parcelableBox: ParcelableAvisioBox
     private lateinit var parcelableCard: ParcelableCard
 
     private lateinit var cardRepository: CardRepository
@@ -41,7 +38,6 @@ class EditCardFragment : Fragment() {
         cardRepository = CardRepository(requireActivity().application)
         arguments?.let {
             fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
-            parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
             parcelableCard = it.getParcelable(CARD_OBJECT_KEY)!!
         }
     }
@@ -119,7 +115,7 @@ class EditCardFragment : Fragment() {
         val question = CardQuestion(arrayListOf(questionToken))
         val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
         val card = Card(
-            boxId = parcelableBox.boxId,
+            boxId = parcelableCard.boxId,
             createDate = Date(System.currentTimeMillis()),
             type = CardType.STANDARD,
             question = question,

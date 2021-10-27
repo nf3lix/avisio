@@ -126,7 +126,6 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
             EditCardFragmentMode.CREATE_CARD -> Intent(this, CreateCardActivity::class.java)
             EditCardFragmentMode.EDIT_CARD ->  Intent(this, EditCardActivity::class.java)
         }
-        intent.putExtra(EditCardFragment.BOX_OBJECT_KEY, parcelableBox)
         intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(card))
         startActivity(intent)
     }
