@@ -129,6 +129,7 @@ class EditCardFragment : Fragment() {
     }
 
     private fun handleInvalidInput() {
+        Toast.makeText(requireContext(), R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
     }
 
     private fun handleValidInput() {
