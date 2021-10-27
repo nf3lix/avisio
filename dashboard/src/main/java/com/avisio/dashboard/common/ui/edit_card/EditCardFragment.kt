@@ -2,7 +2,6 @@ package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -97,7 +96,28 @@ class EditCardFragment : Fragment() {
         })
     }
 
-    fun onBackPressed() {
+    private fun onBackPressed() {
+        when(fragmentMode) {
+            EditCardFragmentMode.CREATE_CARD -> {
+                if(!TextUtils.isEmpty(questionInput.text) || !TextUtils.isEmpty(answerInput.text)) {
+                    showOnBackPressedWarning()
+                    return
+                }
+                requireActivity().finish()
+            }
+            EditCardFragmentMode.EDIT_CARD -> {
+                val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
+                val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
+                if(card.question != updatedQuestion || card.answer != updatedAnswer) {
+                    showOnBackPressedWarning()
+                    return
+                }
+                requireActivity().finish()
+            }
+        }
+    }
+
+    private fun showOnBackPressedWarning() {
         val confirmDialog = ConfirmDialog(
             requireContext(),
             getString(R.string.create_card_cancel_dialog_title),
