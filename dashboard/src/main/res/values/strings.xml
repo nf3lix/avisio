@@ -33,6 +33,8 @@
     <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
     <string name="edit_card_delete">Karte löschen</string>
     <string name="edit_card_action_bar_title">Karte bearbeiten</string>
+    <string name="edit_card_delete_card_dialog_title">Karte löschen</string>
+    <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Cancel</string>

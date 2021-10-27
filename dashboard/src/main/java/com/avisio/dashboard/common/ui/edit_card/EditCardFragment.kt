@@ -67,6 +67,28 @@ class EditCardFragment : Fragment() {
         requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_delete_card -> {
+                showDeleteDialog()
+            }
+        }
+        return true
+    }
+
+    private fun showDeleteDialog() {
+        val confirmDialog = ConfirmDialog(
+            requireContext(),
+            getString(R.string.edit_card_delete_card_dialog_title),
+            getString(R.string.edit_card_delete_card_dialog_message)
+        )
+        confirmDialog.setOnConfirmListener {
+            cardRepository.deleteCard(card)
+            activity?.finish()
+        }
+        confirmDialog.showDialog()
+    }
+
     private fun setOnBackPressedDispatcher() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
