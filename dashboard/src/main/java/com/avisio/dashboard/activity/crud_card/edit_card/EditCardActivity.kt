@@ -1,11 +1,10 @@
 package com.avisio.dashboard.activity.crud_card.edit_card
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
@@ -16,6 +15,7 @@ class EditCardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.title = getString(R.string.edit_card_action_bar_title)
         setContentView(R.layout.activity_edit_card)
         parcelableCard = intent.getParcelableExtra(EditCardFragment.CARD_OBJECT_KEY)!!
         if(savedInstanceState == null) {

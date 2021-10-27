@@ -11,8 +11,7 @@
         android:theme="@style/Theme.Avisio" >
         <activity
             android:name=".activity.crud_card.edit_card.EditCardActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Avisio.NoActionBar" />
+            android:exported="false"/>
         <activity
             android:name=".activity.crud_card.create_card.CreateCardActivity"
             android:exported="false"
