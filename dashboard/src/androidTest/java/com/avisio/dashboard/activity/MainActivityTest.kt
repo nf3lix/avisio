@@ -1,4 +1,4 @@
-package com.avisio.dashboard.persistence.activity
+package com.avisio.dashboard.activity
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click

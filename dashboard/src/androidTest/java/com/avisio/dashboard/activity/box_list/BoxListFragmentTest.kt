@@ -1,4 +1,4 @@
-package com.avisio.dashboard.persistence.activity
+package com.avisio.dashboard.activity.box_list
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -12,8 +12,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
-import com.avisio.dashboard.activity.box_list.AvisioBoxViewHolder
-import com.avisio.dashboard.activity.box_list.BoxListFragment
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After
