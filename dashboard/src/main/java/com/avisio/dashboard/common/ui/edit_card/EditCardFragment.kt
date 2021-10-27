@@ -12,13 +12,12 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CreateCardStrategy
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 class EditCardFragment : Fragment() {
 
@@ -30,8 +29,9 @@ class EditCardFragment : Fragment() {
     private lateinit var questionInput: AppCompatEditText
     private lateinit var answerInput: AppCompatEditText
 
-    private var fragmentMode: EditCardFragmentMode = EditCardFragmentMode.CREATE_CARD
     private lateinit var card: Card
+    private lateinit var fragmentMode: EditCardFragmentMode
+    private lateinit var fragmentStrategy: EditCardFragmentStrategy
 
     private lateinit var cardRepository: CardRepository
 
@@ -39,13 +39,13 @@ class EditCardFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         cardRepository = CardRepository(requireActivity().application)
-        arguments?.let {
-            fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
-            card = it.getCardObject()!!
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        arguments?.let {
+            card = it.getCardObject()!!
+            fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
+        }
         return inflater.inflate(R.layout.fragment_edit_card, container, false)
     }
 
@@ -56,10 +56,9 @@ class EditCardFragment : Fragment() {
         answerInput = requireView().findViewById(R.id.card_answer_input)
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
+        fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
-        if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
-            fillCardInformation()
-        }
+        fragmentStrategy.fillCardInformation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -91,114 +90,15 @@ class EditCardFragment : Fragment() {
     private fun setOnBackPressedDispatcher() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                onBackPressed()
+                fragmentStrategy.onBackPressed()
             }
         })
     }
 
-    private fun onBackPressed() {
-        when(fragmentMode) {
-            EditCardFragmentMode.CREATE_CARD -> {
-                if(!TextUtils.isEmpty(questionInput.text) || !TextUtils.isEmpty(answerInput.text)) {
-                    showOnBackPressedWarning()
-                    return
-                }
-                requireActivity().finish()
-            }
-            EditCardFragmentMode.EDIT_CARD -> {
-                val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
-                val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
-                if(card.question != updatedQuestion || card.answer != updatedAnswer) {
-                    showOnBackPressedWarning()
-                    return
-                }
-                requireActivity().finish()
-            }
-        }
-    }
-
-    private fun showOnBackPressedWarning() {
-        val confirmDialog = ConfirmDialog(
-            requireContext(),
-            getString(R.string.create_card_cancel_dialog_title),
-            getString(R.string.create_card_cancel_dialog_message)
-        )
-        confirmDialog.setOnConfirmListener {
-            activity?.finish()
-        }
-        confirmDialog.showDialog()
-    }
-
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab_edit_card)?.setOnClickListener {
-            handleFabClicked()
+            fragmentStrategy.onFabClicked()
         }
-    }
-
-    private fun handleFabClicked() {
-        val question = questionInput.text
-        val answer = answerInput.text
-        when(TextUtils.isEmpty(question) || TextUtils.isEmpty(answer)) {
-            true -> {
-                handleInvalidInput()
-            }
-            false -> {
-                handleValidInput()
-            }
-        }
-    }
-
-    private fun handleInvalidInput() {
-        Toast.makeText(requireContext(), R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
-    }
-
-    private fun handleValidInput() {
-        when(fragmentMode) {
-            EditCardFragmentMode.CREATE_CARD -> {
-                saveNewCard()
-                requireActivity().finish()
-            }
-            EditCardFragmentMode.EDIT_CARD -> {
-                updateCard()
-            }
-        }
-    }
-
-    private fun updateCard() {
-        val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
-        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
-        if(card.question != updatedQuestion || card.answer != updatedAnswer) {
-            val updatedCard = Card(
-                card.id,
-                card.boxId,
-                card.createDate,
-                card.type,
-                updatedQuestion,
-                updatedAnswer
-            )
-            cardRepository.updateCard(updatedCard)
-        }
-        activity?.finish()
-    }
-
-    private fun saveNewCard() {
-        // TODO: generic approach
-        val questionToken = CardQuestionToken(questionInput.text.toString(), CardQuestionTokenType.TEXT)
-        val question = CardQuestion(arrayListOf(questionToken))
-        val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
-        val card = Card(
-            boxId = card.boxId,
-            createDate = Date(System.currentTimeMillis()),
-            type = CardType.STANDARD,
-            question = question,
-            answer = answer
-        )
-        cardRepository.insertCard(card)
-    }
-
-    private fun fillCardInformation() {
-        questionInput.setText(card.question.getStringRepresentation())
-        answerInput.setText(card.answer.getStringRepresentation())
     }
 
     private fun Bundle.getCardObject(): Card? {
