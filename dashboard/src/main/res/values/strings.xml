@@ -32,6 +32,7 @@
     <string name="create_card_cancel_dialog_title">Abbrechen</string>
     <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
     <string name="create_card_empty_question_answer">Frage und Antwort dürfen nicht leer sein</string>
+    <string name="create_card_action_bar_title">Neue Karte</string>
     <string name="edit_card_delete">Karte löschen</string>
     <string name="edit_card_action_bar_title">Karte bearbeiten</string>
     <string name="edit_card_delete_card_dialog_title">Karte löschen</string>

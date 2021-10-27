@@ -14,7 +14,8 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Unit tests
         run: ./gradlew test
   ## 4
@@ -26,6 +27,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -42,6 +45,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Instrumentation report
         uses: reactivecircus/android-emulator-runner@v2
         with:

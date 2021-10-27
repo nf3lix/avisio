@@ -1,22 +1,19 @@
 package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.card.*
+import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CreateCardStrategy
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EditCardFragment : Fragment() {
@@ -62,7 +59,9 @@ class EditCardFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
+        if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
+            requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
