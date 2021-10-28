@@ -37,13 +37,4 @@ class BoxListFragmentTest {
         release()
     }
 
-    @Test
-    fun addBoxToListTest() {
-        scenario.onFragment { fragment ->
-            fragment.newBoxReceived(AvisioBox(name = "TEST_1", createDate = Date(1600000000)))
-        }
-        onView(withId(R.id.box_list_recycler_view)).check(matches(TestUtils.atPosition(0, hasDescendant(
-            withText("TEST_1")))))
-    }
-
 }
