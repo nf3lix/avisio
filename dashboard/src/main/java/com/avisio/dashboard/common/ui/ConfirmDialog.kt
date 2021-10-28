@@ -4,29 +4,39 @@ import android.app.AlertDialog
 import android.content.Context
 import com.avisio.dashboard.R
 
-class ConfirmDialog<T: Any>(
+class ConfirmDialog(
     private val context: Context,
-    private val listener: ConfirmDialogListener,
     private val dialogTitle: String,
     private val dialogMessage: String
 ) {
 
-    fun showDialog(data: T) {
-        AlertDialog.Builder(context)
+    private val dialogBuilder = AlertDialog.Builder(context)
+
+    init {
+        setDefaultClickListeners()
+    }
+
+    fun showDialog() {
+        dialogBuilder
             .setTitle(dialogTitle)
             .setMessage(dialogMessage)
-            .setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ ->
-                listener.onConfirm(data)
-            }
-            .setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ ->
-                listener.onCancel(data)
-            }
             .show()
     }
 
-    interface ConfirmDialogListener {
-        fun onConfirm(data: Any)
-        fun onCancel(data: Any) { }
+    fun setOnConfirmListener(onClick: () -> Unit) {
+        dialogBuilder.setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ ->
+            onClick()
+        }
     }
 
+    fun setOnCancelListener(onClick: () -> Unit) {
+        dialogBuilder.setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ ->
+            onClick()
+        }
+    }
+
+    private fun setDefaultClickListeners() {
+        dialogBuilder.setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ -> }
+        dialogBuilder.setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ -> }
+    }
 }

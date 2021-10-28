@@ -9,8 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.avisio.dashboard.activity.box_list.BoxListFragment
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 
 class BoxActivityResultObserver(
     private val boxFragment: BoxListFragment,
