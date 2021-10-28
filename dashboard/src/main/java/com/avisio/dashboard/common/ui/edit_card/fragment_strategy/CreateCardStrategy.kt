@@ -1,11 +1,8 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
-import android.content.Intent
-import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.avisio.dashboard.R
-import com.avisio.dashboard.activity.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
