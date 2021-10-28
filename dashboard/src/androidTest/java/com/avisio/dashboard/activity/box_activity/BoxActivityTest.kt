@@ -57,19 +57,4 @@ class BoxActivityTest {
         release()
     }
 
-    @Test
-    fun startCreateCardActivityOnFabClicked() {
-        onView(withId(R.id.fab_new_card)).perform(click())
-        intended(hasComponent(CreateCardActivity::class.java.name))
-    }
-
-    @Test
-    fun startEditCardActivityOnItemClicked() {
-        val card1 = Card(boxId = 1)
-        cardDao.insert(card1)
-        onView(withId(R.id.card_list_recycler_view))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<AvisioBoxViewHolder>(0, click()))
-        intended(hasComponent(EditCardActivity::class.java.name))
-    }
-
 }
