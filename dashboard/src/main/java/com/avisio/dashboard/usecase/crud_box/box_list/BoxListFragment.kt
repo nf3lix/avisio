@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivityResultObserver
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioBoxViewModel

@@ -10,7 +10,6 @@ import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After

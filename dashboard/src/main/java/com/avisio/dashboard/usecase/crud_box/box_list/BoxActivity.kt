@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_activity
+package com.avisio.dashboard.usecase.crud_box.box_list
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,6 +19,9 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
+import com.avisio.dashboard.usecase.crud_card.card_list.CardListAdapter
+import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModel
+import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener {
@@ -111,7 +114,8 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     private fun setupCardViewModel() {
-        cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, parcelableBox)).get(CardViewModel::class.java)
+        cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, parcelableBox)).get(
+            CardViewModel::class.java)
         cardViewModel.getCardList().observe(this) { cardList ->
             cardListAdapter.submitList(cardList)
         }

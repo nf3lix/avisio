@@ -19,7 +19,7 @@
             android:name="com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity"
             android:label="@string/activity_edit_box"
             android:theme="@style/Theme.Avisio.NoActionBar" />
-        <activity android:name="com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivity" />
+        <activity android:name="com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity" />
         <activity
             android:name="com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity"
             android:label="@string/title_activity_create_box"

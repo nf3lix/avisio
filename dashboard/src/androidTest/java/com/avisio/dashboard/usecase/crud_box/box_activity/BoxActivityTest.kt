@@ -18,6 +18,7 @@ import com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

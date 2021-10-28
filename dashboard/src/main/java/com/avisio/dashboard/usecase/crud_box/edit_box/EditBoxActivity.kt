@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivity
+import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
 import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode

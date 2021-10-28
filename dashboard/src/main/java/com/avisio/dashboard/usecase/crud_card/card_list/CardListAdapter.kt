@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_activity
+package com.avisio.dashboard.usecase.crud_card.card_list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -7,7 +7,8 @@ import com.avisio.dashboard.common.data.model.card.Card
 
 class CardListAdapter(
     diffCallback: DiffUtil.ItemCallback<Card>,
-    private val onClickListener: CardListOnClickListener) : ListAdapter<Card, CardViewHolder>(diffCallback) {
+    private val onClickListener: CardListOnClickListener
+) : ListAdapter<Card, CardViewHolder>(diffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {

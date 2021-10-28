@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_activity
+package com.avisio.dashboard.usecase.crud_box.box_list
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,6 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.avisio.dashboard.usecase.crud_box.box_list.BoxListFragment
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 
@@ -31,7 +30,9 @@ class BoxActivityResultObserver(
 
     private fun onResult(activityResult: ActivityResult) {
         if(activityResult.resultCode == Activity.RESULT_OK) {
-            val boxToDelete = activityResult.data?.getParcelableExtra<ParcelableAvisioBox>(BoxActivity.BOX_DELETE_OBSERVER_REPLY)!!
+            val boxToDelete = activityResult.data?.getParcelableExtra<ParcelableAvisioBox>(
+                BoxActivity.BOX_DELETE_OBSERVER_REPLY
+            )!!
             boxFragment.deleteBox(boxToDelete)
         }
     }

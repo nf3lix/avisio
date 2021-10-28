@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_activity
+package com.avisio.dashboard.usecase.crud_card.card_list
 
 import android.view.LayoutInflater
 import android.view.View
