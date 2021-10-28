@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivity
+import com.avisio.dashboard.activity.box_activity.CardViewHolder
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After
@@ -51,7 +52,7 @@ class BoxListFragmentTest {
             fragment.newBoxReceived(AvisioBox(name = "TEST_1", createDate = Date(1600000000)))
         }
         onView(withId(R.id.box_list_recycler_view))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<AvisioBoxViewHolder>(0, click()))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<CardViewHolder>(0, click()))
         intended(hasComponent(BoxActivity::class.java.name))
     }
 
