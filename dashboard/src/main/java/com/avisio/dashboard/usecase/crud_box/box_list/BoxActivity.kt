@@ -22,6 +22,8 @@ import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.card_list.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModel
 import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModelFactory
+import com.avisio.dashboard.usecase.training.activity.LearnBoxActivity
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener {
@@ -46,6 +48,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         super.onStart()
         setupView()
         setupFab()
+        setupLearnFab()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -106,6 +109,14 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         }
     }
 
+    private fun setupLearnFab() {
+        findViewById<ExtendedFloatingActionButton>(R.id.fab_learn).setOnClickListener {
+            val intent = Intent(this, LearnBoxActivity::class.java)
+            intent.putExtra(LearnBoxActivity.BOX_OBJECT_KEY, parcelableBox)
+            startActivity(intent)
+        }
+    }
+
     private fun setupRecyclerView() {
         val cardListRecyclerView = findViewById<RecyclerView>(R.id.card_list_recycler_view)
         cardListAdapter = CardListAdapter(CardListAdapter.CardDifference(), this)
@@ -133,10 +144,5 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(card))
         startActivity(intent)
     }
-
-    /*override fun information(){
-        //layoutInflater.inflate(R.layout.box_detail_view, parent)
-        setContentView(R.layout.box_detail_view)
-    }*/
 
 }

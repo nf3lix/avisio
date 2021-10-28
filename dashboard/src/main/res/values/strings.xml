@@ -55,4 +55,6 @@
     <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
 
+    <string name="learn_activity_title">Lernen</string>
+
 </resources>
