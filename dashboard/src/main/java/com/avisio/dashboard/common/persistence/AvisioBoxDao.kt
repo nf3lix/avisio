@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 @Dao
 interface AvisioBoxDao {

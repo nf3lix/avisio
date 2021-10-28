@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.activity.box_activity.BoxActivityResultObserver
 import com.avisio.dashboard.activity.create_box.CreateBoxActivity
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.data.model.AvisioBoxViewModel
-import com.avisio.dashboard.common.data.model.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBoxViewModel
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener {
