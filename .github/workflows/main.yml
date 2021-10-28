@@ -9,31 +9,8 @@ on:
 
 ## 2
 jobs:
-  ## 3
-  unit_tests:
-    runs-on: [ubuntu-latest]
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Unit tests
-        run: ./gradlew test
-  ## 4
-  android_instrumented_tests:
-    runs-on: [ macos-latest ]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 11
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: ./gradlew connectedAndroidTest
   generate_reports:
     runs-on: [ macos-latest ]
-    needs: [unit_tests, android_instrumented_tests]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -42,6 +19,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Instrumentation report
         uses: reactivecircus/android-emulator-runner@v2
         with:
