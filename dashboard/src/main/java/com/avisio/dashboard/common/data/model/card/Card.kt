@@ -28,6 +28,4 @@ data class Card(
 
     @ColumnInfo(name = "answer")
     val answer: CardAnswer = CardAnswer(ArrayList()),
-
-    ) {
-}
+)
