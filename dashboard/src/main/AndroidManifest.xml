@@ -10,22 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Avisio" >
         <activity
-            android:name=".activity.crud_card.edit_card.EditCardActivity"
+            android:name=".usecase.crud_card.edit_card.EditCardActivity"
             android:exported="false"/>
         <activity
-            android:name=".activity.crud_card.create_card.CreateCardActivity"
+            android:name=".usecase.crud_card.create_card.CreateCardActivity"
             android:exported="false"/>
         <activity
-            android:name=".activity.edit_box.EditBoxActivity"
+            android:name="com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity"
             android:label="@string/activity_edit_box"
             android:theme="@style/Theme.Avisio.NoActionBar" />
-        <activity android:name=".activity.box_activity.BoxActivity" />
+        <activity android:name="com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivity" />
         <activity
-            android:name=".activity.create_box.CreateBoxActivity"
+            android:name="com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity"
             android:label="@string/title_activity_create_box"
             android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
-            android:name=".activity.box_list.MainActivity"
+            android:name="com.avisio.dashboard.usecase.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Avisio.NoActionBar" >
             <intent-filter>

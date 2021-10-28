@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
-import com.avisio.dashboard.activity.box_activity.BoxActivity
+import com.avisio.dashboard.usecase.crud_box.box_activity.BoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
