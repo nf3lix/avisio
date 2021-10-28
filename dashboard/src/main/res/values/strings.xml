@@ -8,19 +8,35 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_create_box">CreateBoxActivity</string>
-
+    <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>
+
+    <string name="box_list_fab_content_description">create card</string>
 
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
+    <string name="box_activity_fab_content_description">Add card to box</string>
 
     <string name="create_box_app_bar_title">New box</string>
+    <string name="create_box_fab_content_description">save box</string>
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Please specify a name</string>
     <string name="create_box_icon_image_content_description">box icon</string>
+
+    <string name="create_card_type_spinner_content_description">select card type</string>
+    <string name="create_card_fab_content_description">save card</string>
+    <string name="create_card_question_text_field_hint">Question</string>
+    <string name="create_card_answer_text_field_hint">Answer</string>
+    <string name="create_card_card_question_input_content_description">Card Question</string>
+    <string name="create_card_cancel_dialog_title">Abbrechen</string>
+    <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
+    <string name="create_card_empty_question_answer">Frage und Antwort dürfen nicht leer sein</string>
+    <string name="create_card_action_bar_title">Neue Karte</string>
+    <string name="edit_card_delete">Karte löschen</string>
+    <string name="edit_card_action_bar_title">Karte bearbeiten</string>
+    <string name="edit_card_delete_card_dialog_title">Karte löschen</string>
+    <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Cancel</string>
@@ -28,9 +44,7 @@
     <string name="delete_box_confirm_dialog_title">Delete Box</string>
     <string name="delete_box_confirm_dialog_message">Are you sure you want to permanently delete this box?</string>
     <string name="delete_box_error_occurred">Error: Box could not be deleted</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="envelope">envelope</string>
+
     <string name="box_title">box_title</string>
     <string name="box_name">Box_name</string>
     <string name="erstelldatum">Erstelldatum</string>

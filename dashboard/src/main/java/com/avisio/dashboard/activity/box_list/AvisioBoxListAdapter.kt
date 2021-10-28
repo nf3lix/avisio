@@ -3,7 +3,7 @@ package com.avisio.dashboard.activity.box_list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.avisio.dashboard.common.data.model.AvisioBox
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 class AvisioBoxListAdapter(
     diffCallback: DiffUtil.ItemCallback<AvisioBox>,

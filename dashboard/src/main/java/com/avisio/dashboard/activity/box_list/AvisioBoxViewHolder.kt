@@ -7,8 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.AvisioBox
-import com.avisio.dashboard.common.ui.BoxIcon
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 class AvisioBoxViewHolder(
     itemView: View,

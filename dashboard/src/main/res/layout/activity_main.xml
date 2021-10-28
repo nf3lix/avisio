@@ -13,11 +13,13 @@
             android:theme="@style/Theme.Avisio.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.Avisio.PopupOverlay"/>
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Avisio.PopupOverlay"
+            app:titleTextAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
+            app:titleTextColor="@color/secondaryDarkColor" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
