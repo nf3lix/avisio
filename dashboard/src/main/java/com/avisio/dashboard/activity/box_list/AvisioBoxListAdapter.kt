@@ -16,7 +16,8 @@ class AvisioBoxListAdapter(
 
     override fun onBindViewHolder(holder: AvisioBoxViewHolder, position: Int) {
         val currentBox = getItem(position)
-        holder.bind(currentBox.name)
+        //holder.bind(currentBox.name)
+        holder.bind(currentBox)
     }
 
     class AvisioBoxDifference : DiffUtil.ItemCallback<AvisioBox>() {

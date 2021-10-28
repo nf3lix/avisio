@@ -19,7 +19,6 @@
             app:title="@string/create_box_app_bar_title"
             app:titleTextAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
             app:titleTextColor="@color/secondaryDarkColor" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView

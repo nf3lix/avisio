@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +58,12 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
             }
             R.id.menu_delete_box -> {
                 confirmDeletion()
+                true
+            }
+            R.id.menu_information_box -> {
+                //information()
+                Toast.makeText(applicationContext, "click", Toast.LENGTH_SHORT).show()
+                setContentView(R.layout.box_detail_view)
                 true
             }
             else -> false
@@ -122,5 +129,10 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(card))
         startActivity(intent)
     }
+
+    /*override fun information(){
+        //layoutInflater.inflate(R.layout.box_detail_view, parent)
+        setContentView(R.layout.box_detail_view)
+    }*/
 
 }
