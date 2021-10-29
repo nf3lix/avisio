@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.TrainingStrategy
 
@@ -20,6 +21,7 @@ class LearnBoxFragment : Fragment() {
         box = AvisioBox()
         trainingStrategy = DefaultTrainingStrategy(box)
         arguments?.let {
+            box = it.getBoxObject()!!
         }
     }
 

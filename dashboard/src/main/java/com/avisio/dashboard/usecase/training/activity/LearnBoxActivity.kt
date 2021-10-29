@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.IntentKeys
 
 class LearnBoxActivity : AppCompatActivity() {
 
@@ -24,7 +25,7 @@ class LearnBoxActivity : AppCompatActivity() {
     }
 
     private fun initFragment() {
-        val bundle = bundleOf()
+        val bundle = bundleOf(IntentKeys.BOX_OBJECT to box)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.learn_card_fragment_container_view, LearnBoxFragment::class.java, bundle)
         transaction.commit()
