@@ -56,5 +56,8 @@
     <string name="box_information">Box Information</string>
 
     <string name="learn_activity_title">Lernen</string>
+    <string name="learn_activity_question_content_description">Frage</string>
+    <string name="learn_activity_answer_content_description">Antwort</string>
+    <string name="learn_activity_correct_answer">Richtige Antwort</string>
 
 </resources>
