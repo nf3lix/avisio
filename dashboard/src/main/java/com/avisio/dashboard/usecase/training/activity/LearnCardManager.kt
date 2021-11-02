@@ -33,14 +33,10 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
                 }
                 is State.Success -> {
                     currentCard = state.data
-                    view.onCardLoadSuccess(currentCard)
+                    view.showCard(currentCard)
                 }
             }
         }
-    }
-
-    private fun startCardTraining(card: Card) {
-        view.showCardQuestion(card.question)
     }
 
     fun onAnswer(answer: String) {

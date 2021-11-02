@@ -11,21 +11,21 @@
             android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="324dp"
-                android:layout_height="204dp"
-                android:id="@+id/learn_card_question_edit_text"
-                android:hint="@string/create_card_question_text_field_hint"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
-                app:layout_constraintVertical_bias="0.13">
+            android:id="@+id/question_input_layout"
+            android:layout_width="326dp"
+            android:layout_height="149dp"
+            android:hint="@string/create_card_question_text_field_hint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.13">
 
             <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/learn_question_edit_text"
+                    android:id="@+id/question_edit_text"
                     android:inputType="none"
                     android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -33,54 +33,66 @@
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="326dp"
                 android:layout_height="72dp"
-                android:id="@+id/learn_card_answer_edit_text"
+                android:id="@+id/answer_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/learn_card_question_edit_text"
+                app:layout_constraintTop_toTopOf="@id/question_input_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.482"
-                app:layout_constraintVertical_bias="0.41">
+                app:layout_constraintVertical_bias="0.31">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/learn_answer_edit_text"
+                    android:id="@+id/answer_edit_text"
                     android:hint="@string/create_card_answer_text_field_hint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/resolve_question_button"
+            android:layout_width="326dp"
+            android:layout_height="52dp"
+            android:text="@string/learn_activity_resolve_button"
+            app:layout_constraintBottom_toTopOf="@+id/correct_answer_input_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/answer_input_layout"
+            app:layout_constraintVertical_bias="0.920" />
+
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="326dp"
-                android:layout_height="72dp"
-                android:id="@+id/learn_card_correct_answer_edit_text"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="@id/learn_card_answer_edit_text"
-                app:layout_constraintHorizontal_bias="0.505"
-                app:layout_constraintVertical_bias="0.295">
+            android:id="@+id/correct_answer_input_layout"
+            android:layout_width="326dp"
+            android:layout_height="72dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/resolve_question_button"
+            app:layout_constraintVertical_bias="0.295">
 
             <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/learn_correct_answer_edit_text"
+                    android:id="@+id/correct_answer_edit_text"
                     android:hint="@string/learn_activity_correct_answer"
                     android:inputType="none"
                     android:enabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!---
         <com.google.android.material.chip.ChipGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="correct_answer_input_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/chipGroup"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintVertical_bias="0.652" />
+                app:layout_constraintVertical_bias="0.652" /> -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
