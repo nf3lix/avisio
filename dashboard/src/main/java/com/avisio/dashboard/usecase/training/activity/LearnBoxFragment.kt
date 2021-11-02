@@ -15,7 +15,9 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
+import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,6 +31,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var correctAnswerLayoutInput: TextInputLayout
     private lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
+    private lateinit var resultChipGroup: ChipGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,8 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
+        resultChipGroup = requireView().findViewById(R.id.chipGroup)
+        setupResultChipGroup()
         trainingStrategy = DefaultTrainingStrategy(box, requireActivity().application)
         manager = LearnCardManager(this, trainingStrategy)
         setupFab()
@@ -92,6 +97,15 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resolveQuestionButton.setOnClickListener {
             manager.onAnswer(requireView().findViewById<EditText>(R.id.answer_edit_text).text.toString())
         }
+    }
+
+    private fun setupResultChipGroup() {
+        val correctChip = QuestionResultChip(this, QuestionResult.CORRECT, requireContext())
+        val partiallyChip = QuestionResultChip(this, QuestionResult.PARTIALLY_CORRECT, requireContext())
+        val incorrectChip = QuestionResultChip(this, QuestionResult.INCORRECT, requireContext())
+        resultChipGroup.addView(correctChip)
+        resultChipGroup.addView(partiallyChip)
+        resultChipGroup.addView(incorrectChip)
     }
 
 }
