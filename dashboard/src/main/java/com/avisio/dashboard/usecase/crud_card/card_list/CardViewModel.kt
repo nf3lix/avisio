@@ -10,7 +10,7 @@ import com.avisio.dashboard.common.persistence.CardRepository
 class CardViewModel(application: Application, val box: ParcelableAvisioBox) : AndroidViewModel(application) {
 
     private val repository: CardRepository = CardRepository(application)
-    private var cardList: LiveData<List<Card>> = repository.getCardsByBox(box.boxId)
+    private var cardList: LiveData<List<Card>> = repository.getCardsLiveDataByBoxId(box.boxId)
 
     fun getCardList(): LiveData<List<Card>> {
         return cardList

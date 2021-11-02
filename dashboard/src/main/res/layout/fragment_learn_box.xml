@@ -13,7 +13,7 @@
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="324dp"
                 android:layout_height="204dp"
-                android:id="@+id/question"
+                android:id="@+id/learn_card_question_edit_text"
                 android:hint="@string/create_card_question_text_field_hint"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -33,10 +33,10 @@
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="326dp"
                 android:layout_height="72dp"
-                android:id="@+id/answer"
+                android:id="@+id/learn_card_answer_edit_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/question"
+                app:layout_constraintTop_toTopOf="@id/learn_card_question_edit_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.482"
                 app:layout_constraintVertical_bias="0.41">
@@ -52,12 +52,12 @@
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="326dp"
                 android:layout_height="72dp"
-                android:id="@+id/correct"
+                android:id="@+id/learn_card_correct_answer_edit_text"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="@id/answer"
+                app:layout_constraintTop_toTopOf="@id/learn_card_answer_edit_text"
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintVertical_bias="0.295">
 

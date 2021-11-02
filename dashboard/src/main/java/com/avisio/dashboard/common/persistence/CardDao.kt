@@ -8,10 +8,16 @@ import com.avisio.dashboard.common.data.model.card.Card
 interface CardDao {
 
     @Query("SELECT * FROM card")
-    fun getAll(): LiveData<List<Card>>
+    fun getAllAsLiveData(): LiveData<List<Card>>
 
     @Query("SELECT * FROM card WHERE boxId = :boxId")
-    fun getCardsByBox(boxId: Long): LiveData<List<Card>>
+    fun getCardsLiveDataByBox(boxId: Long): LiveData<List<Card>>
+
+    @Query("SELECT * FROM card")
+    suspend fun getAll(): List<Card>
+
+    @Query("SELECT * FROM card WHERE boxId = :boxId")
+    suspend fun getCardsByBox(boxId: Long): List<Card>
 
     @Insert
     fun insert(card: Card)
