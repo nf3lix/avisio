@@ -7,6 +7,7 @@
     tools:context=".usecase.training.activity.LearnBoxFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/learn_card_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -59,12 +60,13 @@
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/answer_input_layout"
-            app:layout_constraintVertical_bias="0.920" />
+            app:layout_constraintVertical_bias="1.220" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/correct_answer_input_layout"
             android:layout_width="326dp"
             android:layout_height="72dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
@@ -82,17 +84,33 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!---
         <com.google.android.material.chip.ChipGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="correct_answer_input_layout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/correct_answer_input_layout"
                 android:id="@+id/chipGroup"
+                android:visibility="gone"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintVertical_bias="0.652" /> -->
+                app:layout_constraintVertical_bias="0.652" >
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
