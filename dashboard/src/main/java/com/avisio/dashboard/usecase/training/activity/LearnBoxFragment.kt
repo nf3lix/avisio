@@ -107,7 +107,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         constraintSet.clone(constraintLayout)
         constraintSet.connect(resolveQuestionButton.id, ConstraintSet.TOP, R.id.answer_input_layout, ConstraintSet.TOP, 0)
         constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, resolveQuestionButton.id, ConstraintSet.TOP, 0)
-        constraintSet.setVerticalBias(resolveQuestionButton.id, 1.220F)
         constraintSet.applyTo(constraintLayout)
     }
 
