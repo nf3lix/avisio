@@ -27,8 +27,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var box: AvisioBox
     private lateinit var currentCard: Card
 
+    private lateinit var questionInputLayout: TextInputLayout
     private lateinit var answerInputLayout: TextInputLayout
     private lateinit var correctAnswerLayoutInput: TextInputLayout
+    private lateinit var answerEditText: EditText
     private lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
@@ -46,7 +48,9 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun onStart() {
         super.onStart()
+        questionInputLayout = requireView().findViewById(R.id.question_input_layout)
         answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
+        answerEditText = requireView().findViewById(R.id.answer_edit_text)
         correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
@@ -65,6 +69,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         currentCard = card
         requireActivity().runOnUiThread {
             requireView().findViewById<EditText>(R.id.question_edit_text).setText(currentCard.question.getStringRepresentation())
+            showResolveQuestionButton()
+            answerInputLayout.visibility = View.VISIBLE
+            resultChipGroup.visibility = View.GONE
+            correctAnswerLayoutInput.visibility = View.GONE
         }
     }
 
@@ -114,7 +122,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun setupFab() {
         resolveQuestionButton.setOnClickListener {
-            manager.onAnswer(requireView().findViewById<EditText>(R.id.answer_edit_text).text.toString())
+            manager.onAnswer(answerEditText.text.toString())
         }
     }
 
@@ -128,16 +136,18 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onResultOptionSelected(result: QuestionResult) {
+        answerEditText.setText("")
         manager.onResultOptionSelected(result)
-        answerInputLayout.visibility = View.VISIBLE
-        resultChipGroup.visibility = View.GONE
-        correctAnswerLayoutInput.visibility = View.GONE
-        showResolveQuestionButton()
     }
 
     override fun onTrainingFinished() {
         requireActivity().runOnUiThread {
             Toast.makeText(context, R.string.learn_activity_training_finished, Toast.LENGTH_LONG).show()
+            questionInputLayout.visibility = View.GONE
+            answerInputLayout.visibility = View.GONE
+            correctAnswerLayoutInput.visibility = View.GONE
+            resultChipGroup.visibility = View.GONE
+            resolveQuestionButton.visibility = View.GONE
         }
     }
 

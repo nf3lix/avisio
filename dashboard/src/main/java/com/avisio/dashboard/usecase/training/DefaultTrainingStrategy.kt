@@ -7,6 +7,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.CardRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlin.random.Random
 
 class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) : TrainingStrategy(box) {
 
@@ -25,7 +26,7 @@ class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) 
     }
 
     override fun hasNextCard(): Boolean {
-        return true
+        return Random.nextBoolean()
     }
 
 }

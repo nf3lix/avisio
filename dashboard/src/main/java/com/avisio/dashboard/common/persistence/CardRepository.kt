@@ -16,7 +16,6 @@ class CardRepository(application: Application) {
     init {
         dao = database.cardDao()
         cardList = dao.getAllAsLiveData()
-        // cardList2 = dao.getAll()
     }
 
     fun getCardListLiveData(): LiveData<List<Card>> {
