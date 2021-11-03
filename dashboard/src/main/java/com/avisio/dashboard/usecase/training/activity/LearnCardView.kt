@@ -1,7 +1,6 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.usecase.training.QuestionResult
 
 interface LearnCardView {

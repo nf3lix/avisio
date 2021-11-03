@@ -19,7 +19,7 @@ class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) 
     }
 
     override fun hasNextCard(): Boolean {
-        return false
+        return true
     }
 
 }
