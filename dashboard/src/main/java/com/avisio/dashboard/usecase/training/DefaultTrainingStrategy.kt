@@ -1,13 +1,9 @@
 package com.avisio.dashboard.usecase.training
 
 import android.app.Application
-import com.avisio.dashboard.common.controller.State
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.CardRepository
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlin.random.Random
 
 class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) : TrainingStrategy(box) {
 
@@ -17,16 +13,13 @@ class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) 
         // persist card result
     }
 
-    override fun nextCard() = flow {
-        emit(State.loading(Card()))
+    override suspend fun nextCard(): Card {
         val cardList = cardRepository.getCardsByBox(box.id)
-        emit(State.success(cardList[(Math.random() * cardList.size).toInt()]))
-    }.catch {
-        emit(State.failed(it.message.toString()))
+        return cardList[(Math.random() * cardList.size).toInt()]
     }
 
     override fun hasNextCard(): Boolean {
-        return Random.nextBoolean()
+        return false
     }
 
 }

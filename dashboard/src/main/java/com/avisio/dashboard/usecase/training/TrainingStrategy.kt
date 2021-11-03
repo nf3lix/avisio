@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 abstract class TrainingStrategy(private val box: AvisioBox) {
 
     abstract fun onCardResult(result: QuestionResult)
-    abstract fun nextCard(): Flow<State<Card>>
+    abstract suspend fun nextCard(): Card
     abstract fun hasNextCard(): Boolean
 
     fun getQuestionResult(question: CardQuestion, answer: String): QuestionResult {
