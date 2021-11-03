@@ -13,27 +13,16 @@ class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) 
     private val cardRepository = CardRepository(application)
 
     override fun onCardResult(result: QuestionResult) {
-        TODO("Not yet implemented")
+        // persist card result
     }
 
     override fun nextCard() = flow {
         emit(State.loading(Card()))
         val cardList = cardRepository.getCardsByBox(box.id)
-        emit(State.success(cardList[0]))
+        emit(State.success(cardList[(Math.random() * cardList.size).toInt()]))
     }.catch {
         emit(State.failed(it.message.toString()))
     }
-
-    // override fun nextCard() = flow {
-    //     emit(State.loading(Card()))
-    //     val cardList = cardRepository.getCardsLiveDataByBoxId(box.id)
-    //     val card = cardList.value!![(Math.random() * cardList.value!!.size + 1).toInt()]
-    //     Log.d("test12345, box_size", box.id.toString())
-    //     Log.d("test12345, card", card.question.getStringRepresentation())
-    //     emit(State.success(card))
-    // }.catch {
-    //     emit(State.failed(it.message.toString()))
-    // }.flowOn(Dispatchers.IO)
 
     override fun hasNextCard(): Boolean {
         return true

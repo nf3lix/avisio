@@ -27,6 +27,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var box: AvisioBox
     private lateinit var currentCard: Card
 
+    private lateinit var answerInputLayout: TextInputLayout
     private lateinit var correctAnswerLayoutInput: TextInputLayout
     private lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
@@ -45,6 +46,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun onStart() {
         super.onStart()
+        answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
         correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
@@ -82,10 +84,22 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun hideResolveQuestionButton() {
         resolveQuestionButton.visibility = View.GONE
+        answerInputLayout.visibility = View.GONE
         val constraintLayout = requireView().findViewById<ConstraintLayout>(R.id.learn_card_constraint_layout)
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
-        constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, R.id.answer_input_layout, ConstraintSet.TOP, 0)
+        constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, R.id.question_input_layout, ConstraintSet.TOP, 0)
+        constraintSet.applyTo(constraintLayout)
+    }
+
+    private fun showResolveQuestionButton() {
+        resolveQuestionButton.visibility = View.VISIBLE
+        val constraintLayout = requireView().findViewById<ConstraintLayout>(R.id.learn_card_constraint_layout)
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        constraintSet.connect(resolveQuestionButton.id, ConstraintSet.TOP, R.id.answer_input_layout, ConstraintSet.TOP, 0)
+        constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, resolveQuestionButton.id, ConstraintSet.TOP, 0)
+        constraintSet.setVerticalBias(resolveQuestionButton.id, 1.220F)
         constraintSet.applyTo(constraintLayout)
     }
 
@@ -115,6 +129,16 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun onResultOptionSelected(result: QuestionResult) {
         manager.onResultOptionSelected(result)
+        answerInputLayout.visibility = View.VISIBLE
+        resultChipGroup.visibility = View.GONE
+        correctAnswerLayoutInput.visibility = View.GONE
+        showResolveQuestionButton()
+    }
+
+    override fun onTrainingFinished() {
+        requireActivity().runOnUiThread {
+            Toast.makeText(context, R.string.learn_activity_training_finished, Toast.LENGTH_LONG).show()
+        }
     }
 
 }

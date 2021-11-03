@@ -15,4 +15,6 @@ interface LearnCardView {
 
     fun onResultOptionSelected(result: QuestionResult)
 
+    fun onTrainingFinished()
+
 }

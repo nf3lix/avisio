@@ -64,5 +64,6 @@
     <string name="learn_activity_result_button_correct">Richtig</string>
     <string name="learn_activity_result_button_incorrect">Falsch</string>
     <string name="learn_activity_result_button_partially_correct">Teilweise richtig</string>
+    <string name="learn_activity_training_finished">Lernen beendet</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.avisio.dashboard.usecase.training.activity
 
-import android.util.Log
 import com.avisio.dashboard.common.controller.State
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.usecase.training.QuestionResult
@@ -53,6 +52,14 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     }
 
     fun onResultOptionSelected(result: QuestionResult) {
+        strategy.onCardResult(result)
+        if(strategy.hasNextCard()) {
+            GlobalScope.launch {
+                loadNextCard()
+            }
+            return
+        }
+        view.onTrainingFinished()
     }
 
 }
