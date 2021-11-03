@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.training.activity
 
+import android.util.Log
 import com.avisio.dashboard.common.controller.State
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.usecase.training.QuestionResult
@@ -49,6 +50,9 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
             }
             QuestionResult.PARTIALLY_CORRECT -> { }
         }
+    }
+
+    fun onResultOptionSelected(result: QuestionResult) {
     }
 
 }

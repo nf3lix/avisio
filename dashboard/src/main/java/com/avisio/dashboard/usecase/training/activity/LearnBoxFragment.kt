@@ -17,7 +17,6 @@ import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
-import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 
@@ -32,6 +31,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
+
+    private lateinit var correctChip: QuestionResultChip
+    private lateinit var partiallyChip: QuestionResultChip
+    private lateinit var incorrectChip: QuestionResultChip
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +67,21 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onCorrectAnswer() {
-        Toast.makeText(context, "correct", Toast.LENGTH_LONG).show()
+        resultChipGroup.visibility = View.VISIBLE
+        hideResolveQuestionButton()
+        correctChip.setSuggestedResult()
     }
 
     override fun onIncorrectAnswer() {
-        Toast.makeText(context, "incorrect", Toast.LENGTH_LONG).show()
         correctAnswerLayoutInput.visibility = View.VISIBLE
-        resolveQuestionButton.visibility = View.GONE
-        requireView().findViewById<ChipGroup>(R.id.chipGroup).visibility = View.VISIBLE
+        resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
+        incorrectChip.setSuggestedResult()
     }
 
     private fun hideResolveQuestionButton() {
+        resolveQuestionButton.visibility = View.GONE
         val constraintLayout = requireView().findViewById<ConstraintLayout>(R.id.learn_card_constraint_layout)
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
@@ -100,12 +105,16 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     private fun setupResultChipGroup() {
-        val correctChip = QuestionResultChip(this, QuestionResult.CORRECT, requireContext())
-        val partiallyChip = QuestionResultChip(this, QuestionResult.PARTIALLY_CORRECT, requireContext())
-        val incorrectChip = QuestionResultChip(this, QuestionResult.INCORRECT, requireContext())
+        correctChip = QuestionResultChip(this, QuestionResult.CORRECT, requireContext(), null)
+        partiallyChip = QuestionResultChip(this, QuestionResult.PARTIALLY_CORRECT, requireContext(), null)
+        incorrectChip = QuestionResultChip(this, QuestionResult.INCORRECT, requireContext(), null)
         resultChipGroup.addView(correctChip)
         resultChipGroup.addView(partiallyChip)
         resultChipGroup.addView(incorrectChip)
+    }
+
+    override fun onResultOptionSelected(result: QuestionResult) {
+        manager.onResultOptionSelected(result)
     }
 
 }
