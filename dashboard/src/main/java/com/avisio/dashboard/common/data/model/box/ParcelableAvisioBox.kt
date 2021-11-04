@@ -2,6 +2,7 @@ package com.avisio.dashboard.common.data.model.box
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.avisio.dashboard.common.ui.edit_box.BoxIcon
 
 data class ParcelableAvisioBox(
     val boxId: Long = 0,
@@ -28,6 +29,14 @@ data class ParcelableAvisioBox(
     companion object CREATOR : Parcelable.Creator<ParcelableAvisioBox> {
         fun createFromEntity(avisioBox: AvisioBox): ParcelableAvisioBox {
             return ParcelableAvisioBox(avisioBox.id, avisioBox.name, avisioBox.icon.iconId)
+        }
+
+        fun createEntity(parcelableAvisioBox: ParcelableAvisioBox): AvisioBox {
+            return AvisioBox(
+                id = parcelableAvisioBox.boxId,
+                name = parcelableAvisioBox.boxName,
+                icon = BoxIcon.getBoxIcon(parcelableAvisioBox.boxIconId)
+            )
         }
 
         override fun createFromParcel(parcel: Parcel): ParcelableAvisioBox {

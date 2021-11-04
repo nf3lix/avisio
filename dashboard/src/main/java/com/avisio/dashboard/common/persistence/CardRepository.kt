@@ -15,15 +15,23 @@ class CardRepository(application: Application) {
 
     init {
         dao = database.cardDao()
-        cardList = dao.getAll()
+        cardList = dao.getAllAsLiveData()
     }
 
-    fun getCardList(): LiveData<List<Card>> {
+    fun getCardListLiveData(): LiveData<List<Card>> {
         return cardList
     }
 
-    fun getCardsByBox(boxId: Long): LiveData<List<Card>> {
+    suspend fun getCardList(): List<Card> {
+        return dao.getAll()
+    }
+
+    suspend fun getCardsByBox(boxId: Long): List<Card> {
         return dao.getCardsByBox(boxId)
+    }
+
+    fun getCardsLiveDataByBoxId(boxId: Long): LiveData<List<Card>> {
+        return dao.getCardsLiveDataByBox(boxId)
     }
 
     fun insertCard(card: Card) {
