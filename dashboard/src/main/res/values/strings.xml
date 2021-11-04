@@ -17,6 +17,8 @@
     <string name="box_activity_menu_edit">Edit Box</string>
     <string name="box_activity_menu_delete">Delete Box</string>
     <string name="box_activity_fab_content_description">Add card to box</string>
+    <string name="box_activity_learn_fab">Lernen</string>
+    <string name="box_activity_learn_fab_content_description">Karten in Box lernen</string>
 
     <string name="create_box_app_bar_title">New box</string>
     <string name="create_box_fab_content_description">save box</string>
@@ -52,5 +54,16 @@
     <string name="karteikarten">Karteikarten</string>
     <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
+
+    <string name="learn_activity_title">Lernen</string>
+    <string name="learn_activity_question_content_description">Frage</string>
+    <string name="learn_activity_answer_content_description">Antwort</string>
+    <string name="learn_activity_correct_answer">Richtige Antwort</string>
+    <string name="learn_activity_resolve_button">Auflösen</string>
+
+    <string name="learn_activity_result_button_correct">Richtig</string>
+    <string name="learn_activity_result_button_incorrect">Falsch</string>
+    <string name="learn_activity_result_button_partially_correct">Teilweise richtig</string>
+    <string name="learn_activity_training_finished">Lernen beendet</string>
 
 </resources>

@@ -7,13 +7,13 @@
 
     <activity
         android:id="@+id/MainActivity"
-        android:name="com.avisio.dashboard.activity.box_list.MainActivity"
+        android:name="com.avisio.dashboard.usecase.MainActivity"
         android:label="@string/main_activity_label"
         tools:layout="@layout/activity_main"/>
 
     <fragment
             android:id="@+id/FirstFragment"
-            android:name="com.avisio.dashboard.activity.box_list.BoxListFragment"
+            android:name="com.avisio.dashboard.usecase.crud_box.box_list.BoxListFragment"
             android:label="@string/first_fragment_label"
             tools:layout="@layout/box_list_fragment">
     </fragment>
