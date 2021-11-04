@@ -4,7 +4,6 @@ import android.content.Intent
 import android.text.TextUtils
 import android.widget.CheckBox
 import android.widget.Toast
-import com.avisio.dashboard.activity.crud_card.create_card.CreateCardActivity
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -14,6 +13,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
 import java.util.*
 
 
@@ -39,9 +39,9 @@ class CreateCardStrategy(
         )
         repository.insertCard(cardToCreate)
 
-        val checkbox_view = fragment.requireActivity().findViewById<CheckBox>(com.avisio.dashboard.R.id.checkbox_create_new_card)
+        val checkboxView = fragment.requireActivity().findViewById<CheckBox>(com.avisio.dashboard.R.id.checkbox_create_new_card)
 
-        if(checkbox_view.isChecked){
+        if(checkboxView.isChecked){
             val newIntent = Intent(fragment.requireContext(), CreateCardActivity::class.java)
             newIntent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard(boxId = card.boxId))
             fragment.requireContext().startActivity(newIntent)

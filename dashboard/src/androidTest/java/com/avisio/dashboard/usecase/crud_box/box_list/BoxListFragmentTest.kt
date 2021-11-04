@@ -24,7 +24,7 @@ class BoxListFragmentTest {
     @Before
     fun initScenario() {
         init()
-        scenario = launchFragmentInContainer(themeResId = R.style.Theme_AppCompat)
+        scenario = launchFragmentInContainer(themeResId = R.style.Theme_Avisio)
     }
 
     @After
