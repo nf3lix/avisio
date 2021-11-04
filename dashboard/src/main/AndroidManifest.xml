@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.avisio.dashboard" >
+    package="com.avisio.dashboard">
 
     <application
         android:allowBackup="true"
@@ -8,26 +8,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Avisio" >
+        android:theme="@style/Theme.Avisio">
         <activity
-            android:name=".activity.crud_card.edit_card.EditCardActivity"
-            android:exported="false"/>
+            android:name=".usecase.training.activity.LearnBoxActivity"
+            android:exported="false" />
         <activity
-            android:name=".activity.crud_card.create_card.CreateCardActivity"
-            android:exported="false"/>
+            android:name=".usecase.crud_card.edit_card.EditCardActivity"
+            android:exported="false" />
         <activity
-            android:name=".activity.edit_box.EditBoxActivity"
+            android:name=".usecase.crud_card.create_card.CreateCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".usecase.crud_box.edit_box.EditBoxActivity"
             android:label="@string/activity_edit_box"
             android:theme="@style/Theme.Avisio.NoActionBar" />
-        <activity android:name=".activity.box_activity.BoxActivity" />
+        <activity android:name=".usecase.crud_box.box_list.BoxActivity" />
         <activity
-            android:name=".activity.create_box.CreateBoxActivity"
+            android:name=".usecase.crud_box.create_box.CreateBoxActivity"
             android:label="@string/title_activity_create_box"
             android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
-            android:name=".activity.box_list.MainActivity"
+            android:name=".usecase.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Avisio.NoActionBar" >
+            android:theme="@style/Theme.Avisio.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
