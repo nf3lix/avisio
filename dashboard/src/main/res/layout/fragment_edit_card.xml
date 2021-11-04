@@ -12,6 +12,18 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <CheckBox
+            android:id="@+id/checkbox_create_new_card"
+            android:layout_width="221dp"
+            android:layout_height="49dp"
+            android:text="@string/checkbox_create_new_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.325"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer_text_input_layout"
+            android:checked="true"/>
+
         <Spinner
                 android:id="@+id/card_type_spinner"
                 android:layout_width="277dp"
@@ -37,10 +49,10 @@
                 app:layout_constraintVertical_bias="0.149">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/card_question_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine" />
+                android:id="@+id/card_question_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,6 +75,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_edit_card"
