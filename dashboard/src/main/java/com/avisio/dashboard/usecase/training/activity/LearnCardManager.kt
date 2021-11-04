@@ -15,14 +15,14 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     }
 
     private fun startTraining() {
-        GlobalScope.launch {
-            loadNextCard()
-        }
+        loadNextCard()
     }
 
-    private suspend fun loadNextCard() {
-        currentCard = strategy.nextCard()
-        view.showCard(currentCard)
+    private fun loadNextCard() {
+        GlobalScope.launch {
+            currentCard = strategy.nextCard()
+            view.showCard(currentCard)
+        }
     }
 
     fun onAnswer(answer: String) {
@@ -40,9 +40,7 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     fun onResultOptionSelected(result: QuestionResult) {
         strategy.onCardResult(result)
         if(strategy.hasNextCard()) {
-            GlobalScope.launch {
-                loadNextCard()
-            }
+            loadNextCard()
             return
         }
         view.onTrainingFinished()
