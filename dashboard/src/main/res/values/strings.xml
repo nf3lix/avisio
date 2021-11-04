@@ -52,5 +52,6 @@
     <string name="karteikarten">Karteikarten</string>
     <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
+    <string name="checkbox_create_new_card">Create new card</string>
 
 </resources>

@@ -3,7 +3,9 @@ package com.avisio.dashboard.common.ui.edit_card
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
@@ -32,6 +34,7 @@ class EditCardFragment : Fragment() {
 
     private lateinit var cardRepository: CardRepository
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -57,6 +60,7 @@ class EditCardFragment : Fragment() {
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
