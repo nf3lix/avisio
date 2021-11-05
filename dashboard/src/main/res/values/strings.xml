@@ -8,7 +8,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="title_activity_create_box">CreateBoxActivity</string>
+    <string name="title_activity_create_box">Create Box</string>
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>
 
