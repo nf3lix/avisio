@@ -14,9 +14,11 @@
             android:exported="false" />
         <activity
             android:name=".usecase.crud_card.edit_card.EditCardActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".usecase.crud_card.create_card.CreateCardActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".usecase.crud_box.edit_box.EditBoxActivity"
