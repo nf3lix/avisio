@@ -41,14 +41,4 @@ class BoxListFragmentTest {
             withText("TEST_1")))))
     }
 
-    @Test
-    fun startBoxActivityOnItemClick() {
-        scenario.onFragment { fragment ->
-            fragment.newBoxReceived(AvisioBox(name = "TEST_1", createDate = Date(1600000000)))
-        }
-        onView(withId(R.id.box_list_recycler_view))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<AvisioBoxViewHolder>(0, click()))
-        intended(hasComponent(BoxActivity::class.java.name))
-    }
-
 }
