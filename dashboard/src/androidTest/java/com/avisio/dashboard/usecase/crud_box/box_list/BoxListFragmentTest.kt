@@ -11,6 +11,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.persistence.TestUtils
 import org.junit.After
 import org.junit.Before
@@ -35,7 +36,7 @@ class BoxListFragmentTest {
     @Test
     fun addBoxToListTest() {
         scenario.onFragment { fragment ->
-            fragment.newBoxReceived(AvisioBox(name = "TEST_1", createDate = Date(1600000000)))
+            fragment.newBoxReceived(AvisioBox(id = 0, name = "TEST_1", createDate = Date(1600000000)))
         }
         onView(withId(R.id.box_list_recycler_view)).check(matches(TestUtils.atPosition(0, hasDescendant(
             withText("TEST_1")))))
@@ -44,6 +45,7 @@ class BoxListFragmentTest {
     @Test
     fun startBoxActivityOnItemClick() {
         scenario.onFragment { fragment ->
+            fragment.deleteBox(ParcelableAvisioBox.createFromEntity(AvisioBox(id = 0)))
             fragment.newBoxReceived(AvisioBox(name = "TEST_1", createDate = Date(1600000000)))
         }
         onView(withId(R.id.box_list_recycler_view))
