@@ -12,24 +12,27 @@
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>
 
-    <string name="box_list_fab_content_description">create card</string>
+    <string name="box_list_fab_content_description">Karte erstellen</string>
 
-    <string name="box_activity_menu_edit">Edit Box</string>
-    <string name="box_activity_menu_delete">Delete Box</string>
+    <string name="box_activity_menu_edit">Box bearbeiten</string>
+    <string name="box_activity_menu_delete">Box löschen</string>
     <string name="box_activity_fab_content_description">Add card to box</string>
     <string name="box_activity_learn_fab">Lernen</string>
     <string name="box_activity_learn_fab_content_description">Karten in Box lernen</string>
 
     <string name="create_box_app_bar_title">New box</string>
-    <string name="create_box_fab_content_description">save box</string>
+    <string name="create_box_fab_content_description">Box speichern</string>
     <string name="create_box_select_icon">Select icon</string>
-    <string name="create_box_no_name_specified">Please specify a name</string>
+    <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
+    <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
 
-    <string name="create_card_type_spinner_content_description">select card type</string>
-    <string name="create_card_fab_content_description">save card</string>
-    <string name="create_card_question_text_field_hint">Question</string>
-    <string name="create_card_answer_text_field_hint">Answer</string>
+    <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
+
+    <string name="create_card_type_spinner_content_description">Wähle einen Kartentyp</string>
+    <string name="create_card_fab_content_description">Karte speichern</string>
+    <string name="create_card_question_text_field_hint">Frage</string>
+    <string name="create_card_answer_text_field_hint">Antwort</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Abbrechen</string>
     <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
@@ -43,20 +46,20 @@
     <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
-    <string name="confirm_dialog_cancel_default">Cancel</string>
+    <string name="confirm_dialog_cancel_default">Abbrechen</string>
 
-    <string name="delete_box_confirm_dialog_title">Delete Box</string>
-    <string name="delete_box_confirm_dialog_message">Are you sure you want to permanently delete this box?</string>
-    <string name="delete_box_error_occurred">Error: Box could not be deleted</string>
+    <string name="delete_box_confirm_dialog_title">Box löschen</string>
+    <string name="delete_box_confirm_dialog_message">Wollen Sie diese Box wirklich löschen?</string>
+    <string name="delete_box_error_occurred">Fehler: Box konnte nicht gelöscht werden</string>
 
     <string name="box_title">box_title</string>
     <string name="box_name">Box_name</string>
-    <string name="erstelldatum">Erstelldatum</string>
-    <string name="box_datum">Box_datum</string>
-    <string name="karteikarten">Karteikarten</string>
-    <string name="anzahl_karteikarten">anzahl_karteikarten</string>
+    <string name="box_date_of_creation">Erstelldatum</string>
+    <string name="box_data">Box_datum</string>
+    <string name="number_of_cards">Karteikarten</string>
+    <string name="number_of_cards_title">Kartenanzahl</string>
     <string name="box_information">Box Information</string>
-    <string name="checkbox_create_new_card">Create new card</string>
+    <string name="checkbox_create_new_card">Neue Karte erstellen</string>
 
     <string name="learn_activity_title">Lernen</string>
     <string name="learn_activity_question_content_description">Frage</string>
