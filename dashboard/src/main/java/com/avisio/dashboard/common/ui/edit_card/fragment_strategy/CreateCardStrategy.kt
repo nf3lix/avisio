@@ -51,6 +51,7 @@ class CreateCardStrategy(
     override fun handleValidInput() {
         saveCard()
         fragment.requireActivity().finish()
+        Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich erstellt", Toast.LENGTH_LONG).show()
     }
 
     override fun handleInvalidInput() {

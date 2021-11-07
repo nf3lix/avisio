@@ -42,11 +42,9 @@ abstract class EditCardFragmentStrategy(
         when(TextUtils.isEmpty(question) || TextUtils.isEmpty(answer)) {
             true -> {
                 handleInvalidInput()
-                Toast.makeText(fragment.requireContext(), R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
             }
             false -> {
                 handleValidInput()
-                Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             }
         }
     }

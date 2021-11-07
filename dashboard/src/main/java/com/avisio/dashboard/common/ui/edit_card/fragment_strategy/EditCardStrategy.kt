@@ -38,6 +38,7 @@ class EditCardStrategy(
 
     override fun handleValidInput() {
         saveCard()
+        Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
     }
 
     override fun handleInvalidInput() {
