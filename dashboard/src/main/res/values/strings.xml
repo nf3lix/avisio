@@ -25,6 +25,8 @@
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Please specify a name</string>
     <string name="create_box_icon_image_content_description">box icon</string>
+    <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
 
     <string name="create_card_type_spinner_content_description">select card type</string>
     <string name="create_card_fab_content_description">save card</string>
