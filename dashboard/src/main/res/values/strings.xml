@@ -48,7 +48,7 @@
     <string name="delete_box_error_occurred">Error: Box could not be deleted</string>
 
     <string name="box_title">box_title</string>
-    <string name="box_name">Box_name</string>
+    <string name="box_name">Box name</string>
     <string name="erstelldatum">Erstelldatum</string>
     <string name="box_datum">Box_datum</string>
     <string name="karteikarten">Karteikarten</string>
