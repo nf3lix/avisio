@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
@@ -32,7 +33,8 @@ class EditCardFragmentEditModeTest {
         Intents.init()
         val card = Card(
             question = CardQuestion(arrayListOf(CardQuestionToken("QUESTION_TOKEN", CardQuestionTokenType.TEXT))),
-            answer = CardAnswer(arrayListOf("ANSWER"))
+            answer = CardAnswer(arrayListOf("ANSWER")),
+            type = CardType.CLOZE_TEXT
         )
         val fragmentArgs = bundleOf(
             EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
@@ -46,11 +48,12 @@ class EditCardFragmentEditModeTest {
     }
 
     @Test
-    fun inputFieldsEmptyByDefault() {
+    fun cardInformationSetByDefault() {
         onView(withId(R.id.card_question_input))
             .check(matches(withText("QUESTION_TOKEN")))
         onView(withId(R.id.card_answer_input))
             .check(matches(withText("ANSWER")))
+        onView(withText(CardType.CLOZE_TEXT.name)).check(matches(isDisplayed()))
     }
 
     @Test

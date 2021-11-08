@@ -32,11 +32,11 @@ class CreateCardStrategy(
         val questionToken = CardQuestionToken(questionInput.text.toString(), CardQuestionTokenType.TEXT)
         val question = CardQuestion(arrayListOf(questionToken))
         val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
-        val typeSpinner = fragment.requireView().findViewById<Spinner>(R.id.card_type_spinner)
+        val type = CardType.valueOf(typeSpinner.selectedItem.toString())
         val cardToCreate = Card(
             boxId = card.boxId,
             createDate = Date(System.currentTimeMillis()),
-            type = CardType.valueOf(typeSpinner.selectedItem.toString()),
+            type = type,
             question = question,
             answer = answer
         )
