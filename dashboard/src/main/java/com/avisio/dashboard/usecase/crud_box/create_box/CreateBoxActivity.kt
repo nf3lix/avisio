@@ -15,7 +15,6 @@ class CreateBoxActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_box)
-        setSupportActionBar(findViewById(R.id.toolbar))
         if(savedInstanceState == null) {
             initFragment()
         }
