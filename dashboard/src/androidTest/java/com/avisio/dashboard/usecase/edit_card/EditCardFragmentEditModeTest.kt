@@ -61,7 +61,8 @@ class EditCardFragmentEditModeTest {
         onView(withId(R.id.card_question_input)).perform(clearText())
         onView(withId(R.id.card_answer_input)).perform(clearText())
         onView(withId(R.id.fab_edit_card)).perform(click())
-        onView(withText(R.string.create_card_empty_question_answer)).inRoot(ToastMatcher().apply { matches(isDisplayed()) })
+        onView(withText(R.string.create_card_empty_answer)).check(matches(isDisplayed()))
+        onView(withText(R.string.create_card_empty_question)).check(matches(isDisplayed()))
         onView(withId(R.id.fab_edit_card)).check(matches(isDisplayed()))
     }
 

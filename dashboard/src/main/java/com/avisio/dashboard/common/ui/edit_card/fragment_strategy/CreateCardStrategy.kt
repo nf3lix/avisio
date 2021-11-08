@@ -57,7 +57,6 @@ class CreateCardStrategy(
     }
 
     override fun handleInvalidInput() {
-        Toast.makeText(fragment.requireContext(), com.avisio.dashboard.R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {

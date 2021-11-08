@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class EditBoxFragment : Fragment() {
@@ -30,6 +31,7 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
+    private lateinit var boxNameTextInputLayout: TextInputLayout
     private lateinit var nameInput: AppCompatEditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxRepository: AvisioBoxRepository
@@ -49,8 +51,13 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        nameInput = view?.findViewById(R.id.box_name_edit_text)!!
-        iconImageView = view?.findViewById(R.id.box_icon_imageview)!!
+        nameInput = requireView().findViewById(R.id.box_name_edit_text)!!
+        iconImageView = requireView().findViewById(R.id.box_icon_imageview)!!
+        boxNameTextInputLayout = requireView().findViewById(R.id.box_name_input_layout)
+        nameInput.setOnKeyListener { _, _, _ ->
+            boxNameTextInputLayout.isErrorEnabled = false
+            false
+        }
         setupFab()
         setupSelectIconButton()
         fillBoxInformation()
@@ -100,7 +107,7 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun handleInvalidInput() {
-        Toast.makeText(context, getString(R.string.create_box_no_name_specified), Toast.LENGTH_LONG).show()
+        boxNameTextInputLayout.error = getString(R.string.create_box_no_name_specified)
     }
 
     private fun handleValidInput() {

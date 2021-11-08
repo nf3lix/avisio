@@ -17,6 +17,7 @@ import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 
 class EditCardFragment : Fragment() {
 
@@ -54,6 +55,7 @@ class EditCardFragment : Fragment() {
         setupFab()
         questionInput = requireView().findViewById(R.id.card_question_input)!!
         answerInput = requireView().findViewById(R.id.card_answer_input)
+        setTextInputLayoutListeners()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
@@ -108,6 +110,17 @@ class EditCardFragment : Fragment() {
         val parcelableCard = getParcelable<ParcelableCard>(CARD_OBJECT_KEY)
             ?: return null
         return ParcelableCard.createEntity(parcelableCard)
+    }
+
+    private fun setTextInputLayoutListeners() {
+        questionInput.setOnKeyListener { _, _, _ ->
+            requireView().findViewById<TextInputLayout>(R.id.question_text_input_layout).isErrorEnabled = false
+            false
+        }
+        answerInput.setOnKeyListener { _, _, _ ->
+            requireView().findViewById<TextInputLayout>(R.id.answer_text_input_layout).isErrorEnabled = false
+            false
+        }
     }
 
 }
