@@ -26,11 +26,15 @@ class BoxListFragmentTest {
     fun initScenario() {
         init()
         scenario = launchFragmentInContainer(themeResId = R.style.Theme_Avisio)
+        scenario.onFragment { fragment ->
+            fragment.deleteBox(ParcelableAvisioBox.createFromEntity(AvisioBox(id = 0)))
+        }
     }
 
     @After
     fun releaseIntents() {
         release()
+        scenario = launchFragmentInContainer(themeResId = R.style.Theme_Avisio)
     }
 
     @Test

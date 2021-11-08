@@ -13,20 +13,24 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <EditText
-            android:id="@+id/box_name_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/secondaryLightColor"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/box_name_input_layout"
+            android:layout_width="280dp"
+            android:layout_height="62dp"
+            android:hint="@string/box_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintVertical_bias="0.2">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/box_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
             android:id="@+id/box_icon_imageview"
@@ -37,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/box_name_input"
+            app:layout_constraintTop_toBottomOf="@+id/box_name_input_layout"
             app:layout_constraintVertical_bias="0.05"
             app:srcCompat="@drawable/box_icon_default" />
 

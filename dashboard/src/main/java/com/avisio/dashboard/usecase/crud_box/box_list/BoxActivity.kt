@@ -84,18 +84,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     private fun confirmDeletion() {
-        val confirmDialog = ConfirmDialog(
-            this,
-            baseContext.getString(R.string.delete_box_confirm_dialog_title),
-            baseContext.getString(R.string.delete_box_confirm_dialog_message)
-        )
-        confirmDialog.setOnConfirmListener {
-            val resultIntent = Intent()
-            resultIntent.putExtra(BOX_DELETE_OBSERVER_REPLY, parcelableBox)
-            setResult(RESULT_OK, resultIntent)
-            finish()
-        }
-        confirmDialog.showDialog()
+        ConfirmDeleteBoxDialog.showDialog(this, parcelableBox)
     }
 
     private fun setupView() {

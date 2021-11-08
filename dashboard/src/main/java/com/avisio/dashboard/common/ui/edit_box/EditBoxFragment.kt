@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
@@ -29,7 +30,7 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
-    private lateinit var nameInput: EditText
+    private lateinit var nameInput: AppCompatEditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxRepository: AvisioBoxRepository
 
@@ -48,7 +49,7 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        nameInput = view?.findViewById(R.id.box_name_input)!!
+        nameInput = view?.findViewById(R.id.box_name_edit_text)!!
         iconImageView = view?.findViewById(R.id.box_icon_imageview)!!
         setupFab()
         setupSelectIconButton()

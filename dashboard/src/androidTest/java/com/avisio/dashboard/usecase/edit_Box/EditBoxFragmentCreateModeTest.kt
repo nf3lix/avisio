@@ -45,7 +45,7 @@ class EditBoxFragmentCreateModeTest {
 
     @Test
     fun setBoxNameInputTest() {
-        onView(withId(R.id.box_name_input))
+        onView(withId(R.id.box_name_edit_text))
             .check(matches(withText("")))
     }
 
