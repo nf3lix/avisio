@@ -65,9 +65,7 @@ class EditBoxFragmentEditModeTest {
     fun removeBoxNameTest() {
         onView(withId(R.id.box_name_edit_text)).perform(clearText())
         onView(withId(R.id.fab_edit_box)).perform(click())
-        onView(withText(R.string.create_box_no_name_specified)).inRoot(ToastMatcher().apply {
-            matches(isDisplayed())
-        })
+        onView(withText(R.string.create_box_no_name_specified)).check(matches(isDisplayed()))
     }
 
     @Test
