@@ -119,23 +119,30 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun handleValidInput() {
-        if(nameInput.text.toString() in boxNameList) {
+        if(nameInput.text.toString() in boxNameList &&
+            (fragmentMode == EditBoxFragmentMode.CREATE_BOX || parcelableBox.boxName != nameInput.text.toString())) {
             val dialog = ConfirmDialog(
                 requireContext(),
                 getString(R.string.create_box_duplicate_name_dialog_title),
                 getString(R.string.create_box_duplicate_name_dialog_message)
             )
             dialog.setOnConfirmListener {
-                when(fragmentMode) {
-                    EditBoxFragmentMode.CREATE_BOX -> {
-                        createNewBox()
-                    }
-                    EditBoxFragmentMode.EDIT_BOX -> {
-                        updateBox()
-                    }
-                }
+                saveChanges()
             }
             dialog.showDialog()
+            return
+        }
+        saveChanges()
+    }
+
+    private fun saveChanges() {
+        when(fragmentMode) {
+            EditBoxFragmentMode.CREATE_BOX -> {
+                createNewBox()
+            }
+            EditBoxFragmentMode.EDIT_BOX -> {
+                updateBox()
+            }
         }
     }
 
