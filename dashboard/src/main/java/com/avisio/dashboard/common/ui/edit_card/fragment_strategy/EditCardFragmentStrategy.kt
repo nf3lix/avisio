@@ -2,6 +2,7 @@ package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.text.TextUtils
 import android.widget.CheckBox
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.avisio.dashboard.R
@@ -12,10 +13,9 @@ abstract class EditCardFragmentStrategy(
     private val fragment: EditCardFragment
 ) {
 
-
-
-    var questionInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_question_input)
-    var answerInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_answer_input)
+    val questionInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_question_input)
+    val answerInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_answer_input)
+    val typeSpinner: Spinner = fragment.requireView().findViewById(R.id.card_type_spinner)
 
     abstract fun fillCardInformation()
     abstract fun saveCard()
@@ -50,7 +50,5 @@ abstract class EditCardFragmentStrategy(
             }
         }
     }
-
-
 
 }
