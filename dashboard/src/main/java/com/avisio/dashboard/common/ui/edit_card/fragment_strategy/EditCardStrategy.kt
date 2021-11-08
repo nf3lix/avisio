@@ -52,7 +52,6 @@ class EditCardStrategy(
     }
 
     override fun handleInvalidInput() {
-        Toast.makeText(fragment.requireContext(), R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {

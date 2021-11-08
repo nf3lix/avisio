@@ -33,7 +33,8 @@
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Abbrechen</string>
     <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
-    <string name="create_card_empty_question_answer">Frage und Antwort dürfen nicht leer sein</string>
+    <string name="create_card_empty_question">Frage darf nicht leer sein</string>
+    <string name="create_card_empty_answer">Antwort darf nicht leer sein</string>
     <string name="create_card_action_bar_title">Neue Karte</string>
     <string name="edit_card_delete">Karte löschen</string>
     <string name="edit_card_action_bar_title">Karte bearbeiten</string>
