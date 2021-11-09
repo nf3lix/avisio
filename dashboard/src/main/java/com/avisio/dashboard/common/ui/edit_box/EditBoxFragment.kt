@@ -3,6 +3,7 @@ package com.avisio.dashboard.common.ui.edit_box
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,11 @@ import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
+import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class EditBoxFragment : Fragment() {
@@ -35,10 +39,14 @@ class EditBoxFragment : Fragment() {
     private lateinit var nameInput: AppCompatEditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxRepository: AvisioBoxRepository
+    private lateinit var boxNameList: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         boxRepository = AvisioBoxRepository(requireActivity().application)
+        GlobalScope.launch {
+            boxNameList = boxRepository.getBoxNameList()
+        }
         arguments?.let {
             parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
             fragmentMode = EditBoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
@@ -111,6 +119,23 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun handleValidInput() {
+        if(nameInput.text.toString() in boxNameList &&
+            (fragmentMode == EditBoxFragmentMode.CREATE_BOX || parcelableBox.boxName != nameInput.text.toString())) {
+            val dialog = ConfirmDialog(
+                requireContext(),
+                getString(R.string.create_box_duplicate_name_dialog_title),
+                getString(R.string.create_box_duplicate_name_dialog_message)
+            )
+            dialog.setOnConfirmListener {
+                saveChanges()
+            }
+            dialog.showDialog()
+            return
+        }
+        saveChanges()
+    }
+
+    private fun saveChanges() {
         when(fragmentMode) {
             EditBoxFragmentMode.CREATE_BOX -> {
                 createNewBox()

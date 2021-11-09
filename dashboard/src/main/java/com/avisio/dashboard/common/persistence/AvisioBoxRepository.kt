@@ -41,4 +41,8 @@ class AvisioBoxRepository(application: Application) {
         }
     }
 
+    suspend fun getBoxNameList(): List<String> {
+        return dao.getBoxNameList()
+    }
+
 }

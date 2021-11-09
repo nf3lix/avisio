@@ -1,7 +1,6 @@
 package com.avisio.dashboard.common.persistence
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.card.Card
@@ -48,7 +47,6 @@ class CardRepository(application: Application) {
     }
 
     fun updateCard(card: Card) {
-        Log.d("updated_card_type", card.type.toString())
         GlobalScope.launch {
             dao.updateCard(card)
         }
