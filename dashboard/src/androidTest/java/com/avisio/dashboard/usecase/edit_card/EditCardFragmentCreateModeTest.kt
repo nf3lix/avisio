@@ -4,6 +4,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -16,6 +17,7 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
 import com.avisio.dashboard.persistence.ToastMatcher
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -47,14 +49,33 @@ class EditCardFragmentCreateModeTest {
     @Test
     fun showErrorMessageIfFieldIsEmpty() {
         onView(withId(R.id.fab_edit_card)).perform(click())
-        onView(withText(R.string.create_card_empty_question_answer)).inRoot(ToastMatcher().apply { matches(isDisplayed()) })
+        onView(withText(R.string.create_card_empty_answer)).check(matches(isDisplayed()))
+        onView(withText(R.string.create_card_empty_question)).check(matches(isDisplayed()))
         onView(withId(R.id.fab_edit_card)).check(matches(isDisplayed()))
 
         onView(withId(R.id.card_question_input)).perform(typeText("QUESTION"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.fab_edit_card)).perform(click())
-        onView(withText(R.string.create_card_empty_question_answer)).inRoot(ToastMatcher().apply { matches(isDisplayed()) })
+        onView(withText(R.string.create_card_empty_answer)).check(matches(isDisplayed()))
         onView(withId(R.id.fab_edit_card)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun removeQuestionErrorTextOnKeyTyped() {
+        onView(withId(R.id.fab_edit_card)).perform(click())
+        onView(withText(R.string.create_card_empty_question)).check(matches(isDisplayed()))
+        onView(withId(R.id.card_question_input)).perform(typeText("QUESTION"))
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        onView(withText(R.string.create_card_empty_question)).check(matches(not(isDisplayed())))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun removeAnswerErrorTextOnKeyTyped() {
+        onView(withId(R.id.fab_edit_card)).perform(click())
+        onView(withText(R.string.create_card_empty_answer)).check(matches(isDisplayed()))
+        onView(withId(R.id.card_question_input)).perform(typeText("ANSWER"))
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        onView(withText(R.string.create_card_empty_question)).check(matches(not(isDisplayed())))
     }
 
 }

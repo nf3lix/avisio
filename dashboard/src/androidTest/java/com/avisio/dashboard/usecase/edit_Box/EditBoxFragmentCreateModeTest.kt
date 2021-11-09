@@ -8,6 +8,7 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -45,7 +46,7 @@ class EditBoxFragmentCreateModeTest {
 
     @Test
     fun setBoxNameInputTest() {
-        onView(withId(R.id.box_name_input))
+        onView(withId(R.id.box_name_edit_text))
             .check(matches(withText("")))
     }
 
@@ -68,6 +69,14 @@ class EditBoxFragmentCreateModeTest {
         onView(IndexMatcher(withClassName(containsString(ListMenuItemView::class.java.simpleName)), 1)).perform(click());
         onView(allOf(withClassName(containsString(MenuPopupWindow.MenuDropDownListView::class.java.simpleName)))).check(
             matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun showErrorIfBoxNameIsEmpty() {
+        onView(withId(R.id.select_icon_button)).perform(click())
+        onView(withText(R.string.create_box_no_name_specified)).check(matches(isDisplayed()))
+        onView(withId(R.id.box_name_edit_text)).perform(typeText("NAME"))
+        onView(withText(R.string.create_box_no_name_specified)).check(matches(not(isDisplayed())))
     }
 
 }

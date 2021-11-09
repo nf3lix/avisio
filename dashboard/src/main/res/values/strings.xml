@@ -4,9 +4,6 @@
     <!-- Strings used for fragments for navigation -->
     <string name="main_activity_label">MainActivity</string>
     <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <string name="title_activity_create_box">Create Box</string>
     <string name="main_activity_app_bar_title">Home</string>
@@ -25,8 +22,9 @@
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
+    <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
-
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
 
     <string name="create_card_type_spinner_content_description">Wähle einen Kartentyp</string>
@@ -36,7 +34,8 @@
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Abbrechen</string>
     <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
-    <string name="create_card_empty_question_answer">Frage und Antwort dürfen nicht leer sein</string>
+    <string name="create_card_empty_question">Frage darf nicht leer sein</string>
+    <string name="create_card_empty_answer">Antwort darf nicht leer sein</string>
     <string name="create_card_action_bar_title">Neue Karte</string>
     <string name="create_card_successful">Karte wurde erfolgreich erstellt</string>
     <string name="edit_card_delete">Karte löschen</string>
@@ -53,11 +52,11 @@
     <string name="delete_box_error_occurred">Fehler: Box konnte nicht gelöscht werden</string>
 
     <string name="box_title">box_title</string>
-    <string name="box_name">Box_name</string>
-    <string name="box_date_of_creation">Erstelldatum</string>
-    <string name="box_data">Box_datum</string>
-    <string name="number_of_cards">Karteikarten</string>
-    <string name="number_of_cards_title">Kartenanzahl</string>
+    <string name="box_name">Box name</string>
+    <string name="erstelldatum">Erstelldatum</string>
+    <string name="box_datum">Box_datum</string>
+    <string name="karteikarten">Karteikarten</string>
+    <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
     <string name="checkbox_create_new_card">Neue Karte erstellen</string>
 
