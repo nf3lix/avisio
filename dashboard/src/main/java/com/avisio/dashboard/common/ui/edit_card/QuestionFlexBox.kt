@@ -29,11 +29,24 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
     }
 
     private fun addChip() {
-        val start = editText.selectionStart
-        val end = editText.selectionEnd
-        val selection = editText.text.toString().substring(start, end)
+        var selectedText = ""
+        var selectionEditTextIndex = -1
+        for((index, view) in flexbox.allViews.toList().withIndex()) {
+            if(view !is EditText) continue
+            val start = view.selectionStart
+            val end = view.selectionEnd
+            if(end - start != 0) {
+                selectedText = view.text.toString().substring(start, end)
+                selectionEditTextIndex = index
+            }
+        }
+
+        if(selectedText == "") {
+            return
+        }
+
         val chip = Chip(context)
-        chip.text = selection
+        chip.text = selectedText
         chip.isCloseIconEnabled = true
         chip.isClickable = true
         chip.isCheckable = false
