@@ -46,14 +46,22 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
 
     private fun mergeEditTexts() {
         val viewList = flexbox.allViews.toList()
-        val editTextIndexList = HashMap<Int, String>()
+        val editTextMap = HashMap<Int, String>()
         for((index, view) in viewList.withIndex()) {
             if(view is EditText) {
-                editTextIndexList[index] = view.text.toString()
+                editTextMap[index] = view.text.toString()
             }
         }
-        Log.d("test12345", editTextIndexList.toString())
-
+        var previousEditTextIndex = -1
+        for((editTextIndex, text) in editTextMap) {
+            if(editTextIndex == 1) continue
+            if(editTextIndex == previousEditTextIndex + 1) {
+                val mergedText = editTextMap[previousEditTextIndex] + " " + text
+                (viewList[editTextIndex] as EditText).setText(mergedText)
+                flexbox.removeView(viewList[previousEditTextIndex] as EditText)
+            }
+            previousEditTextIndex = editTextIndex
+        }
     }
 
 }
