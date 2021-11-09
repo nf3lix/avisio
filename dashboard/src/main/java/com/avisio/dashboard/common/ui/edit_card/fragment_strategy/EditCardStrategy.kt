@@ -49,6 +49,7 @@ class EditCardStrategy(
 
     override fun handleValidInput() {
         saveCard()
+        Toast.makeText(fragment.requireContext(), R.string.edit_card_successful, Toast.LENGTH_LONG).show()
     }
 
     override fun handleInvalidInput() {

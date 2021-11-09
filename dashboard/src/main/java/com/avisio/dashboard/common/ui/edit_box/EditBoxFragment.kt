@@ -155,6 +155,7 @@ class EditBoxFragment : Fragment() {
         )
         )
         activity?.finish()
+        Toast.makeText(requireContext(), R.string.create_box_successful, Toast.LENGTH_LONG).show()
     }
 
     private fun updateBox() {
@@ -164,6 +165,7 @@ class EditBoxFragment : Fragment() {
         intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, updatedBox)
         activity?.startActivity(intent)
         activity?.finish()
+        Toast.makeText(requireContext(), R.string.edit_box_successful, Toast.LENGTH_LONG).show()
     }
 
     private fun updateBoxIcon(boxIconId: Int) {

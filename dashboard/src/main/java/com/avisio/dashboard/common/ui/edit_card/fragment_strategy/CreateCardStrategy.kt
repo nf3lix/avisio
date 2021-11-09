@@ -42,7 +42,7 @@ class CreateCardStrategy(
         )
         repository.insertCard(cardToCreate)
 
-        val checkboxView = fragment.requireActivity().findViewById<CheckBox>(com.avisio.dashboard.R.id.checkbox_create_new_card)
+        val checkboxView = fragment.requireActivity().findViewById<CheckBox>(R.id.checkbox_create_new_card)
 
         if(checkboxView.isChecked){
             val newIntent = Intent(fragment.requireContext(), CreateCardActivity::class.java)
@@ -54,6 +54,7 @@ class CreateCardStrategy(
     override fun handleValidInput() {
         saveCard()
         fragment.requireActivity().finish()
+        Toast.makeText(fragment.requireContext(), R.string.create_card_successful, Toast.LENGTH_LONG).show()
     }
 
     override fun handleInvalidInput() {
