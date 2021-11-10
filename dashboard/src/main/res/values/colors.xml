@@ -9,6 +9,7 @@
     <color name="primaryTextColor">#000000</color> <!-- text color on green -->
     <color name="secondaryTextColor">#000000</color> <!-- text color on purple -->
     <color name="dividerColor">#D2D2D2</color> <!-- color for dividers, grids etc -->
+    <color name="backgroundTintLightColor">#e0e0e0</color> <!-- color for dividers, grids etc -->
     <color name="textColor">#979797</color> <!-- text color on white background -->
     <color name="correctAnswer">#4CAF50</color> <!-- text color on white background -->
     <color name="partiallyCorrectAnswer">#FFC107</color> <!-- text color on white background -->

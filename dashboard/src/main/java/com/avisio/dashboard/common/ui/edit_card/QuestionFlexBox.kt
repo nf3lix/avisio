@@ -3,6 +3,7 @@ package com.avisio.dashboard.common.ui.edit_card
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
+import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -12,6 +13,9 @@ import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
 
@@ -54,37 +58,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
             return
         }
 
-        val chip = Chip(context)
-        chip.text = selectedText
-        chip.tag = false
-        chip.setOnTouchListener{ view, motionEvent ->
-            if(view is Chip && view.tag == false) {
-                if(motionEvent.x >= view.totalPaddingRight) {
-                    chip.tag = true
-                    var chipIndex = 0
-                    for((index, flexboxView) in flexbox.allViews.toList().withIndex()) {
-                        if(flexboxView == chip) {
-                            chipIndex = index
-                        }
-                    }
-                    val editTextReplacement = EditText(context)
-                    editTextReplacement.setText(selectedText)
-                    flexbox.removeView(chip)
-                    flexbox.addView(editTextReplacement as View, chipIndex - 1)
-                }
-                mergeEditTexts()
-            }
-            true
-        }
-
-        chip.isCloseIconVisible = true
-        chip.isCheckable = false
+        val chip = getClozeChip(selectedText)
         flexbox.removeView(flexbox.allViews.toList()[selectionEditTextIndex])
         flexbox.addView(chip as View, selectionEditTextIndex - 1)
         val preEditText = EditText(context)
         preEditText.setText(preSelectedText)
+        preEditText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         val postEditText = EditText(context)
         postEditText.setText(postSelectedText)
+        postEditText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         flexbox.addView(preEditText as View, selectionEditTextIndex - 1)
         flexbox.addView(postEditText as View, selectionEditTextIndex + 1)
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
@@ -113,6 +95,69 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
             }
             previousEditTextIndex = editTextIndex
         }
+    }
+
+    fun getCardQuestion(): CardQuestion {
+        val tokenList = arrayListOf<CardQuestionToken>()
+        for(view in flexbox.allViews.toList()) {
+            when(view) {
+                is EditText -> {
+                    tokenList.add(CardQuestionToken(view.text.toString(), CardQuestionTokenType.TEXT))
+                }
+                is Chip -> {
+                    tokenList.add(CardQuestionToken(view.text.toString(), CardQuestionTokenType.QUESTION))
+                }
+            }
+        }
+        return CardQuestion(tokenList)
+    }
+
+    fun setCardQuestion(cardQuestion: CardQuestion) {
+        flexbox.removeAllViews()
+        for((index, token) in cardQuestion.tokenList.withIndex()) {
+            when(token.tokenType) {
+                CardQuestionTokenType.TEXT -> {
+                    val editText = EditText(context)
+                    editText.setText(token.content)
+                    flexbox.addView(editText, index)
+                }
+                CardQuestionTokenType.QUESTION -> {
+                    val chip = getClozeChip(token.content)
+                    flexbox.addView(chip, index)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun getClozeChip(question: String): Chip {
+        val chip = Chip(context)
+        chip.text = question
+        chip.setChipBackgroundColorResource(R.color.primaryDarkColor)
+        chip.tag = false
+        chip.setOnTouchListener{ view, motionEvent ->
+            if(view is Chip && view.tag == false) {
+                if(motionEvent.x >= view.totalPaddingRight) {
+                    chip.tag = true
+                    var chipIndex = 0
+                    for((index, flexboxView) in flexbox.allViews.toList().withIndex()) {
+                        if(flexboxView == chip) {
+                            chipIndex = index
+                        }
+                    }
+                    val editTextReplacement = EditText(context)
+                    editTextReplacement.setText(question)
+                    flexbox.removeView(chip)
+                    flexbox.addView(editTextReplacement as View, chipIndex - 1)
+                }
+                mergeEditTexts()
+            }
+            true
+        }
+
+        chip.isCloseIconVisible = true
+        chip.isCheckable = false
+        return chip
     }
 
 }

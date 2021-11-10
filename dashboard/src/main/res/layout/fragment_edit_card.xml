@@ -74,6 +74,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.avisio.dashboard.common.ui.edit_card.QuestionFlexBox
+            android:id="@+id/question_flexbox"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"

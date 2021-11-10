@@ -61,6 +61,8 @@ class EditCardFragment : Fragment() {
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
+        val flexbox = requireView().findViewById<QuestionFlexBox>(R.id.question_flexbox)
+        flexbox.setCardQuestion(card.question)
     }
 
 
