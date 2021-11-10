@@ -38,6 +38,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
             if(end - start != 0) {
                 selectedText = view.text.toString().substring(start, end)
                 selectionEditTextIndex = index
+                view.setText("")
             }
         }
 
@@ -48,11 +49,19 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         val chip = Chip(context)
         chip.text = selectedText
         chip.isCloseIconEnabled = true
+        chip.setOnCloseIconClickListener {
+            mergeEditTexts()
+        }
         chip.isClickable = true
         chip.isCheckable = false
-        flexbox.addView(chip as View, flexbox.childCount - 1)
-        editText.setText("")
-        flexbox.addView(EditText(context) as View, 0)
+        flexbox.addView(chip as View, selectionEditTextIndex - 1)
+        Log.d("test1234", selectionEditTextIndex.toString())
+        if(selectionEditTextIndex == 1) {
+            flexbox.addView(EditText(context) as View, selectionEditTextIndex - 1)
+        } else {
+            flexbox.addView(EditText(context) as View, selectionEditTextIndex - 2)
+            flexbox.addView(EditText(context) as View, selectionEditTextIndex)
+        }
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
         mergeEditTexts()
     }
