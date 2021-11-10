@@ -17,7 +17,7 @@ enum class QuestionResult(val stringRepresentation: Int, val color: Int) {
         }
     },
 
-    INCORRECT(R.string.learn_activity_result_button_incorrect, R.color.incorrectAnswer) {
+    INCORRECT(R.string.learn_activity_result_button_incorrect, R.color.warning) {
         override fun onOptionSelected(view: LearnCardView) {
             view.onResultOptionSelected(this)
         }

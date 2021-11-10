@@ -8,15 +8,15 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
+import com.avisio.dashboard.common.ui.edit_card.QuestionFlexBox
 import com.google.android.material.textfield.TextInputLayout
 
 abstract class EditCardFragmentStrategy(
     private val fragment: EditCardFragment
 ) {
 
-    private val questionInputLayout: TextInputLayout = fragment.requireView().findViewById(R.id.question_text_input_layout)
+    val questionFlexBox: QuestionFlexBox = fragment.requireView().findViewById(R.id.question_flexbox)
     private val answerInputLayout: TextInputLayout = fragment.requireView().findViewById(R.id.answer_text_input_layout)
-    val questionInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_question_input)
     val answerInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_answer_input)
     val typeSpinner: Spinner = fragment.requireView().findViewById(R.id.card_type_spinner)
 
@@ -40,7 +40,7 @@ abstract class EditCardFragmentStrategy(
     }
 
     fun onFabClicked() {
-        val question = questionInput.text
+        val question = questionFlexBox.getCardQuestion().getStringRepresentation()
         val answer = answerInput.text
         if(!TextUtils.isEmpty(question) && !TextUtils.isEmpty(answer)) {
             handleValidInput()
@@ -49,7 +49,7 @@ abstract class EditCardFragmentStrategy(
         }
 
         if(TextUtils.isEmpty(question)) {
-            questionInputLayout.error = fragment.requireContext().getString(R.string.create_card_empty_question)
+            questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_question))
         }
         if(TextUtils.isEmpty(answer)) {
             answerInputLayout.error = fragment.requireContext().getString(R.string.create_card_empty_answer)

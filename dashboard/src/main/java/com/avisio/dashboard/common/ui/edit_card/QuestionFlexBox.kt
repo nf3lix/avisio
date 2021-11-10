@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.allViews
+import androidx.core.view.isVisible
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
@@ -38,6 +40,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         }
         val editText = getEditText("")
         editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        editText.setOnKeyListener { _, _, _ ->
+            setEditTextKeyListeners()
+            true
+        }
         flexbox.addView(editText as View, 0)
     }
 
@@ -73,6 +79,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         flexbox.addView(postEditText as View, selectionEditTextIndex + 1)
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
         mergeEditTexts()
+        resetError()
     }
 
     private fun mergeEditTexts() {
@@ -153,6 +160,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
                     flexbox.addView(editTextReplacement as View, chipIndex - 1)
                 }
                 mergeEditTexts()
+                setEditTextKeyListeners()
             }
             true
         }
@@ -169,6 +177,33 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
             editText.textSize = TEXT_SIZE
         }
         return editText
+    }
+
+    fun setError(errorMessage: String) {
+        val errorMessageView = findViewById<TextView>(R.id.question_box_error_message)
+        errorMessageView.visibility = View.VISIBLE
+        errorMessageView.text = errorMessage
+        findViewById<TextView>(R.id.question_title_text_view).setTextColor(resources.getColor(R.color.warning))
+    }
+
+    fun resetError() {
+        findViewById<TextView>(R.id.question_title_text_view).setTextColor(resources.getColor(R.color.primaryColor))
+        val errorMessageView = findViewById<TextView>(R.id.question_box_error_message)
+        errorMessageView.visibility = View.GONE
+        errorMessageView.text = ""
+    }
+
+    private fun setEditTextKeyListeners() {
+        val views = flexbox.allViews.toList()
+        for(view in views) {
+            if(view is EditText) {
+                view.setOnKeyListener { _, _, _ ->
+                    Log.d("test123", "test")
+                    resetError()
+                    false
+                }
+            }
+        }
     }
 
 }

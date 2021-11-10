@@ -26,7 +26,6 @@ class EditCardFragment : Fragment() {
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
-    private lateinit var questionInput: AppCompatEditText
     private lateinit var answerInput: AppCompatEditText
 
     private lateinit var card: Card
@@ -53,7 +52,6 @@ class EditCardFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFab()
-        questionInput = requireView().findViewById(R.id.card_question_input)!!
         answerInput = requireView().findViewById(R.id.card_answer_input)
         setTextInputLayoutListeners()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
@@ -117,10 +115,6 @@ class EditCardFragment : Fragment() {
     }
 
     private fun setTextInputLayoutListeners() {
-        questionInput.setOnKeyListener { _, _, _ ->
-            requireView().findViewById<TextInputLayout>(R.id.question_text_input_layout).isErrorEnabled = false
-            false
-        }
         answerInput.setOnKeyListener { _, _, _ ->
             requireView().findViewById<TextInputLayout>(R.id.answer_text_input_layout).isErrorEnabled = false
             false

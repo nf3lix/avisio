@@ -35,6 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.217" />
 
+        <!---
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/question_text_input_layout"
                 android:layout_width="280dp"
@@ -52,7 +53,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout> -->
+
+        <com.avisio.dashboard.common.ui.edit_card.QuestionFlexBox
+            android:id="@+id/question_flexbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_type_spinner"
+            app:layout_constraintVertical_bias="0.01"
+        />
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/answer_text_input_layout"
@@ -63,7 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/question_text_input_layout"
+                app:layout_constraintTop_toBottomOf="@+id/question_flexbox"
                 app:layout_constraintVertical_bias="0.070">
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -72,18 +85,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.avisio.dashboard.common.ui.edit_card.QuestionFlexBox
-            android:id="@+id/question_flexbox"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/answer_text_input_layout"
-            app:layout_constraintVertical_bias="0.070"
-            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

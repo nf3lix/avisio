@@ -13,5 +13,5 @@
     <color name="textColor">#979797</color> <!-- text color on white background -->
     <color name="correctAnswer">#4CAF50</color> <!-- text color on white background -->
     <color name="partiallyCorrectAnswer">#FFC107</color> <!-- text color on white background -->
-    <color name="incorrectAnswer">#F44336</color> <!-- text color on white background -->
+    <color name="warning">#b00022</color> <!-- text color on white background -->
 </resources>

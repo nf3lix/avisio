@@ -29,8 +29,7 @@ class CreateCardStrategy(
     }
 
     override fun saveCard() {
-        val questionToken = CardQuestionToken(questionInput.text.toString(), CardQuestionTokenType.TEXT)
-        val question = CardQuestion(arrayListOf(questionToken))
+        val question = questionFlexBox.getCardQuestion()
         val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
         val type = CardType.valueOf(typeSpinner.selectedItem.toString())
         val cardToCreate = Card(
@@ -61,7 +60,7 @@ class CreateCardStrategy(
     }
 
     override fun onBackPressed() {
-        if(!TextUtils.isEmpty(questionInput.text) || !TextUtils.isEmpty(answerInput.text)) {
+        if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !TextUtils.isEmpty(answerInput.text)) {
             showOnBackPressedWarning()
             return
         }
