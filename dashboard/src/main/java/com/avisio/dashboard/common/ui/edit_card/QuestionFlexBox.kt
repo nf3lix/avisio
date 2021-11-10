@@ -7,6 +7,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -35,7 +36,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         button.setOnClickListener {
             addChip()
         }
-        val editText = EditText(context)
+        val editText = getEditText("")
+        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         flexbox.addView(editText as View, 0)
     }
 
@@ -117,8 +119,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 CardQuestionTokenType.TEXT -> {
-                    val editText = EditText(context)
-                    editText.setText(token.content)
+                    val editText = getEditText(token.content)
                     flexbox.addView(editText, index)
                 }
                 CardQuestionTokenType.QUESTION -> {
