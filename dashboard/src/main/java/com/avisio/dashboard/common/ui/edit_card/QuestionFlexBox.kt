@@ -21,6 +21,10 @@ import com.google.android.material.chip.Chip
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
+    companion object {
+        private const val TEXT_SIZE = 14F
+    }
+
     private var button: Button
     private var flexbox: FlexboxLayout
 
@@ -61,10 +65,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         val chip = getClozeChip(selectedText)
         flexbox.removeView(flexbox.allViews.toList()[selectionEditTextIndex])
         flexbox.addView(chip as View, selectionEditTextIndex - 1)
-        val preEditText = EditText(context)
-        preEditText.setText(preSelectedText)
-        val postEditText = EditText(context)
-        postEditText.setText(postSelectedText)
+        val preEditText = getEditText(preSelectedText)
+        val postEditText = getEditText(postSelectedText)
         flexbox.addView(preEditText as View, selectionEditTextIndex - 1)
         flexbox.addView(postEditText as View, selectionEditTextIndex + 1)
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
@@ -132,6 +134,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         val chip = Chip(context)
         chip.text = question
         chip.setChipBackgroundColorResource(R.color.primaryDarkColor)
+        chip.textSize = TEXT_SIZE
         chip.tag = false
         chip.setOnTouchListener{ view, motionEvent ->
             if(view is Chip && view.tag == false) {
@@ -156,6 +159,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         chip.isCloseIconVisible = true
         chip.isCheckable = false
         return chip
+    }
+
+    private fun getEditText(input: String): EditText {
+        val editText = EditText(context)
+        editText.setText(input)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            editText.textSize = TEXT_SIZE
+        }
+        return editText
     }
 
 }
