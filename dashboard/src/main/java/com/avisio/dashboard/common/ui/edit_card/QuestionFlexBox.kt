@@ -22,17 +22,17 @@ import com.google.android.material.chip.Chip
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
     private var button: Button
-    private var editText: EditText
     private var flexbox: FlexboxLayout
 
     init {
         inflate(context, R.layout.question_flex_box, this)
         button = findViewById(R.id.test_button)
-        editText = findViewById(R.id.test_edit_text)
         flexbox = findViewById(R.id.test_flexbox)
         button.setOnClickListener {
             addChip()
         }
+        val editText = EditText(context)
+        flexbox.addView(editText as View, 0)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -63,10 +63,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         flexbox.addView(chip as View, selectionEditTextIndex - 1)
         val preEditText = EditText(context)
         preEditText.setText(preSelectedText)
-        preEditText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         val postEditText = EditText(context)
         postEditText.setText(postSelectedText)
-        postEditText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         flexbox.addView(preEditText as View, selectionEditTextIndex - 1)
         flexbox.addView(postEditText as View, selectionEditTextIndex + 1)
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
