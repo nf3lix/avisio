@@ -1,6 +1,6 @@
 package com.avisio.dashboard.common.data.model.card
 
-class CardAnswer(private val answerList: ArrayList<String>) {
+class CardAnswer(val answerList: ArrayList<String>) {
 
     companion object {
         fun getFromStringRepresentation(representation: String): CardAnswer {

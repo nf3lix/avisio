@@ -3,8 +3,12 @@ package com.avisio.dashboard.common.data.model.card
 import android.text.TextUtils
 import android.util.Log
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
+import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.ui.edit_card.SaveCardConstraint
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.usecase.training.QuestionResult
 
 enum class CardType(val iconId: Int) {
 
@@ -13,6 +17,13 @@ enum class CardType(val iconId: Int) {
             val constraintList = arrayListOf(answerNotEmptyConstraint(strategy))
             constraintList.addAll(getUniversalConstraints(strategy))
             return constraintList
+        }
+
+        override fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
+            return when(cardQuestion.getStringRepresentation() == cardAnswer.getStringRepresentation()) {
+                true -> QuestionResult.CORRECT
+                false -> QuestionResult.INCORRECT
+            }
         }
     },
 
@@ -33,6 +44,25 @@ enum class CardType(val iconId: Int) {
             constraintList.addAll(getUniversalConstraints(strategy))
             return constraintList
         }
+
+        override fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
+            val answerTokenList = cardAnswer.answerList
+            val questionTokenList = arrayListOf<CardQuestionToken>()
+            for(questionToken in cardQuestion.tokenList) {
+                if(questionToken.tokenType == CardQuestionTokenType.QUESTION) {
+                    questionTokenList.add(questionToken)
+                }
+            }
+            if(answerTokenList.size != questionTokenList.size) {
+                return QuestionResult.INCORRECT
+            }
+            for((index, questionToken) in questionTokenList.withIndex()) {
+                if(questionToken.content != answerTokenList[index]) {
+                    return QuestionResult.INCORRECT
+                }
+            }
+            return QuestionResult.CORRECT
+        }
     },
 
     CUSTOM(R.drawable.card_icon_custom) {
@@ -41,9 +71,14 @@ enum class CardType(val iconId: Int) {
             constraintList.addAll(getUniversalConstraints(strategy))
             return constraintList
         }
+
+        override fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
+            return QuestionResult.PARTIALLY_CORRECT
+        }
     };
 
     abstract fun getSaveCardConstraints(strategy: EditCardFragmentStrategy): List<SaveCardConstraint>
+    abstract fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult
 
     fun getUniversalConstraints(strategy: EditCardFragmentStrategy): List<SaveCardConstraint> {
 
@@ -67,7 +102,6 @@ enum class CardType(val iconId: Int) {
                 R.string.create_card_empty_answer, strategy.answerFlexBox, Priority.HIGH) {
 
                 override fun isFulfilled(card: Card): Boolean {
-                    Log.d("test1234", card.answer.getStringRepresentation())
                     return !card.answer.answerIsEmpty()
                 }
             }
