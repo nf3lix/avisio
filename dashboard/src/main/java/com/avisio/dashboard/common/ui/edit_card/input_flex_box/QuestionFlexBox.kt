@@ -26,7 +26,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     init {
         initToolbar()
-        addInitialEditText()
+        addInitialEditText("")
     }
 
     private fun addClozeChip() {
@@ -108,15 +108,16 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 CardQuestionTokenType.TEXT -> {
-                    val editText = getEditText(token.content)
+                    val editText = getEditText(token.content.trim())
                     flexbox.addView(editText, index)
                 }
                 CardQuestionTokenType.QUESTION -> {
-                    val chip = getClozeChip(token.content)
+                    val chip = getClozeChip(token.content.trim())
                     flexbox.addView(chip, index)
                 }
             }
         }
+        mergeRemainingEditTexts()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -157,6 +158,16 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
+    fun replaceClozeTextByStandardQuestion() {
+        val previousQuestion = getCardQuestion()
+        val newQuestionTokenList = arrayListOf<CardQuestionToken>()
+        for(token in previousQuestion.tokenList) {
+            newQuestionTokenList.add(CardQuestionToken(token.content, CardQuestionTokenType.TEXT))
+        }
+        flexbox.removeAllViews()
+        setCardQuestion(CardQuestion(newQuestionTokenList))
+    }
+
     private fun checkCardType() {
         val views = flexbox.allViews.toList()
         for(view in views) {
@@ -168,8 +179,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         cardChangeListener.onCardTypeSet(CardType.STANDARD)
     }
 
-    private fun addInitialEditText() {
-        val editText = getEditText("")
+    private fun addInitialEditText(input: String) {
+        val editText = getEditText(input)
         editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         editText.setOnKeyListener { _, _, _ ->
             setEditTextKeyListeners()
