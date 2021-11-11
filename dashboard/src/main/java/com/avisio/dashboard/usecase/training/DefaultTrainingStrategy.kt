@@ -13,8 +13,11 @@ class DefaultTrainingStrategy(val box: AvisioBox, val application: Application) 
         // persist card result
     }
 
-    override suspend fun nextCard(): Card {
+    override suspend fun nextCard(): Card? {
         val cardList = cardRepository.getCardsByBox(box.id)
+        if(cardList.isEmpty()) {
+            return null
+        }
         return cardList[(Math.random() * cardList.size).toInt()]
     }
 

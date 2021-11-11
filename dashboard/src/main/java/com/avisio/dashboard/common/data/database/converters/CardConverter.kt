@@ -1,5 +1,6 @@
 package com.avisio.dashboard.common.data.database.converters
 
+import android.util.Log
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.avisio.dashboard.common.data.model.card.CardAnswer
@@ -33,7 +34,6 @@ class CardConverter {
         val gson = Gson()
         return gson.fromJson(serializedObject, CardAnswer::class.java)
     }
-
 
     @TypeConverter
     fun enumToInt(type: CardType): Int {

@@ -3,6 +3,7 @@ package com.avisio.dashboard.common.ui.edit_box
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
+import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class EditBoxFragment : Fragment() {
@@ -29,13 +35,18 @@ class EditBoxFragment : Fragment() {
     private lateinit var parcelableBox: ParcelableAvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
-    private lateinit var nameInput: EditText
+    private lateinit var boxNameTextInputLayout: TextInputLayout
+    private lateinit var nameInput: AppCompatEditText
     private lateinit var iconImageView: ImageView
     private lateinit var boxRepository: AvisioBoxRepository
+    private lateinit var boxNameList: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         boxRepository = AvisioBoxRepository(requireActivity().application)
+        GlobalScope.launch {
+            boxNameList = boxRepository.getBoxNameList()
+        }
         arguments?.let {
             parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
             fragmentMode = EditBoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
@@ -48,8 +59,13 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        nameInput = view?.findViewById(R.id.box_name_input)!!
-        iconImageView = view?.findViewById(R.id.box_icon_imageview)!!
+        nameInput = requireView().findViewById(R.id.box_name_edit_text)!!
+        iconImageView = requireView().findViewById(R.id.box_icon_imageview)!!
+        boxNameTextInputLayout = requireView().findViewById(R.id.box_name_input_layout)
+        nameInput.setOnKeyListener { _, _, _ ->
+            boxNameTextInputLayout.isErrorEnabled = false
+            false
+        }
         setupFab()
         setupSelectIconButton()
         fillBoxInformation()
@@ -99,10 +115,27 @@ class EditBoxFragment : Fragment() {
     }
 
     private fun handleInvalidInput() {
-        Toast.makeText(context, getString(R.string.create_box_no_name_specified), Toast.LENGTH_LONG).show()
+        boxNameTextInputLayout.error = getString(R.string.create_box_no_name_specified)
     }
 
     private fun handleValidInput() {
+        if(nameInput.text.toString() in boxNameList &&
+            (fragmentMode == EditBoxFragmentMode.CREATE_BOX || parcelableBox.boxName != nameInput.text.toString())) {
+            val dialog = ConfirmDialog(
+                requireContext(),
+                getString(R.string.create_box_duplicate_name_dialog_title),
+                getString(R.string.create_box_duplicate_name_dialog_message)
+            )
+            dialog.setOnConfirmListener {
+                saveChanges()
+            }
+            dialog.showDialog()
+            return
+        }
+        saveChanges()
+    }
+
+    private fun saveChanges() {
         when(fragmentMode) {
             EditBoxFragmentMode.CREATE_BOX -> {
                 createNewBox()
@@ -122,6 +155,7 @@ class EditBoxFragment : Fragment() {
         )
         )
         activity?.finish()
+        Toast.makeText(requireContext(), R.string.create_box_successful, Toast.LENGTH_LONG).show()
     }
 
     private fun updateBox() {
@@ -131,6 +165,7 @@ class EditBoxFragment : Fragment() {
         intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, updatedBox)
         activity?.startActivity(intent)
         activity?.finish()
+        Toast.makeText(requireContext(), R.string.edit_box_successful, Toast.LENGTH_LONG).show()
     }
 
     private fun updateBoxIcon(boxIconId: Int) {

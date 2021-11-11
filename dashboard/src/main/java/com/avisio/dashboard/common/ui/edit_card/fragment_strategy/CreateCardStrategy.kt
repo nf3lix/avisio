@@ -3,7 +3,9 @@ package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 import android.content.Intent
 import android.text.TextUtils
 import android.widget.CheckBox
+import android.widget.Spinner
 import android.widget.Toast
+import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -30,16 +32,17 @@ class CreateCardStrategy(
         val questionToken = CardQuestionToken(questionInput.text.toString(), CardQuestionTokenType.TEXT)
         val question = CardQuestion(arrayListOf(questionToken))
         val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
+        val type = CardType.valueOf(typeSpinner.selectedItem.toString())
         val cardToCreate = Card(
             boxId = card.boxId,
             createDate = Date(System.currentTimeMillis()),
-            type = CardType.STANDARD,
+            type = type,
             question = question,
             answer = answer
         )
         repository.insertCard(cardToCreate)
 
-        val checkboxView = fragment.requireActivity().findViewById<CheckBox>(com.avisio.dashboard.R.id.checkbox_create_new_card)
+        val checkboxView = fragment.requireActivity().findViewById<CheckBox>(R.id.checkbox_create_new_card)
 
         if(checkboxView.isChecked){
             val newIntent = Intent(fragment.requireContext(), CreateCardActivity::class.java)
@@ -51,10 +54,10 @@ class CreateCardStrategy(
     override fun handleValidInput() {
         saveCard()
         fragment.requireActivity().finish()
+        Toast.makeText(fragment.requireContext(), R.string.create_card_successful, Toast.LENGTH_LONG).show()
     }
 
     override fun handleInvalidInput() {
-        Toast.makeText(fragment.requireContext(), com.avisio.dashboard.R.string.create_card_empty_question_answer, Toast.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {
