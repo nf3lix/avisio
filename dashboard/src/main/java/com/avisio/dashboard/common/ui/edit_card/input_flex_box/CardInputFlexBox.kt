@@ -1,7 +1,6 @@
 package com.avisio.dashboard.common.ui.edit_card.input_flex_box
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -9,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
 import com.google.android.flexbox.FlexboxLayout
 
 abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
@@ -21,6 +21,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
     private val informationLayout: LinearLayout
     private val informationIcon: ImageView
     private val informationTextView: TextView
+    private lateinit var cardTypeChangeListener: CardTypeChangeListener
     val flexbox: FlexboxLayout
     val toolbarContainer: FrameLayout
 
@@ -54,6 +55,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
 
     fun setTitle(title: String) {
         titleTextView.text = title
+    }
+
+    fun setCardTypeChangeListener(listener: CardTypeChangeListener) {
+        cardTypeChangeListener = listener
     }
 
 }

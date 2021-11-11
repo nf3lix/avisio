@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -14,18 +13,19 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputLayout
 
-class EditCardFragment : Fragment() {
+class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     companion object {
         const val FRAGMENT_MODE_KEY: String = "EDIT_CARD_FRAGMENT_MODE"
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
+    private lateinit var questionInput: QuestionFlexBox
     private lateinit var answerInput: AnswerFlexBox
 
     private lateinit var card: Card
@@ -52,15 +52,17 @@ class EditCardFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFab()
+        questionInput = requireView().findViewById(R.id.question_flexbox)
         answerInput = requireView().findViewById(R.id.answer_flex_box)
+        questionInput.setCardTypeChangeListener(this)
+        answerInput.setCardTypeChangeListener(this)
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
-        val flexbox = requireView().findViewById<QuestionFlexBox>(R.id.question_flexbox)
         if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
-            flexbox.setCardQuestion(card.question)
+            questionInput.setCardQuestion(card.question)
         }
     }
 
@@ -113,12 +115,8 @@ class EditCardFragment : Fragment() {
         return ParcelableCard.createEntity(parcelableCard)
     }
 
-    /*
-    private fun setTextInputLayoutListeners() {
-        answerInput.setOnKeyListener { _, _, _ ->
-            requireView().findViewById<TextInputLayout>(R.id.answer_text_input_layout).isErrorEnabled = false
-            false
-        }
-    }*/
+    override fun onCardTypeSet(cardType: CardType) {
+
+    }
 
 }
