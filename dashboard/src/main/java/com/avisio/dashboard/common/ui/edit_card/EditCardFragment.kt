@@ -1,8 +1,8 @@
 package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
@@ -13,10 +13,9 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -115,8 +114,11 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     private fun initTypeSpinner() {
         typeSpinner = requireView().findViewById(R.id.card_type_spinner)
-        typeSpinner.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-            onCardTypeSet(CardType.valueOf(typeSpinner.selectedItem.toString()))
+        typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+                onCardTypeSet(CardType.valueOf(typeSpinner.selectedItem.toString()))
+            }
+            override fun onNothingSelected(parentView: AdapterView<*>?) {}
         }
     }
 
