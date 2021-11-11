@@ -12,30 +12,6 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <CheckBox
-            android:id="@+id/checkbox_create_new_card"
-            android:layout_width="221dp"
-            android:layout_height="49dp"
-            android:text="@string/checkbox_create_new_card"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.325"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/answer_flex_box"
-            android:checked="true"/>
-
-        <Spinner
-                android:id="@+id/card_type_spinner"
-                android:layout_width="277dp"
-                android:layout_height="61dp"
-                android:contentDescription="@string/create_card_type_spinner_content_description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.485"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.217" />
-
         <com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
             android:id="@+id/question_flexbox"
             android:layout_width="wrap_content"
@@ -44,9 +20,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_type_spinner"
-            app:layout_constraintVertical_bias="0.01"
-        />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050" />
 
         <com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
             android:id="@+id/answer_flex_box"
@@ -57,8 +32,32 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/question_flexbox"
-            app:layout_constraintVertical_bias="0.070"
-        />
+            app:layout_constraintVertical_bias="0.030" />
+
+        <Spinner
+            android:id="@+id/card_type_spinner"
+            android:layout_width="277dp"
+            android:layout_height="61dp"
+            android:contentDescription="@string/create_card_type_spinner_content_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_flex_box"
+            app:layout_constraintVertical_bias="0.03" />
+
+        <CheckBox
+            android:id="@+id/checkbox_create_new_card"
+            android:layout_width="221dp"
+            android:layout_height="49dp"
+            android:text="@string/checkbox_create_new_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.325"
+            app:layout_constraintVertical_bias="0.96"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer_flex_box"
+            android:checked="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
