@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
@@ -76,6 +77,13 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
 
     fun setCardTypeChangeListener(listener: CardTypeChangeListener) {
         cardChangeListener = listener
+    }
+
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        for(view in flexbox.allViews.toList()) {
+            view.isEnabled = enabled
+        }
     }
 
 }

@@ -121,14 +121,18 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     override fun onCardTypeSet(cardType: CardType) {
         if(cardType == CardType.CLOZE_TEXT) {
             answerInput.isEnabled = false
-        }
-        if(!answerInput.getAnswer().cardIsEmpty() && cardType == CardType.CLOZE_TEXT) {
-            answerInput.setWarning("Antwort wird ignoriert")
+            if(!answerInput.getAnswer().cardIsEmpty()) {
+                answerInput.setWarning(requireContext().getString(R.string.edit_card_cloze_text_answer_is_ignored))
+            } else {
+                answerInput.visibility = View.GONE
+            }
         }
         if(cardType == CardType.STANDARD || cardType == CardType.CUSTOM) {
             answerInput.resetInformation()
+            answerInput.visibility = View.VISIBLE
+            answerInput.isEnabled = true
         }
-        typeSpinner.setSelection(card.type.ordinal)
+        typeSpinner.setSelection(cardType.ordinal)
     }
 
 }
