@@ -64,8 +64,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         val chip = getClozeChip(selection.selectedText)
         flexbox.removeView(selection.editText)
         flexbox.addView(chip as View, editTextPosition - 1)
-        val preEditText = getEditText(selection.preSelectedText)
-        val postEditText = getEditText(selection.postSelectedText)
+        val preEditText = getEditText(selection.preSelectedText.trim())
+        val postEditText = getEditText(selection.postSelectedText.trim())
         flexbox.addView(preEditText as View, editTextPosition - 1)
         flexbox.addView(postEditText as View, editTextPosition + 1)
         chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
