@@ -5,11 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -30,8 +27,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 class LearnBoxFragmentTest {
 
@@ -76,12 +71,12 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.correct_answer_input_layout)).check(matches(isDisplayed()))
     }
 
-    @Test(expected = NoMatchingViewException::class)
+    @Test
     fun hideViewsAfterTrainingFinished() {
         scenario.onFragment { fragment ->
             fragment.onTrainingFinished()
         }
-        onView(withId(R.id.question_text_input_layout)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
     @Test

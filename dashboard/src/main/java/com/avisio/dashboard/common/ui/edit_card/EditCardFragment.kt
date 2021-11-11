@@ -26,9 +26,9 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
-    private lateinit var questionInput: QuestionFlexBox
-    private lateinit var answerInput: AnswerFlexBox
-    private lateinit var typeSpinner: Spinner
+    lateinit var questionInput: QuestionFlexBox
+    lateinit var answerInput: AnswerFlexBox
+    lateinit var typeSpinner: Spinner
 
     private lateinit var card: Card
     private lateinit var fragmentMode: EditCardFragmentMode

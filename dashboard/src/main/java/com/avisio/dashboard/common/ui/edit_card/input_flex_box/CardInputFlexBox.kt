@@ -51,6 +51,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
         setInformation(CardInputInformation(message, CardFlexBoxInformationType.WARNING))
     }
 
+    fun setInformation(message: String) {
+        setInformation(CardInputInformation(message, CardFlexBoxInformationType.INFORMATION))
+    }
+
     private fun setInformation(information: CardInputInformation) {
         if(information.isBlank()) {
             resetInformation()

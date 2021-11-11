@@ -31,7 +31,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private fun addClozeChip() {
         val (editTextSelection, selectionEditTextIndex) = getSelectedText()
-        if(editTextSelection.isEmpty()) return
+        if(editTextSelection.isEmpty()) {
+            setAddClozeButtonExplanation()
+            return
+        }
         replaceTextEditByChip(selectionEditTextIndex, editTextSelection)
         mergeRemainingEditTexts()
         resetInformation()
@@ -51,6 +54,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         return Pair(editTextSelection, selectionEditTextIndex)
+    }
+
+    private fun setAddClozeButtonExplanation() {
+        setInformation(context.getString(R.string.create_card_add_cloze_button_explanation))
     }
 
     private fun replaceTextEditByChip(editTextPosition: Int, selection: EditTextSelection) {

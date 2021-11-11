@@ -39,6 +39,7 @@
     <string name="create_card_action_bar_title">Neue Karte</string>
     <string name="create_card_successful">Karte wurde erfolgreich erstellt</string>
     <string name="create_card_cloze_needs_at_least_one_question">Lückentexte brauchen mindestens eine Lücke</string>
+    <string name="create_card_add_cloze_button_explanation">Markiere zunächst den Text, der als Lücke markiert werden soll</string>
     <string name="edit_card_delete">Karte löschen</string>
     <string name="edit_card_successful">Karte wurde erfolgreich geändert</string>
     <string name="edit_card_action_bar_title">Karte bearbeiten</string>
