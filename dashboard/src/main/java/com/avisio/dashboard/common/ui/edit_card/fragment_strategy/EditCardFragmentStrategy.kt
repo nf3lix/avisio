@@ -38,20 +38,25 @@ abstract class EditCardFragmentStrategy(
     }
 
     fun onFabClicked() {
-        val question = questionFlexBox.getCardQuestion().getStringRepresentation()
+        val question = questionFlexBox.getCardQuestion()
         val answer = answerFlexBox.getAnswer()
         val type = CardType.valueOf(typeSpinner.selectedItem.toString())
-        if(!TextUtils.isEmpty(question) && (!answer.cardIsEmpty() || type == CardType.CLOZE_TEXT)) {
+        if(!TextUtils.isEmpty(question.getStringRepresentation())
+            && (!answer.cardIsEmpty() || type == CardType.CLOZE_TEXT)
+            && !(type == CardType.CLOZE_TEXT && !question.hasQuestionToken())) {
             handleValidInput()
             Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             return
         }
 
-        if(TextUtils.isEmpty(question)) {
+        if(TextUtils.isEmpty(question.getStringRepresentation())) {
             questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_question))
         }
         if(answer.cardIsEmpty() && type != CardType.CLOZE_TEXT) {
             answerFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_answer))
+        }
+        if(type == CardType.CLOZE_TEXT && !question.hasQuestionToken()) {
+            questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_cloze_needs_at_least_one_question))
         }
         handleInvalidInput()
     }

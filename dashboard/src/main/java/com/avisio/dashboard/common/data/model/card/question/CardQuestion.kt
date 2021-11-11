@@ -8,6 +8,15 @@ class CardQuestion(val tokenList: ArrayList<CardQuestionToken>) {
         }
     }
 
+    fun hasQuestionToken(): Boolean {
+        for(token in tokenList) {
+            if(token.tokenType == CardQuestionTokenType.QUESTION) {
+                return true
+            }
+        }
+        return false
+    }
+
     fun addToken(token: CardQuestionToken) {
         tokenList.add(token)
     }
