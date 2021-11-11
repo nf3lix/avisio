@@ -3,9 +3,7 @@ package com.avisio.dashboard.common.ui.edit_card
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
@@ -16,6 +14,8 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
 
@@ -26,7 +26,7 @@ class EditCardFragment : Fragment() {
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
-    private lateinit var answerInput: AppCompatEditText
+    private lateinit var answerInput: AnswerFlexBox
 
     private lateinit var card: Card
     private lateinit var fragmentMode: EditCardFragmentMode
@@ -52,8 +52,7 @@ class EditCardFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         setupFab()
-        answerInput = requireView().findViewById(R.id.card_answer_input)
-        setTextInputLayoutListeners()
+        answerInput = requireView().findViewById(R.id.answer_flex_box)
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
@@ -114,11 +113,12 @@ class EditCardFragment : Fragment() {
         return ParcelableCard.createEntity(parcelableCard)
     }
 
+    /*
     private fun setTextInputLayoutListeners() {
         answerInput.setOnKeyListener { _, _, _ ->
             requireView().findViewById<TextInputLayout>(R.id.answer_text_input_layout).isErrorEnabled = false
             false
         }
-    }
+    }*/
 
 }

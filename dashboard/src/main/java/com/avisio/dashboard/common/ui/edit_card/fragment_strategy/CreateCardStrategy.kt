@@ -2,17 +2,13 @@ package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.widget.CheckBox
-import android.widget.Spinner
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
@@ -30,7 +26,7 @@ class CreateCardStrategy(
 
     override fun saveCard() {
         val question = questionFlexBox.getCardQuestion()
-        val answer = CardAnswer(arrayListOf(answerInput.text.toString()))
+        val answer = answerFlexBox.getAnswer()
         val type = CardType.valueOf(typeSpinner.selectedItem.toString())
         val cardToCreate = Card(
             boxId = card.boxId,
@@ -60,7 +56,7 @@ class CreateCardStrategy(
     }
 
     override fun onBackPressed() {
-        if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !TextUtils.isEmpty(answerInput.text)) {
+        if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !answerFlexBox.getAnswer().cardIsEmpty()) {
             showOnBackPressedWarning()
             return
         }

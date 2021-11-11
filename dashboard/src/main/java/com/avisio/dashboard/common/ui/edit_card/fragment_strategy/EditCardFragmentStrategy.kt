@@ -1,23 +1,20 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.text.TextUtils
-import android.widget.CheckBox
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatEditText
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.QuestionFlexBox
-import com.google.android.material.textfield.TextInputLayout
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 
 abstract class EditCardFragmentStrategy(
     private val fragment: EditCardFragment
 ) {
 
     val questionFlexBox: QuestionFlexBox = fragment.requireView().findViewById(R.id.question_flexbox)
-    private val answerInputLayout: TextInputLayout = fragment.requireView().findViewById(R.id.answer_text_input_layout)
-    val answerInput: AppCompatEditText = fragment.requireView().findViewById(R.id.card_answer_input)
+    val answerFlexBox: AnswerFlexBox = fragment.requireView().findViewById(R.id.answer_flex_box)
     val typeSpinner: Spinner = fragment.requireView().findViewById(R.id.card_type_spinner)
 
     abstract fun fillCardInformation()
@@ -41,8 +38,8 @@ abstract class EditCardFragmentStrategy(
 
     fun onFabClicked() {
         val question = questionFlexBox.getCardQuestion().getStringRepresentation()
-        val answer = answerInput.text
-        if(!TextUtils.isEmpty(question) && !TextUtils.isEmpty(answer)) {
+        val answer = answerFlexBox.getAnswer()
+        if(!TextUtils.isEmpty(question) && !answer.cardIsEmpty()) {
             handleValidInput()
             Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             return
@@ -51,8 +48,8 @@ abstract class EditCardFragmentStrategy(
         if(TextUtils.isEmpty(question)) {
             questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_question))
         }
-        if(TextUtils.isEmpty(answer)) {
-            answerInputLayout.error = fragment.requireContext().getString(R.string.create_card_empty_answer)
+        if(answer.cardIsEmpty()) {
+            answerFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_answer))
         }
         handleInvalidInput()
     }

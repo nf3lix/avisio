@@ -16,13 +16,13 @@ class EditCardStrategy(
 
     override fun fillCardInformation() {
         questionFlexBox.setCardQuestion(card.question)
-        answerInput.setText(card.answer.getStringRepresentation())
+        answerFlexBox.setAnswer(card.answer)
         typeSpinner.setSelection(card.type.ordinal)
     }
 
     override fun saveCard() {
         val updatedQuestion = questionFlexBox.getCardQuestion()
-        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
+        val updatedAnswer = answerFlexBox.getAnswer()
         val updatedType = CardType.valueOf(typeSpinner.selectedItem.toString())
         val newCard = Card(question = updatedQuestion, answer = updatedAnswer, type = updatedType)
         if(cardChanged(card, newCard)) {
@@ -55,7 +55,7 @@ class EditCardStrategy(
 
     override fun onBackPressed() {
         val updatedQuestion = questionFlexBox.getCardQuestion()
-        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
+        val updatedAnswer = answerFlexBox.getAnswer()
         if(card.question != updatedQuestion || card.answer != updatedAnswer) {
             showOnBackPressedWarning()
             return

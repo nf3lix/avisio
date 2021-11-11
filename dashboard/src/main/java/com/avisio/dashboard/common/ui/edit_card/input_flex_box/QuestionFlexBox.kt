@@ -1,88 +1,68 @@
-package com.avisio.dashboard.common.ui.edit_card
+package com.avisio.dashboard.common.ui.edit_card.input_flex_box
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import android.text.InputType
 import android.util.AttributeSet
-import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.allViews
-import androidx.core.view.isVisible
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
 
-class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
+class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet) {
 
     companion object {
         private const val TEXT_SIZE = 14F
     }
 
-    private var button: Button
-    private var flexbox: FlexboxLayout
+    private lateinit var toolbar: CardQuestionInputToolbar
 
     init {
-        inflate(context, R.layout.question_flex_box, this)
-        button = findViewById(R.id.test_button)
-        flexbox = findViewById(R.id.test_flexbox)
-        button.setOnClickListener {
-            addChip()
-        }
-        val editText = getEditText("")
-        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        editText.setOnKeyListener { _, _, _ ->
-            setEditTextKeyListeners()
-            true
-        }
-        flexbox.addView(editText as View, 0)
+        initToolbar()
+        addInitialEditText()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun addChip() {
-        var preSelectedText = ""
-        var postSelectedText = ""
-        var selectedText = ""
-        var selectionEditTextIndex = -1
-        for((index, view) in flexbox.allViews.toList().withIndex()) {
-            if(view !is EditText) continue
-            val start = view.selectionStart
-            val end = view.selectionEnd
-            if(end - start != 0) {
-                selectedText = view.text.toString().substring(start, end)
-                preSelectedText = view.text.toString().substring(0, start)
-                postSelectedText = view.text.toString().substring(end, view.text.toString().length)
-                selectionEditTextIndex = index
-                view.setText("")
-            }
-        }
-
-        if(selectedText == "") {
-            return
-        }
-
-        val chip = getClozeChip(selectedText)
-        flexbox.removeView(flexbox.allViews.toList()[selectionEditTextIndex])
-        flexbox.addView(chip as View, selectionEditTextIndex - 1)
-        val preEditText = getEditText(preSelectedText)
-        val postEditText = getEditText(postSelectedText)
-        flexbox.addView(preEditText as View, selectionEditTextIndex - 1)
-        flexbox.addView(postEditText as View, selectionEditTextIndex + 1)
-        chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
-        mergeEditTexts()
+    private fun addClozeChip() {
+        val (editTextSelection, selectionEditTextIndex) = getSelectedText()
+        if(editTextSelection.isEmpty()) return
+        replaceTextEditByChip(selectionEditTextIndex, editTextSelection)
+        mergeRemainingEditTexts()
         resetError()
     }
 
-    private fun mergeEditTexts() {
+    private fun getSelectedText(): Pair<EditTextSelection, Int> {
+        var editTextSelection = EditTextSelection(EditText(context))
+        var selectionEditTextIndex = -1
+        for((index, view) in flexbox.allViews.toList().withIndex()) {
+            if(view !is EditText) continue
+            editTextSelection = EditTextSelection(view)
+            if(!editTextSelection.isEmpty()) {
+                selectionEditTextIndex = index
+                view.setText("")
+                break
+            }
+        }
+        return Pair(editTextSelection, selectionEditTextIndex)
+    }
+
+    private fun replaceTextEditByChip(editTextPosition: Int, selection: EditTextSelection) {
+        val chip = getClozeChip(selection.selectedText)
+        flexbox.removeView(selection.editText)
+        flexbox.addView(chip as View, editTextPosition - 1)
+        val preEditText = getEditText(selection.preSelectedText)
+        val postEditText = getEditText(selection.postSelectedText)
+        flexbox.addView(preEditText as View, editTextPosition - 1)
+        flexbox.addView(postEditText as View, editTextPosition + 1)
+        chip.setOnCloseIconClickListener { flexbox.removeView(chip as View) }
+    }
+
+    private fun mergeRemainingEditTexts() {
         val viewList = flexbox.allViews.toList()
         val editTextMap = HashMap<Int, String>()
         for((index, view) in viewList.withIndex()) {
@@ -145,29 +125,43 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         chip.textSize = TEXT_SIZE
         chip.tag = false
         chip.setOnTouchListener{ view, motionEvent ->
-            if(view is Chip && view.tag == false) {
-                if(motionEvent.x >= view.totalPaddingRight) {
-                    chip.tag = true
-                    var chipIndex = 0
-                    for((index, flexboxView) in flexbox.allViews.toList().withIndex()) {
-                        if(flexboxView == chip) {
-                            chipIndex = index
-                        }
-                    }
-                    val editTextReplacement = EditText(context)
-                    editTextReplacement.setText(question)
-                    flexbox.removeView(chip)
-                    flexbox.addView(editTextReplacement as View, chipIndex - 1)
-                }
-                mergeEditTexts()
-                setEditTextKeyListeners()
-            }
+            closeChip(chip, view, motionEvent)
             true
         }
 
         chip.isCloseIconVisible = true
         chip.isCheckable = false
         return chip
+    }
+
+    private fun closeChip(chip: Chip, view: View, motionEvent: MotionEvent) {
+        if(view is Chip && view.tag == false) {
+            if(motionEvent.x >= view.totalPaddingRight) {
+                chip.tag = true
+                var chipIndex = 0
+                for((index, flexboxView) in flexbox.allViews.toList().withIndex()) {
+                    if(flexboxView == chip) {
+                        chipIndex = index
+                    }
+                }
+                val editTextReplacement = EditText(context)
+                editTextReplacement.setText(chip.text)
+                flexbox.removeView(chip)
+                flexbox.addView(editTextReplacement as View, chipIndex - 1)
+            }
+            mergeRemainingEditTexts()
+            setEditTextKeyListeners()
+        }
+    }
+
+    private fun addInitialEditText() {
+        val editText = getEditText("")
+        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        editText.setOnKeyListener { _, _, _ ->
+            setEditTextKeyListeners()
+            true
+        }
+        flexbox.addView(editText as View, 0)
     }
 
     private fun getEditText(input: String): EditText {
@@ -179,30 +173,23 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayo
         return editText
     }
 
-    fun setError(errorMessage: String) {
-        val errorMessageView = findViewById<TextView>(R.id.question_box_error_message)
-        errorMessageView.visibility = View.VISIBLE
-        errorMessageView.text = errorMessage
-        findViewById<TextView>(R.id.question_title_text_view).setTextColor(resources.getColor(R.color.warning))
-    }
-
-    fun resetError() {
-        findViewById<TextView>(R.id.question_title_text_view).setTextColor(resources.getColor(R.color.primaryColor))
-        val errorMessageView = findViewById<TextView>(R.id.question_box_error_message)
-        errorMessageView.visibility = View.GONE
-        errorMessageView.text = ""
-    }
-
     private fun setEditTextKeyListeners() {
         val views = flexbox.allViews.toList()
         for(view in views) {
             if(view is EditText) {
                 view.setOnKeyListener { _, _, _ ->
-                    Log.d("test123", "test")
                     resetError()
                     false
                 }
             }
+        }
+    }
+
+    override fun initToolbar() {
+        toolbar = CardQuestionInputToolbar(context)
+        toolbarContainer.addView(toolbar as View)
+        toolbar.clozeTextButton.setOnClickListener {
+            addClozeChip()
         }
     }
 

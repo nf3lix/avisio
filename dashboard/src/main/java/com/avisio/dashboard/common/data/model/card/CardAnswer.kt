@@ -1,5 +1,6 @@
 package com.avisio.dashboard.common.data.model.card
 
+import android.util.Log
 import java.lang.StringBuilder
 
 class CardAnswer(private val answerList: ArrayList<String>) {
@@ -22,12 +23,8 @@ class CardAnswer(private val answerList: ArrayList<String>) {
         return representation.toString().trim()
     }
 
-    override fun toString(): String {
-        val sb = StringBuilder()
-        for(token in answerList) {
-            sb.append("$token;")
-        }
-        return sb.toString()
+    fun cardIsEmpty(): Boolean {
+        return getStringRepresentation().isEmpty()
     }
 
     override fun equals(other: Any?): Boolean {
