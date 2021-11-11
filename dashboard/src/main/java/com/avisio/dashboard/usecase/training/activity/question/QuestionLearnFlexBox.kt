@@ -4,19 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.chip.Chip
-import java.lang.StringBuilder
 
 class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet) {
-
-    init {
-    }
 
     fun setQuestion(cardQuestion: CardQuestion) {
         flexbox.removeAllViews()
@@ -30,6 +29,24 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
                     flexbox.addView(chip, index)
                 }
+            }
+        }
+        removeEmptyEditTexts()
+        disableEditTexts()
+    }
+
+    private fun removeEmptyEditTexts() {
+        for(view in flexbox.allViews.toList()) {
+            if(view is EditText && view.text.toString().isEmpty()) {
+                flexbox.removeView(view)
+            }
+        }
+    }
+
+    private fun disableEditTexts() {
+        for(view in flexbox.allViews.toList()) {
+            if(view is EditText) {
+                view.isEnabled = false
             }
         }
     }
@@ -52,8 +69,8 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         chip.setChipBackgroundColorResource(R.color.primaryDarkColor)
         chip.textSize = QuestionFlexBox.TEXT_SIZE
         chip.tag = false
-        chip.setOnTouchListener{ view, motionEvent ->
-            true
+        chip.setOnClickListener {
+            InputDialog(this, chip, rootView as? ViewGroup).showDialog()
         }
         chip.isCheckable = false
         return chip
