@@ -1,14 +1,12 @@
 package com.avisio.dashboard.common.data.model.card
 
-import android.util.Log
-import java.lang.StringBuilder
-
 class CardAnswer(private val answerList: ArrayList<String>) {
 
     companion object {
         fun getFromStringRepresentation(representation: String): CardAnswer {
             return CardAnswer(arrayListOf(representation))
         }
+        val BLANK = CardAnswer(arrayListOf())
     }
 
     fun addToken(answer: String) {

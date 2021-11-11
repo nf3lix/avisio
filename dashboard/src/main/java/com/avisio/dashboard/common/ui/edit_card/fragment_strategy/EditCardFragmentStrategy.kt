@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.widget.Spinner
 import android.widget.Toast
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
@@ -39,7 +40,8 @@ abstract class EditCardFragmentStrategy(
     fun onFabClicked() {
         val question = questionFlexBox.getCardQuestion().getStringRepresentation()
         val answer = answerFlexBox.getAnswer()
-        if(!TextUtils.isEmpty(question) && !answer.cardIsEmpty()) {
+        val type = CardType.valueOf(typeSpinner.selectedItem.toString())
+        if(!TextUtils.isEmpty(question) && (!answer.cardIsEmpty() || type == CardType.CLOZE_TEXT)) {
             handleValidInput()
             Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             return
@@ -48,7 +50,7 @@ abstract class EditCardFragmentStrategy(
         if(TextUtils.isEmpty(question)) {
             questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_question))
         }
-        if(answer.cardIsEmpty()) {
+        if(answer.cardIsEmpty() && type != CardType.CLOZE_TEXT) {
             answerFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_answer))
         }
         handleInvalidInput()

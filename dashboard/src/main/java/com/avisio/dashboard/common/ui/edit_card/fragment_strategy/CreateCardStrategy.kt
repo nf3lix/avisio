@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
@@ -25,9 +26,9 @@ class CreateCardStrategy(
     }
 
     override fun saveCard() {
-        val question = questionFlexBox.getCardQuestion()
-        val answer = answerFlexBox.getAnswer()
         val type = CardType.valueOf(typeSpinner.selectedItem.toString())
+        val question = questionFlexBox.getCardQuestion()
+        val answer = if(type == CardType.CLOZE_TEXT) CardAnswer.BLANK else answerFlexBox.getAnswer()
         val cardToCreate = Card(
             boxId = card.boxId,
             createDate = Date(System.currentTimeMillis()),
