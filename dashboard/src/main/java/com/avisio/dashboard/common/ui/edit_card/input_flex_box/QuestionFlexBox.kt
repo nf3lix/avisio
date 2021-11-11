@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
@@ -34,6 +35,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         replaceTextEditByChip(selectionEditTextIndex, editTextSelection)
         mergeRemainingEditTexts()
         resetInformation()
+        cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
     }
 
     private fun getSelectedText(): Pair<EditTextSelection, Int> {
@@ -151,7 +153,19 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
             mergeRemainingEditTexts()
             setEditTextKeyListeners()
+            checkCardType()
         }
+    }
+
+    private fun checkCardType() {
+        val views = flexbox.allViews.toList()
+        for(view in views) {
+            if(view is Chip) {
+                cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
+                return
+            }
+        }
+        cardChangeListener.onCardTypeSet(CardType.STANDARD)
     }
 
     private fun addInitialEditText() {

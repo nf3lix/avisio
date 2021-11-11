@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
 import com.google.android.flexbox.FlexboxLayout
 
@@ -21,7 +22,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
     private val informationLayout: LinearLayout
     private val informationIcon: ImageView
     private val informationTextView: TextView
-    private lateinit var cardTypeChangeListener: CardTypeChangeListener
+    var cardChangeListener: CardTypeChangeListener = EditCardFragment()
     val flexbox: FlexboxLayout
     val toolbarContainer: FrameLayout
 
@@ -58,7 +59,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
     }
 
     fun setCardTypeChangeListener(listener: CardTypeChangeListener) {
-        cardTypeChangeListener = listener
+        cardChangeListener = listener
     }
 
 }
