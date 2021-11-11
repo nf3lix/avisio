@@ -21,7 +21,7 @@ class CardAnswer(private val answerList: ArrayList<String>) {
         return representation.toString().trim()
     }
 
-    fun cardIsEmpty(): Boolean {
+    fun answerIsEmpty(): Boolean {
         return getStringRepresentation().isEmpty()
     }
 

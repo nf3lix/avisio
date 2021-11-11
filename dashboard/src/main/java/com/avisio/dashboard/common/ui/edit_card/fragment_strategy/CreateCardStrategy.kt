@@ -2,7 +2,6 @@ package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import com.avisio.dashboard.R
@@ -57,7 +56,7 @@ class CreateCardStrategy(
     }
 
     override fun onBackPressed() {
-        if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !answerFlexBox.getAnswer().cardIsEmpty()) {
+        if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !answerFlexBox.getAnswer().answerIsEmpty()) {
             showOnBackPressedWarning()
             return
         }
