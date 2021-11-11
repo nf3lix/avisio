@@ -18,8 +18,8 @@ import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
-import com.avisio.dashboard.usecase.training.activity.card_type_strategy.LearnCardTypeStrategy
-import com.avisio.dashboard.usecase.training.activity.card_type_strategy.LearnClozeTextStrategy
+import com.avisio.dashboard.usecase.training.activity.card_type_strategy.CardTypeLayoutStrategy
+import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTextLayoutStrategy
 import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputLayout
 class LearnBoxFragment : Fragment(), LearnCardView {
 
     private lateinit var trainingStrategy: TrainingStrategy
+    private lateinit var cardTypeLayoutStrategy: CardTypeLayoutStrategy
     private lateinit var manager: LearnCardManager
     private lateinit var box: AvisioBox
     private lateinit var currentCard: Card
@@ -43,8 +44,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var partiallyChip: QuestionResultChip
     private lateinit var incorrectChip: QuestionResultChip
 
-    private lateinit var learnCardTypeStrategy: LearnCardTypeStrategy
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -54,7 +53,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun onStart() {
         super.onStart()
-        learnCardTypeStrategy = LearnClozeTextStrategy(this)
+        cardTypeLayoutStrategy = ClozeTextLayoutStrategy(this)
         questionInputLayout = requireView().findViewById(R.id.question_input_layout)
         answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
@@ -74,14 +73,14 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun showCard(card: Card) {
         currentCard = card
-        learnCardTypeStrategy = LearnCardTypeStrategy.getCardTypeStrategy(currentCard, this)
+        cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
         requireActivity().runOnUiThread {
             requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
             showResolveQuestionButton()
             answerInputLayout.visibility = View.VISIBLE
             resultChipGroup.visibility = View.GONE
             correctAnswerLayoutInput.visibility = View.GONE
-            learnCardTypeStrategy.onShowCard()
+            cardTypeLayoutStrategy.onShowCard()
         }
     }
 
@@ -90,7 +89,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         hideResolveQuestionButton()
         correctChip.setSuggestedResult()
         if(currentCard.type == CardType.CLOZE_TEXT) {
-            learnCardTypeStrategy.onCorrectAnswer()
+            cardTypeLayoutStrategy.onCorrectAnswer()
         }
     }
 
@@ -101,7 +100,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         incorrectChip.setSuggestedResult()
         if(currentCard.type == CardType.CLOZE_TEXT) {
-            learnCardTypeStrategy.onIncorrectAnswer()
+            cardTypeLayoutStrategy.onIncorrectAnswer()
         }
     }
 
@@ -136,7 +135,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun setupFab() {
         resolveQuestionButton.setOnClickListener {
-            manager.onAnswer(learnCardTypeStrategy.getQuestionResult(currentCard.question, learnCardTypeStrategy.getUserInputAsAnswer()))
+            manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard.question, cardTypeLayoutStrategy.getUserInputAsAnswer()))
         }
     }
 

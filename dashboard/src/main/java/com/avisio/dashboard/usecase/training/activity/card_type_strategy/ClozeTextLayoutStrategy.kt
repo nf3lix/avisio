@@ -5,7 +5,7 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 
-class LearnClozeTextStrategy(private val fragment: LearnBoxFragment) : LearnCardTypeStrategy(fragment, CardType.CLOZE_TEXT) {
+class ClozeTextLayoutStrategy(private val fragment: LearnBoxFragment) : CardTypeLayoutStrategy(fragment, CardType.CLOZE_TEXT) {
 
     override fun onShowCard() {
         fragment.answerInputLayout.visibility = View.GONE

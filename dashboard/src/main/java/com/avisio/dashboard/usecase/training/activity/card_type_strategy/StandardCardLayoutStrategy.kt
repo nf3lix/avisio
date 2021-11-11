@@ -4,7 +4,7 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 
-class LearnStandardCardStrategy(val fragment: LearnBoxFragment) : LearnCardTypeStrategy(fragment, CardType.STANDARD) {
+class StandardCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayoutStrategy(fragment, CardType.STANDARD) {
 
     override fun onShowCard() {
 
