@@ -15,6 +15,7 @@ import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -27,6 +28,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     private lateinit var questionInput: QuestionFlexBox
     private lateinit var answerInput: AnswerFlexBox
+    private lateinit var typeSpinner: Spinner
 
     private lateinit var card: Card
     private lateinit var fragmentMode: EditCardFragmentMode
@@ -56,6 +58,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
         answerInput.setCardTypeChangeListener(this)
+        typeSpinner = requireView().findViewById(R.id.card_type_spinner)
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
@@ -116,7 +119,16 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onCardTypeSet(cardType: CardType) {
-
+        if(cardType == CardType.CLOZE_TEXT) {
+            answerInput.isEnabled = false
+        }
+        if(!answerInput.getAnswer().cardIsEmpty() && cardType == CardType.CLOZE_TEXT) {
+            answerInput.setWarning("Antwort wird ignoriert")
+        }
+        if(cardType == CardType.STANDARD || cardType == CardType.CUSTOM) {
+            answerInput.resetInformation()
+        }
+        typeSpinner.setSelection(card.type.ordinal)
     }
 
 }

@@ -13,6 +13,6 @@
     <color name="textColor">#979797</color> <!-- text color on white background -->
     <color name="success">#4CAF50</color>
     <color name="information">#2196F3</color>
-    <color name="warning">#FFC107</color>
+    <color name="warning">#CC8824</color>
     <color name="error">#b00022</color> <!-- text color on white background -->
 </resources>

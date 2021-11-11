@@ -46,10 +46,10 @@ abstract class EditCardFragmentStrategy(
         }
 
         if(TextUtils.isEmpty(question)) {
-            questionFlexBox.setInformation(fragment.requireContext().getString(R.string.create_card_empty_question))
+            questionFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_question))
         }
         if(answer.cardIsEmpty()) {
-            answerFlexBox.setInformation(fragment.requireContext().getString(R.string.create_card_empty_answer))
+            answerFlexBox.setError(fragment.requireContext().getString(R.string.create_card_empty_answer))
         }
         handleInvalidInput()
     }

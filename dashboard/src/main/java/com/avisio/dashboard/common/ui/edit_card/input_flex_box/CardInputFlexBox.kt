@@ -22,6 +22,8 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
     private val informationLayout: LinearLayout
     private val informationIcon: ImageView
     private val informationTextView: TextView
+    var currentInformation = CardInputInformation.NONE
+
     var cardChangeListener: CardTypeChangeListener = EditCardFragment()
     val flexbox: FlexboxLayout
     val toolbarContainer: FrameLayout
@@ -40,18 +42,32 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
 
     abstract fun initToolbar()
 
-    fun setInformation(message: String, type: CardFlexBoxInformationType = CardFlexBoxInformationType.ERROR) {
+    fun setError(message: String) {
+        setInformation(CardInputInformation(message, CardFlexBoxInformationType.ERROR))
+    }
+
+    fun setWarning(message: String) {
+        setInformation(CardInputInformation(message, CardFlexBoxInformationType.WARNING))
+    }
+
+    private fun setInformation(information: CardInputInformation) {
+        if(information.isBlank()) {
+            resetInformation()
+            return
+        }
         informationLayout.visibility = View.VISIBLE
-        informationIcon.setImageResource(type.drawable)
-        informationTextView.text = message
-        informationTextView.setTextColor(resources.getColor(type.color))
-        titleTextView.setTextColor(resources.getColor(type.color))
+        informationIcon.setImageResource(information.type.drawable)
+        informationTextView.text = information.message
+        informationTextView.setTextColor(resources.getColor(information.type.color))
+        titleTextView.setTextColor(resources.getColor(information.type.color))
+        currentInformation = information
     }
 
     fun resetInformation() {
         titleTextView.setTextColor(resources.getColor(R.color.primaryColor))
         informationLayout.visibility = View.GONE
         informationTextView.text = ""
+        currentInformation = CardInputInformation.NONE
     }
 
     fun setTitle(title: String) {
