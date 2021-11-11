@@ -118,6 +118,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         mergeRemainingEditTexts()
+        setEditTextKeyListeners()
     }
 
     @SuppressLint("ClickableViewAccessibility")
