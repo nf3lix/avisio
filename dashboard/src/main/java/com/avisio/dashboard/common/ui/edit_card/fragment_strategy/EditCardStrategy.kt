@@ -1,5 +1,6 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
+import android.view.View
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -18,6 +19,9 @@ class EditCardStrategy(
         questionFlexBox.setCardQuestion(card.question)
         answerFlexBox.setAnswer(card.answer)
         typeSpinner.setSelection(card.type.ordinal)
+        if(card.type == CardType.CLOZE_TEXT) {
+            answerFlexBox.visibility = View.GONE
+        }
     }
 
     override fun saveCard() {

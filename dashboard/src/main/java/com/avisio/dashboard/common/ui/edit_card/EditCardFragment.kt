@@ -1,6 +1,7 @@
 package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -58,7 +59,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
         answerInput.setCardTypeChangeListener(this)
-        typeSpinner = requireView().findViewById(R.id.card_type_spinner)
+        initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
@@ -109,6 +110,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab_edit_card)?.setOnClickListener {
             fragmentStrategy.onFabClicked()
+        }
+    }
+
+    private fun initTypeSpinner() {
+        typeSpinner = requireView().findViewById(R.id.card_type_spinner)
+        typeSpinner.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            onCardTypeSet(CardType.valueOf(typeSpinner.selectedItem.toString()))
         }
     }
 
