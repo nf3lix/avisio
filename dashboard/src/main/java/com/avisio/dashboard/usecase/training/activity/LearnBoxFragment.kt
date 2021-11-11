@@ -17,6 +17,7 @@ import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
+import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 
@@ -27,7 +28,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var box: AvisioBox
     private lateinit var currentCard: Card
 
-    private lateinit var questionInputLayout: TextInputLayout
+    private lateinit var questionInputLayout: QuestionLearnFlexBox
     private lateinit var answerInputLayout: TextInputLayout
     private lateinit var correctAnswerLayoutInput: TextInputLayout
     private lateinit var answerEditText: EditText
@@ -68,7 +69,8 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     override fun showCard(card: Card) {
         currentCard = card
         requireActivity().runOnUiThread {
-            requireView().findViewById<EditText>(R.id.question_edit_text).setText(currentCard.question.getStringRepresentation())
+            // requireView().findViewById<EditText>(R.id.question_edit_text).setText(currentCard.question.getStringRepresentation())
+            requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
             showResolveQuestionButton()
             answerInputLayout.visibility = View.VISIBLE
             resultChipGroup.visibility = View.GONE

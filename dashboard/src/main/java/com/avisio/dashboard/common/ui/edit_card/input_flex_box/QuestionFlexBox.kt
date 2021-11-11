@@ -19,7 +19,7 @@ import com.google.android.material.chip.Chip
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet) {
 
     companion object {
-        private const val TEXT_SIZE = 14F
+        const val TEXT_SIZE = 14F
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
