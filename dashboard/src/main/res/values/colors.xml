@@ -11,7 +11,8 @@
     <color name="dividerColor">#D2D2D2</color> <!-- color for dividers, grids etc -->
     <color name="backgroundTintLightColor">#e0e0e0</color> <!-- color for dividers, grids etc -->
     <color name="textColor">#979797</color> <!-- text color on white background -->
-    <color name="correctAnswer">#4CAF50</color> <!-- text color on white background -->
-    <color name="partiallyCorrectAnswer">#FFC107</color> <!-- text color on white background -->
-    <color name="warning">#b00022</color> <!-- text color on white background -->
+    <color name="success">#4CAF50</color>
+    <color name="information">#2196F3</color>
+    <color name="warning">#FFC107</color>
+    <color name="error">#b00022</color> <!-- text color on white background -->
 </resources>

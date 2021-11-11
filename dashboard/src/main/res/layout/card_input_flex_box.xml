@@ -42,15 +42,30 @@
 
             </com.google.android.flexbox.FlexboxLayout>
 
-            <TextView
-                android:id="@+id/question_box_error_message"
-                android:textColor="@color/warning"
-                android:visibility="gone"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="5dp"
+            <LinearLayout
+                android:id="@+id/card_input_information_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/card_input_information_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+
+                <TextView
+                    android:id="@+id/question_box_information_message"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -33,7 +33,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         if(editTextSelection.isEmpty()) return
         replaceTextEditByChip(selectionEditTextIndex, editTextSelection)
         mergeRemainingEditTexts()
-        resetError()
+        resetInformation()
     }
 
     private fun getSelectedText(): Pair<EditTextSelection, Int> {
@@ -178,7 +178,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         for(view in views) {
             if(view is EditText) {
                 view.setOnKeyListener { _, _, _ ->
-                    resetError()
+                    resetInformation()
                     false
                 }
             }

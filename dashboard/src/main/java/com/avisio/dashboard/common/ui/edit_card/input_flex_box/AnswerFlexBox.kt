@@ -3,7 +3,6 @@ package com.avisio.dashboard.common.ui.edit_card.input_flex_box
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -37,7 +36,7 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         }
         answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.setOnKeyListener { _, _, _ ->
-            resetError()
+            resetInformation()
             false
         }
         flexbox.addView(answerEditText as View, 0)

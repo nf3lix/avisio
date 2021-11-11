@@ -1,12 +1,11 @@
 package com.avisio.dashboard.common.ui.edit_card.input_flex_box
 
 import android.content.Context
-import android.os.Build
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.avisio.dashboard.R
@@ -19,30 +18,38 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
     }
 
     private val titleTextView: TextView
-    private val errorMessageTextView: TextView
+    private val informationLayout: LinearLayout
+    private val informationIcon: ImageView
+    private val informationTextView: TextView
     val flexbox: FlexboxLayout
     val toolbarContainer: FrameLayout
 
     init {
         inflate(context, R.layout.card_input_flex_box, this)
         titleTextView = findViewById(R.id.card_input_title_text_view)
-        errorMessageTextView = findViewById(R.id.question_box_error_message)
+
+        informationLayout = findViewById(R.id.card_input_information_layout)
+        informationIcon = findViewById(R.id.card_input_information_icon)
+        informationTextView = findViewById(R.id.question_box_information_message)
+
         flexbox = findViewById(R.id.test_flexbox)
         toolbarContainer = findViewById(R.id.card_input_frame_layout)
     }
 
     abstract fun initToolbar()
 
-    fun setError(errorMessage: String) {
-        errorMessageTextView.visibility = View.VISIBLE
-        errorMessageTextView.text = errorMessage
-        titleTextView.setTextColor(resources.getColor(R.color.warning))
+    fun setInformation(message: String, type: CardFlexBoxInformationType = CardFlexBoxInformationType.ERROR) {
+        informationLayout.visibility = View.VISIBLE
+        informationIcon.setImageResource(type.drawable)
+        informationTextView.text = message
+        informationTextView.setTextColor(resources.getColor(type.color))
+        titleTextView.setTextColor(resources.getColor(type.color))
     }
 
-    fun resetError() {
+    fun resetInformation() {
         titleTextView.setTextColor(resources.getColor(R.color.primaryColor))
-        errorMessageTextView.visibility = View.GONE
-        errorMessageTextView.text = ""
+        informationLayout.visibility = View.GONE
+        informationTextView.text = ""
     }
 
     fun setTitle(title: String) {
