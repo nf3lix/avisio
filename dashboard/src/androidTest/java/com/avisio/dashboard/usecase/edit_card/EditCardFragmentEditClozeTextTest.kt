@@ -71,14 +71,6 @@ class EditCardFragmentEditClozeTextTest {
     }
 
     @Test
-    fun changeCardTypeOnChipCloseClick() {
-        scenario.onFragment {
-            it.questionInput.replaceClozeTextByStandardQuestion()
-        }
-        onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1 TOKEN_2 TOKEN_3"))).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun replaceClozeTextOnCardTypeChangedManually() {
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.CLOZE_TEXT.name))))
         onView(withId(R.id.card_type_spinner)).perform(ViewActions.click())
