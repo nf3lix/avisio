@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
@@ -119,6 +118,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             when(token.tokenType) {
                 CardQuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
+                    // if(index == 0) {
+                    //     editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    // }
                     flexbox.addView(editText, index)
                 }
                 CardQuestionTokenType.QUESTION -> {
@@ -128,7 +130,18 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         mergeRemainingEditTexts()
+        stretchSingleEditText()
         setEditTextKeyListeners()
+    }
+
+    private fun stretchSingleEditText() {
+        if(flexbox.childCount == 1 && flexbox.getChildAt(0) is EditText) {
+            val previousText = (flexbox.getChildAt(0) as EditText).text.toString()
+            val stretchedEditText = getEditText(previousText.trim())
+            stretchedEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, WRAP_CONTENT)
+            flexbox.removeAllViews()
+            flexbox.addView(stretchedEditText, 0)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -192,7 +205,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private fun addInitialEditText(input: String) {
         val editText = getEditText(input)
-        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, WRAP_CONTENT)
         editText.setOnKeyListener { _, _, _ ->
             setEditTextKeyListeners()
             true
