@@ -10,6 +10,7 @@ import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 abstract class CardTypeLayoutStrategy(fragment: LearnBoxFragment, val cardType: CardType) {
 
     abstract fun onShowCard()
+    abstract fun resetCard()
     abstract fun getUserInputAsAnswer(): CardAnswer
     abstract fun onCorrectAnswer()
     abstract fun onIncorrectAnswer()

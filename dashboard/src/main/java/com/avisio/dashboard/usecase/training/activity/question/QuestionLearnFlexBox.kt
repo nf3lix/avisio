@@ -75,7 +75,7 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
     override fun initToolbar() {
     }
 
-    private fun getQuestionPlaceholder(question: String): String {
+    fun getQuestionPlaceholder(question: String): String {
         val stringBuilder = StringBuilder()
         for(i in 0..question.length) {
             stringBuilder.append(" ")

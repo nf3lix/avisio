@@ -35,7 +35,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
     private lateinit var correctAnswerLayoutInput: TextInputLayout
-    private lateinit var answerEditText: EditText
+    lateinit var answerEditText: EditText
     lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
@@ -149,7 +149,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onResultOptionSelected(result: QuestionResult) {
-        answerEditText.setText("")
+        cardTypeLayoutStrategy.resetCard()
         manager.onResultOptionSelected(result)
     }
 

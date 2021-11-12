@@ -7,6 +7,7 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -22,6 +23,8 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.persistence.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
+import com.google.android.flexbox.FlexboxLayout
+import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
@@ -54,6 +57,7 @@ class LearnBoxFragmentTest {
 
     @After
     fun releaseIntents() {
+        cardDao.deleteAll()
         Intents.release()
     }
 
@@ -79,12 +83,13 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
-    @Test
+    @Test(expected = NoMatchingViewException::class)
     fun resetQuestionTextLayoutOnResultOptionSelected() {
         scenario.onFragment { fragment ->
             fragment.onResultOptionSelected(QuestionResult.CORRECT)
         }
-        onView(withId(R.id.question_edit_text)).check(matches(withText("")))
+        onView(withParent(withClassName(`is`(
+            FlexboxLayout::class.java.name)))).check(matches(withText("")))
     }
 
     @Test
