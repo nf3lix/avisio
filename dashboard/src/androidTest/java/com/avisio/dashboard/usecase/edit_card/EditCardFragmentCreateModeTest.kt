@@ -40,7 +40,7 @@ class EditCardFragmentCreateModeTest {
         val fragmentArgs = bundleOf(
             EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.CREATE_CARD.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(Card(id = 1)))
-        scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_AppCompat)
+        scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }
 
     @After
