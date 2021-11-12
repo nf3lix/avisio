@@ -1,6 +1,7 @@
 package com.avisio.dashboard.common.ui.edit_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,13 +11,19 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.data.model.card.CardType.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType.*
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EditCardFragment : Fragment(), CardTypeChangeListener {
@@ -116,7 +123,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         typeSpinner = requireView().findViewById(R.id.card_type_spinner)
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-                onCardTypeSet(CardType.valueOf(typeSpinner.selectedItem.toString()))
+                onCardTypeSet(getSelectedCardType())
             }
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
         }
@@ -129,7 +136,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onCardTypeSet(cardType: CardType) {
-        if(cardType == CardType.CLOZE_TEXT) {
+        if(cardType == CLOZE_TEXT) {
             answerInput.isEnabled = false
             if(!answerInput.getAnswer().answerIsEmpty()) {
                 answerInput.setWarning(requireContext().getString(R.string.edit_card_cloze_text_answer_is_ignored))
@@ -137,15 +144,45 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
                 answerInput.visibility = View.GONE
             }
         }
-        if(cardType == CardType.STANDARD) {
+        if(cardType == STANDARD) {
             questionInput.replaceClozeTextByStandardQuestion()
         }
-        if(cardType == CardType.STANDARD || cardType == CardType.CUSTOM) {
+        if(cardType == STANDARD || cardType == CUSTOM) {
             answerInput.resetInformation()
             answerInput.visibility = View.VISIBLE
             answerInput.isEnabled = true
         }
         typeSpinner.setSelection(cardType.ordinal)
+        onFlexboxInputChanged(questionInput)
+        onFlexboxInputChanged(answerInput)
+    }
+
+    override fun onFlexboxInputChanged(input: CardInputFlexBox) {
+        val previousInformation = input.currentInformation
+        if(previousInformation.type == ERROR) {
+            input.resetInformation()
+        }
+        if(allConstraintsFulfilled(input)) {
+            if(previousInformation.type != SUCCESS) {
+                input.setSuccess("")
+            }
+        } else if(previousInformation.type != WARNING) {
+            input.resetInformation()
+        }
+    }
+
+    private fun allConstraintsFulfilled(input: CardInputFlexBox): Boolean {
+        return getUnfulfilledConstraints(input).isEmpty()
+    }
+
+    private fun getUnfulfilledConstraints(input: CardInputFlexBox): List<SaveCardConstraint> {
+        return SaveCardValidator.getTargetSpecificUnfulfilledConstraints(
+            Card(answer = answerInput.getAnswer(), question = questionInput.getCardQuestion(), type = getSelectedCardType()),
+            input.target)
+    }
+
+    fun getSelectedCardType(): CardType {
+        return CardType.valueOf(typeSpinner.selectedItem.toString())
     }
 
 }

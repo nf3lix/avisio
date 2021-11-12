@@ -14,9 +14,10 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.material.chip.Chip
 
-class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet) {
+class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     companion object {
         const val TEXT_SIZE = 14F
@@ -39,6 +40,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         mergeRemainingEditTexts()
         resetInformation()
         cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
+        cardChangeListener.onFlexboxInputChanged(this)
     }
 
     private fun getSelectedText(): Pair<EditTextSelection, Int> {
@@ -118,15 +120,13 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             when(token.tokenType) {
                 CardQuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
-                    // if(index == 0) {
-                    //     editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    // }
                     flexbox.addView(editText, index)
                 }
                 CardQuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(token.content.trim())
                     flexbox.addView(chip, index)
                 }
+                CardQuestionTokenType.IMAGE -> { }
             }
         }
         mergeRemainingEditTexts()
@@ -175,6 +175,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 editTextReplacement.setText(chip.text)
                 flexbox.removeView(chip)
                 flexbox.addView(editTextReplacement as View, chipIndex - 1)
+                cardChangeListener.onFlexboxInputChanged(this)
             }
             mergeRemainingEditTexts()
             setEditTextKeyListeners()
@@ -190,6 +191,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
         flexbox.removeAllViews()
         setCardQuestion(CardQuestion(newQuestionTokenList))
+        cardChangeListener.onFlexboxInputChanged(this)
     }
 
     private fun checkCardType() {
@@ -227,7 +229,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         for(view in views) {
             if(view is EditText) {
                 view.setOnKeyListener { _, _, _ ->
-                    resetInformation()
+                    cardChangeListener.onFlexboxInputChanged(this)
                     false
                 }
             }

@@ -11,9 +11,11 @@ import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
 import com.google.android.flexbox.FlexboxLayout
 
-abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
+abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, val target: TargetInput) : LinearLayout(context, attributeSet) {
 
     companion object {
         const val TEXT_SIZE = 14F
@@ -55,6 +57,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
         setInformation(CardInputInformation(message, CardFlexBoxInformationType.INFORMATION))
     }
 
+    fun setSuccess(message: String) {
+        setInformation(CardInputInformation(message, CardFlexBoxInformationType.SUCCESS))
+    }
+
     private fun setInformation(information: CardInputInformation) {
         if(information.isBlank()) {
             resetInformation()
@@ -62,6 +68,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
         }
         informationLayout.visibility = View.VISIBLE
         informationIcon.setImageResource(information.type.drawable)
+        informationIcon.tag = information.type.drawable
         informationTextView.text = information.message
         informationTextView.setTextColor(resources.getColor(information.type.color))
         titleTextView.setTextColor(resources.getColor(information.type.color))
@@ -70,6 +77,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet) : 
 
     fun resetInformation() {
         titleTextView.setTextColor(resources.getColor(R.color.primaryColor))
+        informationIcon.tag = -1
         informationLayout.visibility = View.GONE
         informationTextView.text = ""
         currentInformation = CardInputInformation.NONE

@@ -26,7 +26,7 @@ class CreateCardStrategy(
     }
 
     override fun saveCard() {
-        val type = CardType.valueOf(typeSpinner.selectedItem.toString())
+        val type = fragment.getSelectedCardType()
         val question = questionFlexBox.getCardQuestion()
         val answer = if(type == CardType.CLOZE_TEXT) CardAnswer.BLANK else answerFlexBox.getAnswer()
         val cardToCreate = Card(

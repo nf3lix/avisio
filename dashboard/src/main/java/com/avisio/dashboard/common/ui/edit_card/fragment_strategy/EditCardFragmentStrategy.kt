@@ -10,8 +10,6 @@ import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardValidator
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
 
 abstract class EditCardFragmentStrategy(
@@ -44,10 +42,10 @@ abstract class EditCardFragmentStrategy(
     fun onFabClicked() {
         val question = questionFlexBox.getCardQuestion(trimmed = true)
         val answer = answerFlexBox.getAnswer()
-        val type = CardType.valueOf(typeSpinner.selectedItem.toString())
+        val type = fragment.getSelectedCardType()
         val cardToValidate = Card(question = question, answer = answer, type = type)
 
-        val unfulfilled = SaveCardValidator.getUnfulfilledConstraints(cardToValidate, this)
+        val unfulfilled = SaveCardValidator.getUnfulfilledConstraints(cardToValidate)
         if(unfulfilled.isEmpty()) {
             handleValidInput()
             Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()

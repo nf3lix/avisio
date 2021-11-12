@@ -7,7 +7,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 
-abstract class CardTypeLayoutStrategy(fragment: LearnBoxFragment, val cardType: CardType) {
+abstract class CardTypeLayoutStrategy(val cardType: CardType) {
 
     abstract fun onShowCard()
     abstract fun resetCard()

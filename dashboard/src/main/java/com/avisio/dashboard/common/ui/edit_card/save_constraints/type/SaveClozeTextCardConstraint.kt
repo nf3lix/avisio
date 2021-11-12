@@ -5,33 +5,44 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.Priority.MEDIUM
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.ANSWER_INPUT
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 
-sealed class SaveClozeTextCardConstraint(notFulFilledMessageId: Int, target: TargetInput, priority: Priority)
-    : SaveCardConstraint(notFulFilledMessageId, target, priority) {
+class SaveClozeTextCardConstraint {
 
     companion object {
+
         fun getConstraints(): List<SaveCardConstraint> {
-            return SaveClozeTextCardConstraint::class.sealedSubclasses
-                .map { it.objectInstance as SaveClozeTextCardConstraint }
+            return listOf(
+                clozeTextHasQuestion,
+                clozeTextHasActualText,
+                separateAnswerIsEmpty
+            )
         }
-    }
 
-    object ClozeTextHasQuestion : SaveClozeTextCardConstraint(string.create_card_cloze_needs_at_least_one_question, QUESTION_INPUT, MEDIUM) {
-        override fun isFulfilled(card: Card): Boolean {
-            return card.question.hasQuestionToken()
-        }
-    }
-
-    object ClozeTextHasActualText : SaveClozeTextCardConstraint(string.edit_card_cloze_text_is_required, QUESTION_INPUT, MEDIUM) {
-        override fun isFulfilled(card: Card): Boolean {
-            for(token in card.question.tokenList) {
-                if(token.tokenType == CardQuestionTokenType.TEXT) {
-                    return true
-                }
+        private val clozeTextHasQuestion = object : SaveCardConstraint(string.create_card_cloze_needs_at_least_one_question, QUESTION_INPUT, MEDIUM) {
+            override fun isFulfilled(card: Card): Boolean {
+                return card.question.hasQuestionToken()
             }
-            return false
         }
+
+        private val clozeTextHasActualText = object : SaveCardConstraint(string.edit_card_cloze_text_is_required, QUESTION_INPUT, MEDIUM) {
+            override fun isFulfilled(card: Card): Boolean {
+                for(token in card.question.tokenList) {
+                    if(token.tokenType == CardQuestionTokenType.TEXT && token.content.trim().isNotEmpty()) {
+                        return true
+                    }
+                }
+                return false
+            }
+        }
+
+        private val separateAnswerIsEmpty = object : SaveCardConstraint(string.edit_card_cloze_text_is_required, ANSWER_INPUT, MEDIUM) {
+            override fun isFulfilled(card: Card): Boolean {
+                return card.answer.answerIsEmpty()
+            }
+        }
+
     }
 
 }

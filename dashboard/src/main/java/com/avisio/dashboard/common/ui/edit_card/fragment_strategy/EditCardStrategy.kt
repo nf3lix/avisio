@@ -28,7 +28,7 @@ class EditCardStrategy(
     override fun saveCard() {
         val updatedQuestion = questionFlexBox.getCardQuestion()
         val updatedAnswer = answerFlexBox.getAnswer()
-        val updatedType = CardType.valueOf(typeSpinner.selectedItem.toString())
+        val updatedType = fragment.getSelectedCardType()
         val newCard = Card(question = updatedQuestion, answer = updatedAnswer, type = updatedType)
         if(cardChanged(card, newCard)) {
             val updatedCard = Card(

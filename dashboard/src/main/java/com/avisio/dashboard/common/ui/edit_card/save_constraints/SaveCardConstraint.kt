@@ -2,7 +2,6 @@ package com.avisio.dashboard.common.ui.edit_card.save_constraints
 
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveClozeTextCardConstraint
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveCustomCardConstraint
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveStandardCardConstraint
@@ -41,9 +40,20 @@ abstract class SaveCardConstraint(
             return mergeConstraints(typeSpecificConstraints, UniversalConstraint.getConstraints())
         }
 
+        fun getInputTargetSpecificConstraints(cardType: CardType, targetInput: TargetInput): List<SaveCardConstraint> {
+            val unfilteredConstraints = getConstraints(cardType)
+            val filtered = arrayListOf<SaveCardConstraint>()
+            for(constraint in unfilteredConstraints) {
+                if(constraint.targetInput == targetInput) {
+                    filtered.add(constraint)
+                }
+            }
+            return filtered
+        }
+
         private fun mergeConstraints(
             typeSpecificConstraints: List<SaveCardConstraint>,
-            universalConstraint: List<UniversalConstraint>): ArrayList<SaveCardConstraint>
+            universalConstraint: List<SaveCardConstraint>): ArrayList<SaveCardConstraint>
         {
             val specificConstraints = ArrayList(typeSpecificConstraints)
             specificConstraints.addAll(universalConstraint)

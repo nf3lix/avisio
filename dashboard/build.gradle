@@ -106,8 +106,4 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation "androidx.room:room-ktx:$room_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
-    implementation 'com.android.support:multidex:1.0.3'
-
-
 }

@@ -18,7 +18,9 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
+import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
 import org.junit.After
 import org.junit.Before
@@ -52,7 +54,8 @@ class EditCardFragmentEditClozeWithoutTextTest {
     @Test
     fun showTextIsRequiredWarningOnFabClicked() {
         onView(withClassName(`is`(FloatingActionButton::class.java.name))).perform(click())
-        onView(withText(R.string.edit_card_cloze_text_is_required)).check(matches(isDisplayed()))
+        onView(allOf(withText(R.string.edit_card_cloze_text_is_required), withParent(withParent(
+            withParent(withParent(withParent(withClassName(`is`(QuestionFlexBox::class.java.name))))))))).check(matches(isDisplayed()))
     }
 
 }

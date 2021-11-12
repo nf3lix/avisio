@@ -102,14 +102,6 @@ class LearnBoxFragmentClozeTextTest {
     }
 
     @Test
-    fun correctAnswerTextViewIsShownOnIncorrectAnswer() {
-        setChipText("ANSWER_TOKEN")
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(withId(R.id.correct_answer_input_layout)).check(matches(isDisplayed()))
-        onView(withText("TOKEN_1 TOKEN_2 TOKEN_3")).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun correctAnswerTextViewNotShownOnCorrectAnswer() {
         setChipText("TOKEN_2")
         onView(withId(R.id.resolve_question_button)).perform(click())

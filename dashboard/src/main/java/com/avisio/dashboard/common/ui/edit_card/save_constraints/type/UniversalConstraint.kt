@@ -7,20 +7,22 @@ import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstra
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.Priority.HIGH
 import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 
-sealed class UniversalConstraint(notFulFilledMessageId: Int, target: TargetInput, priority: Priority)
-    : SaveCardConstraint(notFulFilledMessageId, target, priority) {
-
-    object QuestionNotEmpty : UniversalConstraint(string.create_card_empty_question, QUESTION_INPUT, HIGH) {
-        override fun isFulfilled(card: Card): Boolean {
-            return !TextUtils.isEmpty(card.question.getStringRepresentation())
-        }
-    }
+class UniversalConstraint {
 
     companion object {
-        fun getConstraints(): List<UniversalConstraint> {
-            return UniversalConstraint::class.sealedSubclasses
-                .map { it.objectInstance as UniversalConstraint }
+
+        fun getConstraints(): List<SaveCardConstraint> {
+            return listOf(
+                questionNotEmpty
+            )
         }
+
+        private val questionNotEmpty = object : SaveCardConstraint(string.create_card_empty_question, QUESTION_INPUT, HIGH) {
+            override fun isFulfilled(card: Card): Boolean {
+                return !TextUtils.isEmpty(card.question.getStringRepresentation())
+            }
+        }
+
     }
 
 }

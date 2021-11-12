@@ -17,9 +17,12 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenTyp
 import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
 import com.google.android.material.chip.Chip
 
-class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet) {
+class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     private var cardQuestion: CardQuestion = CardQuestion(arrayListOf())
 
@@ -36,6 +39,7 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
                     flexbox.addView(chip, index)
                 }
+                CardQuestionTokenType.IMAGE -> { }
             }
         }
         removeEmptyEditTexts()
