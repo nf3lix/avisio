@@ -81,13 +81,6 @@ class LearnBoxFragmentClozeTextTest {
     }
 
     @Test
-    fun showDialogOnChipClicked() {
-        onView(withClassName(`is`(Chip::class.java.name))).perform(click())
-        onView(withText(R.string.confirm_dialog_confirm_default)).check(matches(isDisplayed()))
-        onView(withClassName(`is`(AutoCompleteTextView::class.java.name))).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun setDialogInputToChip() {
         setChipText("ANSWER_TOKEN")
         onView(allOf(withText("ANSWER_TOKEN"), withClassName(`is`(Chip::class.java.name)))).check(matches(isDisplayed()))
@@ -106,15 +99,6 @@ class LearnBoxFragmentClozeTextTest {
         setChipText("TOKEN_2")
         onView(withId(R.id.resolve_question_button)).perform(click())
         onView(withId(R.id.correct_answer_input_layout)).check(matches(not(isDisplayed())))
-    }
-
-    @Test
-    fun resultChipIsNotClickable() {
-        onView(withClassName(`is`(Chip::class.java.name))).perform(click())
-        onView(withClassName(`is`(AutoCompleteTextView::class.java.name))).perform(typeText("TOKEN_2"))
-        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(allOf(withClassName(`is`(Chip::class.java.name)), withText("TOKEN_2"))).check(matches(not(isClickable())))
     }
 
     private fun setChipText(text: String) {
