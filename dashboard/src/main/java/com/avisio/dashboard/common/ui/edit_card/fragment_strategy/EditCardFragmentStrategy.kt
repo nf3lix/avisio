@@ -1,6 +1,7 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Spinner
 import android.widget.Toast
 import com.avisio.dashboard.R
@@ -41,7 +42,7 @@ abstract class EditCardFragmentStrategy(
     }
 
     fun onFabClicked() {
-        val question = questionFlexBox.getCardQuestion()
+        val question = questionFlexBox.getCardQuestion(trimmed = true)
         val answer = answerFlexBox.getAnswer()
         val type = CardType.valueOf(typeSpinner.selectedItem.toString())
         val cardToValidate = Card(question = question, answer = answer, type = type)

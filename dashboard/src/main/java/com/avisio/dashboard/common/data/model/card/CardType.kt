@@ -30,17 +30,25 @@ enum class CardType(val iconId: Int) {
     CLOZE_TEXT(R.drawable.card_icon_cloze_text) {
         override fun getSaveCardConstraints(strategy: EditCardFragmentStrategy): List<SaveCardConstraint> {
 
-            val clozeTextHasQuestion = object : SaveCardConstraint
-                (R.string.create_card_cloze_needs_at_least_one_question,
-                strategy.questionFlexBox,
-                Priority.MEDIUM
-            ) {
+            val clozeTextHasQuestion = object : SaveCardConstraint(R.string.create_card_cloze_needs_at_least_one_question, strategy.questionFlexBox, Priority.MEDIUM) {
                 override fun isFulfilled(card: Card): Boolean {
                     return card.question.hasQuestionToken()
                 }
             }
 
-            val constraintList = arrayListOf<SaveCardConstraint>(clozeTextHasQuestion)
+            val clozeTextHasActualText = object : SaveCardConstraint(R.string.edit_card_cloze_text_is_required, strategy.questionFlexBox, Priority.MEDIUM) {
+                override fun isFulfilled(card: Card): Boolean {
+                    for(token in card.question.tokenList) {
+                        if(token.tokenType == CardQuestionTokenType.TEXT) {
+                            return true
+                        }
+                    }
+                    return false
+                }
+
+            }
+
+            val constraintList = arrayListOf(clozeTextHasQuestion, clozeTextHasActualText)
             constraintList.addAll(getUniversalConstraints(strategy))
             return constraintList
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -95,12 +96,14 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
-    fun getCardQuestion(): CardQuestion {
+    fun getCardQuestion(trimmed: Boolean = false): CardQuestion {
         val tokenList = arrayListOf<CardQuestionToken>()
         for(view in flexbox.allViews.toList()) {
             when(view) {
                 is EditText -> {
-                    tokenList.add(CardQuestionToken(view.text.toString(), CardQuestionTokenType.TEXT))
+                    if(view.text.isNotEmpty() || !trimmed) {
+                        tokenList.add(CardQuestionToken(view.text.toString(), CardQuestionTokenType.TEXT))
+                    }
                 }
                 is Chip -> {
                     tokenList.add(CardQuestionToken(view.text.toString(), CardQuestionTokenType.QUESTION))
