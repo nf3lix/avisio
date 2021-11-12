@@ -61,7 +61,7 @@ class EditCardStrategy(
     override fun onBackPressed() {
         val updatedQuestion = questionFlexBox.getCardQuestion()
         val updatedAnswer = answerFlexBox.getAnswer()
-        if(card.question != updatedQuestion || card.answer != updatedAnswer) {
+        if(card.question != updatedQuestion || card.answer.getStringRepresentation() != updatedAnswer.getStringRepresentation()) {
             showOnBackPressedWarning()
             return
         }

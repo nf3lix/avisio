@@ -6,7 +6,11 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoActivityResumedException
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -77,6 +81,28 @@ class EditCardFragmentEditClozeTextTest {
         Espresso.onData(allOf(`is`(IsInstanceOf.instanceOf(CardType.STANDARD::class.java)))).perform(ViewActions.click())
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.STANDARD.name))))
         onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1 TOKEN_2 TOKEN_3"))).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showWarningOnBackPressedAfterChange() {
+        onView(withText("TOKEN_1")).perform(typeText("TEST"))
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.pressBack()
+        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun disposeUnsavedChangesWarningOnCancel() {
+        onView(withText("TOKEN_1")).perform(typeText("TEST"))
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.pressBack()
+        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
+        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(not(isDisplayed())))
+    }
+
+    @Test(expected = NoActivityResumedException::class)
+    fun finishActivityOnBackPressedWithoutChanges() {
+        Espresso.pressBack()
     }
 
 }
