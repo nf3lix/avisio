@@ -15,8 +15,7 @@ class SaveClozeTextCardConstraint {
         fun getConstraints(): List<SaveCardConstraint> {
             return listOf(
                 clozeTextHasQuestion,
-                clozeTextHasActualText,
-                separateAnswerIsEmpty
+                clozeTextHasActualText
             )
         }
 
@@ -37,11 +36,12 @@ class SaveClozeTextCardConstraint {
             }
         }
 
-        private val separateAnswerIsEmpty = object : SaveCardConstraint(string.edit_card_cloze_text_is_required, ANSWER_INPUT, MEDIUM) {
+        /*
+        private val separateAnswerIsEmpty = object : SaveCardConstraint(string.edit_card_cloze_text_answer_is_ignored, ANSWER_INPUT, MEDIUM) {
             override fun isFulfilled(card: Card): Boolean {
                 return card.answer.answerIsEmpty()
             }
-        }
+        }*/
 
     }
 
