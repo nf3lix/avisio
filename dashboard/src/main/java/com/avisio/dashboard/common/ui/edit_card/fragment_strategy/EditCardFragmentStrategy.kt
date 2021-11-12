@@ -1,7 +1,5 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
-import android.text.TextUtils
-import android.util.Log
 import android.widget.Spinner
 import android.widget.Toast
 import com.avisio.dashboard.R
@@ -9,10 +7,12 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.SaveCardValidator
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardValidator
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
+import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
 
 abstract class EditCardFragmentStrategy(
     private val fragment: EditCardFragment
@@ -55,7 +55,14 @@ abstract class EditCardFragmentStrategy(
         }
 
         for(constraint in unfulfilled) {
-            constraint.targetInput.setError(fragment.requireContext().getString(constraint.notFulfilledMessageId))
+            when(constraint.targetInput) {
+                ANSWER_INPUT -> {
+                    answerFlexBox.setError(fragment.requireContext().getString(constraint.notFulfilledMessageId))
+                }
+                QUESTION_INPUT -> {
+                    questionFlexBox.setError(fragment.requireContext().getString(constraint.notFulfilledMessageId))
+                }
+            }
         }
     }
 
