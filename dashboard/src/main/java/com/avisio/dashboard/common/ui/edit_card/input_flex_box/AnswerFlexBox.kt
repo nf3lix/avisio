@@ -17,7 +17,6 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
 
     init {
         setTitle(context.getString(R.string.create_card_answer_text_field_hint))
-        addInitialEditText()
     }
 
     override fun initToolbar() {
@@ -32,15 +31,12 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         answerEditText.setText(answer.getStringRepresentation())
     }
 
-    private fun addInitialEditText() {
+    fun addInitialEditText() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             answerEditText.textSize = TEXT_SIZE
         }
         answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        answerEditText.setOnKeyListener { _, _, _ ->
-            cardChangeListener.onFlexboxInputChanged(this)
-            false
-        }
+        answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
         flexbox.addView(answerEditText as View, 0)
     }
 

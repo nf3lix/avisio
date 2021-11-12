@@ -65,6 +65,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
         answerInput.setCardTypeChangeListener(this)
+        answerInput.addInitialEditText()
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
@@ -163,7 +164,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
             input.resetInformation()
         }
         if(allConstraintsFulfilled(input)) {
-            if(previousInformation.type != SUCCESS) {
+            if(previousInformation.type != SUCCESS && !(getSelectedCardType() == CLOZE_TEXT && input is AnswerFlexBox)) {
                 input.setSuccess("")
             }
         } else if(previousInformation.type != WARNING) {

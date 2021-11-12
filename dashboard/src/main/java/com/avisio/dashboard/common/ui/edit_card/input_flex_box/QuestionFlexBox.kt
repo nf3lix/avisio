@@ -228,10 +228,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         val views = flexbox.allViews.toList()
         for(view in views) {
             if(view is EditText) {
-                view.setOnKeyListener { _, _, _ ->
-                    cardChangeListener.onFlexboxInputChanged(this)
-                    false
-                }
+                view.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
             }
         }
     }
