@@ -1,13 +1,12 @@
 package com.avisio.dashboard.common.data.model.card
 
-import java.lang.StringBuilder
-
-class CardAnswer(private val answerList: ArrayList<String>) {
+class CardAnswer(val answerList: ArrayList<String>) {
 
     companion object {
         fun getFromStringRepresentation(representation: String): CardAnswer {
             return CardAnswer(arrayListOf(representation))
         }
+        val BLANK = CardAnswer(arrayListOf())
     }
 
     fun addToken(answer: String) {
@@ -22,12 +21,8 @@ class CardAnswer(private val answerList: ArrayList<String>) {
         return representation.toString().trim()
     }
 
-    override fun toString(): String {
-        val sb = StringBuilder()
-        for(token in answerList) {
-            sb.append("$token;")
-        }
-        return sb.toString()
+    fun answerIsEmpty(): Boolean {
+        return getStringRepresentation().isEmpty()
     }
 
     override fun equals(other: Any?): Boolean {

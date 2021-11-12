@@ -1,12 +1,12 @@
 package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
 
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 
@@ -17,15 +17,18 @@ class EditCardStrategy(
 ) : EditCardFragmentStrategy(fragment) {
 
     override fun fillCardInformation() {
-        questionInput.setText(card.question.getStringRepresentation())
-        answerInput.setText(card.answer.getStringRepresentation())
+        questionFlexBox.setCardQuestion(card.question)
+        answerFlexBox.setAnswer(card.answer)
         typeSpinner.setSelection(card.type.ordinal)
+        if(card.type == CardType.CLOZE_TEXT) {
+            answerFlexBox.visibility = View.GONE
+        }
     }
 
     override fun saveCard() {
-        val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
-        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
-        val updatedType = CardType.valueOf(typeSpinner.selectedItem.toString())
+        val updatedQuestion = questionFlexBox.getCardQuestion()
+        val updatedAnswer = answerFlexBox.getAnswer()
+        val updatedType = fragment.getSelectedCardType()
         val newCard = Card(question = updatedQuestion, answer = updatedAnswer, type = updatedType)
         if(cardChanged(card, newCard)) {
             val updatedCard = Card(
@@ -56,9 +59,9 @@ class EditCardStrategy(
     }
 
     override fun onBackPressed() {
-        val updatedQuestion = CardQuestion.getFromStringRepresentation(questionInput.text.toString())
-        val updatedAnswer = CardAnswer.getFromStringRepresentation(answerInput.text.toString())
-        if(card.question != updatedQuestion || card.answer != updatedAnswer) {
+        val updatedQuestion = questionFlexBox.getCardQuestion()
+        val updatedAnswer = answerFlexBox.getAnswer()
+        if(card.question != updatedQuestion || card.answer.getStringRepresentation() != updatedAnswer.getStringRepresentation()) {
             showOnBackPressedWarning()
             return
         }

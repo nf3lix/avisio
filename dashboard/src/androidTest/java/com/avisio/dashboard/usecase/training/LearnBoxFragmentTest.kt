@@ -5,8 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
@@ -25,13 +23,13 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.persistence.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
+import com.google.android.flexbox.FlexboxLayout
+import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 class LearnBoxFragmentTest {
 
@@ -59,6 +57,7 @@ class LearnBoxFragmentTest {
 
     @After
     fun releaseIntents() {
+        cardDao.deleteAll()
         Intents.release()
     }
 
@@ -76,20 +75,21 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.correct_answer_input_layout)).check(matches(isDisplayed()))
     }
 
-    @Test(expected = NoMatchingViewException::class)
+    @Test
     fun hideViewsAfterTrainingFinished() {
         scenario.onFragment { fragment ->
             fragment.onTrainingFinished()
         }
-        onView(withId(R.id.question_text_input_layout)).check(matches(not(isDisplayed())))
+        onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
-    @Test
+    @Test(expected = NoMatchingViewException::class)
     fun resetQuestionTextLayoutOnResultOptionSelected() {
         scenario.onFragment { fragment ->
             fragment.onResultOptionSelected(QuestionResult.CORRECT)
         }
-        onView(withId(R.id.question_edit_text)).check(matches(withText("")))
+        onView(withParent(withClassName(`is`(
+            FlexboxLayout::class.java.name)))).check(matches(withText("")))
     }
 
     @Test

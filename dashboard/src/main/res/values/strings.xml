@@ -38,11 +38,15 @@
     <string name="create_card_empty_answer">Antwort darf nicht leer sein</string>
     <string name="create_card_action_bar_title">Neue Karte</string>
     <string name="create_card_successful">Karte wurde erfolgreich erstellt</string>
+    <string name="create_card_cloze_needs_at_least_one_question">Lückentexte brauchen mindestens eine Lücke</string>
+    <string name="create_card_add_cloze_button_explanation">Markiere zunächst den Text, der als Lücke markiert werden soll</string>
     <string name="edit_card_delete">Karte löschen</string>
     <string name="edit_card_successful">Karte wurde erfolgreich geändert</string>
     <string name="edit_card_action_bar_title">Karte bearbeiten</string>
     <string name="edit_card_delete_card_dialog_title">Karte löschen</string>
     <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
+    <string name="edit_card_cloze_text_answer_is_ignored">Separete Antwort bei Lückentext nicht möglich</string>
+    <string name="edit_card_cloze_text_is_required">Lückentexte brauchen Text</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Abbrechen</string>
