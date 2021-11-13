@@ -9,8 +9,9 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.common.workflow.CRUD.*
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
-import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentMode
 
 class EditBoxActivity : AppCompatActivity() {
 
@@ -28,7 +29,7 @@ class EditBoxActivity : AppCompatActivity() {
     private fun initFragment() {
         val bundle = bundleOf(
             IntentKeys.BOX_OBJECT to ParcelableAvisioBox.createFromEntity(box),
-            EditBoxFragment.FRAGMENT_MODE_KEY to BoxFragmentMode.EDIT_BOX.ordinal)
+            EditBoxFragment.BOX_CRUD_WORKFLOW to UPDATE.ordinal)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.edit_fragment_container_view, EditBoxFragment::class.java, bundle)
         transaction.commit()

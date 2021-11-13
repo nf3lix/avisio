@@ -8,7 +8,6 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.transfer.setCardObject
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
@@ -20,7 +19,7 @@ class CreateCardStrategy(
     private val fragment: EditCardFragment,
     private val card: Card,
     private val repository: CardRepository,
-) : EditCardFragmentStrategy(fragment) {
+) : CardFragmentStrategy(fragment) {
 
     override fun fillCardInformation() {
     }

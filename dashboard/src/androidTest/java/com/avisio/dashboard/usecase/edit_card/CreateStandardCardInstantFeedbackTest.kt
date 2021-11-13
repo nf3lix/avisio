@@ -14,8 +14,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import org.hamcrest.core.AllOf.allOf
@@ -33,7 +33,7 @@ class CreateStandardCardInstantFeedbackTest {
     fun initScenario() {
         Intents.init()
         val fragmentArgs = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.CREATE_CARD.ordinal,
+            EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.CREATE.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(Card(id = 1)))
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }

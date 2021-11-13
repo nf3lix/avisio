@@ -14,15 +14,12 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
-import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCardObject
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
+import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.common.workflow.CRUD.*
 import com.avisio.dashboard.usecase.crud_card.read.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModel
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModelFactory
@@ -97,7 +94,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
-            startEditCardActivity(EditCardFragmentMode.CREATE_CARD, Card(boxId = box.id))
+            startEditCardActivity(CREATE, Card(boxId = box.id))
         }
     }
 
@@ -125,13 +122,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     override fun onClick(index: Int) {
-        startEditCardActivity(EditCardFragmentMode.EDIT_CARD, cardListAdapter.currentList[index])
+        startEditCardActivity(UPDATE, cardListAdapter.currentList[index])
     }
 
-    private fun startEditCardActivity(fragmentMode: EditCardFragmentMode, card: Card) {
-        val intent = when(fragmentMode) {
-            EditCardFragmentMode.CREATE_CARD -> Intent(this, CreateCardActivity::class.java)
-            EditCardFragmentMode.EDIT_CARD ->  Intent(this, EditCardActivity::class.java)
+    private fun startEditCardActivity(workflow: CRUD, card: Card) {
+        val intent = when(workflow) {
+            CREATE -> Intent(this, CreateCardActivity::class.java)
+            UPDATE ->  Intent(this, EditCardActivity::class.java)
         }
         intent.setCardObject(card)
         startActivity(intent)

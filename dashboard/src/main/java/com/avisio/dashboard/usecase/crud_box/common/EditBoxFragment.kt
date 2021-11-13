@@ -12,7 +12,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
-import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentMode
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
@@ -22,11 +22,11 @@ import kotlinx.coroutines.launch
 class EditBoxFragment : Fragment() {
 
     companion object {
-        const val FRAGMENT_MODE_KEY = "FRAGMENT_MODE_KEY"
+        const val BOX_CRUD_WORKFLOW = "BOX_CRUD_WORKFLOW"
     }
 
     internal lateinit var box: AvisioBox
-    internal var fragmentMode: BoxFragmentMode = BoxFragmentMode.CREATE_BOX
+    internal var workflow: CRUD = CRUD.CREATE
 
     lateinit var boxFragmentStrategy: BoxFragmentStrategy
     internal lateinit var boxNameTextInputLayout: TextInputLayout
@@ -43,7 +43,7 @@ class EditBoxFragment : Fragment() {
         }
         arguments?.let {
             box = it.getBoxObject()!!
-            fragmentMode = BoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
+            workflow = CRUD.values()[it.getInt(BOX_CRUD_WORKFLOW)]
             boxFragmentStrategy = BoxFragmentStrategy.getStrategy(this)
         }
     }

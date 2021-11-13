@@ -2,9 +2,10 @@ package com.avisio.dashboard.usecase.crud_box.common.fragment_strategy
 
 import android.text.TextUtils
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.workflow.CRUD.CREATE
+import com.avisio.dashboard.common.workflow.CRUD.UPDATE
 import com.avisio.dashboard.usecase.crud_box.common.BoxNameExistsWarningDialog
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
-import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentMode.*
 import com.avisio.dashboard.usecase.crud_box.create.CreateBoxStrategy
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxStrategy
 
@@ -12,9 +13,9 @@ abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment) {
 
     companion object {
 
-        fun getStrategy(fragment: EditBoxFragment): BoxFragmentStrategy = when(fragment.fragmentMode) {
-            CREATE_BOX -> CreateBoxStrategy(fragment)
-            EDIT_BOX -> EditBoxStrategy(fragment)
+        fun getStrategy(fragment: EditBoxFragment): BoxFragmentStrategy = when(fragment.workflow) {
+            CREATE -> CreateBoxStrategy(fragment)
+            UPDATE -> EditBoxStrategy(fragment)
         }
 
     }

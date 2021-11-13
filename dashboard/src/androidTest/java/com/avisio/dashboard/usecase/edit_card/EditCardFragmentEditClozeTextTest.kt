@@ -4,7 +4,6 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.NoActivityResumedException
 import androidx.test.espresso.NoMatchingViewException
@@ -22,13 +21,12 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.google.android.material.chip.Chip
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
-import org.hamcrest.core.IsInstanceOf
 import org.hamcrest.core.IsNot.not
 import org.hamcrest.core.StringContains
 import org.junit.After
@@ -52,7 +50,7 @@ class EditCardFragmentEditClozeTextTest {
             type = CardType.CLOZE_TEXT
         )
         val fragmentArgs = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
+            EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.UPDATE.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(card))
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }

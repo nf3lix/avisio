@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.controller
+package com.avisio.dashboard.common.workflow
 
 sealed class State<T> {
 

@@ -15,8 +15,8 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import org.hamcrest.Matchers
@@ -37,7 +37,7 @@ class EditCardFragmentEditModeTest {
             type = CardType.CUSTOM
         )
         val fragmentArgs = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
+            EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.UPDATE.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(card))
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }

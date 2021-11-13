@@ -14,8 +14,9 @@ import com.avisio.dashboard.common.data.model.card.CardType.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
@@ -27,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     companion object {
-        const val FRAGMENT_MODE_KEY: String = "EDIT_CARD_FRAGMENT_MODE"
+        const val CARD_CRUD_WORKFLOW: String = "CARD_CRUD_WORKFLOW"
         const val CARD_OBJECT_KEY: String = "CARD_OBJECT"
     }
 
@@ -36,8 +37,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     lateinit var typeSpinner: Spinner
 
     private lateinit var card: Card
-    private lateinit var fragmentMode: EditCardFragmentMode
-    private lateinit var fragmentStrategy: EditCardFragmentStrategy
+    internal lateinit var workflow: CRUD
+    private lateinit var fragmentStrategy: CardFragmentStrategy
 
     private lateinit var cardRepository: CardRepository
 
@@ -51,7 +52,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         arguments?.let {
             card = it.getCardObject()!!
-            fragmentMode = EditCardFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
+            workflow = CRUD.values()[it.getInt(CARD_CRUD_WORKFLOW)]
         }
         return inflater.inflate(R.layout.fragment_edit_card, container, false)
     }
@@ -67,17 +68,17 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
-        fragmentStrategy = fragmentMode.getFragmentStrategy(this, card, cardRepository)
+        fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
-        if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
+        if(workflow == CRUD.UPDATE) {
             questionInput.setCardQuestion(card.question)
         }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(fragmentMode == EditCardFragmentMode.EDIT_CARD) {
+        if(workflow == CRUD.UPDATE) {
             requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
         }
     }
