@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.data.database.converters
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.avisio.dashboard.common.ui.edit_box.BoxIcon
+import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 
 @ProvidedTypeConverter
 class BoxIconConverter {

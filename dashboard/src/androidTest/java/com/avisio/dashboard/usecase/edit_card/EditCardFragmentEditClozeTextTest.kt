@@ -4,8 +4,7 @@ import android.widget.EditText
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.NoActivityResumedException
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
@@ -20,15 +19,14 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.google.android.material.chip.Chip
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
-import org.hamcrest.core.IsInstanceOf
 import org.hamcrest.core.IsNot.not
 import org.hamcrest.core.StringContains
 import org.junit.After
@@ -44,15 +42,15 @@ class EditCardFragmentEditClozeTextTest {
         Intents.init()
         val card = Card(
             question = CardQuestion(arrayListOf(
-                CardQuestionToken("TOKEN_1", CardQuestionTokenType.TEXT),
-                CardQuestionToken("TOKEN_2", CardQuestionTokenType.QUESTION),
-                CardQuestionToken("TOKEN_3", CardQuestionTokenType.TEXT)
+                QuestionToken("TOKEN_1", QuestionTokenType.TEXT),
+                QuestionToken("TOKEN_2", QuestionTokenType.QUESTION),
+                QuestionToken("TOKEN_3", QuestionTokenType.TEXT)
             )),
             answer = CardAnswer(arrayListOf("ANSWER")),
             type = CardType.CLOZE_TEXT
         )
         val fragmentArgs = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
+            EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.UPDATE.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(card))
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }
@@ -77,8 +75,8 @@ class EditCardFragmentEditClozeTextTest {
     @Test
     fun replaceClozeTextOnCardTypeChangedManually() {
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.CLOZE_TEXT.name))))
-        onView(withId(R.id.card_type_spinner)).perform(ViewActions.click())
-        Espresso.onData(allOf(`is`(IsInstanceOf.instanceOf(CardType.STANDARD::class.java)))).perform(ViewActions.click())
+        onView(withId(R.id.card_type_spinner)).perform(click())
+        onView(withText(CardType.STANDARD.name)).perform(click())
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.STANDARD.name))))
         onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1 TOKEN_2 TOKEN_3"))).check(matches(isDisplayed()))
     }
@@ -87,7 +85,7 @@ class EditCardFragmentEditClozeTextTest {
     fun showWarningOnBackPressedAfterChange() {
         onView(withText("TOKEN_1")).perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
-        Espresso.pressBack()
+        pressBack()
         onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(isDisplayed()))
     }
 
@@ -95,14 +93,14 @@ class EditCardFragmentEditClozeTextTest {
     fun disposeUnsavedChangesWarningOnCancel() {
         onView(withText("TOKEN_1")).perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
-        Espresso.pressBack()
+        pressBack()
         onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
         onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(not(isDisplayed())))
     }
 
     @Test(expected = NoActivityResumedException::class)
     fun finishActivityOnBackPressedWithoutChanges() {
-        Espresso.pressBack()
+        pressBack()
     }
 
 }

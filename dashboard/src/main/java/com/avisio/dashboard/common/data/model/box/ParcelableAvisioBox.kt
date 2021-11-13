@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.data.model.box
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.avisio.dashboard.common.ui.edit_box.BoxIcon
+import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 
 data class ParcelableAvisioBox(
     val boxId: Long = 0,

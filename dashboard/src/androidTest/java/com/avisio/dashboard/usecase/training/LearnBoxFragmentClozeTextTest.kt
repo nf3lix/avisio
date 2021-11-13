@@ -21,8 +21,8 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
@@ -55,9 +55,9 @@ class LearnBoxFragmentClozeTextTest {
         val card1 = Card(
             boxId = 1,
             question = CardQuestion(arrayListOf(
-                CardQuestionToken("TOKEN_1", CardQuestionTokenType.TEXT),
-                CardQuestionToken("TOKEN_2", CardQuestionTokenType.QUESTION),
-                CardQuestionToken("TOKEN_3", CardQuestionTokenType.TEXT))),
+                QuestionToken("TOKEN_1", QuestionTokenType.TEXT),
+                QuestionToken("TOKEN_2", QuestionTokenType.QUESTION),
+                QuestionToken("TOKEN_3", QuestionTokenType.TEXT))),
             type = CardType.CLOZE_TEXT
         )
         cardDao.insert(card1)
@@ -84,14 +84,6 @@ class LearnBoxFragmentClozeTextTest {
     fun setDialogInputToChip() {
         setChipText("ANSWER_TOKEN")
         onView(allOf(withText("ANSWER_TOKEN"), withClassName(`is`(Chip::class.java.name)))).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun dialogInputIsIgnoredOnCancel() {
-        onView(withClassName(`is`(Chip::class.java.name))).perform(click())
-        onView(withClassName(`is`(AutoCompleteTextView::class.java.name))).perform(typeText("TOKEN_2"))
-        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
-        onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
     }
 
     @Test

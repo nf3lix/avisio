@@ -4,22 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
-import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.ui.InputDialog
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 import com.google.android.material.chip.Chip
 
 class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
@@ -31,15 +27,15 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         flexbox.removeAllViews()
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
-                CardQuestionTokenType.TEXT -> {
+                QuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
                     flexbox.addView(editText, index)
                 }
-                CardQuestionTokenType.QUESTION -> {
+                QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
                     flexbox.addView(chip, index)
                 }
-                CardQuestionTokenType.IMAGE -> { }
+                QuestionTokenType.IMAGE -> { }
             }
         }
         removeEmptyEditTexts()
@@ -111,9 +107,9 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
     }
 
     fun correctClozeText() {
-        val cardQuestionTokenList = arrayListOf<CardQuestionToken>()
+        val cardQuestionTokenList = arrayListOf<QuestionToken>()
         for(questionToken in cardQuestion.tokenList) {
-            if(questionToken.tokenType == CardQuestionTokenType.QUESTION) {
+            if(questionToken.tokenType == QuestionTokenType.QUESTION) {
                 cardQuestionTokenList.add(questionToken)
             }
         }

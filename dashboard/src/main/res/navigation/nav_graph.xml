@@ -13,7 +13,7 @@
 
     <fragment
             android:id="@+id/FirstFragment"
-            android:name="com.avisio.dashboard.usecase.crud_box.box_list.BoxListFragment"
+            android:name="com.avisio.dashboard.usecase.crud_box.read.BoxListFragment"
             android:label="@string/first_fragment_label"
             tools:layout="@layout/box_list_fragment">
     </fragment>

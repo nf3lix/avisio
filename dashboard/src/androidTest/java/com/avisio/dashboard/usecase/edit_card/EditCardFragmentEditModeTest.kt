@@ -13,12 +13,12 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
@@ -32,12 +32,12 @@ class EditCardFragmentEditModeTest {
     fun initScenario() {
         Intents.init()
         val card = Card(
-            question = CardQuestion(arrayListOf(CardQuestionToken("QUESTION_TOKEN", CardQuestionTokenType.TEXT))),
+            question = CardQuestion(arrayListOf(QuestionToken("QUESTION_TOKEN", QuestionTokenType.TEXT))),
             answer = CardAnswer(arrayListOf("ANSWER")),
             type = CardType.CUSTOM
         )
         val fragmentArgs = bundleOf(
-            EditCardFragment.FRAGMENT_MODE_KEY to EditCardFragmentMode.EDIT_CARD.ordinal,
+            EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.UPDATE.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to ParcelableCard.createFromEntity(card))
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_MaterialComponents)
     }
