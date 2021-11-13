@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usecase.crud_card.edit_card.EditCardActivity">
+    tools:context=".usecase.crud_card.update.EditCardActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/edit_card_fragment_container_view"

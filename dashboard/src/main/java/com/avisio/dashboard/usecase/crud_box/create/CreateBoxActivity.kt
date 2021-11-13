@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.create_box
+package com.avisio.dashboard.usecase.crud_box.create
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

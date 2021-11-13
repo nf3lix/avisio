@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_card.card_list
+package com.avisio.dashboard.usecase.crud_card.read
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

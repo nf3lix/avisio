@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_list
+package com.avisio.dashboard.usecase.crud_box.read
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

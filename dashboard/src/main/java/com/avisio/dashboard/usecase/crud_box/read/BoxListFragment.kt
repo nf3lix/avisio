@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.box_list
+package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create.CreateBoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioBoxViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox

@@ -13,12 +13,12 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
-import com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity
+import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
+import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.CardDao
-import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
+import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
