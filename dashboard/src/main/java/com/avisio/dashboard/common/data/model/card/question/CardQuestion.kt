@@ -1,23 +1,33 @@
 package com.avisio.dashboard.common.data.model.card.question
 
-class CardQuestion(val tokenList: ArrayList<CardQuestionToken>) {
+class CardQuestion(val tokenList: ArrayList<QuestionToken>) {
 
     companion object {
         fun getFromStringRepresentation(representation: String): CardQuestion {
-            return CardQuestion(arrayListOf(CardQuestionToken(representation, CardQuestionTokenType.TEXT)))
+            return CardQuestion(arrayListOf(QuestionToken(representation, QuestionTokenType.TEXT)))
         }
     }
 
-    fun hasQuestionToken(): Boolean {
+    fun getTokensOfType(tokenType: QuestionTokenType): List<QuestionToken> {
+        val typeSpecificTokenList = arrayListOf<QuestionToken>()
+        for(questionToken in tokenList) {
+            if(questionToken.tokenType == tokenType) {
+                typeSpecificTokenList.add(questionToken)
+            }
+        }
+        return typeSpecificTokenList
+    }
+
+    fun hasTokenOfType(tokenType: QuestionTokenType): Boolean {
         for(token in tokenList) {
-            if(token.tokenType == CardQuestionTokenType.QUESTION) {
+            if(token.tokenType == tokenType) {
                 return true
             }
         }
         return false
     }
 
-    fun addToken(token: CardQuestionToken) {
+    fun addToken(token: QuestionToken) {
         tokenList.add(token)
     }
 

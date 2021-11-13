@@ -14,8 +14,8 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
@@ -35,7 +35,7 @@ class EditCardFragmentEditClozeWithoutTextTest {
         Intents.init()
         val card = Card(
             question = CardQuestion(arrayListOf(
-                CardQuestionToken("TOKEN_1", CardQuestionTokenType.QUESTION)
+                QuestionToken("TOKEN_1", QuestionTokenType.QUESTION)
             )),
             answer = CardAnswer(arrayListOf("ANSWER")),
             type = CardType.CLOZE_TEXT

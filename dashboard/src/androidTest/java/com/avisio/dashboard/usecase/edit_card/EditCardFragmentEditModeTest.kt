@@ -13,8 +13,8 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
@@ -32,7 +32,7 @@ class EditCardFragmentEditModeTest {
     fun initScenario() {
         Intents.init()
         val card = Card(
-            question = CardQuestion(arrayListOf(CardQuestionToken("QUESTION_TOKEN", CardQuestionTokenType.TEXT))),
+            question = CardQuestion(arrayListOf(QuestionToken("QUESTION_TOKEN", QuestionTokenType.TEXT))),
             answer = CardAnswer(arrayListOf("ANSWER")),
             type = CardType.CUSTOM
         )

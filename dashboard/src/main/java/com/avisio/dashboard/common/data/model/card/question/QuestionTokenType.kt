@@ -1,6 +1,6 @@
 package com.avisio.dashboard.common.data.model.card.question
 
-enum class CardQuestionTokenType {
+enum class QuestionTokenType {
 
     TEXT, IMAGE, QUESTION
 

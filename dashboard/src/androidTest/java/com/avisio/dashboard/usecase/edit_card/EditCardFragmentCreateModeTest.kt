@@ -77,7 +77,7 @@ class EditCardFragmentCreateModeTest {
     fun showWarningIfCardTypeIsClozeTextAndAnswerInputNotEmpty() {
         typeInAnswerEditText("ANSWER")
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onData(allOf(`is`(instanceOf(CardType.CLOZE_TEXT::class.java)))).perform(click())
+        onView(withText(CardType.CLOZE_TEXT.name)).perform(click())
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.CLOZE_TEXT.name))))
         onView(withText(R.string.edit_card_cloze_text_answer_is_ignored)).check(matches(isDisplayed()))
     }
@@ -85,7 +85,7 @@ class EditCardFragmentCreateModeTest {
     @Test(expected = NoMatchingViewException::class)
     fun removeWarningOfIgnoredAnswerOnCardTypeChanged() {
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onData(allOf(`is`(instanceOf(CardType.STANDARD::class.java)))).perform(click())
+        onView(withText(CardType.STANDARD.name)).perform(click())
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.STANDARD.name))))
         onView(withText(R.string.edit_card_cloze_text_answer_is_ignored)).check(matches(not(isDisplayed())))
     }

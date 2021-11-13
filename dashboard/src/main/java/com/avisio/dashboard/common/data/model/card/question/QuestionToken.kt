@@ -1,7 +1,6 @@
 package com.avisio.dashboard.common.data.model.card.question
 
-data class CardQuestionToken(
-
+data class QuestionToken(
     val content: String,
-    val tokenType: CardQuestionTokenType
+    val tokenType: QuestionTokenType
 )
