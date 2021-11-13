@@ -17,7 +17,7 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragmentMode
+import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentMode
 import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Before
@@ -35,7 +35,7 @@ class EditBoxFragmentEditModeTest {
         Intents.init()
         val fragmentArgs = bundleOf(
             IntentKeys.BOX_OBJECT to ParcelableAvisioBox(1, BOX_NAME, BoxIcon.LANGUAGE.iconId),
-            EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.EDIT_BOX.ordinal)
+            EditBoxFragment.FRAGMENT_MODE_KEY to BoxFragmentMode.EDIT_BOX.ordinal)
         scenario = launchFragmentInContainer(fragmentArgs = fragmentArgs, themeResId = R.style.Theme_AppCompat)
     }
 
