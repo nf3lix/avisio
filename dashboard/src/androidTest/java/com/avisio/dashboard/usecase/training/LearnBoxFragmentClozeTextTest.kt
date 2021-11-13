@@ -87,14 +87,6 @@ class LearnBoxFragmentClozeTextTest {
     }
 
     @Test
-    fun dialogInputIsIgnoredOnCancel() {
-        onView(withClassName(`is`(Chip::class.java.name))).perform(click())
-        onView(withClassName(`is`(AutoCompleteTextView::class.java.name))).perform(typeText("TOKEN_2"))
-        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
-        onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun correctAnswerTextViewNotShownOnCorrectAnswer() {
         setChipText("TOKEN_2")
         onView(withId(R.id.resolve_question_button)).perform(click())
