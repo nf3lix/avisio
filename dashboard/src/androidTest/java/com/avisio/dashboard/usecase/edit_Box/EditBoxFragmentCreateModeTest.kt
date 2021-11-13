@@ -14,9 +14,9 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.ui.edit_box.BoxIcon
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode
+import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragmentMode
 import com.avisio.dashboard.persistence.IndexMatcher
 import org.hamcrest.Matchers.*
 import org.junit.After

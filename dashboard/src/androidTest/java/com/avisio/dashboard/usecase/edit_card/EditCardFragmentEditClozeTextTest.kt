@@ -22,9 +22,9 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.google.android.material.chip.Chip
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`

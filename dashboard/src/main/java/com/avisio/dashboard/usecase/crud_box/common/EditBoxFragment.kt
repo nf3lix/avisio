@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_box
+package com.avisio.dashboard.usecase.crud_box.common
 
 import android.content.Intent
 import android.os.Bundle

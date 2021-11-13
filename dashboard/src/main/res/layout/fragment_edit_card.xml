@@ -12,7 +12,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+        <com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
             android:id="@+id/question_flexbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.050" />
 
-        <com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
+        <com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
             android:id="@+id/answer_flex_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

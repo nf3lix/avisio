@@ -1,11 +1,11 @@
-package com.avisio.dashboard.common.ui.edit_card.save_constraints
+package com.avisio.dashboard.usecase.crud_card.common.save_constraints
 
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveClozeTextCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveCustomCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.SaveStandardCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.type.UniversalConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveClozeTextCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveCustomCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveStandardCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.UniversalConstraint
 
 abstract class SaveCardConstraint(
     val notFulfilledMessageId: Int,

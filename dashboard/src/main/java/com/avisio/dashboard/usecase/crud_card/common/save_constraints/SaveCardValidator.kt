@@ -1,7 +1,7 @@
-package com.avisio.dashboard.common.ui.edit_card.save_constraints
+package com.avisio.dashboard.usecase.crud_card.common.save_constraints
 
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
 
 object SaveCardValidator {
 

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card.input_flex_box
+package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
 import android.os.Build
@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
 

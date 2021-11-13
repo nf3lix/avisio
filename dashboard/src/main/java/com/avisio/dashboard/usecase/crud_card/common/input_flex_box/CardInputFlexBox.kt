@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card.input_flex_box
+package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,10 +9,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.*
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
 import com.google.android.flexbox.FlexboxLayout
 
 abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, val target: TargetInput) : LinearLayout(context, attributeSet) {

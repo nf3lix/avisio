@@ -1,7 +1,7 @@
-package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
+package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 
 interface CardTypeChangeListener {
 

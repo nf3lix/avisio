@@ -16,8 +16,8 @@ import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.read.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModel
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModelFactory

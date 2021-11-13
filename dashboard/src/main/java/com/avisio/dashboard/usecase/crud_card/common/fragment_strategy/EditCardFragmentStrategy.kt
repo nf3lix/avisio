@@ -1,16 +1,15 @@
-package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
+package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.widget.Spinner
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardValidator
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
 abstract class EditCardFragmentStrategy(
     private val fragment: EditCardFragment

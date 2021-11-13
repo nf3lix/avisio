@@ -1,7 +1,6 @@
-package com.avisio.dashboard.common.ui.edit_card
+package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,15 +14,14 @@ import com.avisio.dashboard.common.data.model.card.CardType.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.EditCardFragmentStrategy
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardFlexBoxInformationType.*
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.CardInputFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardValidator
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.EditCardFragmentStrategy
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class EditCardFragment : Fragment(), CardTypeChangeListener {

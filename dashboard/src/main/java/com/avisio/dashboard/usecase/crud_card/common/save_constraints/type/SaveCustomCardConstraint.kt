@@ -1,10 +1,10 @@
-package com.avisio.dashboard.common.ui.edit_card.save_constraints.type
+package com.avisio.dashboard.usecase.crud_card.common.save_constraints.type
 
 import com.avisio.dashboard.R.string
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.Priority.HIGH
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.ANSWER_INPUT
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.Priority.HIGH
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.ANSWER_INPUT
 
 class SaveCustomCardConstraint {
 

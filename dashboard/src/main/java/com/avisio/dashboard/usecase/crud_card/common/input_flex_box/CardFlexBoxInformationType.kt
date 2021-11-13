@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card.input_flex_box
+package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import com.avisio.dashboard.R
 

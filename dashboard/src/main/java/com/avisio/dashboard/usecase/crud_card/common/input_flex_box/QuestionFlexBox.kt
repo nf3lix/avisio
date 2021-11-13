@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card.input_flex_box
+package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,7 +14,7 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.material.chip.Chip
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {

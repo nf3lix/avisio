@@ -1,12 +1,11 @@
-package com.avisio.dashboard.common.ui.edit_card.save_constraints.type
+package com.avisio.dashboard.usecase.crud_card.common.save_constraints.type
 
 import com.avisio.dashboard.R.string
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.Priority.MEDIUM
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.ANSWER_INPUT
-import com.avisio.dashboard.common.ui.edit_card.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.Priority.MEDIUM
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 
 class SaveClozeTextCardConstraint {
 

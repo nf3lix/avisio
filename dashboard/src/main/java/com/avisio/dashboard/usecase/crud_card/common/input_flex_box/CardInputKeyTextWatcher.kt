@@ -1,8 +1,8 @@
-package com.avisio.dashboard.common.ui.edit_card.input_flex_box
+package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.text.Editable
 import android.text.TextWatcher
-import com.avisio.dashboard.common.ui.edit_card.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 
 class CardInputKeyTextWatcher(private val listener: CardTypeChangeListener, private val flexbox: CardInputFlexBox) : TextWatcher {
 

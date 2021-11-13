@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card.fragment_strategy
+package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.content.Intent
 import android.text.TextUtils
@@ -10,7 +10,7 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import java.util.*
 

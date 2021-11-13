@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.ui.edit_card
+package com.avisio.dashboard.usecase.crud_card.common
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf

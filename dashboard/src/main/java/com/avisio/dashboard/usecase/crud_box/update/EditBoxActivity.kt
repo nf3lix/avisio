@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragmentMode
 
 class EditBoxActivity : AppCompatActivity() {
 

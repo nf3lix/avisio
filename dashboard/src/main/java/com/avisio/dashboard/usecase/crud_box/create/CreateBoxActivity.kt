@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragment
-import com.avisio.dashboard.common.ui.edit_box.EditBoxFragmentMode
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragmentMode
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.ui.edit_box.BoxIcon
+import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 
 class CreateBoxActivity : AppCompatActivity() {
 

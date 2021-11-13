@@ -14,10 +14,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
-import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.AnswerFlexBox
-import com.avisio.dashboard.common.ui.edit_card.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
+import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
