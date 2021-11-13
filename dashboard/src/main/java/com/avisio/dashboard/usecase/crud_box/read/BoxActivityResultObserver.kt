@@ -10,6 +10,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.setBoxObject
 
 class BoxActivityResultObserver(
     private val boxFragment: BoxListFragment,
@@ -37,9 +38,9 @@ class BoxActivityResultObserver(
         }
     }
 
-    fun startBoxActivity(avisioBox: AvisioBox) {
+    fun startBoxActivity(box: AvisioBox) {
         val intent = Intent(boxFragment.context, BoxActivity::class.java)
-        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, ParcelableAvisioBox.createFromEntity(avisioBox))
+        intent.setBoxObject(box)
         content.launch(intent)
     }
 

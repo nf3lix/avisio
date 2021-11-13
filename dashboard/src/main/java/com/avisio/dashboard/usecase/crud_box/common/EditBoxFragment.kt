@@ -15,6 +15,8 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.persistence.AvisioBoxRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,11 +28,10 @@ import java.util.*
 class EditBoxFragment : Fragment() {
 
     companion object {
-        const val BOX_OBJECT_KEY = "BOX_OBJECT_KEY"
         const val FRAGMENT_MODE_KEY = "FRAGMENT_MODE_KEY"
     }
 
-    private lateinit var parcelableBox: ParcelableAvisioBox
+    private lateinit var box: AvisioBox
     private var fragmentMode: EditBoxFragmentMode = EditBoxFragmentMode.CREATE_BOX
 
     private lateinit var boxNameTextInputLayout: TextInputLayout
@@ -46,7 +47,7 @@ class EditBoxFragment : Fragment() {
             boxNameList = boxRepository.getBoxNameList()
         }
         arguments?.let {
-            parcelableBox = it.getParcelable(BOX_OBJECT_KEY)!!
+            box = it.getBoxObject()!!
             fragmentMode = EditBoxFragmentMode.values()[it.getInt(FRAGMENT_MODE_KEY)]
         }
     }
@@ -71,8 +72,8 @@ class EditBoxFragment : Fragment() {
 
     private fun fillBoxInformation() {
         if(fragmentMode == EditBoxFragmentMode.EDIT_BOX) {
-            nameInput.setText(parcelableBox.boxName)
-            updateBoxIcon(parcelableBox.boxIconId)
+            nameInput.setText(box.name)
+            updateBoxIcon(box.icon.iconId)
             return
         }
         updateBoxIcon(BoxIcon.DEFAULT.iconId)
@@ -118,7 +119,7 @@ class EditBoxFragment : Fragment() {
 
     private fun handleValidInput() {
         if(nameInput.text.toString() in boxNameList &&
-            (fragmentMode == EditBoxFragmentMode.CREATE_BOX || parcelableBox.boxName != nameInput.text.toString())) {
+            (fragmentMode == EditBoxFragmentMode.CREATE_BOX || box.name != nameInput.text.toString())) {
             val dialog = ConfirmDialog(
                 requireContext(),
                 getString(R.string.create_box_duplicate_name_dialog_title),
@@ -149,10 +150,9 @@ class EditBoxFragment : Fragment() {
             AvisioBox(
             name = nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
-            icon = BoxIcon.getBoxIcon(iconImageView.tag as Int)
+            icon = BoxIcon.getBoxIcon(iconImageView.tag as Int))
         )
-        )
-        activity?.finish()
+        requireActivity().finish()
         Toast.makeText(requireContext(), R.string.create_box_successful, Toast.LENGTH_LONG).show()
     }
 
@@ -160,9 +160,9 @@ class EditBoxFragment : Fragment() {
         val updatedBox = getUpdatedBox()
         boxRepository.updateBox(getUpdatedBox())
         val intent = Intent(context, BoxActivity::class.java)
-        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, updatedBox)
-        activity?.startActivity(intent)
-        activity?.finish()
+        intent.setBoxObject(updatedBox)
+        requireActivity().startActivity(intent)
+        requireActivity().finish()
         Toast.makeText(requireContext(), R.string.edit_box_successful, Toast.LENGTH_LONG).show()
     }
 
@@ -171,8 +171,13 @@ class EditBoxFragment : Fragment() {
         iconImageView.tag = boxIconId
     }
 
-    private fun getUpdatedBox(): ParcelableAvisioBox {
+    private fun getUpdatedBox(): AvisioBox {
         val updatedName = nameInput.text.toString()
-        return ParcelableAvisioBox(parcelableBox.boxId, updatedName, iconImageView.tag as Int)
+        return AvisioBox(
+            id = box.id,
+            name = updatedName,
+            icon = BoxIcon.getBoxIcon(iconImageView.tag as Int)
+        )
     }
+
 }

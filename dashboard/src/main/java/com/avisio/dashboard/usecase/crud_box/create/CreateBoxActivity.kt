@@ -8,6 +8,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragmentMode
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 
 class CreateBoxActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class CreateBoxActivity : AppCompatActivity() {
 
     private fun initFragment() {
         val bundle = bundleOf(
-            EditBoxFragment.BOX_OBJECT_KEY to ParcelableAvisioBox(-1, "", BoxIcon.DEFAULT.iconId),
+            IntentKeys.BOX_OBJECT to ParcelableAvisioBox(-1, "", BoxIcon.DEFAULT.iconId),
             EditBoxFragment.FRAGMENT_MODE_KEY to EditBoxFragmentMode.CREATE_BOX.ordinal)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.create_fragment_container_view, EditBoxFragment::class.java, bundle)

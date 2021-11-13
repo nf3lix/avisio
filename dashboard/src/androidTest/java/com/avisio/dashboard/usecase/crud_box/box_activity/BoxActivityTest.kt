@@ -17,6 +17,7 @@ import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import org.junit.After
@@ -26,14 +27,14 @@ import org.junit.Test
 
 class BoxActivityTest {
 
-    private lateinit var intent: Intent
+    private var intent: Intent
     private lateinit var cardDao: CardDao
     private lateinit var database: AppDatabase
 
     init {
         val box = ParcelableAvisioBox(1, "BOX_NAME", R.drawable.box_icon_language)
         intent = Intent(ApplicationProvider.getApplicationContext(), BoxActivity::class.java)
-        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, box)
+        intent.putExtra(IntentKeys.BOX_OBJECT, box)
     }
 
 

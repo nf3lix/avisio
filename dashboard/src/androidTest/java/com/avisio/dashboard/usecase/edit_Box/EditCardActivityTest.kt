@@ -16,6 +16,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import org.hamcrest.core.AllOf.allOf
@@ -31,7 +32,7 @@ class EditCardActivityTest {
         Intent(ApplicationProvider.getApplicationContext(), EditCardActivity::class.java)
 
     init {
-        intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(Card(boxId = 1)))
+        intent.putExtra(IntentKeys.CARD_OBJECT, ParcelableCard.createFromEntity(Card(boxId = 1)))
     }
 
     @get:Rule

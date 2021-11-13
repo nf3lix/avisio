@@ -10,12 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.transfer.IntentKeys
+import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.common.data.transfer.setBoxObject
+import com.avisio.dashboard.common.data.transfer.setCardObject
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragmentMode
 import com.avisio.dashboard.usecase.crud_card.read.CardListAdapter
@@ -28,19 +33,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener {
 
     companion object {
-        const val PARCELABLE_BOX_KEY = "BOX_OBJECT"
         const val BOX_DELETE_OBSERVER_REPLY = "BOX_DELETE_REPLY"
     }
 
     private lateinit var cardViewModel: CardViewModel
     private lateinit var cardListAdapter: CardListAdapter
-    private lateinit var parcelableBox: ParcelableAvisioBox
+    private lateinit var box: AvisioBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_box)
-        parcelableBox = intent.getParcelableExtra(PARCELABLE_BOX_KEY)!!
-        supportActionBar?.title = parcelableBox.boxName
+        box = intent.getBoxObject()!!
+        supportActionBar?.title = box.name
     }
 
     override fun onStart() {
@@ -77,13 +81,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
 
     private fun onEditSelected() {
         val intent = Intent(baseContext, EditBoxActivity::class.java)
-        intent.putExtra(PARCELABLE_BOX_KEY, parcelableBox)
+        intent.setBoxObject(box)
         startActivity(intent)
         finish()
     }
 
     private fun confirmDeletion() {
-        ConfirmDeleteBoxDialog.showDialog(this, parcelableBox)
+        ConfirmDeleteBoxDialog.showDialog(this, box)
     }
 
     private fun setupView() {
@@ -93,14 +97,14 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
 
     private fun setupFab() {
         findViewById<FloatingActionButton>(R.id.fab_new_card).setOnClickListener {
-            startEditCardActivity(EditCardFragmentMode.CREATE_CARD, Card(boxId = parcelableBox.boxId))
+            startEditCardActivity(EditCardFragmentMode.CREATE_CARD, Card(boxId = box.id))
         }
     }
 
     private fun setupLearnFab() {
         findViewById<ExtendedFloatingActionButton>(R.id.fab_learn).setOnClickListener {
             val intent = Intent(this, LearnBoxActivity::class.java)
-            intent.putExtra(LearnBoxActivity.BOX_OBJECT_KEY, parcelableBox)
+            intent.setBoxObject(box)
             startActivity(intent)
         }
     }
@@ -113,7 +117,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     private fun setupCardViewModel() {
-        cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, parcelableBox)).get(
+        cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, box)).get(
             CardViewModel::class.java)
         cardViewModel.getCardList().observe(this) { cardList ->
             cardListAdapter.submitList(cardList)
@@ -129,7 +133,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
             EditCardFragmentMode.CREATE_CARD -> Intent(this, CreateCardActivity::class.java)
             EditCardFragmentMode.EDIT_CARD ->  Intent(this, EditCardActivity::class.java)
         }
-        intent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard.createFromEntity(card))
+        intent.setCardObject(card)
         startActivity(intent)
     }
 

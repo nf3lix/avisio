@@ -9,6 +9,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.transfer.setCardObject
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
@@ -41,7 +42,7 @@ class CreateCardStrategy(
 
         if(checkboxView.isChecked){
             val newIntent = Intent(fragment.requireContext(), CreateCardActivity::class.java)
-            newIntent.putExtra(EditCardFragment.CARD_OBJECT_KEY, ParcelableCard(boxId = card.boxId))
+            newIntent.setCardObject(card)
             fragment.requireContext().startActivity(newIntent)
         }
     }
