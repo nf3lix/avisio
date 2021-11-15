@@ -40,7 +40,7 @@ data class ParcelableCard(
     val id: Long = 0,
     val boxId: Long = 0,
     val createDate: Date = Date(System.currentTimeMillis()),
-    val type: CardType = CardType.STANDARD,
+    val type: CardType = CardType.STRICT,
     val question: CardQuestion = CardQuestion(arrayListOf()),
     val answer: CardAnswer = CardAnswer(arrayListOf())
 ): Parcelable {

@@ -34,7 +34,7 @@ class EditCardFragmentEditModeTest {
         val card = Card(
             question = CardQuestion(arrayListOf(QuestionToken("QUESTION_TOKEN", QuestionTokenType.TEXT))),
             answer = CardAnswer(arrayListOf("ANSWER")),
-            type = CardType.CUSTOM
+            type = CardType.STANDARD
         )
         val fragmentArgs = bundleOf(
             EditCardFragment.CARD_CRUD_WORKFLOW to CRUD.UPDATE.ordinal,
@@ -57,7 +57,7 @@ class EditCardFragmentEditModeTest {
             assertThat(questionInput.getCardQuestion().getStringRepresentation(), Matchers.`is`("QUESTION_TOKEN"))
             assertThat(answerInput.getAnswer().getStringRepresentation(), Matchers.`is`("ANSWER"))
         }
-        onView(withText(CardType.CUSTOM.name)).check(matches(isDisplayed()))
+        onView(withText(CardType.STANDARD.name)).check(matches(isDisplayed()))
     }
 
 }

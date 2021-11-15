@@ -83,8 +83,8 @@ class EditCardFragmentCreateModeTest {
     @Test(expected = NoMatchingViewException::class)
     fun removeWarningOfIgnoredAnswerOnCardTypeChanged() {
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onView(withText(CardType.STANDARD.name)).perform(click())
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.STANDARD.name))))
+        onView(withText(CardType.STRICT.name)).perform(click())
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.STRICT.name))))
         onView(withText(R.string.edit_card_cloze_text_answer_is_ignored)).check(matches(not(isDisplayed())))
     }
 

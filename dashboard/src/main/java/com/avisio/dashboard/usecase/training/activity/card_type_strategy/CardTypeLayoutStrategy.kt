@@ -23,7 +23,7 @@ abstract class CardTypeLayoutStrategy(val cardType: CardType) {
 
         fun getCardTypeStrategy(card: Card, fragment: LearnBoxFragment): CardTypeLayoutStrategy {
             return when(card.type) {
-                CardType.STANDARD -> StandardCardLayoutStrategy(fragment)
+                CardType.STRICT -> StandardCardLayoutStrategy(fragment)
                 CardType.CLOZE_TEXT -> ClozeTextLayoutStrategy(fragment)
                 else -> StandardCardLayoutStrategy(fragment)
             }

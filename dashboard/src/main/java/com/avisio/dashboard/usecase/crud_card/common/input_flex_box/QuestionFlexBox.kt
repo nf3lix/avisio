@@ -202,7 +202,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 return
             }
         }
-        cardChangeListener.onCardTypeSet(CardType.STANDARD)
+        cardChangeListener.onCardTypeSet(CardType.STRICT)
     }
 
     private fun addInitialEditText(input: String) {
