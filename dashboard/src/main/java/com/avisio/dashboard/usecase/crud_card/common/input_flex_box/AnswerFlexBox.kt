@@ -6,8 +6,10 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
@@ -36,6 +38,7 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         }
         answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
+        Markdown(answerEditText, TextView(context))
         flexbox.addView(answerEditText as View, 0)
     }
 

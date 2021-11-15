@@ -8,14 +8,17 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.material.chip.Chip
+import io.noties.markwon.editor.MarkwonEditor
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
@@ -132,6 +135,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         mergeRemainingEditTexts()
         stretchSingleEditText()
         setEditTextKeyListeners()
+        enableMarkdown()
     }
 
     private fun stretchSingleEditText() {
@@ -238,6 +242,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         toolbarContainer.addView(toolbar as View)
         toolbar.clozeTextButton.setOnClickListener {
             addClozeChip()
+        }
+    }
+
+    private fun enableMarkdown() {
+        val blankTextView = TextView(context)
+        for(view in flexbox.allViews.toList()) {
+            if(view is EditText) {
+                Markdown(view, blankTextView)
+            }
         }
     }
 
