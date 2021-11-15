@@ -3,9 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.box_list
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,10 +40,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_box)
         parcelableBox = intent.getParcelableExtra(PARCELABLE_BOX_KEY)!!
+        val appBar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.box_list_app_bar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            findViewById<androidx.appcompat.widget.Toolbar>(R.id.box_list_app_bar).title = parcelableBox.boxName
+            appBar.title = parcelableBox.boxName
         }
-        // supportActionBar?.title =
+        appBar.setOnMenuItemClickListener { item ->
+            onMenuItemClicked(item)
+        }
     }
 
     override fun onStart() {
@@ -55,12 +56,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         setupLearnFab()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.box_activity_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_edit_box -> {
                 onEditSelected()
@@ -71,8 +67,6 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
                 true
             }
             R.id.menu_information_box -> {
-                //information()
-                Toast.makeText(applicationContext, "click", Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.box_detail_view)
                 true
             }

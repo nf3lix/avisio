@@ -12,7 +12,6 @@ abstract class EditCardFragmentConsumer(
 
     fun initFragment(parcelableCard: ParcelableCard) {
         setContentView(fragmentMode.activityLayout)
-        // supportActionBar?.title = getString(fragmentMode.activityActionBarTitleId)
         val bundle = bundleOf(
             EditCardFragment.FRAGMENT_MODE_KEY to fragmentMode.ordinal,
             EditCardFragment.CARD_OBJECT_KEY to parcelableCard)

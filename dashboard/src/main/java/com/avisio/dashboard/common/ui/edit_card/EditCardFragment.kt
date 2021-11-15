@@ -8,6 +8,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -51,6 +52,7 @@ class EditCardFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        requireView().findViewById<Toolbar>(R.id.card_activity_app_bar).title = getString(fragmentMode.activityActionBarTitleId)
         setupFab()
         questionInput = requireView().findViewById(R.id.card_question_input)!!
         answerInput = requireView().findViewById(R.id.card_answer_input)
