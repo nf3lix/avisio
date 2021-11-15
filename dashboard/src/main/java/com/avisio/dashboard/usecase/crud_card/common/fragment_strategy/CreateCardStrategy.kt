@@ -19,7 +19,7 @@ class CreateCardStrategy(
     private val fragment: EditCardFragment,
     private val card: Card,
     private val repository: CardRepository,
-) : CardFragmentStrategy(fragment) {
+) : CardFragmentStrategy(fragment, R.string.create_card_action_bar_title) {
 
     override fun fillCardInformation() {
     }

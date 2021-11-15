@@ -10,7 +10,7 @@ import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 
-class EditBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrategy(fragment) {
+class EditBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrategy(fragment, R.string.box_activity_menu_edit) {
 
     override fun fillBoxInformation() {
         fragment.nameInput.setText(fragment.box.name)

@@ -9,7 +9,7 @@ import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.create.CreateBoxStrategy
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxStrategy
 
-abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment) {
+abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment, val titleId: Int) {
 
     companion object {
 

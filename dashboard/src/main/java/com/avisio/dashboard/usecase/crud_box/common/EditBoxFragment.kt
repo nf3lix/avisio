@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
@@ -54,6 +55,7 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        setTitle()
         setupViews()
         fillBoxInformation()
     }
@@ -90,6 +92,10 @@ class EditBoxFragment : Fragment() {
     fun updateBoxIcon(boxIconId: Int) {
         iconImageView.setImageResource(boxIconId)
         iconImageView.tag = boxIconId
+    }
+
+    private fun setTitle() {
+        requireView().findViewById<Toolbar>(R.id.box_activity_app_bar).title = requireContext().getString(boxFragmentStrategy.titleId)
     }
 
 }

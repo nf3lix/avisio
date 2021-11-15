@@ -13,7 +13,7 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBo
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
-abstract class CardFragmentStrategy(private val fragment: EditCardFragment) {
+abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val titleId: Int) {
 
     companion object {
 

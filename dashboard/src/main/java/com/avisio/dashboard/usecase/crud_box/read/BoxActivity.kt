@@ -1,20 +1,19 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
-import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCardObject
@@ -41,7 +40,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_box)
         box = intent.getBoxObject()!!
-        supportActionBar?.title = box.name
+        val appBar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.box_list_app_bar)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            appBar.title = box.name
+        }
+        appBar.setOnMenuItemClickListener { item ->
+            onMenuItemClicked(item)
+        }
     }
 
     override fun onStart() {
@@ -51,12 +56,7 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         setupLearnFab()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.box_activity_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_edit_box -> {
                 onEditSelected()
@@ -67,8 +67,6 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
                 true
             }
             R.id.menu_information_box -> {
-                //information()
-                Toast.makeText(applicationContext, "click", Toast.LENGTH_SHORT).show()
                 setContentView(R.layout.box_detail_view)
                 true
             }

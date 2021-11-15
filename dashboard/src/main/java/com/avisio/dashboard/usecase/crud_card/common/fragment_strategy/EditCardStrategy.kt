@@ -12,7 +12,7 @@ class EditCardStrategy(
     private val fragment: EditCardFragment,
     private val card: Card,
     private val repository: CardRepository
-) : CardFragmentStrategy(fragment) {
+) : CardFragmentStrategy(fragment, R.string.edit_card_action_bar_title) {
 
     override fun fillCardInformation() {
         questionFlexBox.setCardQuestion(card.question)

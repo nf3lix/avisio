@@ -1,11 +1,13 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -69,6 +71,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
+        setTitle()
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
         if(workflow == CRUD.UPDATE) {
@@ -183,6 +186,12 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     fun getSelectedCardType(): CardType {
         return CardType.valueOf(typeSpinner.selectedItem.toString())
+    }
+
+    private fun setTitle() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            requireView().findViewById<Toolbar>(R.id.card_activity_app_bar).title = requireContext().getString(fragmentStrategy.titleId)
+        }
     }
 
 }

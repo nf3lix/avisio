@@ -8,7 +8,7 @@ import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import java.util.*
 
-class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrategy(fragment) {
+class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrategy(fragment, R.string.create_box_app_bar_title) {
 
     override fun fillBoxInformation() {
         fragment.updateBoxIcon(BoxIcon.DEFAULT.iconId)
