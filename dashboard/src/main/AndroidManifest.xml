@@ -13,24 +13,24 @@
             android:name=".usecase.training.activity.LearnBoxActivity"
             android:exported="false" />
         <activity
-            android:name=".usecase.crud_card.edit_card.EditCardActivity"
+            android:name=".usecase.crud_card.update.EditCardActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".usecase.crud_card.create_card.CreateCardActivity"
+            android:name=".usecase.crud_card.create.CreateCardActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".usecase.crud_box.edit_box.EditBoxActivity"
+            android:name=".usecase.crud_box.update.EditBoxActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:label="@string/activity_edit_box"/>
-        <activity android:name=".usecase.crud_box.box_list.BoxActivity"
+        <activity android:name=".usecase.crud_box.read.BoxActivity"
             android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
-            android:name=".usecase.crud_box.create_box.CreateBoxActivity"
+            android:name=".usecase.crud_box.create.CreateBoxActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:label="@string/title_activity_create_box"/>
