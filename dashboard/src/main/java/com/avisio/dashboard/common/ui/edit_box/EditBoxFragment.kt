@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
@@ -48,6 +49,10 @@ class EditBoxFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        requireView().findViewById<Toolbar>(R.id.box_activity_app_bar).title = when(fragmentMode) {
+            EditBoxFragmentMode.EDIT_BOX -> getString(R.string.activity_edit_box)
+            EditBoxFragmentMode.CREATE_BOX -> getString(R.string.create_box_app_bar_title)
+        }
         nameInput = view?.findViewById(R.id.box_name_input)!!
         iconImageView = view?.findViewById(R.id.box_icon_imageview)!!
         setupFab()

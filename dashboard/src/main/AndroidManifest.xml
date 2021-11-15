@@ -25,12 +25,14 @@
         <activity
             android:name=".usecase.crud_box.edit_box.EditBoxActivity"
             android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
             android:label="@string/activity_edit_box"/>
         <activity android:name=".usecase.crud_box.box_list.BoxActivity"
             android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
             android:name=".usecase.crud_box.create_box.CreateBoxActivity"
             android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
             android:label="@string/title_activity_create_box"/>
         <activity
             android:name=".usecase.MainActivity"
