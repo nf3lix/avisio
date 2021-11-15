@@ -28,10 +28,18 @@
     <style name="Theme.Avisio.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/secondaryDarkColor</item>
         <item name="android:textColorPrimary">@color/secondaryDarkColor</item>
+        <item name="popupTheme">@style/Theme.Avisio.PopupOverlay</item>
+        <item name="toolbarStyle">@style/Theme.Avisio.Toolbar</item>
+        <item name="background">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.Avisio.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlNormal">@color/secondaryDarkColor</item>
-        <item name="android:textColorPrimary">@color/secondaryDarkColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    </style>
+
+
+    <style name="Theme.Avisio.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.MdcTypographyStyles.Headline6</item>
     </style>
 </resources>

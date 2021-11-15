@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.crud_box.box_list
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,18 +11,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
-import com.avisio.dashboard.usecase.crud_card.edit_card.EditCardActivity
-import com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragment
 import com.avisio.dashboard.common.ui.edit_card.EditCardFragmentMode
+import com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_card.card_list.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModel
 import com.avisio.dashboard.usecase.crud_card.card_list.CardViewModelFactory
+import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
+import com.avisio.dashboard.usecase.crud_card.edit_card.EditCardActivity
 import com.avisio.dashboard.usecase.training.activity.LearnBoxActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,7 +42,10 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_box)
         parcelableBox = intent.getParcelableExtra(PARCELABLE_BOX_KEY)!!
-        supportActionBar?.title = parcelableBox.boxName
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            findViewById<androidx.appcompat.widget.Toolbar>(R.id.box_list_app_bar).title = parcelableBox.boxName
+        }
+        // supportActionBar?.title =
     }
 
     override fun onStart() {

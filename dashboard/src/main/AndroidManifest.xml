@@ -14,17 +14,20 @@
             android:exported="false" />
         <activity
             android:name=".usecase.crud_card.edit_card.EditCardActivity"
+            android:theme="@style/Theme.Avisio.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".usecase.crud_card.create_card.CreateCardActivity"
             android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Avisio.AppBarOverlay" />
         <activity
             android:name=".usecase.crud_box.edit_box.EditBoxActivity"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/activity_edit_box"/>
-        <activity android:name=".usecase.crud_box.box_list.BoxActivity" />
+        <activity android:name=".usecase.crud_box.box_list.BoxActivity"
+            android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
             android:name=".usecase.crud_box.create_box.CreateBoxActivity"
             android:windowSoftInputMode="adjustResize"
