@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.training
 
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 
 abstract class TrainingStrategy(private val box: AvisioBox) {

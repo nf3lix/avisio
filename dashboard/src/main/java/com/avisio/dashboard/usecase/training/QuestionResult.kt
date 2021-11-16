@@ -5,19 +5,19 @@ import com.avisio.dashboard.usecase.training.activity.LearnCardView
 
 enum class QuestionResult(val stringRepresentation: Int, val color: Int) {
 
-    CORRECT(R.string.learn_activity_result_button_correct, R.color.correctAnswer) {
+    CORRECT(R.string.learn_activity_result_button_correct, R.color.success) {
         override fun onOptionSelected(view: LearnCardView) {
             view.onResultOptionSelected(this)
         }
     },
 
-    PARTIALLY_CORRECT(R.string.learn_activity_result_button_partially_correct, R.color.partiallyCorrectAnswer) {
+    PARTIALLY_CORRECT(R.string.learn_activity_result_button_partially_correct, R.color.warning) {
         override fun onOptionSelected(view: LearnCardView) {
             view.onResultOptionSelected(this)
         }
     },
 
-    INCORRECT(R.string.learn_activity_result_button_incorrect, R.color.incorrectAnswer) {
+    INCORRECT(R.string.learn_activity_result_button_incorrect, R.color.error) {
         override fun onOptionSelected(view: LearnCardView) {
             view.onResultOptionSelected(this)
         }

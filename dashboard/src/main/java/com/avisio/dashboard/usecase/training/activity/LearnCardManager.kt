@@ -30,8 +30,8 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
         }
     }
 
-    fun onAnswer(answer: String) {
-        when(strategy.getQuestionResult(currentCard.question, answer)) {
+    fun onAnswer(result: QuestionResult) {
+        when(result) {
             QuestionResult.CORRECT -> {
                 view.onCorrectAnswer()
             }

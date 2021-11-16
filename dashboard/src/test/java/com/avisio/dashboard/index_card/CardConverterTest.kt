@@ -3,8 +3,8 @@ package com.avisio.dashboard.index_card
 import com.avisio.dashboard.common.data.database.converters.CardConverter
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import org.junit.Assert
 import org.junit.Test
 
@@ -15,9 +15,9 @@ class CardConverterTest {
     @Test
     fun questionConverterTest() {
         val question = CardQuestion(ArrayList())
-        question.addToken(CardQuestionToken("test", CardQuestionTokenType.QUESTION))
-        question.addToken(CardQuestionToken("test1", CardQuestionTokenType.IMAGE))
-        question.addToken(CardQuestionToken("test2", CardQuestionTokenType.TEXT))
+        question.addToken(QuestionToken("test", QuestionTokenType.QUESTION))
+        question.addToken(QuestionToken("test1", QuestionTokenType.IMAGE))
+        question.addToken(QuestionToken("test2", QuestionTokenType.TEXT))
         val questionString = question.toString()
         val serialized = converter.questionToString(question)
         val deserialized = converter.stringToQuestion(serialized)

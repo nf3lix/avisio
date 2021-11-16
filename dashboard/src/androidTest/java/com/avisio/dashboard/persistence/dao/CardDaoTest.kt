@@ -6,13 +6,10 @@ import androidx.test.core.app.ApplicationProvider
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.card.*
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionToken
-import com.avisio.dashboard.common.data.model.card.question.CardQuestionTokenType
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.CardDao
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import java.util.*
 
 class CardDaoTest : DaoTest() {
@@ -29,6 +26,11 @@ class CardDaoTest : DaoTest() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         cardDao = database.cardDao()
+        cardDao.deleteAll()
+    }
+
+    @After
+    fun deleteAll() {
         cardDao.deleteAll()
     }
 
@@ -118,10 +120,10 @@ class CardDaoTest : DaoTest() {
             type = CardType.CLOZE_TEXT,
             question = CardQuestion(
                 arrayListOf(
-                    CardQuestionToken("CONTENT_1", CardQuestionTokenType.TEXT),
-                    CardQuestionToken("CONTENT_2", CardQuestionTokenType.IMAGE),
-                    CardQuestionToken("CONTENT_3", CardQuestionTokenType.QUESTION),
-                    CardQuestionToken("CONTENT_4", CardQuestionTokenType.QUESTION))),
+                    QuestionToken("CONTENT_1", QuestionTokenType.TEXT),
+                    QuestionToken("CONTENT_2", QuestionTokenType.IMAGE),
+                    QuestionToken("CONTENT_3", QuestionTokenType.QUESTION),
+                    QuestionToken("CONTENT_4", QuestionTokenType.QUESTION))),
             answer = CardAnswer(arrayListOf("CONTENT_3", "CONTENT_4")))
     }
 

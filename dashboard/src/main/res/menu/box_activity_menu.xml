@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity">
+      tools:context="com.avisio.dashboard.usecase.crud_box.read.BoxActivity">
 
     <item android:id="@+id/menu_edit_box"
           android:title="@string/box_activity_menu_edit"
@@ -17,5 +17,5 @@
         android:title="@string/box_information"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_information"/>
+        android:icon="@drawable/ic_box_details"/>
 </menu>

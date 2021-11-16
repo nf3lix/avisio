@@ -7,7 +7,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create.CreateBoxActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
