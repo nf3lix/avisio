@@ -136,9 +136,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         mergeRemainingEditTexts()
-        // stretchSingleEditText()
-        // setEditTextKeyListeners()
-        // enableMarkdown()
     }
 
     private fun stretchSingleEditText() {
@@ -255,7 +252,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private fun enableMarkdown() {
         val blankTextView = TextView(context)
-        for(view in flexbox.allViews.toList()) {
+        for((i, view) in flexbox.allViews.toList().withIndex()) {
             if(view is EditText) {
                 val prevText = view.text.toString()
                 markdown = Markdown(view, blankTextView)

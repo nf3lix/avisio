@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,6 +105,14 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         }
     }
 
+    override fun onPartiallyCorrectAnswer() {
+        resultChipGroup.visibility = View.VISIBLE
+        hideResolveQuestionButton()
+        if(currentCard.type == CardType.CLOZE_TEXT) {
+            cardTypeLayoutStrategy.onCorrectAnswer()
+        }
+    }
+
     private fun hideResolveQuestionButton() {
         resolveQuestionButton.visibility = View.GONE
         answerInputLayout.visibility = View.GONE
@@ -135,6 +144,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun setupFab() {
         resolveQuestionButton.setOnClickListener {
+            Log.d("test1234", "test123")
             manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard.question, cardTypeLayoutStrategy.getUserInputAsAnswer()))
         }
     }

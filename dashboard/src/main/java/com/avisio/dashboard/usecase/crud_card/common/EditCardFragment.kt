@@ -137,7 +137,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
                 answerInput.visibility = View.GONE
             }
         }
-        if(cardType == STRICT) {
+        if(cardType == STRICT || cardType == STANDARD) {
             questionInput.replaceClozeTextByStandardQuestion()
         }
         if(cardType == STRICT || cardType == STANDARD) {

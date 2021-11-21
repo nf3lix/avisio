@@ -1,6 +1,5 @@
 package com.avisio.dashboard.common.data.database.converters
 
-import android.util.Log
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.avisio.dashboard.common.data.model.card.CardAnswer

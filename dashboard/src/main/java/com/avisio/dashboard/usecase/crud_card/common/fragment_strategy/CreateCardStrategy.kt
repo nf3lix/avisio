@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import com.avisio.dashboard.R
