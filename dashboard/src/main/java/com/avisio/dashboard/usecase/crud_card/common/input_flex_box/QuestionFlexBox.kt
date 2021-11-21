@@ -27,6 +27,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private lateinit var toolbar: CardQuestionInputToolbar
     private lateinit var markdown: Markdown
+    private var markdownDisabled: Boolean = false
 
     init {
         initToolbar()
@@ -100,7 +101,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
         stretchSingleEditText()
         setEditTextKeyListeners()
-        enableMarkdown()
+        setMarkdown()
     }
 
     fun getCardQuestion(trimmed: Boolean = false): CardQuestion {
@@ -200,6 +201,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private fun checkCardType() {
         val views = flexbox.allViews.toList()
+        markdownDisabled = false
         for(view in views) {
             if(view is Chip) {
                 cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
@@ -221,7 +223,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             true
         }
         flexbox.addView(editText as View, 0)
-        enableMarkdown()
+        setMarkdown()
     }
 
     private fun getEditText(input: String): EditText {
@@ -250,9 +252,22 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
-    private fun enableMarkdown() {
+    fun disableMarkdown() {
+        markdownDisabled = true
+        markdown.disable()
+    }
+
+    fun enableMarkdown() {
+        markdownDisabled = false
+        setMarkdown()
+    }
+
+    private fun setMarkdown() {
+        if(markdownDisabled) {
+            return
+        }
         val blankTextView = TextView(context)
-        for((i, view) in flexbox.allViews.toList().withIndex()) {
+        for(view in flexbox.allViews.toList()) {
             if(view is EditText) {
                 val prevText = view.text.toString()
                 markdown = Markdown(view, blankTextView)

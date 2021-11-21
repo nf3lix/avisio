@@ -2,7 +2,10 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -17,8 +20,8 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
-import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
@@ -137,10 +140,14 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
                 answerInput.visibility = View.GONE
             }
         }
-        if(cardType == STRICT || cardType == STANDARD) {
-            questionInput.replaceClozeTextByStandardQuestion()
+        if(cardType == STRICT) {
+            questionInput.disableMarkdown()
+        }
+        if(cardType == STANDARD || cardType == CLOZE_TEXT) {
+            questionInput.enableMarkdown()
         }
         if(cardType == STRICT || cardType == STANDARD) {
+            questionInput.replaceClozeTextByStandardQuestion()
             answerInput.resetInformation()
             answerInput.visibility = View.VISIBLE
             answerInput.isEnabled = true
