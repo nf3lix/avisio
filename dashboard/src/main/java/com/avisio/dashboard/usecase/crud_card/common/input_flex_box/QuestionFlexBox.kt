@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
-import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -101,7 +100,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
         stretchSingleEditText()
         setEditTextKeyListeners()
-        setMarkdown()
+        initMarkdown()
     }
 
     fun getCardQuestion(trimmed: Boolean = false): CardQuestion {
@@ -223,7 +222,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             true
         }
         flexbox.addView(editText as View, 0)
-        setMarkdown()
+        initMarkdown()
     }
 
     private fun getEditText(input: String): EditText {
@@ -249,30 +248,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         toolbarContainer.addView(toolbar as View)
         toolbar.clozeTextButton.setOnClickListener {
             addClozeChip()
-        }
-    }
-
-    fun disableMarkdown() {
-        markdownDisabled = true
-        markdown.disable()
-    }
-
-    fun enableMarkdown() {
-        markdownDisabled = false
-        setMarkdown()
-    }
-
-    private fun setMarkdown() {
-        if(markdownDisabled) {
-            return
-        }
-        val blankTextView = TextView(context)
-        for(view in flexbox.allViews.toList()) {
-            if(view is EditText) {
-                val prevText = view.text.toString()
-                markdown = Markdown(view, blankTextView)
-                view.setText(prevText)
-            }
         }
     }
 

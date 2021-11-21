@@ -142,9 +142,11 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         }
         if(cardType == STRICT) {
             questionInput.disableMarkdown()
+            answerInput.disableMarkdown()
         }
         if(cardType == STANDARD || cardType == CLOZE_TEXT) {
             questionInput.enableMarkdown()
+            answerInput.enableMarkdown()
         }
         if(cardType == STRICT || cardType == STANDARD) {
             questionInput.replaceClozeTextByStandardQuestion()

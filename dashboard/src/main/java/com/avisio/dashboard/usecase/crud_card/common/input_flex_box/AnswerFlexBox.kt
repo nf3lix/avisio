@@ -38,7 +38,7 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         }
         answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
-        Markdown(answerEditText, TextView(context))
+        initMarkdown()
         flexbox.addView(answerEditText as View, 0)
     }
 
