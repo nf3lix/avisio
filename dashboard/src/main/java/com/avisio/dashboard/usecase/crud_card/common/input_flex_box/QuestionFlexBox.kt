@@ -18,7 +18,6 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.material.chip.Chip
-import io.noties.markwon.editor.MarkwonEditor
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
@@ -27,6 +26,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
+    private lateinit var markdown: Markdown
 
     init {
         initToolbar()
@@ -98,6 +98,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
             previousEditTextIndex = editTextIndex
         }
+        stretchSingleEditText()
+        setEditTextKeyListeners()
+        enableMarkdown()
     }
 
     fun getCardQuestion(trimmed: Boolean = false): CardQuestion {
@@ -133,9 +136,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         mergeRemainingEditTexts()
-        stretchSingleEditText()
-        setEditTextKeyListeners()
-        enableMarkdown()
+        // stretchSingleEditText()
+        // setEditTextKeyListeners()
+        // enableMarkdown()
     }
 
     private fun stretchSingleEditText() {
@@ -206,6 +209,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 return
             }
         }
+        if(markdown.isEnabled()) {
+            cardChangeListener.onCardTypeSet(CardType.STANDARD)
+            return
+        }
         cardChangeListener.onCardTypeSet(CardType.STRICT)
     }
 
@@ -217,6 +224,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             true
         }
         flexbox.addView(editText as View, 0)
+        enableMarkdown()
     }
 
     private fun getEditText(input: String): EditText {
@@ -249,7 +257,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         val blankTextView = TextView(context)
         for(view in flexbox.allViews.toList()) {
             if(view is EditText) {
-                Markdown(view, blankTextView)
+                val prevText = view.text.toString()
+                markdown = Markdown(view, blankTextView)
+                view.setText(prevText)
             }
         }
     }

@@ -21,7 +21,7 @@ data class Card(
     val createDate: Date = Date(System.currentTimeMillis()),
 
     @ColumnInfo(name = "type")
-    val type: CardType = CardType.STRICT,
+    val type: CardType = CardType.STANDARD,
 
     @ColumnInfo(name = "question")
     val question: CardQuestion = CardQuestion(ArrayList()),

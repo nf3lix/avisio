@@ -74,16 +74,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         setTitle()
         setOnBackPressedDispatcher()
         fragmentStrategy.fillCardInformation()
-        if(workflow == CRUD.UPDATE) {
-            questionInput.setCardQuestion(card.question)
-        }
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(workflow == CRUD.UPDATE) {
-            requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

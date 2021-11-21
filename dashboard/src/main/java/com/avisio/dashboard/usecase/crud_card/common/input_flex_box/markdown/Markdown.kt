@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.handlers.*
@@ -63,7 +62,6 @@ class Markdown(private val editText: EditText, private val targetView: TextView)
             override fun afterTextChanged(s: Editable?) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 markwon.setMarkdown(targetView, editText.text.toString())
-                Log.d("test1234", "test12q34")
             }
 
         }
@@ -72,6 +70,7 @@ class Markdown(private val editText: EditText, private val targetView: TextView)
     fun enable() {
         editText.addTextChangedListener(markdownEditTextChangedListener)
         editText.addTextChangedListener(targetEditTextChangedListener)
+        markwon.setMarkdown(targetView, editText.text.toString())
         enabled = true
     }
 
