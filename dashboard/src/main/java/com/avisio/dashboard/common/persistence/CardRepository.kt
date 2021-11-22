@@ -18,14 +18,6 @@ class CardRepository(application: Application) {
         cardList = dao.getAllAsLiveData()
     }
 
-    fun getCardListLiveData(): LiveData<List<Card>> {
-        return cardList
-    }
-
-    suspend fun getCardList(): List<Card> {
-        return dao.getAll()
-    }
-
     suspend fun getCardsByBox(boxId: Long): List<Card> {
         return dao.getCardsByBox(boxId)
     }

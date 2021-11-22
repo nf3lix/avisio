@@ -5,6 +5,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.clearText
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -19,6 +20,7 @@ import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import org.hamcrest.Matchers.*
+import org.hamcrest.core.IsNot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -80,6 +82,11 @@ class EditBoxFragmentEditModeTest {
         onView(withId(R.id.select_icon_button)).perform(click())
         onView(allOf(withClassName(containsString(MenuPopupWindow.MenuDropDownListView::class.java.simpleName)))).check(matches(
             isDisplayed()))
+    }
+
+    @Test
+    fun showCardMenu() {
+        onView(withText(R.string.box_activity_menu_edit)).check(matches(isDisplayed()))
     }
 
 }

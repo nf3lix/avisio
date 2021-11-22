@@ -106,6 +106,20 @@ class EditCardFragmentCreateModeTest {
         onView(withText(R.string.create_card_empty_answer)).check(matches(not(isDisplayed())))
     }
 
+    @Test
+    fun finishActivityOnFabClicked() {
+        typeInQuestionEditText("QUESTION")
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        typeInAnswerEditText("ANSWER")
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.fab_edit_card)).perform(click())
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun doNotShowCardMenu() {
+        onView(withContentDescription("More options")).check(matches(not(isDisplayed())))
+    }
+
     private fun typeInQuestionEditText(question: String) {
         typeInEditText(QuestionFlexBox::class.java.name, question)
     }

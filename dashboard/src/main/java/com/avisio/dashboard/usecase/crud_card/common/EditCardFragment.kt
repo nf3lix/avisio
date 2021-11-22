@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -51,12 +52,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         cardRepository = CardRepository(requireActivity().application)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(workflow == CRUD.UPDATE) {
-            requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         arguments?.let {
             card = it.getCardObject()!!
@@ -77,12 +72,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
-        setTitle()
         setOnBackPressedDispatcher()
+        setupAppBar()
         fragmentStrategy.fillCardInformation()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("test123", "test1234")
         when(item.itemId) {
             R.id.menu_delete_card -> {
                 showDeleteDialog()
@@ -170,9 +166,23 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         return CardType.valueOf(typeSpinner.selectedItem.toString())
     }
 
-    private fun setTitle() {
+    private fun setupAppBar() {
+        val toolbar = requireView().findViewById<Toolbar>(R.id.card_activity_app_bar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            requireView().findViewById<Toolbar>(R.id.card_activity_app_bar).title = requireContext().getString(fragmentStrategy.titleId)
+            toolbar.title = requireContext().getString(fragmentStrategy.titleId)
+        }
+        if(workflow == CRUD.UPDATE) {
+            toolbar.inflateMenu(R.menu.edit_card_menu)
+            toolbar.setOnMenuItemClickListener { item ->
+                when(item.itemId) {
+                    R.id.menu_delete_card -> {
+                        showDeleteDialog()
+                        false
+                    } else -> {
+                        true
+                    }
+                }
+            }
         }
     }
 
