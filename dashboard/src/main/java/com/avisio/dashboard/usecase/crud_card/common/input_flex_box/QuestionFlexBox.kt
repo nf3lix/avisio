@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -25,7 +26,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
-    private lateinit var markdown: Markdown
     private var markdownDisabled: Boolean = false
 
     init {
@@ -183,6 +183,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
             mergeRemainingEditTexts()
             setEditTextKeyListeners()
+            enableMarkdown()
             checkCardType()
         }
     }
@@ -207,7 +208,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 return
             }
         }
-        if(markdown.isEnabled()) {
+        if(!markdownDisabled && markdown.isEnabled()) {
             cardChangeListener.onCardTypeSet(CardType.STANDARD)
             return
         }

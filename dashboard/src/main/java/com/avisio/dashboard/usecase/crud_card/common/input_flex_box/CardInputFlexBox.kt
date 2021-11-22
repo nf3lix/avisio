@@ -24,7 +24,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     private val informationTextView: TextView
     var currentInformation = CardInputInformation.NONE
 
-    private lateinit var markdown: Markdown
+    internal var markdown: Markdown = Markdown(EditText(context), TextView(context))
     private var markdownDisabled: Boolean = false
 
     var cardChangeListener: CardTypeChangeListener = EditCardFragment()

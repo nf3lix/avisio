@@ -78,6 +78,9 @@ class Markdown(private val editText: EditText, private val targetView: TextView)
         editText.removeTextChangedListener(markdownEditTextChangedListener)
         editText.removeTextChangedListener(targetEditTextChangedListener)
         enabled = false
+        val prevInput = editText.text.toString()
+        editText.setText("")
+        editText.setText(prevInput)
     }
 
     fun isEnabled(): Boolean {

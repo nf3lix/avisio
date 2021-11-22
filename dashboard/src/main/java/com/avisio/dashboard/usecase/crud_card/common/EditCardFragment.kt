@@ -133,6 +133,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     override fun onCardTypeSet(cardType: CardType) {
         if(cardType == CLOZE_TEXT) {
+            answerInput.disableMarkdown()
             answerInput.isEnabled = false
             if(!answerInput.getAnswer().answerIsEmpty()) {
                 answerInput.setWarning(requireContext().getString(R.string.edit_card_cloze_text_answer_is_ignored))
