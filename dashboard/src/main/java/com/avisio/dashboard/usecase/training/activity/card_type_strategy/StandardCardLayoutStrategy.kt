@@ -7,7 +7,7 @@ import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 class StandardCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayoutStrategy(CardType.STANDARD) {
 
     override fun onShowCard() {
-        //
+        fragment.questionInputLayout.enableMarkdown()
     }
 
     override fun resetCard() {

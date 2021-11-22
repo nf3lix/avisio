@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
@@ -30,8 +31,8 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
-                    val editText = getEditText(token.content.trim())
-                    flexbox.addView(editText, index)
+                    val textView = getTextView(token.content.trim())
+                    flexbox.addView(textView, index)
                 }
                 QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
@@ -99,13 +100,14 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         return chip
     }
 
-    private fun getEditText(input: String): EditText {
-        val editText = EditText(context)
-        editText.setText(input)
+    private fun getTextView(input: String): TextView {
+        val textView = TextView(context)
+        textView.text = input
+        textView.gravity = Gravity.CENTER_VERTICAL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.textSize = QuestionFlexBox.TEXT_SIZE
+            textView.textSize = QuestionFlexBox.TEXT_SIZE
         }
-        return editText
+        return textView
     }
 
     fun correctClozeText() {

@@ -11,27 +11,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!--
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/question_input_layout"
-            android:layout_width="326dp"
-            android:layout_height="149dp"
-            android:hint="@string/create_card_question_text_field_hint"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/question_edit_text"
-                    android:inputType="none"
-                    android:enabled="false" />
-        </com.google.android.material.textfield.TextInputLayout> -->
-
         <com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
             android:id="@+id/question_input_layout"
             android:layout_width="wrap_content"
