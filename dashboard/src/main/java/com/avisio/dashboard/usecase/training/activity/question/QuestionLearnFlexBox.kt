@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
@@ -15,6 +16,7 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 import com.google.android.material.chip.Chip
 
@@ -72,8 +74,8 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         }
     }
 
-    override fun initToolbar() {
-    }
+    override fun initToolbar() { }
+    override fun resetEditText() { }
 
     fun getQuestionPlaceholder(question: String): String {
         val stringBuilder = StringBuilder()

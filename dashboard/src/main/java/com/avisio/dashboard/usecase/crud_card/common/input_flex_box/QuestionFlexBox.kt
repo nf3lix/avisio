@@ -252,4 +252,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
+    override fun resetEditText() { }
+
 }

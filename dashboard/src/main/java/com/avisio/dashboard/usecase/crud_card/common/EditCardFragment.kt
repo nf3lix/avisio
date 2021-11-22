@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -26,6 +28,7 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBo
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler.CardTypeChangeHandler
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -132,29 +135,9 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onCardTypeSet(cardType: CardType) {
-        if(cardType == CLOZE_TEXT) {
-            answerInput.disableMarkdown()
-            answerInput.isEnabled = false
-            if(!answerInput.getAnswer().answerIsEmpty()) {
-                answerInput.setWarning(requireContext().getString(R.string.edit_card_cloze_text_answer_is_ignored))
-            } else {
-                answerInput.visibility = View.GONE
-            }
-        }
-        if(cardType == STRICT) {
-            questionInput.disableMarkdown()
-            answerInput.disableMarkdown()
-        }
-        if(cardType == STANDARD || cardType == CLOZE_TEXT) {
-            questionInput.enableMarkdown()
-            answerInput.enableMarkdown()
-        }
-        if(cardType == STRICT || cardType == STANDARD) {
-            questionInput.replaceClozeTextByStandardQuestion()
-            answerInput.resetInformation()
-            answerInput.visibility = View.VISIBLE
-            answerInput.isEnabled = true
-        }
+        Log.d("test1234", answerInput.markdown.editText.toString())
+        val handler = CardTypeChangeHandler.getHandler(this, cardType)
+        handler.updateCardInputs()
         typeSpinner.setSelection(cardType.ordinal)
         onFlexboxInputChanged(questionInput)
         onFlexboxInputChanged(answerInput)

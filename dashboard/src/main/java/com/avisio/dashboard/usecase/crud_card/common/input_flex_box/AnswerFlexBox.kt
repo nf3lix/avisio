@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -33,6 +34,15 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     fun addInitialEditText() {
+        setEditTextLayout()
+    }
+
+    override fun resetEditText() {
+        flexbox.removeAllViews()
+        setEditTextLayout()
+    }
+
+    private fun setEditTextLayout() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             answerEditText.textSize = TEXT_SIZE
         }

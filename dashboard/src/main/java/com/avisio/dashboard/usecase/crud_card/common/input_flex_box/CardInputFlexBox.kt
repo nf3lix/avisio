@@ -98,9 +98,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         }
     }
 
-    fun disableMarkdown() {
+    open fun disableMarkdown() {
         markdownDisabled = true
         markdown.disable()
+        resetEditText()
     }
 
     fun enableMarkdown() {
@@ -121,5 +122,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
             }
         }
     }
+
+    abstract fun resetEditText()
 
 }
