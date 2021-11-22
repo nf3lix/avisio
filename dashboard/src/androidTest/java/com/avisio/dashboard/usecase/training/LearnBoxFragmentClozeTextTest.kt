@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.training
 import android.content.Context
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
@@ -75,9 +76,9 @@ class LearnBoxFragmentClozeTextTest {
 
     @Test
     fun showClozeTextChipOfQuestion() {
-        onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1"))).check(matches(isDisplayed()))
+        onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_1"))).check(matches(isDisplayed()))
         onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
-        onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_3"))).check(matches(isDisplayed()))
+        onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_3"))).check(matches(isDisplayed()))
     }
 
     @Test

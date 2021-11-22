@@ -11,9 +11,9 @@ enum class CardType(val iconId: Int) {
     CLOZE_TEXT(R.drawable.card_icon_cloze_text),
     STANDARD(R.drawable.card_icon_custom);
 
-    fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
+    fun getQuestionResult(card: Card, cardAnswer: CardAnswer): QuestionResult {
         return CardAnswerValidatorImpl(
-            cardQuestion,
+            card,
             cardAnswer,
             this
         ).getCardAnswerResult()

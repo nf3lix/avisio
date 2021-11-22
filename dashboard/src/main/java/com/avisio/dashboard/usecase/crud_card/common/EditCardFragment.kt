@@ -2,17 +2,12 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -50,11 +45,16 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     private lateinit var cardRepository: CardRepository
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         cardRepository = CardRepository(requireActivity().application)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if(workflow == CRUD.UPDATE) {
+            requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -135,7 +135,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onCardTypeSet(cardType: CardType) {
-        Log.d("test1234", answerInput.markdown.editText.toString())
         val handler = CardTypeChangeHandler.getHandler(this, cardType)
         handler.updateCardInputs()
         typeSpinner.setSelection(cardType.ordinal)

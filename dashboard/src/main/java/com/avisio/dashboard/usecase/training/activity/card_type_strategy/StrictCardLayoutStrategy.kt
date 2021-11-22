@@ -27,4 +27,7 @@ class StrictCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayoutS
     override fun onIncorrectAnswer() {
 
     }
+
+    override fun onPartiallyCorrectAnswer() {
+    }
 }

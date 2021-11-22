@@ -31,4 +31,7 @@ class ClozeTextLayoutStrategy(private val fragment: LearnBoxFragment) : CardType
         fragment.correctAnswerEditText.setText(fragment.questionInputLayout.getQuestion().getStringRepresentation())
     }
 
+    override fun onPartiallyCorrectAnswer() {
+    }
+
 }

@@ -14,9 +14,10 @@ abstract class CardTypeLayoutStrategy(val cardType: CardType) {
     abstract fun getUserInputAsAnswer(): CardAnswer
     abstract fun onCorrectAnswer()
     abstract fun onIncorrectAnswer()
+    abstract fun onPartiallyCorrectAnswer()
 
-    fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
-        return cardType.getQuestionResult(cardQuestion, cardAnswer)
+    fun getQuestionResult(card: Card, cardAnswer: CardAnswer): QuestionResult {
+        return cardType.getQuestionResult(card, cardAnswer)
     }
 
     companion object {

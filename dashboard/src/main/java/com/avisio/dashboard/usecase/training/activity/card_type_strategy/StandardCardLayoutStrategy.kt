@@ -8,10 +8,12 @@ class StandardCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayou
 
     override fun onShowCard() {
         fragment.questionInputLayout.enableMarkdown()
+        fragment.hideAnswerEditText()
     }
 
     override fun resetCard() {
-        //
+        fragment.hideStandardAnswerTextView()
+        fragment.showAnswerEditText()
     }
 
     override fun getUserInputAsAnswer(): CardAnswer {
@@ -19,11 +21,13 @@ class StandardCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayou
     }
 
     override fun onCorrectAnswer() {
-        //
     }
 
     override fun onIncorrectAnswer() {
-        //
+    }
+
+    override fun onPartiallyCorrectAnswer() {
+        fragment.showStandardAnswerTextView()
     }
 
 }

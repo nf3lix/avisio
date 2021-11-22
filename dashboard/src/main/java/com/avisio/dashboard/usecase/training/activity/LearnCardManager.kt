@@ -1,6 +1,5 @@
 package com.avisio.dashboard.usecase.training.activity
 
-import android.util.Log
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
