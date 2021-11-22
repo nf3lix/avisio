@@ -8,7 +8,7 @@ import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.MarkdownEditor
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
 import com.google.android.flexbox.FlexboxLayout
 
@@ -24,7 +24,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     private val informationTextView: TextView
     var currentInformation = CardInputInformation.NONE
 
-    internal var markdown: Markdown = Markdown(EditText(context), TextView(context))
+    internal var markdown: MarkdownEditor = MarkdownEditor(EditText(context), TextView(context))
     private var markdownDisabled: Boolean = false
 
     var cardChangeListener: CardTypeChangeListener = EditCardFragment()
@@ -117,7 +117,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         for(view in flexbox.allViews.toList()) {
             if(view is EditText) {
                 val prevText = view.text.toString()
-                markdown = Markdown(view, blankTextView)
+                markdown = MarkdownEditor(view, blankTextView)
                 view.setText(prevText)
             }
         }

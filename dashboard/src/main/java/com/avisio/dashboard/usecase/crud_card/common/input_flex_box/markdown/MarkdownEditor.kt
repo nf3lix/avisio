@@ -16,7 +16,7 @@ import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.inlineparser.MarkwonInlineParserPlugin
 import java.util.concurrent.Executors
 
-class Markdown(val editText: EditText, private val targetView: TextView) {
+class MarkdownEditor(val editText: EditText, private val targetView: TextView) {
 
     private lateinit var markwon: Markwon
     private lateinit var editor: MarkwonEditor

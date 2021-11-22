@@ -17,13 +17,15 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.Markdown
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.training.activity.MarkdownView
 import com.google.android.material.chip.Chip
+import io.noties.markwon.Markwon
 
 class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     private var cardQuestion: CardQuestion = CardQuestion(arrayListOf())
+    private val markwon = Markwon.create(context)
 
     fun setQuestion(cardQuestion: CardQuestion) {
         this.cardQuestion = cardQuestion
@@ -33,6 +35,7 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
                 QuestionTokenType.TEXT -> {
                     val textView = getTextView(token.content.trim())
                     flexbox.addView(textView, index)
+                    MarkdownView.enableMarkdown(markwon, textView)
                 }
                 QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
