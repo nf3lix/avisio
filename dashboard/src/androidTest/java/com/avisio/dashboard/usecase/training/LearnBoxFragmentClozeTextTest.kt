@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.training
 
 import android.content.Context
 import android.widget.AutoCompleteTextView
-import android.widget.EditText
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.os.bundleOf
@@ -10,6 +9,7 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -85,13 +85,6 @@ class LearnBoxFragmentClozeTextTest {
     fun setDialogInputToChip() {
         setChipText("ANSWER_TOKEN")
         onView(allOf(withText("ANSWER_TOKEN"), withClassName(`is`(Chip::class.java.name)))).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun correctAnswerTextViewNotShownOnCorrectAnswer() {
-        setChipText("TOKEN_2")
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(withId(R.id.correct_answer_input_layout)).check(matches(not(isDisplayed())))
     }
 
     private fun setChipText(text: String) {
