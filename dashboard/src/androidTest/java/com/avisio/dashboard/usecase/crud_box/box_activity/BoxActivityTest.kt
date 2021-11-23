@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.box_activity
 
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
@@ -20,10 +21,8 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.hamcrest.core.IsNot.not
+import org.junit.*
 
 class BoxActivityTest {
 
@@ -81,6 +80,11 @@ class BoxActivityTest {
         openContextualActionModeOverflowMenu()
         onView(withText(R.string.box_activity_menu_edit)).perform(click())
         intended(hasComponent(EditBoxActivity::class.java.name))
+    }
+
+    @Test
+    fun boxMenuIsDisplayed() {
+        onView(withContentDescription("More options")).check(matches(isDisplayed()))
     }
 
 }

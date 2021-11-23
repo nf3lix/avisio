@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.edit_Box
+package com.avisio.dashboard.usecase.edit_card
 
 import android.content.Intent
 import android.widget.EditText
@@ -17,7 +17,6 @@ import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.transfer.IntentKeys
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`

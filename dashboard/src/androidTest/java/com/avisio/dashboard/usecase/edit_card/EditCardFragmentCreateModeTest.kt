@@ -83,8 +83,8 @@ class EditCardFragmentCreateModeTest {
     @Test(expected = NoMatchingViewException::class)
     fun removeWarningOfIgnoredAnswerOnCardTypeChanged() {
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onView(withText(CardType.STANDARD.name)).perform(click())
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.STANDARD.name))))
+        onView(withText(CardType.STRICT.name)).perform(click())
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.STRICT.name))))
         onView(withText(R.string.edit_card_cloze_text_answer_is_ignored)).check(matches(not(isDisplayed())))
     }
 
@@ -104,6 +104,20 @@ class EditCardFragmentCreateModeTest {
         typeInAnswerEditText("ANSWER")
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withText(R.string.create_card_empty_answer)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun finishActivityOnFabClicked() {
+        typeInQuestionEditText("QUESTION")
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        typeInAnswerEditText("ANSWER")
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.fab_edit_card)).perform(click())
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun doNotShowCardMenu() {
+        onView(withContentDescription("More options")).check(matches(not(isDisplayed())))
     }
 
     private fun typeInQuestionEditText(question: String) {

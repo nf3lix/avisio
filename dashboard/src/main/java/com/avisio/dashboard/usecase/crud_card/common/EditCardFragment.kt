@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -17,12 +18,13 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
-import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler.CardTypeChangeHandler
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,7 +45,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     private lateinit var fragmentStrategy: CardFragmentStrategy
 
     private lateinit var cardRepository: CardRepository
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,22 +72,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
-        setTitle()
         setOnBackPressedDispatcher()
+        setupAppBar()
         fragmentStrategy.fillCardInformation()
-        if(workflow == CRUD.UPDATE) {
-            questionInput.setCardQuestion(card.question)
-        }
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(workflow == CRUD.UPDATE) {
-            requireActivity().menuInflater.inflate(R.menu.edit_card_menu, menu)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("test123", "test1234")
         when(item.itemId) {
             R.id.menu_delete_card -> {
                 showDeleteDialog()
@@ -139,22 +131,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onCardTypeSet(cardType: CardType) {
-        if(cardType == CLOZE_TEXT) {
-            answerInput.isEnabled = false
-            if(!answerInput.getAnswer().answerIsEmpty()) {
-                answerInput.setWarning(requireContext().getString(R.string.edit_card_cloze_text_answer_is_ignored))
-            } else {
-                answerInput.visibility = View.GONE
-            }
-        }
-        if(cardType == STANDARD) {
-            questionInput.replaceClozeTextByStandardQuestion()
-        }
-        if(cardType == STANDARD || cardType == CUSTOM) {
-            answerInput.resetInformation()
-            answerInput.visibility = View.VISIBLE
-            answerInput.isEnabled = true
-        }
+        val handler = CardTypeChangeHandler.getHandler(this, cardType)
+        handler.updateCardInputs()
         typeSpinner.setSelection(cardType.ordinal)
         onFlexboxInputChanged(questionInput)
         onFlexboxInputChanged(answerInput)
@@ -188,9 +166,23 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         return CardType.valueOf(typeSpinner.selectedItem.toString())
     }
 
-    private fun setTitle() {
+    private fun setupAppBar() {
+        val toolbar = requireView().findViewById<Toolbar>(R.id.card_activity_app_bar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            requireView().findViewById<Toolbar>(R.id.card_activity_app_bar).title = requireContext().getString(fragmentStrategy.titleId)
+            toolbar.title = requireContext().getString(fragmentStrategy.titleId)
+        }
+        if(workflow == CRUD.UPDATE) {
+            toolbar.inflateMenu(R.menu.edit_card_menu)
+            toolbar.setOnMenuItemClickListener { item ->
+                when(item.itemId) {
+                    R.id.menu_delete_card -> {
+                        showDeleteDialog()
+                        false
+                    } else -> {
+                        true
+                    }
+                }
+            }
         }
     }
 

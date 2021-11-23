@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
@@ -16,11 +18,14 @@ import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.training.activity.MarkdownView
 import com.google.android.material.chip.Chip
+import io.noties.markwon.Markwon
 
 class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     private var cardQuestion: CardQuestion = CardQuestion(arrayListOf())
+    private val markwon = Markwon.create(context)
 
     fun setQuestion(cardQuestion: CardQuestion) {
         this.cardQuestion = cardQuestion
@@ -28,8 +33,9 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
-                    val editText = getEditText(token.content.trim())
-                    flexbox.addView(editText, index)
+                    val textView = getTextView(token.content.trim())
+                    flexbox.addView(textView, index)
+                    MarkdownView.enableMarkdown(markwon, textView)
                 }
                 QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
@@ -72,8 +78,8 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         }
     }
 
-    override fun initToolbar() {
-    }
+    override fun initToolbar() { }
+    override fun resetEditText() { }
 
     fun getQuestionPlaceholder(question: String): String {
         val stringBuilder = StringBuilder()
@@ -97,13 +103,14 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
         return chip
     }
 
-    private fun getEditText(input: String): EditText {
-        val editText = EditText(context)
-        editText.setText(input)
+    private fun getTextView(input: String): TextView {
+        val textView = TextView(context)
+        textView.text = input
+        textView.gravity = Gravity.CENTER_VERTICAL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            editText.textSize = QuestionFlexBox.TEXT_SIZE
+            textView.textSize = QuestionFlexBox.TEXT_SIZE
         }
-        return editText
+        return textView
     }
 
     fun correctClozeText() {

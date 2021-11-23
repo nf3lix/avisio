@@ -104,7 +104,7 @@ class CardDaoTest : DaoTest() {
 
     @Test
     fun updateCardTest() {
-        val card1 = Card(boxId = 1, type = CardType.STANDARD)
+        val card1 = Card(boxId = 1, type = CardType.STRICT)
         cardDao.insert(card1)
         val cardToUpdate = cardDao.getAllAsLiveData().blockingObserve()?.get(0)!!
         val card2 = Card(id = cardToUpdate.id, type = CardType.CLOZE_TEXT)

@@ -19,6 +19,7 @@ import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.persistence.ToastMatcher
@@ -47,7 +48,7 @@ class LearnBoxFragmentTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         cardDao = database.cardDao()
-        val card1 = Card(boxId = 1)
+        val card1 = Card(boxId = 1, type = CardType.STRICT)
         cardDao.insert(card1)
         Intents.init()
         val fragmentArgs = bundleOf(

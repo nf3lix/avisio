@@ -31,11 +31,21 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     fun addInitialEditText() {
+        setEditTextLayout()
+    }
+
+    override fun resetEditText() {
+        flexbox.removeAllViews()
+        setEditTextLayout()
+    }
+
+    private fun setEditTextLayout() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             answerEditText.textSize = TEXT_SIZE
         }
         answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
+        initMarkdown()
         flexbox.addView(answerEditText as View, 0)
     }
 

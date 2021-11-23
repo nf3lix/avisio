@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -23,6 +24,7 @@ import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTe
 import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
+import io.noties.markwon.Markwon
 
 class LearnBoxFragment : Fragment(), LearnCardView {
 
@@ -88,9 +90,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctChip.setSuggestedResult()
-        if(currentCard.type == CardType.CLOZE_TEXT) {
-            cardTypeLayoutStrategy.onCorrectAnswer()
-        }
+        cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
     override fun onIncorrectAnswer() {
@@ -99,9 +99,13 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         incorrectChip.setSuggestedResult()
-        if(currentCard.type == CardType.CLOZE_TEXT) {
-            cardTypeLayoutStrategy.onIncorrectAnswer()
-        }
+        cardTypeLayoutStrategy.onIncorrectAnswer()
+    }
+
+    override fun onPartiallyCorrectAnswer() {
+        resultChipGroup.visibility = View.VISIBLE
+        hideResolveQuestionButton()
+        cardTypeLayoutStrategy.onPartiallyCorrectAnswer()
     }
 
     private fun hideResolveQuestionButton() {
@@ -135,8 +139,30 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun setupFab() {
         resolveQuestionButton.setOnClickListener {
-            manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard.question, cardTypeLayoutStrategy.getUserInputAsAnswer()))
+            manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard, cardTypeLayoutStrategy.getUserInputAsAnswer()))
         }
+    }
+
+    fun showStandardAnswerTextView() {
+        val textView = requireView().findViewById<TextView>(R.id.standard_answer_text_view)
+        textView.visibility = View.VISIBLE
+        textView.text = currentCard.answer.getStringRepresentation()
+        MarkdownView.enableMarkdown(Markwon.create(requireContext()), textView)
+    }
+
+    fun hideStandardAnswerTextView() {
+        val textView = requireView().findViewById<TextView>(R.id.standard_answer_text_view)
+        answerEditText.visibility = View.VISIBLE
+        textView.text = ""
+        textView.visibility = View.GONE
+    }
+
+    fun showAnswerEditText() {
+        answerInputLayout.visibility = View.VISIBLE
+    }
+
+    fun hideAnswerEditText() {
+        answerInputLayout.visibility = View.GONE
     }
 
     private fun setupResultChipGroup() {

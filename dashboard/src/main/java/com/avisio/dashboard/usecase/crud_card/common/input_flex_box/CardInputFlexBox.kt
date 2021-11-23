@@ -3,14 +3,12 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.MarkdownEditor
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
 import com.google.android.flexbox.FlexboxLayout
 
@@ -25,6 +23,9 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     private val informationIcon: ImageView
     private val informationTextView: TextView
     var currentInformation = CardInputInformation.NONE
+
+    internal var markdown: MarkdownEditor = MarkdownEditor(EditText(context), TextView(context))
+    private var markdownDisabled: Boolean = false
 
     var cardChangeListener: CardTypeChangeListener = EditCardFragment()
     val flexbox: FlexboxLayout
@@ -96,5 +97,32 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
             view.isEnabled = enabled
         }
     }
+
+    open fun disableMarkdown() {
+        markdownDisabled = true
+        markdown.disable()
+        resetEditText()
+    }
+
+    fun enableMarkdown() {
+        markdownDisabled = false
+        initMarkdown()
+    }
+
+    internal fun initMarkdown() {
+        if(markdownDisabled) {
+            return
+        }
+        val blankTextView = TextView(context)
+        for(view in flexbox.allViews.toList()) {
+            if(view is EditText) {
+                val prevText = view.text.toString()
+                markdown = MarkdownEditor(view, blankTextView)
+                view.setText(prevText)
+            }
+        }
+    }
+
+    abstract fun resetEditText()
 
 }

@@ -38,7 +38,9 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
             QuestionResult.INCORRECT -> {
                 view.onIncorrectAnswer()
             }
-            QuestionResult.PARTIALLY_CORRECT -> { }
+            QuestionResult.PARTIALLY_CORRECT -> {
+                view.onPartiallyCorrectAnswer()
+            }
         }
     }
 

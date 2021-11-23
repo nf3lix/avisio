@@ -76,8 +76,8 @@ class EditCardFragmentEditClozeTextTest {
     fun replaceClozeTextOnCardTypeChangedManually() {
         onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.CLOZE_TEXT.name))))
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onView(withText(CardType.STANDARD.name)).perform(click())
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.STANDARD.name))))
+        onView(withText(CardType.STRICT.name)).perform(click())
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.STRICT.name))))
         onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1 TOKEN_2 TOKEN_3"))).check(matches(isDisplayed()))
     }
 

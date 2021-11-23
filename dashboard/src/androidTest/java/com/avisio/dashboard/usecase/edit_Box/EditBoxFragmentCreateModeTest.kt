@@ -7,6 +7,7 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -20,6 +21,7 @@ import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
 import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
 import com.avisio.dashboard.persistence.IndexMatcher
 import org.hamcrest.Matchers.*
+import org.hamcrest.core.IsNot
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -78,6 +80,18 @@ class EditBoxFragmentCreateModeTest {
         onView(withText(R.string.create_box_no_name_specified)).check(matches(isDisplayed()))
         onView(withId(R.id.box_name_edit_text)).perform(typeText("NAME"))
         onView(withText(R.string.create_box_no_name_specified)).check(matches(not(isDisplayed())))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun doNotShowCardMenu() {
+        onView(withContentDescription("More options")).check(matches(IsNot.not(isDisplayed())))
+    }
+
+    @Test
+    fun finishActivityOnFabClicked() {
+        onView(withId(R.id.box_name_edit_text)).perform(typeText("T"))
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.fab_edit_box)).perform(click())
     }
 
 }
