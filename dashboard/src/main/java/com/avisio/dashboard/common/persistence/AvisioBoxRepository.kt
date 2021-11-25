@@ -35,10 +35,14 @@ class AvisioBoxRepository(application: Application) {
         }
     }
 
-    fun updateBox(box: ParcelableAvisioBox) {
+    fun updateBox(box: AvisioBox) {
         GlobalScope.launch {
-            dao.updateBox(box.boxId, box.boxName, box.boxIconId)
+            dao.updateBox(box.id, box.name, box.icon.iconId)
         }
+    }
+
+    suspend fun getBoxNameList(): List<String> {
+        return dao.getBoxNameList()
     }
 
 }

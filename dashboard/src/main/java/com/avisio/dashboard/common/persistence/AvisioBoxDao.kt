@@ -22,4 +22,7 @@ interface AvisioBoxDao {
     @Query("UPDATE box SET name = :name, icon = :iconId WHERE id = :boxId")
     fun updateBox(boxId: Long, name: String, iconId: Int)
 
+    @Query("SELECT name FROM box")
+    fun getBoxNameList(): List<String>
+
 }

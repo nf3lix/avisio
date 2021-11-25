@@ -11,25 +11,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
             android:id="@+id/question_input_layout"
-            android:layout_width="326dp"
-            android:layout_height="149dp"
-            android:hint="@string/create_card_question_text_field_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/question_edit_text"
-                    android:inputType="none"
-                    android:enabled="false" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintVertical_bias="0.13"/>
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="326dp"
@@ -49,6 +40,18 @@
                     android:layout_height="match_parent"
                     android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="326dp"
+            android:layout_height="72dp"
+            android:id="@+id/standard_answer_text_view"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/question_input_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintVertical_bias="0.31"/>
 
         <Button
             android:id="@+id/resolve_question_button"

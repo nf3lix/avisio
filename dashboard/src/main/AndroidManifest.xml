@@ -13,32 +13,37 @@
             android:name=".usecase.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Avisio.FullScreen">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".usecase.training.activity.LearnBoxActivity"
             android:exported="false" />
         <activity
-            android:name=".usecase.crud_card.edit_card.EditCardActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".usecase.crud_card.create.CreateCardActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
+            android:exported="false" />
         <activity
-            android:name=".usecase.crud_card.create_card.CreateCardActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".usecase.crud_card.update.EditCardActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
+            android:exported="false" />
         <activity
-            android:name=".usecase.crud_box.edit_box.EditBoxActivity"
-            android:label="@string/activity_edit_box"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".usecase.crud_box.box_list.BoxActivity" />
+            android:name=".usecase.crud_box.update.EditBoxActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
+            android:label="@string/activity_edit_box"/>
+        <activity android:name=".usecase.crud_box.read.BoxActivity"
+            android:theme="@style/Theme.Avisio.NoActionBar" />
         <activity
-            android:name=".usecase.crud_box.create_box.CreateBoxActivity"
-            android:label="@string/title_activity_create_box"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".usecase.crud_box.create.CreateBoxActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.Avisio.NoActionBar"
+            android:label="@string/title_activity_create_box"/>
         <activity
             android:name=".usecase.MainActivity"
             android:label="@string/app_name"

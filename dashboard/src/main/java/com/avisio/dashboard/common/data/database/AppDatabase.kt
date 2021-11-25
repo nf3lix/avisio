@@ -39,12 +39,13 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: buildDatabase(context).also { instance = it }
         }
 
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+        private fun buildDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
                 .addTypeConverter(DateTimeConverter())
                 .addTypeConverter(BoxIconConverter())
                 .addTypeConverter(CardConverter())
                 .build()
+        }
 
     }
 

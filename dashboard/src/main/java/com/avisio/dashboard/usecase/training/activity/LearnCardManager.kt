@@ -15,34 +15,39 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     }
 
     private fun startTraining() {
+        loadNextCard()
+    }
+
+    private fun loadNextCard() {
         GlobalScope.launch {
-            loadNextCard()
+            val card = strategy.nextCard()
+            if(card == null) {
+                view.onTrainingFinished()
+            } else {
+                currentCard = card
+                view.showCard(currentCard)
+            }
         }
     }
 
-    private suspend fun loadNextCard() {
-        currentCard = strategy.nextCard()
-        view.showCard(currentCard)
-    }
-
-    fun onAnswer(answer: String) {
-        when(strategy.getQuestionResult(currentCard.question, answer)) {
+    fun onAnswer(result: QuestionResult) {
+        when(result) {
             QuestionResult.CORRECT -> {
                 view.onCorrectAnswer()
             }
             QuestionResult.INCORRECT -> {
                 view.onIncorrectAnswer()
             }
-            QuestionResult.PARTIALLY_CORRECT -> { }
+            QuestionResult.PARTIALLY_CORRECT -> {
+                view.onPartiallyCorrectAnswer()
+            }
         }
     }
 
     fun onResultOptionSelected(result: QuestionResult) {
         strategy.onCardResult(result)
         if(strategy.hasNextCard()) {
-            GlobalScope.launch {
-                loadNextCard()
-            }
+            loadNextCard()
             return
         }
         view.onTrainingFinished()

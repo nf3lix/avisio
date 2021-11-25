@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -13,25 +14,31 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.TrainingStrategy
+import com.avisio.dashboard.usecase.training.activity.card_type_strategy.CardTypeLayoutStrategy
+import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTextLayoutStrategy
+import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
+import io.noties.markwon.Markwon
 
 class LearnBoxFragment : Fragment(), LearnCardView {
 
     private lateinit var trainingStrategy: TrainingStrategy
+    private lateinit var cardTypeLayoutStrategy: CardTypeLayoutStrategy
     private lateinit var manager: LearnCardManager
     private lateinit var box: AvisioBox
     private lateinit var currentCard: Card
 
-    private lateinit var questionInputLayout: TextInputLayout
-    private lateinit var answerInputLayout: TextInputLayout
+    lateinit var questionInputLayout: QuestionLearnFlexBox
+    lateinit var answerInputLayout: TextInputLayout
     private lateinit var correctAnswerLayoutInput: TextInputLayout
-    private lateinit var answerEditText: EditText
-    private lateinit var correctAnswerEditText: EditText
+    lateinit var answerEditText: EditText
+    lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
 
@@ -48,6 +55,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun onStart() {
         super.onStart()
+        cardTypeLayoutStrategy = ClozeTextLayoutStrategy(this)
         questionInputLayout = requireView().findViewById(R.id.question_input_layout)
         answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
@@ -67,12 +75,14 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     override fun showCard(card: Card) {
         currentCard = card
+        cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
         requireActivity().runOnUiThread {
-            requireView().findViewById<EditText>(R.id.question_edit_text).setText(currentCard.question.getStringRepresentation())
+            requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
             showResolveQuestionButton()
             answerInputLayout.visibility = View.VISIBLE
             resultChipGroup.visibility = View.GONE
             correctAnswerLayoutInput.visibility = View.GONE
+            cardTypeLayoutStrategy.onShowCard()
         }
     }
 
@@ -80,6 +90,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctChip.setSuggestedResult()
+        cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
     override fun onIncorrectAnswer() {
@@ -88,6 +99,13 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         incorrectChip.setSuggestedResult()
+        cardTypeLayoutStrategy.onIncorrectAnswer()
+    }
+
+    override fun onPartiallyCorrectAnswer() {
+        resultChipGroup.visibility = View.VISIBLE
+        hideResolveQuestionButton()
+        cardTypeLayoutStrategy.onPartiallyCorrectAnswer()
     }
 
     private fun hideResolveQuestionButton() {
@@ -121,8 +139,30 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     private fun setupFab() {
         resolveQuestionButton.setOnClickListener {
-            manager.onAnswer(answerEditText.text.toString())
+            manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard, cardTypeLayoutStrategy.getUserInputAsAnswer()))
         }
+    }
+
+    fun showStandardAnswerTextView() {
+        val textView = requireView().findViewById<TextView>(R.id.standard_answer_text_view)
+        textView.visibility = View.VISIBLE
+        textView.text = currentCard.answer.getStringRepresentation()
+        MarkdownView.enableMarkdown(Markwon.create(requireContext()), textView)
+    }
+
+    fun hideStandardAnswerTextView() {
+        val textView = requireView().findViewById<TextView>(R.id.standard_answer_text_view)
+        answerEditText.visibility = View.VISIBLE
+        textView.text = ""
+        textView.visibility = View.GONE
+    }
+
+    fun showAnswerEditText() {
+        answerInputLayout.visibility = View.VISIBLE
+    }
+
+    fun hideAnswerEditText() {
+        answerInputLayout.visibility = View.GONE
     }
 
     private fun setupResultChipGroup() {
@@ -135,7 +175,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onResultOptionSelected(result: QuestionResult) {
-        answerEditText.setText("")
+        cardTypeLayoutStrategy.resetCard()
         manager.onResultOptionSelected(result)
     }
 

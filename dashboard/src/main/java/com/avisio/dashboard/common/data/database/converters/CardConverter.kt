@@ -34,7 +34,6 @@ class CardConverter {
         return gson.fromJson(serializedObject, CardAnswer::class.java)
     }
 
-
     @TypeConverter
     fun enumToInt(type: CardType): Int {
         return type.ordinal

@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.box_activity
 
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
@@ -13,27 +14,26 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_card.create_card.CreateCardActivity
-import com.avisio.dashboard.usecase.crud_box.edit_box.EditBoxActivity
+import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
+import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
-import com.avisio.dashboard.usecase.crud_box.box_list.BoxActivity
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
+import org.hamcrest.core.IsNot.not
+import org.junit.*
 
 class BoxActivityTest {
 
-    private lateinit var intent: Intent
+    private var intent: Intent
     private lateinit var cardDao: CardDao
     private lateinit var database: AppDatabase
 
     init {
         val box = ParcelableAvisioBox(1, "BOX_NAME", R.drawable.box_icon_language)
         intent = Intent(ApplicationProvider.getApplicationContext(), BoxActivity::class.java)
-        intent.putExtra(BoxActivity.PARCELABLE_BOX_KEY, box)
+        intent.putExtra(IntentKeys.BOX_OBJECT, box)
     }
 
 
@@ -80,6 +80,11 @@ class BoxActivityTest {
         openContextualActionModeOverflowMenu()
         onView(withText(R.string.box_activity_menu_edit)).perform(click())
         intended(hasComponent(EditBoxActivity::class.java.name))
+    }
+
+    @Test
+    fun boxMenuIsDisplayed() {
+        onView(withContentDescription("More options")).check(matches(isDisplayed()))
     }
 
 }
