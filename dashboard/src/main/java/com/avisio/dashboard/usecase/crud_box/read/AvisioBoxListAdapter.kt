@@ -8,9 +8,10 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 class AvisioBoxListAdapter(
     diffCallback: DiffUtil.ItemCallback<AvisioBox>,
-    private var filteredBoxList: List<AvisioBox>,
     private val onClickListener: BoxListOnClickListener
 ) : ListAdapter<AvisioBox, AvisioBoxViewHolder>(diffCallback) {
+
+    private var initialList = currentList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvisioBoxViewHolder {
         return AvisioBoxViewHolder.create(parent, onClickListener)
@@ -43,35 +44,18 @@ class AvisioBoxListAdapter(
     }
 
     fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(sequence: CharSequence?): FilterResults {
-                val constraints = sequence.toString()
-                val filterResult =  FilterResults()
-                if(constraints.isEmpty()) {
-                    filteredBoxList = currentList
-                    filterResult.values = filteredBoxList
-                    return filterResult
-                }
-                val filteredList = arrayListOf<AvisioBox>()
-                for(listItem in currentList) {
-                    if(listItem.name.lowercase().contains(constraints.lowercase())) {
-                        filteredList.add(listItem)
-                    }
-                }
-                filterResult.values = filteredBoxList
-                return filterResult
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredBoxList = results?.values as ArrayList<AvisioBox>
-                notifyItemRangeChanged(0, currentList.size)
-            }
-
-        }
+        return BoxFilter(this, initialList)
     }
 
     interface BoxListOnClickListener {
         fun onClick(index: Int)
+    }
+
+    fun updateList(list: List<AvisioBox>?) {
+        super.submitList(list)
+        if (list != null) {
+            initialList = list
+        }
     }
 
 }

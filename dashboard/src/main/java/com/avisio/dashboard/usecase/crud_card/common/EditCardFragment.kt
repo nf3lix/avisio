@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
@@ -78,7 +79,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("test123", "test1234")
         when(item.itemId) {
             R.id.menu_delete_card -> {
                 showDeleteDialog()
