@@ -91,7 +91,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
         menu.clear()
         inflater.inflate(R.menu.menu_main, menu)
         val searchItem = menu.findItem(R.id.box_list_search)
-        val searchView = SearchView(((requireContext() as MainActivity).supportActionBar!!.themedContext))
+        val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         searchItem.actionView = searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
