@@ -15,9 +15,23 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Avisio.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Theme.Avisio.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Avisio.FullScreen" parent="Theme.Avisio.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.Avisio.AppBarOverlay.Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

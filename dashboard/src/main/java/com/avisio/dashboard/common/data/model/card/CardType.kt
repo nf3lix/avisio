@@ -7,13 +7,13 @@ import com.avisio.dashboard.usecase.training.QuestionResult
 
 enum class CardType(val iconId: Int) {
 
-    STANDARD(R.drawable.card_icon_standard),
+    STRICT(R.drawable.card_icon_standard),
     CLOZE_TEXT(R.drawable.card_icon_cloze_text),
-    CUSTOM(R.drawable.card_icon_custom);
+    STANDARD(R.drawable.card_icon_custom);
 
-    fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
+    fun getQuestionResult(card: Card, cardAnswer: CardAnswer): QuestionResult {
         return CardAnswerValidatorImpl(
-            cardQuestion,
+            card,
             cardAnswer,
             this
         ).getCardAnswerResult()

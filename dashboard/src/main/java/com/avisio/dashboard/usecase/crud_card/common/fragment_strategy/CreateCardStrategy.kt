@@ -22,6 +22,7 @@ class CreateCardStrategy(
 ) : CardFragmentStrategy(fragment, R.string.create_card_action_bar_title) {
 
     override fun fillCardInformation() {
+        typeSpinner.setSelection(card.type.ordinal)
     }
 
     override fun saveCard() {

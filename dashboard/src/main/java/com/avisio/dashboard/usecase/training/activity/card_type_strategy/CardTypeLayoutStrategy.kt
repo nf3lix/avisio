@@ -14,18 +14,19 @@ abstract class CardTypeLayoutStrategy(val cardType: CardType) {
     abstract fun getUserInputAsAnswer(): CardAnswer
     abstract fun onCorrectAnswer()
     abstract fun onIncorrectAnswer()
+    abstract fun onPartiallyCorrectAnswer()
 
-    fun getQuestionResult(cardQuestion: CardQuestion, cardAnswer: CardAnswer): QuestionResult {
-        return cardType.getQuestionResult(cardQuestion, cardAnswer)
+    fun getQuestionResult(card: Card, cardAnswer: CardAnswer): QuestionResult {
+        return cardType.getQuestionResult(card, cardAnswer)
     }
 
     companion object {
 
         fun getCardTypeStrategy(card: Card, fragment: LearnBoxFragment): CardTypeLayoutStrategy {
             return when(card.type) {
-                CardType.STANDARD -> StandardCardLayoutStrategy(fragment)
+                CardType.STRICT -> StrictCardLayoutStrategy(fragment)
                 CardType.CLOZE_TEXT -> ClozeTextLayoutStrategy(fragment)
-                else -> StandardCardLayoutStrategy(fragment)
+                CardType.STANDARD -> StandardCardLayoutStrategy(fragment)
             }
         }
 

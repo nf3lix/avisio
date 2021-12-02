@@ -24,6 +24,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
+    private var markdownDisabled: Boolean = false
 
     init {
         initToolbar()
@@ -95,6 +96,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
             previousEditTextIndex = editTextIndex
         }
+        stretchSingleEditText()
+        setEditTextKeyListeners()
+        initMarkdown()
     }
 
     fun getCardQuestion(trimmed: Boolean = false): CardQuestion {
@@ -130,8 +134,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
         }
         mergeRemainingEditTexts()
-        stretchSingleEditText()
-        setEditTextKeyListeners()
     }
 
     private fun stretchSingleEditText() {
@@ -179,6 +181,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             }
             mergeRemainingEditTexts()
             setEditTextKeyListeners()
+            enableMarkdown()
             checkCardType()
         }
     }
@@ -196,13 +199,18 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private fun checkCardType() {
         val views = flexbox.allViews.toList()
+        markdownDisabled = false
         for(view in views) {
             if(view is Chip) {
                 cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
                 return
             }
         }
-        cardChangeListener.onCardTypeSet(CardType.STANDARD)
+        if(!markdownDisabled && markdown.isEnabled()) {
+            cardChangeListener.onCardTypeSet(CardType.STANDARD)
+            return
+        }
+        cardChangeListener.onCardTypeSet(CardType.STRICT)
     }
 
     private fun addInitialEditText(input: String) {
@@ -213,6 +221,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             true
         }
         flexbox.addView(editText as View, 0)
+        initMarkdown()
     }
 
     private fun getEditText(input: String): EditText {
@@ -240,5 +249,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             addClozeChip()
         }
     }
+
+    override fun resetEditText() { }
 
 }

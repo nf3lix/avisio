@@ -27,13 +27,13 @@ abstract class SaveCardConstraint(
 
         fun getConstraints(cardType: CardType): List<SaveCardConstraint> {
             val typeSpecificConstraints = when(cardType) {
-                CardType.STANDARD -> {
+                CardType.STRICT -> {
                     SaveStandardCardConstraint.getConstraints()
                 }
                 CardType.CLOZE_TEXT -> {
                     SaveClozeTextCardConstraint.getConstraints()
                 }
-                CardType.CUSTOM -> {
+                CardType.STANDARD -> {
                     SaveCustomCardConstraint.getConstraints()
                 }
             }
