@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +37,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
 
     override fun onStart() {
         super.onStart()
+        requireView().findViewById<Toolbar>(R.id.box_list_app_bar).title = requireContext().getString(R.string.main_activity_app_bar_title)
         setupView()
         setupFab()
     }
@@ -47,7 +49,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
 
     private fun setupRecyclerView() {
         val boxListRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
-        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference(), this)
+        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference(), arrayListOf(), this)
         boxListRecyclerView?.adapter = boxAdapter
         boxListRecyclerView?.layoutManager = LinearLayoutManager(context)
     }

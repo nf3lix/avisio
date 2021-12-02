@@ -1,12 +1,14 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
 import android.view.ViewGroup
+import android.widget.Filter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 
 class AvisioBoxListAdapter(
     diffCallback: DiffUtil.ItemCallback<AvisioBox>,
+    private var filteredBoxList: List<AvisioBox>,
     private val onClickListener: BoxListOnClickListener
 ) : ListAdapter<AvisioBox, AvisioBoxViewHolder>(diffCallback) {
 
@@ -38,6 +40,34 @@ class AvisioBoxListAdapter(
             }
         }
         return null
+    }
+
+    fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(sequence: CharSequence?): FilterResults {
+                val constraints = sequence.toString()
+                val filterResult =  FilterResults()
+                if(constraints.isEmpty()) {
+                    filteredBoxList = currentList
+                    filterResult.values = filteredBoxList
+                    return filterResult
+                }
+                val filteredList = arrayListOf<AvisioBox>()
+                for(listItem in currentList) {
+                    if(listItem.name.lowercase().contains(constraints.lowercase())) {
+                        filteredList.add(listItem)
+                    }
+                }
+                filterResult.values = filteredBoxList
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredBoxList = results?.values as ArrayList<AvisioBox>
+                notifyItemRangeChanged(0, currentList.size)
+            }
+
+        }
     }
 
     interface BoxListOnClickListener {
