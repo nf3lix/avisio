@@ -7,14 +7,30 @@
         android:layout_height="match_parent"
         tools:context="com.avisio.dashboard.usecase.crud_box.read.BoxListFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_activity_appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/Theme.Avisio.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/box_list_app_bar"
+            android:layout_width="match_parent"
+            app:menu="@menu/menu_main"
+            android:layout_height="?attr/actionBarSize"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/box_list_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/main_activity_appbar"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
