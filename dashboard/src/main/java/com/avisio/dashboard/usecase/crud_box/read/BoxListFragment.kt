@@ -2,9 +2,11 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,6 +47,7 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     override fun onStart() {
         super.onStart()
         requireView().findViewById<Toolbar>(R.id.box_list_app_bar).title = requireContext().getString(R.string.main_activity_app_bar_title)
+        setOnBackPressedDispatcher()
         setupView()
         setupFab()
     }
@@ -107,5 +110,19 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
         })
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+    private fun setOnBackPressedDispatcher() {
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val searchView = requireView().findViewById<SearchView>(R.id.box_list_search)
+                if(!searchView.isIconified) {
+                    searchView.isIconified = true
+                    searchView.onActionViewCollapsed()
+                    return
+                }
+            }
+        })
+    }
+
 
 }

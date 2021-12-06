@@ -2,7 +2,9 @@ package com.avisio.dashboard.usecase.box_list
 
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.widget.SearchView
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
@@ -93,6 +95,26 @@ class BoxListFragmentTest {
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
         onView(allOf(withText("CCC"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
         onView(allOf(withText("DDD"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun resetSearchCriteriaOnBackPressed() {
+        onView(withId(R.id.box_list_search)).perform(click())
+        typeInSearchView("A")
+        Espresso.pressBack()
+        Espresso.pressBack()
+        onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+        onView(allOf(withText("CCC"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+        onView(allOf(withText("DDD"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun hideSearchAutoCompleteOnBackPressed() {
+        onView(withId(R.id.box_list_search)).perform(click())
+        typeInSearchView("A")
+        Espresso.pressBack()
+        Espresso.pressBack()
+        onView(withClassName(`is`(SearchView.SearchAutoComplete::class.java.name))).check(matches(not(isDisplayed())))
     }
 
     private fun typeInSearchView(text: String) {
