@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.edit_card
+package com.avisio.dashboard.usecase.create_card
 
 import android.widget.EditText
 import androidx.core.os.bundleOf

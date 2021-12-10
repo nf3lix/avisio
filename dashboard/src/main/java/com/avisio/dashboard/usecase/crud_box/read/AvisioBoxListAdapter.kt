@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
 import android.view.ViewGroup
+import android.widget.Filter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.avisio.dashboard.common.data.model.box.AvisioBox
@@ -9,6 +10,8 @@ class AvisioBoxListAdapter(
     diffCallback: DiffUtil.ItemCallback<AvisioBox>,
     private val onClickListener: BoxListOnClickListener
 ) : ListAdapter<AvisioBox, AvisioBoxViewHolder>(diffCallback) {
+
+    private var initialList = currentList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvisioBoxViewHolder {
         return AvisioBoxViewHolder.create(parent, onClickListener)
@@ -40,8 +43,19 @@ class AvisioBoxListAdapter(
         return null
     }
 
+    fun getFilter(): Filter {
+        return BoxFilter(this, initialList)
+    }
+
     interface BoxListOnClickListener {
         fun onClick(index: Int)
+    }
+
+    fun updateList(list: List<AvisioBox>?) {
+        super.submitList(list)
+        if (list != null) {
+            initialList = list
+        }
     }
 
 }
