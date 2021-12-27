@@ -2,13 +2,17 @@ package com.avisio.dashboard.usecase.training.super_memo.model
 
 import java.util.*
 
-class PointSequence(vararg point: Point) {
+class PointSequence {
 
-    private val points: LinkedList<Point> = LinkedList()
-
-    init {
+    constructor(vararg point: Point) {
         points.addAll(point)
     }
+
+    constructor(pointsList: List<Point>) {
+        points.addAll(pointsList)
+    }
+
+    private val points: LinkedList<Point> = LinkedList()
 
     fun size(): Int {
         return points.size

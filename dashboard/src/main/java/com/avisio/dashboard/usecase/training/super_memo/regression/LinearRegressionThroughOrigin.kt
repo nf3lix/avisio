@@ -4,7 +4,7 @@ import com.avisio.dashboard.usecase.training.super_memo.model.LRThroughOriginMod
 import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
 import kotlin.math.pow
 
-class LinearRegressionThroughOrigin(private val points: PointSequence) : Regression<LRThroughOriginModel>(points) {
+class LinearRegressionThroughOrigin(private val points: PointSequence) : Regression<LRThroughOriginModel>() {
 
     override fun compute(): LRThroughOriginModel {
         val xCoords = points.xCoordinates()
