@@ -1,12 +1,12 @@
 package com.avisio.dashboard.usecase.training.super_memo
 
-import com.avisio.dashboard.usecase.training.super_memo.regression.model.*
+import com.avisio.dashboard.usecase.training.super_memo.model.*
 import org.junit.Assert
 import org.junit.Test
 import java.lang.Math.*
 import kotlin.math.pow
 
-class RegressionTest {
+class RegressionModelTest {
 
     @Test
     fun powerLawModelTest() {
@@ -102,7 +102,7 @@ class RegressionTest {
             Point(2.0, exp(2.0 * 4.0) * exp(3.0) + 1),
             Point(3.0, exp(3.0 * 4.0) * exp(3.0))
         )
-        Assert.assertEquals(g2.getMeanSquaredError(points2), (1.0 / 3.0).toDouble(), 1E-6)
+        Assert.assertEquals(g2.getMeanSquaredError(points2), (1.0 / 3.0), 1E-6)
     }
 
     companion object {

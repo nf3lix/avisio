@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.training.super_memo.regression.model
+package com.avisio.dashboard.usecase.training.super_memo.model
 
 class LinearRegressionModel(private val m: Double, private val c: Double) : Model() {
 

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.training.super_memo.regression.model
+package com.avisio.dashboard.usecase.training.super_memo.model
 
 import kotlin.math.pow
 
