@@ -13,8 +13,9 @@ class LinearRegressionThroughOrigin(private val points: PointSequence) : Regress
         return LRThroughOriginModel(m)
     }
 
-    private fun sumSquaredX(xCoords: List<Double>): Double {
-        return xCoords.map { x -> x.pow(2) }.reduce { x1, x2 -> x1 + x2}
+    private fun sumSquaredX(xCoords: ArrayList<Double>): Double {
+        val squared = squaredXCoordinates(xCoords)
+        return xCoordinatesSum(squared)
     }
 
     private fun sumXY(xCoords: List<Double>, yCoords: List<Double>): Double {
@@ -23,6 +24,21 @@ class LinearRegressionThroughOrigin(private val points: PointSequence) : Regress
             sumXY += xCoords[i] * yCoords[i]
         }
         return sumXY
+    }
+
+    private fun squaredXCoordinates(xCoords: ArrayList<Double>): ArrayList<Double> {
+        for(i in xCoords.indices) {
+            xCoords[i] = xCoords[i].pow(2)
+        }
+        return xCoords
+    }
+
+    private fun xCoordinatesSum(xCoords: ArrayList<Double>): Double {
+        var sum = 0.0
+        for(x in xCoords) {
+            sum += x
+        }
+        return sum
     }
 
 }

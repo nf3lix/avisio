@@ -8,9 +8,10 @@ abstract class Model {
     abstract fun getY(x: Double): Double
 
     fun getMeanSquaredError(points: List<Point>): Double {
-        val sum: Double = points.map { p ->
-            (getY(p.x) - p.y).pow(2.0)
-        }.sum()
+        var sum = 0.0
+        for(point in points) {
+            sum += (getY(point.x) - point.y).pow(2.0)
+        }
         return sum / points.size
     }
 

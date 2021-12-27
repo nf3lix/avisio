@@ -18,7 +18,7 @@ class PointSequence {
         return points.size
     }
 
-    fun xCoordinates(): List<Double> {
+    fun xCoordinates(): ArrayList<Double> {
         val x = arrayListOf<Double>()
         for(point in points) {
             x.add(point.x)
@@ -26,7 +26,7 @@ class PointSequence {
         return x
     }
 
-    fun yCoordinates(): List<Double> {
+    fun yCoordinates(): ArrayList<Double> {
         val y = arrayListOf<Double>()
         for(point in points) {
             y.add(point.y)
