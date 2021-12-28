@@ -8,7 +8,7 @@ import java.util.*
 
 class CardQueueTest {
 
-    private val sm = SuperMemo()
+    private val sm = SuperMemoImpl()
 
     @Test
     fun addCardTest() {
