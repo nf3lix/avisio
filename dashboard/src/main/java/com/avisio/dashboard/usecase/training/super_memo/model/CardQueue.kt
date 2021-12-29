@@ -26,11 +26,11 @@ class CardQueue {
         return list.size
     }
 
-    fun addItem(cardItem: CardItem) {
+    fun addCard(cardItem: CardItem) {
         list.add(findIndexToInsert(cardItem), cardItem)
     }
 
-    fun nextItem(isAdvanceable: Boolean = false): CardItem? {
+    fun nextCard(isAdvanceable: Boolean = false): CardItem? {
         if(list.size == 0) {
             return null
         }

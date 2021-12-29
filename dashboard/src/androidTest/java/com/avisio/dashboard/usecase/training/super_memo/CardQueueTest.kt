@@ -8,7 +8,7 @@ import java.util.*
 
 class CardQueueTest {
 
-    private val sm = SuperMemoImpl()
+    private val sm = SuperMemo()
 
     @Test
     fun addCardTest() {
@@ -17,12 +17,12 @@ class CardQueueTest {
         val card3 = CardItem(sm, Date(1600002000))
         val queue = CardQueue()
         Assert.assertEquals(queue.queueCount(), 0)
-        queue.addItem(card1)
-        Assert.assertEquals(queue.nextItem(), card1)
-        queue.addItem(card2)
-        Assert.assertEquals(queue.nextItem(), card2)
-        queue.addItem(card3)
-        Assert.assertEquals(queue.nextItem(), card2)
+        queue.addCard(card1)
+        Assert.assertEquals(queue.nextCard(), card1)
+        queue.addCard(card2)
+        Assert.assertEquals(queue.nextCard(), card2)
+        queue.addCard(card3)
+        Assert.assertEquals(queue.nextCard(), card2)
     }
 
     @Test
@@ -30,10 +30,10 @@ class CardQueueTest {
         val card1 = CardItem(sm, Date(1600003000))
         val card2 = CardItem(sm, Date(1600001000))
         val queue = CardQueue()
-        queue.addItem(card1)
-        queue.addItem(card2)
+        queue.addCard(card1)
+        queue.addCard(card2)
         queue.answer(card1)
-        Assert.assertEquals(queue.nextItem(), card2)
+        Assert.assertEquals(queue.nextCard(), card2)
         Assert.assertEquals(queue.queueCount(), 2)
     }
 

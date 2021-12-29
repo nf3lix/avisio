@@ -20,6 +20,14 @@ class PointSequence {
         return points.size
     }
 
+    fun addPoint(point: Point) {
+        points.add(point)
+    }
+
+    fun subSequence(start: Int, end: Int): PointSequence {
+        return PointSequence(points.subList(start, end))
+    }
+
     fun xCoordinates(): ArrayList<Double> {
         val x = arrayListOf<Double>()
         for(point in points) {
@@ -66,6 +74,10 @@ class PointSequence {
             xCoords[i] = xCoords[i].pow(2)
         }
         return xCoords
+    }
+
+    override fun toString(): String {
+        return points.toString()
     }
 
 }

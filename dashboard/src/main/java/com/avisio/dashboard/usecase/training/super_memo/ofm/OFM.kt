@@ -1,10 +1,10 @@
 package com.avisio.dashboard.usecase.training.super_memo.ofm
 
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoImpl.Companion.MIN_AF
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoImpl.Companion.NOTCH_AF
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoImpl.Companion.RANGE_AF
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoImpl.Companion.RANGE_REPETITION
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_AF
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_REPETITION
 import com.avisio.dashboard.usecase.training.super_memo.model.Point
 import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
 import com.avisio.dashboard.usecase.training.super_memo.model.PowerLawModel
@@ -16,7 +16,7 @@ import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.pow
 
-class OFM(private val sm: SuperMemo) {
+class OFM(private val sm: SuperMemoIntf) {
 
     companion object {
         const val INITIAL_REPETITION_VALUE = 1
@@ -84,7 +84,7 @@ class OFM(private val sm: SuperMemo) {
     private fun updateOFM0() {
         val erp = arrayListOf<Point>()
         for(i in 0 until RANGE_AF) {
-            erp.add(Point(i.toDouble(), sm.rf(0, i)))
+            erp.add(Point(i.toDouble(), sm.rfm().rf(0, i)))
         }
         val g = ExponentialRegression(PointSequence(erp)).compute()
         ofm0 = object : OFM0 {
@@ -111,7 +111,7 @@ class OFM(private val sm: SuperMemo) {
         for(i in 0 until RANGE_AF) {
             val points = arrayListOf<Point>()
             for(j in 1 until RANGE_REPETITION) {
-                points.add(Point(repFromIndex(j.toDouble()), sm.rf(j, i)))
+                points.add(Point(repFromIndex(j.toDouble()), sm.rfm().rf(j, i)))
             }
             val fixedPoint = Point(repFromIndex(1.0), afFromIndex(i))
             val rb = FixedPointPowerLawRegression(PointSequence(points), fixedPoint).compute().power

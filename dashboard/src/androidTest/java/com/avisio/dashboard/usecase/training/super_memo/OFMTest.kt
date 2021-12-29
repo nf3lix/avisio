@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training.super_memo
 
 import com.avisio.dashboard.usecase.training.super_memo.ofm.OFM
+import com.avisio.dashboard.usecase.training.super_memo.rfm.RFMIntf
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -15,15 +16,28 @@ class OFMTest {
 
 
     @Mock
-    private lateinit var initialSM: SuperMemo
+    private lateinit var initialSM: SuperMemoIntf
 
     @Mock
-    private lateinit var advancedSM: SuperMemo
+    private lateinit var advancedSM: SuperMemoIntf
+
+    private lateinit var rfm1: RFMIntf
+    private lateinit var rfm2: RFMIntf
 
     @Before
     fun setUp() {
-        `when`(initialSM.rf(any(Int::class.java), any(Int::class.java))).thenReturn(1.0429290121703236)
-        `when`(advancedSM.rf(any(Int::class.java), any(Int::class.java))).thenReturn(1.1548701505862036)
+        rfm1 = object : RFMIntf {
+            override fun rf(repetition: Int, afIndex: Int): Double {
+                return 1.0429290121703236
+            }
+        }
+        rfm2 = object : RFMIntf {
+            override fun rf(repetition: Int, afIndex: Int): Double {
+                return 1.1548701505862036
+            }
+        }
+        `when`(initialSM.rfm()).thenReturn(rfm1)
+        `when`(advancedSM.rfm()).thenReturn(rfm2)
     }
 
     @Test
