@@ -34,8 +34,8 @@ class SuperMemo : SuperMemoIntf {
         return cardItem.answer(grade, date)
     }
 
-    fun answer(grade: Double, cardItem: CardItem) {
-        update(grade, cardItem, Date(System.currentTimeMillis()))
+    fun answer(grade: Double, cardItem: CardItem, date: Date = Date(System.currentTimeMillis())) {
+        update(grade, cardItem, date)
         queue.answer(cardItem)
     }
 

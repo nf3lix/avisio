@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.training.super_memo
+package com.avisio.dashboard.usecase.training.super_memo.ofm
 
 import com.avisio.dashboard.usecase.training.super_memo.model.PowerLawModel
 import com.avisio.dashboard.usecase.training.super_memo.ofm.OFMModel

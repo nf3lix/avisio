@@ -1,12 +1,11 @@
-package com.avisio.dashboard.usecase.training.super_memo
+package com.avisio.dashboard.usecase.training.super_memo.ofm
 
-import com.avisio.dashboard.usecase.training.super_memo.ofm.OFM
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import com.avisio.dashboard.usecase.training.super_memo.rfm.RFMIntf
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner

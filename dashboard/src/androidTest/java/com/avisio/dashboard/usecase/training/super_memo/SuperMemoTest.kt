@@ -1,12 +1,44 @@
 package com.avisio.dashboard.usecase.training.super_memo
 
+import com.avisio.dashboard.usecase.training.super_memo.card.CardItemTest
 import com.avisio.dashboard.usecase.training.super_memo.model.CardItem
 import org.junit.Assert
 import org.junit.Test
+import java.util.*
 
 class SuperMemoTest {
 
     private val sm = SuperMemo()
+
+    @Test
+    fun test() {
+        val interval1 = 14427904 // ~ 4h
+        val interval2 = 17315486 // ~ 4h 45m
+
+        val answer1 = 1600000000000
+        val answer2 = nextAnswerDate(answer1, interval1)
+
+        sm.queue().addCard(CardItem(sm))
+        sm.queue().addCard(CardItem(sm))
+
+        val card11 = sm.queue().nextCard()!!
+        sm.answer(5.0, card11, Date(answer1))
+
+        val card21 = sm.queue().nextCard()!!
+        sm.answer(5.0, card21, Date(answer2))
+
+        val card12 = sm.queue().nextCard()!!
+        sm.answer(5.0, card12, Date(answer1))
+        Assert.assertEquals(sm.forgettingCurves().curves()[0][0], -0.2961760279708177)
+        // Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.a, -0.2961760279708177, 1E-3)
+        // Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.c, 4.842871655888891, 1E-3)
+
+        val card22 = sm.queue().nextCard()!!
+        sm.answer(5.0, card22, Date(answer1))
+        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.a, -0.2961760279708177, 1E-3)
+        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.c, 4.842871655888891, 1E-3)
+        // sm.answer(5.0, card22, Date(answer2))
+    }
 
     @Test
     fun answerGradeOverThresholdRecall() {
@@ -41,6 +73,10 @@ class SuperMemoTest {
         Assert.assertEquals(c1.previousDate(), null)
         Assert.assertEquals(c2.previousDate(), null)
         Assert.assertEquals(c3.previousDate(), null)
+    }
+
+    private fun nextAnswerDate(prevAnswer: Long, interval: Int): Long {
+        return (prevAnswer + interval + CardItemTest.DUE_DATE_OFFSET).toLong()
     }
 
 }

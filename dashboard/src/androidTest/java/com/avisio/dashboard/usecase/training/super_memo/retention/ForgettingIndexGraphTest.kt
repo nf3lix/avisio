@@ -1,5 +1,6 @@
-package com.avisio.dashboard.usecase.training.super_memo
+package com.avisio.dashboard.usecase.training.super_memo.retention
 
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingIndexGraph
 import org.junit.Assert
 import org.junit.Test

@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
+import android.util.Log
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
@@ -72,7 +73,7 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
         return curves
     }
 
-    inner class ForgettingCurve(private var points: PointSequence) {
+    class ForgettingCurve(private var points: PointSequence) {
 
         private var graph: ExponentialGraph? = null
 
@@ -82,7 +83,7 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
             points.addPoint(Point(uf, yCoord.toDouble()))
             points = points.subSequence(
                 max(0, (points.size() - MAX_POINTS_COUNT)),
-                points.size() - 1)
+                points.size())
             graph = null
         }
 
@@ -91,6 +92,14 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
                 graph = ExponentialRegression(points).compute()
             }
             return max(0.0, graph!!.getX(retention + FORGOTTEN))
+        }
+
+        override fun toString(): String {
+            return points.toString()
+        }
+
+        fun graph(): ExponentialGraph? {
+            return graph
         }
 
     }

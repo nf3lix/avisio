@@ -5,9 +5,7 @@ import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_REPETITION
-import com.avisio.dashboard.usecase.training.super_memo.model.Point
-import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
-import com.avisio.dashboard.usecase.training.super_memo.model.PowerLawModel
+import com.avisio.dashboard.usecase.training.super_memo.model.*
 import com.avisio.dashboard.usecase.training.super_memo.ofm.OFMModel.*
 import com.avisio.dashboard.usecase.training.super_memo.regression.ExponentialRegression
 import com.avisio.dashboard.usecase.training.super_memo.regression.FixedPointPowerLawRegression
@@ -82,11 +80,11 @@ class OFM(private val sm: SuperMemoIntf) {
     }
 
     private fun updateOFM0() {
-        val erp = arrayListOf<Point>()
+        val firstRow = arrayListOf<Point>()
         for(i in 0 until RANGE_AF) {
-            erp.add(Point(i.toDouble(), sm.rfm().rf(0, i)))
+            firstRow.add(Point(i.toDouble(), sm.rfm().rf(0, i)))
         }
-        val g = ExponentialRegression(PointSequence(erp)).compute()
+        val g = ExponentialRegression(PointSequence(firstRow)).compute()
         ofm0 = object : OFM0 {
             override fun get(i: Int): Double {
                 return g.getY(i.toDouble())
@@ -95,7 +93,7 @@ class OFM(private val sm: SuperMemoIntf) {
     }
 
     private fun decayPoints(): ArrayList<Point> {
-        val dfs = dFactors()
+        val dfs = dFactors2()
         for(i in 0 until RANGE_AF) {
             dfs[i] = afFromIndex(i) / 2.0.pow(dfs[i])
         }
@@ -106,7 +104,7 @@ class OFM(private val sm: SuperMemoIntf) {
         return points
     }
 
-    private fun dFactors(): ArrayList<Double> {
+    private fun dFactors2(): ArrayList<Double> {
         val dfs = arrayListOf<Double>()
         for(i in 0 until RANGE_AF) {
             val points = arrayListOf<Point>()
@@ -118,6 +116,44 @@ class OFM(private val sm: SuperMemoIntf) {
             dfs.add(rb)
         }
         return dfs
+    }
+
+    private fun computeRFactorPowerApproximation(): List<PowerLawModel> {
+        val approximations = arrayListOf<PowerLawModel>()
+        for(i in 0 until RANGE_AF) {
+            val points = arrayListOf<Point>()
+            for(j in 1 until RANGE_REPETITION) {
+                points.add(Point(repFromIndex(j.toDouble()), sm.rfm().rf(j, i)))
+            }
+            val fixedPoint = Point(2.0, afFromIndex(i))
+            val approximation = FixedPointPowerLawRegression(PointSequence(points), fixedPoint).compute()
+            approximations.add(approximation)
+        }
+        return approximations
+    }
+
+    private fun dFactors(powerApproximations: List<PowerLawModel>): List<Double> {
+        val decayConstants = arrayListOf<Double>()
+        for(approximation in powerApproximations) {
+            decayConstants.add(approximation.power)
+        }
+        return decayConstants
+    }
+
+    private fun approximateDFactorChange(dFactors: List<Double>): LinearModel {
+        val points = arrayListOf<Point>()
+        for((x, y) in dFactors.withIndex()) {
+            points.add(Point(x.toDouble(), y))
+        }
+        return LinearRegression(PointSequence(points)).compute()
+    }
+
+    private fun firstRowOFM(): ExponentialGraph {
+        val firstRow = arrayListOf<Point>()
+        for(i in 0 until RANGE_AF) {
+            firstRow.add(Point(i.toDouble(), sm.rfm().rf(0, i)))
+        }
+        return ExponentialRegression(PointSequence(firstRow)).compute()
     }
 
 }

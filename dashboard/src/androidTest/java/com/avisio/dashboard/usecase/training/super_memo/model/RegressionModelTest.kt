@@ -1,6 +1,5 @@
-package com.avisio.dashboard.usecase.training.super_memo
+package com.avisio.dashboard.usecase.training.super_memo.model
 
-import com.avisio.dashboard.usecase.training.super_memo.model.*
 import org.junit.Assert
 import org.junit.Test
 import java.lang.Math.*
@@ -38,7 +37,7 @@ class RegressionModelTest {
 
     @Test
     fun linearRegressionTest() {
-        val l1 = LinearRegressionModel(3.0, 2.0) // f(x)=3x^2
+        val l1 = LinearModel(3.0, 2.0) // f(x)=3x^2
         Assert.assertEquals(l1.getY(1.0), (3 * 1 + 2).toDouble(), 0.0)
         Assert.assertEquals(l1.getY(2.0), (3 * 2 + 2).toDouble(), 0.0)
         Assert.assertEquals(l1.getY(3.0), (3 * 3 + 2).toDouble(), 0.0)

@@ -1,5 +1,6 @@
-package com.avisio.dashboard.usecase.training.super_memo
+package com.avisio.dashboard.usecase.training.super_memo.card
 
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.model.CardItem
 import com.avisio.dashboard.usecase.training.super_memo.model.CardQueue
 import org.junit.Assert

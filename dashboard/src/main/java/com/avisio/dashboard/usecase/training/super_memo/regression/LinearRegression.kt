@@ -1,11 +1,11 @@
 package com.avisio.dashboard.usecase.training.super_memo.regression
 
-import com.avisio.dashboard.usecase.training.super_memo.model.LinearRegressionModel
+import com.avisio.dashboard.usecase.training.super_memo.model.LinearModel
 import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
 
-class LinearRegression(private val pointSequence: PointSequence) : Regression<LinearRegressionModel>() {
+class LinearRegression(private val pointSequence: PointSequence) : Regression<LinearModel>() {
 
-    override fun compute(): LinearRegressionModel {
+    override fun compute(): LinearModel {
         val n = pointSequence.size()
         val sumX = pointSequence.sumX()
         val sumY = pointSequence.sumY()
@@ -14,7 +14,7 @@ class LinearRegression(private val pointSequence: PointSequence) : Regression<Li
         val sqSumX = sumX * sumX
         val c = (sumY * sumSqX - sumX * sumXY) / (n * sumSqX - sqSumX)
         val m = (n * sumXY - sumX * sumY) / (n * sumSqX - sqSumX)
-        return LinearRegressionModel(m, c)
+        return LinearModel(m, c)
     }
 
     private fun sumSquaredX(): Double {

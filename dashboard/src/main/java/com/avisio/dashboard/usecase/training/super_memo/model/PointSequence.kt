@@ -21,7 +21,8 @@ class PointSequence {
     }
 
     fun addPoint(point: Point) {
-        points.add(point)
+        // points.add(point)
+        points.add(findIndexToInsert(point), point)
     }
 
     fun subSequence(start: Int, end: Int): PointSequence {
@@ -74,6 +75,26 @@ class PointSequence {
             xCoords[i] = xCoords[i].pow(2)
         }
         return xCoords
+    }
+
+    private fun findIndexToInsert(point: Point): Int {
+        if(points.size == 0) {
+            return 0
+        }
+        if(points.size == 1) {
+            if(points[0].x <= point.x) {
+                return 1
+            }
+            return 0
+        }
+        for(i in 1 until points.size) {
+            val prevPoint = points[i - 1]
+            val currentPoint = points[i]
+            if(prevPoint.x < point.x && currentPoint.x > point.x) {
+                return i
+            }
+        }
+        return points.size
     }
 
     override fun toString(): String {
