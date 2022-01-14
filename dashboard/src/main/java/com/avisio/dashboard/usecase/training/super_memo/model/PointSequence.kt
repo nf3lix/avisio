@@ -101,4 +101,24 @@ class PointSequence {
         return points.toString()
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PointSequence
+        if(points.size != other.size()) return false
+        for((index, p) in points.withIndex()) {
+            if(p != other.points[index]) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return points.hashCode()
+    }
+
+
 }

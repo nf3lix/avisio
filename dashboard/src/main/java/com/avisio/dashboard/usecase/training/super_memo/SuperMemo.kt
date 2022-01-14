@@ -19,11 +19,23 @@ class SuperMemo : SuperMemoIntf {
         const val INTERVAL_BASE = 3 * 60 * 60 * 1000
     }
 
-    private val queue = CardQueue()
-    private val forgettingIndexGraph = ForgettingIndexGraph(this)
-    private val forgettingCurves = ForgettingCurves(this)
+    private val queue: CardQueue
+    private val forgettingIndexGraph: ForgettingIndexGraph
+    private val forgettingCurves: ForgettingCurves
     private val rfm: RFM = RFM(this)
     private val ofm = OFM(this)
+
+    constructor() {
+        queue = CardQueue()
+        forgettingIndexGraph = ForgettingIndexGraph(this)
+        forgettingCurves = ForgettingCurves(this)
+    }
+
+    constructor(forgettingCurves: ForgettingCurves, forgettingIndexGraph: ForgettingIndexGraph, cardQueue: CardQueue) {
+        this.queue = cardQueue
+        this.forgettingIndexGraph = forgettingIndexGraph
+        this.forgettingCurves = forgettingCurves
+    }
 
     fun update(grade: Double, cardItem: CardItem, date: Date): Double {
         if(cardItem.repetition() >= 0) {

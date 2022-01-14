@@ -5,6 +5,7 @@ import androidx.room.*
 import com.avisio.dashboard.common.data.database.converters.BoxIconConverter
 import com.avisio.dashboard.common.data.database.converters.CardConverter
 import com.avisio.dashboard.common.data.database.converters.DateTimeConverter
+import com.avisio.dashboard.common.data.database.converters.ForgettingCurveConverter
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
@@ -44,6 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
                 .addTypeConverter(DateTimeConverter())
                 .addTypeConverter(BoxIconConverter())
                 .addTypeConverter(CardConverter())
+                .addTypeConverter(ForgettingCurveConverter())
                 .build()
         }
 

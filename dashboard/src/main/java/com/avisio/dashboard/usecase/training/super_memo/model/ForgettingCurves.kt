@@ -73,7 +73,7 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
         return curves
     }
 
-    class ForgettingCurve(private var points: PointSequence) {
+    class ForgettingCurve(var points: PointSequence) {
 
         private var graph: ExponentialGraph? = null
 
@@ -101,6 +101,25 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
         fun graph(): ExponentialGraph? {
             return graph
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as ForgettingCurve
+
+            if (points != other.points) return false
+            if (graph != other.graph) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = points.hashCode()
+            result = 31 * result + (graph?.hashCode() ?: 0)
+            return result
+        }
+
 
     }
 
