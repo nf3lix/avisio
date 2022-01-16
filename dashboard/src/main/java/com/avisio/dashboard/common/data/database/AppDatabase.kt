@@ -6,28 +6,35 @@ import com.avisio.dashboard.common.data.database.converters.BoxIconConverter
 import com.avisio.dashboard.common.data.database.converters.CardConverter
 import com.avisio.dashboard.common.data.database.converters.DateTimeConverter
 import com.avisio.dashboard.common.data.database.converters.ForgettingCurveConverter
+import com.avisio.dashboard.common.data.model.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.ForgettingCurveDao
+import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurveEntity
 
 @Database(
     version = 1,
     exportSchema = false,
     entities = [
         AvisioBox::class,
-        Card::class
+        Card::class,
+        ForgettingCurveEntity::class,
+        SMCardItem::class
     ]
 )
 @TypeConverters(
     DateTimeConverter::class,
     BoxIconConverter::class,
-    CardConverter::class
+    CardConverter::class,
+    ForgettingCurveConverter::class,
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun boxDao(): AvisioBoxDao
     abstract fun cardDao(): CardDao
+    abstract fun forgettingCurveDao(): ForgettingCurveDao
 
     companion object {
 

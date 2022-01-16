@@ -1,7 +1,5 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
-import android.util.Log
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
@@ -9,10 +7,9 @@ import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANG
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_REPETITION
 import com.avisio.dashboard.usecase.training.super_memo.regression.ExponentialRegression
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.*
 
-class ForgettingCurves(private val sm: SuperMemoIntf) {
+class ForgettingCurves {
 
     companion object {
         const val MAX_POINTS_COUNT = 500
@@ -21,13 +18,39 @@ class ForgettingCurves(private val sm: SuperMemoIntf) {
     }
 
     private val points = arrayListOf<List<Point>>()
-    private var curves: List<List<ForgettingCurve>>
+    private var curves: ArrayList<ArrayList<ForgettingCurve>>
+    private var complyInitialCurves = false
 
-    init {
+    constructor() {
         curves = initialCurves()
+        complyInitialCurves = true
     }
 
-    private fun initialCurves(): List<List<ForgettingCurve>>  {
+    constructor(curvesList: List<ForgettingCurveEntity>) {
+        if(curvesList.isEmpty()) {
+            curves = initialCurves()
+            complyInitialCurves = true
+            return
+        }
+        curves = arrayListOf()
+        parseCurveEntities(curvesList)
+    }
+
+    private fun parseCurveEntities(curvesList: List<ForgettingCurveEntity>) {
+        for(i in 0 until RANGE_REPETITION) {
+            val tempCurves = arrayListOf<ForgettingCurve>()
+            for(j in 0 until RANGE_AF) {
+                tempCurves.add(curvesList[i * j].curve)
+            }
+            curves.add(tempCurves)
+        }
+    }
+
+    fun complyInitialCurves(): Boolean {
+        return complyInitialCurves
+    }
+
+    private fun initialCurves(): ArrayList<ArrayList<ForgettingCurve>>  {
         val curves = arrayListOf<ArrayList<ForgettingCurve>>()
         for(r in 0 until RANGE_REPETITION) {
             val c = arrayListOf<ForgettingCurve>()

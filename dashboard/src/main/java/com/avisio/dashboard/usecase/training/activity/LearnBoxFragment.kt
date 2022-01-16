@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
+import com.avisio.dashboard.usecase.training.SM15TrainingStrategy
 import com.avisio.dashboard.usecase.training.TrainingStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.CardTypeLayoutStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTextLayoutStrategy
@@ -64,7 +65,8 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)
         setupResultChipGroup()
-        trainingStrategy = DefaultTrainingStrategy(box, requireActivity().application)
+        // trainingStrategy = DefaultTrainingStrategy(box, requireActivity().application) // FIXME
+        trainingStrategy = SM15TrainingStrategy(box, requireActivity().application)
         manager = LearnCardManager(this, trainingStrategy)
         setupFab()
     }

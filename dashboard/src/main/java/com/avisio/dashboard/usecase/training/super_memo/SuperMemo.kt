@@ -22,19 +22,31 @@ class SuperMemo : SuperMemoIntf {
     private val queue: CardQueue
     private val forgettingIndexGraph: ForgettingIndexGraph
     private val forgettingCurves: ForgettingCurves
-    private val rfm: RFM = RFM(this)
-    private val ofm = OFM(this)
+    private val rfm: RFM
+    private val ofm: OFM
 
     constructor() {
         queue = CardQueue()
         forgettingIndexGraph = ForgettingIndexGraph(this)
-        forgettingCurves = ForgettingCurves(this)
+        forgettingCurves = ForgettingCurves()
+        rfm = RFM(this)
+        ofm = OFM(this)
     }
 
     constructor(forgettingCurves: ForgettingCurves, forgettingIndexGraph: ForgettingIndexGraph, cardQueue: CardQueue) {
         this.queue = cardQueue
         this.forgettingIndexGraph = forgettingIndexGraph
         this.forgettingCurves = forgettingCurves
+        rfm = RFM(this)
+        ofm = OFM(this)
+    }
+
+    constructor(forgettingCurves: ForgettingCurves) {
+        queue = CardQueue()
+        forgettingIndexGraph = ForgettingIndexGraph(this)
+        this.forgettingCurves = forgettingCurves
+        rfm = RFM(this)
+        ofm = OFM(this)
     }
 
     fun update(grade: Double, cardItem: CardItem, date: Date): Double {
