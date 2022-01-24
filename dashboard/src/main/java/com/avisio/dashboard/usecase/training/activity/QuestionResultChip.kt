@@ -14,12 +14,8 @@ class QuestionResultChip(learnCardView: LearnCardView, private val result: Quest
         inflate(getContext(), R.layout.chip_question_result, null)
         text = context.getString(result.stringRepresentation)
         setOnClickListener {
-            clearSuggestedResult()
             result.onOptionSelected(learnCardView)
         }
-    }
-
-    private fun clearSuggestedResult() {
     }
 
 }

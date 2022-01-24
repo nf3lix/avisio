@@ -101,7 +101,7 @@ class RegressionModelTest {
             Point(2.0, exp(2.0 * 4.0) * exp(3.0) + 1),
             Point(3.0, exp(3.0 * 4.0) * exp(3.0))
         )
-        Assert.assertEquals(g2.getMeanSquaredError(points2), (1.0 / 3.0), 1E-6)
+        Assert.assertEquals(g2.getMeanSquaredError(points2), 1.0 / 3.0, 1E-6)
     }
 
     companion object {

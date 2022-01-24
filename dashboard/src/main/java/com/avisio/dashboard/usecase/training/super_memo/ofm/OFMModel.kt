@@ -15,7 +15,7 @@ class OFMModel {
 
     class PointModel(private val model: PowerLawModel): Model() {
         override fun getX(y: Double): Double {
-            return (model.getX(y)) - OFM.INITIAL_REPETITION_VALUE
+            return model.getX(y) - OFM.INITIAL_REPETITION_VALUE
         }
 
         override fun getY(x: Double): Double {

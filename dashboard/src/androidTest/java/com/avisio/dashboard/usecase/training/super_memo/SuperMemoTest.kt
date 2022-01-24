@@ -65,9 +65,9 @@ class SuperMemoTest {
         sm.answer(1.0, c2)
         val c3 = sm.queue().nextCard()!!
         sm.answer(2.0, c3)
-        Assert.assertTrue((c1.dueDate().time).toDouble() - System.currentTimeMillis() <= 0)
-        Assert.assertTrue((c2.dueDate().time).toDouble() - System.currentTimeMillis() <= 0)
-        Assert.assertTrue((c3.dueDate().time).toDouble() - System.currentTimeMillis() <= 0)
+        Assert.assertTrue(c1.dueDate().time.toDouble() - System.currentTimeMillis() <= 0)
+        Assert.assertTrue(c2.dueDate().time.toDouble() - System.currentTimeMillis() <= 0)
+        Assert.assertTrue(c3.dueDate().time.toDouble() - System.currentTimeMillis() <= 0)
         Assert.assertEquals(c1.previousDate(), null)
         Assert.assertEquals(c2.previousDate(), null)
         Assert.assertEquals(c3.previousDate(), null)

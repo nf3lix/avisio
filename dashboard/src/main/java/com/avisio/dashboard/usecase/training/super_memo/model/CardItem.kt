@@ -113,7 +113,7 @@ class CardItem(
         val index = if(repetition == 0) lapse else afIndex()
         val newOf = sm.ofm().of(repetition, index)
         of = max(1.0, (newOf - 1) * (interval(date) / optimumInterval) + 1)
-        optimumInterval = (optimumInterval * of)
+        optimumInterval *= of
         previousDate = date
         dueDate = Date(date.time + optimumInterval.toLong())
         return dueDate.time
@@ -149,12 +149,12 @@ class CardItem(
             updateAF(grade, date)
         }
         if(grade >= THRESHOLD_RECALL) {
-            if(repetition < (RANGE_REPETITION - 1)) {
+            if(repetition < RANGE_REPETITION - 1) {
                 repetition++
             }
             return i(date).toDouble()
         }
-        if(lapse < (RANGE_AF - 1)) {
+        if(lapse < RANGE_AF - 1) {
             lapse++
         }
         optimumInterval = INTERVAL_BASE.toDouble()

@@ -69,14 +69,14 @@ class ForgettingCurves {
                         for(i in 0..20) {
                             res.add(Point(
                                 MIN_AF + NOTCH_AF * i,
-                                min(REMEMBERED.toDouble(), exp((-(dr + 1) / 200) * (i - da * sqrt(2 / (dr + 1)))) * (REMEMBERED - SuperMemo.REQUESTED_FI))
+                                min(REMEMBERED.toDouble(), exp(-(dr + 1) / 200 * (i - da * sqrt(2 / (dr + 1)))) * (REMEMBERED - SuperMemo.REQUESTED_FI))
                             ))
                         }
                     } else {
                         for(i in 0..20) {
                             res.add(Point(
                                 MIN_AF + NOTCH_AF * i,
-                                min(REMEMBERED.toDouble(), exp((-1 / (10 + 1 * (da + 1))) * (i - a.toDouble().pow(0.6))) * (REMEMBERED - SuperMemo.REQUESTED_FI))
+                                min(REMEMBERED.toDouble(), exp(-1 / (10 + 1 * (da + 1)) * (i - a.toDouble().pow(0.6))) * (REMEMBERED - SuperMemo.REQUESTED_FI))
                             ))
                         }
                     }
@@ -108,7 +108,7 @@ class ForgettingCurves {
             val yCoord = if(isRemembered) REMEMBERED else FORGOTTEN
             points.addPoint(Point(uf, yCoord.toDouble()))
             points = points.subSequence(
-                max(0, (points.size() - MAX_POINTS_COUNT)),
+                max(0, points.size() - MAX_POINTS_COUNT),
                 points.size())
             graph = null
         }

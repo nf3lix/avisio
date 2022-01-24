@@ -28,7 +28,7 @@ class ForgettingIndexGraph(private val sm: SuperMemoIntf) {
     }
 
     fun update(grade: Double, cardItem: CardItem, date: Date) {
-        val expectedFI = (cardItem.uf(date) / cardItem.of()) * SuperMemo.REQUESTED_FI
+        val expectedFI = cardItem.uf(date) / cardItem.of() * SuperMemo.REQUESTED_FI
         registerPoint(Point(expectedFI, grade))
         graph = null
     }
