@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.box
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

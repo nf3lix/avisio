@@ -2,8 +2,7 @@ package com.avisio.dashboard.common.persistence
 
 import android.app.Application
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
-import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurveEntity
+import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
 import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurves
 
 class ForgettingCurveRepository(application: Application) {
@@ -15,12 +14,16 @@ class ForgettingCurveRepository(application: Application) {
         dao = database.forgettingCurveDao()
     }
 
-    suspend fun getForgettingCurves(): ForgettingCurves {
+    fun updateCurve(forgettingCurveEntity: ForgettingCurveEntity) {
+        dao.updateForgettingCurve(forgettingCurveEntity)
+    }
+
+    fun getForgettingCurves(): ForgettingCurves {
         val curves = dao.getAll()
         return ForgettingCurves(curves)
     }
 
-    suspend fun createCurves(curves: ForgettingCurves) {
+    fun createCurves(curves: ForgettingCurves) {
         val c = curves.curves()
         for((i, list) in c.withIndex()) {
             for((j, curve) in list.withIndex()) {

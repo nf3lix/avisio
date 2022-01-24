@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
-import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.SM15TrainingStrategy
 import com.avisio.dashboard.usecase.training.TrainingStrategy
@@ -43,10 +41,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
 
-    private lateinit var correctChip: QuestionResultChip
-    private lateinit var partiallyChip: QuestionResultChip
-    private lateinit var incorrectChip: QuestionResultChip
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -64,10 +58,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)
-        setupResultChipGroup()
-        // trainingStrategy = DefaultTrainingStrategy(box, requireActivity().application) // FIXME
+        addAllQuestionResultChips()
         trainingStrategy = SM15TrainingStrategy(box, requireActivity().application)
         manager = LearnCardManager(this, trainingStrategy)
+        trainingStrategy.initObserver(manager)
         setupFab()
     }
 
@@ -91,7 +85,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     override fun onCorrectAnswer() {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
-        correctChip.setSuggestedResult()
         cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
@@ -100,7 +93,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
-        incorrectChip.setSuggestedResult()
         cardTypeLayoutStrategy.onIncorrectAnswer()
     }
 
@@ -167,13 +159,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         answerInputLayout.visibility = View.GONE
     }
 
-    private fun setupResultChipGroup() {
-        correctChip = QuestionResultChip(this, QuestionResult.CORRECT, requireContext(), null)
-        partiallyChip = QuestionResultChip(this, QuestionResult.PARTIALLY_CORRECT, requireContext(), null)
-        incorrectChip = QuestionResultChip(this, QuestionResult.INCORRECT, requireContext(), null)
-        resultChipGroup.addView(correctChip)
-        resultChipGroup.addView(partiallyChip)
-        resultChipGroup.addView(incorrectChip)
+    private fun addAllQuestionResultChips() {
+        for(questionResult in QuestionResult.values()) {
+            resultChipGroup.addView(QuestionResultChip(this, questionResult, requireContext(), null))
+        }
     }
 
     override fun onResultOptionSelected(result: QuestionResult) {

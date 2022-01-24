@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training
 
 import android.content.Context
+import android.view.View
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -10,6 +11,9 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -28,6 +32,8 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.runBlocking
+import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
@@ -35,6 +41,13 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeoutException
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.util.HumanReadables
+import androidx.test.espresso.util.TreeIterables
+import com.avisio.dashboard.view_actions.WaitForView
+import java.util.concurrent.TimeUnit
+
 
 class LearnBoxFragmentClozeTextTest {
 
@@ -76,6 +89,7 @@ class LearnBoxFragmentClozeTextTest {
 
     @Test
     fun showClozeTextChipOfQuestion() {
+        onView(isRoot()).perform(WaitForView.withText("TOKEN_1", TimeUnit.SECONDS.toMillis(15)))
         onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_1"))).check(matches(isDisplayed()))
         onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
         onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_3"))).check(matches(isDisplayed()))
@@ -88,6 +102,7 @@ class LearnBoxFragmentClozeTextTest {
     }
 
     private fun setChipText(text: String) {
+        onView(isRoot()).perform(WaitForView.withClassName(Chip::class.java.name, TimeUnit.SECONDS.toMillis(15)))
         onView(withClassName(`is`(Chip::class.java.name))).perform(click())
         onView(withClassName(`is`(AutoCompleteTextView::class.java.name))).perform(typeText(text))
         onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())

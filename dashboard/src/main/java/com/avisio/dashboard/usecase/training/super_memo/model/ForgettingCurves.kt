@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
+import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
@@ -37,10 +38,12 @@ class ForgettingCurves {
     }
 
     private fun parseCurveEntities(curvesList: List<ForgettingCurveEntity>) {
+        var count = 0
         for(i in 0 until RANGE_REPETITION) {
             val tempCurves = arrayListOf<ForgettingCurve>()
             for(j in 0 until RANGE_AF) {
-                tempCurves.add(curvesList[i * j].curve)
+                tempCurves.add(curvesList[count].curve)
+                count++
             }
             curves.add(tempCurves)
         }

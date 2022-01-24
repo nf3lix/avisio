@@ -7,8 +7,6 @@ import org.junit.Test
 
 class OFMPointModelTest {
 
-    // f(x)=-1+2x^3
-
     @Test
     fun getY() {
         val model = PowerLawModel(3.0, 2.0)

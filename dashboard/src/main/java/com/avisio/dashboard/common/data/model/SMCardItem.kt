@@ -6,6 +6,7 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.INTERVAL_BASE
+import com.avisio.dashboard.usecase.training.super_memo.model.CardItem
 import java.util.*
 
 @Entity(
@@ -31,8 +32,31 @@ data class SMCardItem(
 
     val afs: ArrayList<Double> = arrayListOf(),
 
-    val optimumInterval: Double = INTERVAL_BASE.toDouble(),
+    var optimumInterval: Double = INTERVAL_BASE.toDouble(),
 
-    val previousDate: Date? = null
+    val dueDate: Date = Date(0),
 
-)
+    val previousDate: Date = Date(0)
+
+) {
+
+    companion object {
+
+        fun fromCardItem(cardItem: CardItem): SMCardItem {
+            val previousDate = if(cardItem.previousDate() == null) Date(0) else cardItem.previousDate()
+            return SMCardItem(
+                cardId = cardItem.cardId,
+                lapse = cardItem.lapse(),
+                repetition = cardItem.repetition(),
+                of = cardItem.of(),
+                af = cardItem.af(),
+                afs = cardItem.afs(),
+                optimumInterval = cardItem.optimumInterval(),
+                dueDate = cardItem.dueDate(),
+                previousDate = previousDate!!
+            )
+        }
+
+    }
+
+}

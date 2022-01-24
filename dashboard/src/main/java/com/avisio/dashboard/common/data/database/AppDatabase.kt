@@ -9,10 +9,11 @@ import com.avisio.dashboard.common.data.database.converters.ForgettingCurveConve
 import com.avisio.dashboard.common.data.model.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.persistence.AvisioBoxDao
+import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.common.persistence.ForgettingCurveDao
-import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurveEntity
+import com.avisio.dashboard.common.persistence.SMCardItemDao
+import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
 
 @Database(
     version = 1,
@@ -35,6 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun boxDao(): AvisioBoxDao
     abstract fun cardDao(): CardDao
     abstract fun forgettingCurveDao(): ForgettingCurveDao
+    abstract fun smCardItemDao(): SMCardItemDao
 
     companion object {
 

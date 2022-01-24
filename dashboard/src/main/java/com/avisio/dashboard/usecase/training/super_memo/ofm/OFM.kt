@@ -1,10 +1,10 @@
 package com.avisio.dashboard.usecase.training.super_memo.ofm
 
-import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_REPETITION
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import com.avisio.dashboard.usecase.training.super_memo.model.*
 import com.avisio.dashboard.usecase.training.super_memo.ofm.OFMModel.*
 import com.avisio.dashboard.usecase.training.super_memo.regression.ExponentialRegression

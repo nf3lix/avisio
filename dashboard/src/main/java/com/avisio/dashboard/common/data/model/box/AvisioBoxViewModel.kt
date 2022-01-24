@@ -3,7 +3,7 @@ package com.avisio.dashboard.common.data.model.box
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.avisio.dashboard.common.persistence.AvisioBoxRepository
+import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 
 class AvisioBoxViewModel(application: Application) : AndroidViewModel(application) {
 

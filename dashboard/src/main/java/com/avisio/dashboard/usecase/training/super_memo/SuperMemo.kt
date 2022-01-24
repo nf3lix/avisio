@@ -83,6 +83,4 @@ class SuperMemo : SuperMemoIntf {
         return forgettingCurves
     }
 
-
-
 }

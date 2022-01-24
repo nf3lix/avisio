@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class QuestionResultChip(learnCardView: LearnCardView, private val result: QuestionResult, context: Context, attributeSet: AttributeSet?) : Chip(context, attributeSet) {
 
@@ -17,12 +19,7 @@ class QuestionResultChip(learnCardView: LearnCardView, private val result: Quest
         }
     }
 
-    fun setSuggestedResult() {
-        setChipBackgroundColorResource(result.color)
-    }
-
     private fun clearSuggestedResult() {
-        setChipBackgroundColorResource(R.color.textColor)
     }
 
 }

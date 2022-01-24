@@ -31,7 +31,7 @@ class ForgettingCurveConverter {
 
     @TypeConverter
     fun stringToAfs(serialized: String): ArrayList<Double> {
-        val listType = object : TypeToken<ArrayList<String?>?>() {}.type
+        val listType = object : TypeToken<ArrayList<Double?>?>() {}.type
         return Gson().fromJson(serialized, listType)
     }
 

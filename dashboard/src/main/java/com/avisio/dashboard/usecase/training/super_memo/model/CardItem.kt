@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
+import com.avisio.dashboard.common.data.model.SMCardItem
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.INTERVAL_BASE
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MAX_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF
@@ -10,21 +11,43 @@ import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.REQU
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.THRESHOLD_RECALL
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemoIntf
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.*
 
-class CardItem(private val sm: SuperMemoIntf, private var dueDate: Date = Date(System.currentTimeMillis())) {
+class CardItem(
+    private val sm: SuperMemoIntf,
+    val cardId: Long = -1,
+    var dueDate: Date = Date(System.currentTimeMillis()),
+    private var lapse: Int = 0,
+    private var repetition: Int = -1,
+    private var of: Double = 1.0,
+    private var af: Double = -1.0,
+    private var afs: ArrayList<Double> = arrayListOf(),
+    private var optimumInterval: Double = INTERVAL_BASE.toDouble(),
+    private var previousDate: Date? = null
+) {
 
     companion object {
         const val MAX_AFS_COUNT = 30
-    }
 
-    private var lapse = 0
-    private var repetition = -1
-    private var of = 1.0
-    private var af = -1.0
-    private var afs = arrayListOf<Double>()
-    private var optimumInterval = INTERVAL_BASE.toDouble()
-    private var previousDate: Date? = null
+        fun fromSMCardItem(sm: SuperMemoIntf, cardItem: SMCardItem): CardItem {
+            val dueDate =
+                if (cardItem.dueDate == Date(0)) Date(System.currentTimeMillis()) else cardItem.dueDate
+            val previousDate = if (cardItem.previousDate == Date(0)) null else cardItem.previousDate
+            return CardItem(
+                sm = sm,
+                cardId = cardItem.cardId,
+                dueDate = dueDate,
+                lapse = cardItem.lapse,
+                repetition = cardItem.repetition,
+                of = cardItem.of,
+                af = cardItem.af,
+                afs = cardItem.afs,
+                optimumInterval = cardItem.optimumInterval,
+                previousDate = previousDate
+            )
+        }
+    }
 
     private fun interval(date: Date): Long {
         if(previousDate == null) {
@@ -51,11 +74,19 @@ class CardItem(private val sm: SuperMemoIntf, private var dueDate: Date = Date(S
         return af
     }
 
-    private fun af(): Double {
+    fun af(): Double {
         if(af == -1.0) {
             return MIN_AF
         }
         return af
+    }
+
+    fun afs(): ArrayList<Double> {
+        return afs
+    }
+
+    fun optimumInterval(): Double {
+        return optimumInterval
     }
 
     fun afIndex(): Int {

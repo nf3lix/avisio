@@ -18,7 +18,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.persistence.AvisioBoxDao
+import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.core.AllOf.allOf

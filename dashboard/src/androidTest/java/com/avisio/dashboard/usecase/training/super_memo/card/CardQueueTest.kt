@@ -13,9 +13,9 @@ class CardQueueTest {
 
     @Test
     fun addCardTest() {
-        val card1 = CardItem(sm, Date(1600001000))
-        val card2 = CardItem(sm, Date(1600000000))
-        val card3 = CardItem(sm, Date(1600002000))
+        val card1 = CardItem(sm, dueDate = Date(1600001000L))
+        val card2 = CardItem(sm, dueDate = Date(1600000000L))
+        val card3 = CardItem(sm, dueDate = Date(1600002000L))
         val queue = CardQueue()
         Assert.assertEquals(queue.queueCount(), 0)
         queue.addCard(card1)
@@ -28,8 +28,8 @@ class CardQueueTest {
 
     @Test
     fun answerTest() {
-        val card1 = CardItem(sm, Date(1600003000))
-        val card2 = CardItem(sm, Date(1600001000))
+        val card1 = CardItem(sm, dueDate = Date(1600003000L))
+        val card2 = CardItem(sm, dueDate = Date(1600001000L))
         val queue = CardQueue()
         queue.addCard(card1)
         queue.addCard(card2)
