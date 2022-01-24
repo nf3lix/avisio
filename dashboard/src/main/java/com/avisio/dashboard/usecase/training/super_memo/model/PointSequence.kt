@@ -1,7 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.pow
 
 class PointSequence {
@@ -21,7 +20,6 @@ class PointSequence {
     }
 
     fun addPoint(point: Point) {
-        // points.add(point)
         points.add(findIndexToInsert(point), point)
     }
 
@@ -95,10 +93,6 @@ class PointSequence {
             }
         }
         return points.size
-    }
-
-    override fun toString(): String {
-        return points.toString()
     }
 
     override fun equals(other: Any?): Boolean {

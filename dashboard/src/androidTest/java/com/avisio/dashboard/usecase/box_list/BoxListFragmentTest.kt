@@ -36,9 +36,7 @@ class BoxListFragmentTest {
     private lateinit var database: AppDatabase
 
     init {
-        val box = ParcelableAvisioBox(1, "BOX_NAME", R.drawable.box_icon_language)
         intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        //intent.putExtra(IntentKeys.BOX_OBJECT, box)
     }
 
 

@@ -120,10 +120,6 @@ class ForgettingCurves {
             return max(0.0, graph!!.getX(retention + FORGOTTEN))
         }
 
-        override fun toString(): String {
-            return points.toString()
-        }
-
         fun graph(): ExponentialGraph? {
             return graph
         }
@@ -145,7 +141,6 @@ class ForgettingCurves {
             result = 31 * result + (graph?.hashCode() ?: 0)
             return result
         }
-
 
     }
 

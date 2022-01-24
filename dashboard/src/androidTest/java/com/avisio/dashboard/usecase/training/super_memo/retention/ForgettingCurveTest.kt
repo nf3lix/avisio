@@ -26,7 +26,29 @@ class ForgettingCurveTest {
         updateGraph(curve)
         Assert.assertEquals(curve.graph()!!.a, -0.2935573940825819, 1E-3)
         Assert.assertEquals(curve.graph()!!.c, 4.954689792331937, 1E-3)
-        //Assert.assertEquals(curve., 4.842871655888891, 1E-3)
+    }
+
+    @Test
+    fun registerRememberedPoint() {
+        val c1 = ForgettingCurves.ForgettingCurve(PointSequence())
+        c1.registerPoint(5.0, 2.0)
+        val c2 = ForgettingCurves.ForgettingCurve(PointSequence())
+        c2.registerPoint(4.0, 2.0)
+        val c3 = ForgettingCurves.ForgettingCurve(PointSequence())
+        c3.registerPoint(3.0, 2.0)
+        Assert.assertEquals(ForgettingCurves.ForgettingCurve(PointSequence(Point(2.0, ForgettingCurves.REMEMBERED.toDouble()))), c1)
+        Assert.assertEquals(ForgettingCurves.ForgettingCurve(PointSequence(Point(2.0, ForgettingCurves.REMEMBERED.toDouble()))), c2)
+        Assert.assertEquals(ForgettingCurves.ForgettingCurve(PointSequence(Point(2.0, ForgettingCurves.REMEMBERED.toDouble()))), c3)
+    }
+
+    @Test
+    fun registerForgottenPoint() {
+        val c1 = ForgettingCurves.ForgettingCurve(PointSequence())
+        c1.registerPoint(2.0, 2.0)
+        val c2 = ForgettingCurves.ForgettingCurve(PointSequence())
+        c2.registerPoint(1.0, 2.0)
+        Assert.assertEquals(ForgettingCurves.ForgettingCurve(PointSequence(Point(2.0, ForgettingCurves.FORGOTTEN.toDouble()))), c1)
+        Assert.assertEquals(ForgettingCurves.ForgettingCurve(PointSequence(Point(2.0, ForgettingCurves.FORGOTTEN.toDouble()))), c2)
     }
 
     private fun updateGraph(curve: ForgettingCurves.ForgettingCurve) {

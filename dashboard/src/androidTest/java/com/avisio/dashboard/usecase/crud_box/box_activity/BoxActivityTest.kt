@@ -21,6 +21,7 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
+import com.avisio.dashboard.usecase.training.activity.LearnBoxActivity
 import org.hamcrest.core.IsNot.not
 import org.junit.*
 
@@ -58,6 +59,12 @@ class BoxActivityTest {
     fun startCreateCardActivityOnFabClicked() {
         onView(withId(R.id.fab_new_card)).perform(click())
         intended(hasComponent(CreateCardActivity::class.java.name))
+    }
+
+    @Test
+    fun startLearnActivityOnFabClicked() {
+        onView(withId(R.id.fab_learn)).perform(click())
+        intended(hasComponent(LearnBoxActivity::class.java.name))
     }
 
     @Test
