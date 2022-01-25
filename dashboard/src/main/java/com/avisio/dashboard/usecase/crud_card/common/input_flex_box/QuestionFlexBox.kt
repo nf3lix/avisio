@@ -153,7 +153,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         chip.setChipBackgroundColorResource(R.color.primaryDarkColor)
         chip.textSize = TEXT_SIZE
         chip.tag = false
-        chip.setOnTouchListener{ view, motionEvent ->
+        chip.setOnTouchListener { view, motionEvent ->
             closeChip(chip, view, motionEvent)
             true
         }

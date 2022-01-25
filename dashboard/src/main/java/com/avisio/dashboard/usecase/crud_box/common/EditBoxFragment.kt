@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
-import com.avisio.dashboard.common.persistence.AvisioBoxRepository
+import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton

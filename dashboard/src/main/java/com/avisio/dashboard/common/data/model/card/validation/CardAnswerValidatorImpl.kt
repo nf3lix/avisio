@@ -15,13 +15,13 @@ class CardAnswerValidatorImpl(
 
     override fun getStrictCardAnswerResult(): QuestionResult {
         return when(card.answer.getStringRepresentation() == givenAnswer.getStringRepresentation()) {
-            true -> QuestionResult.CORRECT
-            false -> QuestionResult.INCORRECT
+            true -> QuestionResult.EASY
+            false -> QuestionResult.WRONG
         }
     }
 
     override fun getStandardCardAnswerResult(): QuestionResult {
-        return QuestionResult.PARTIALLY_CORRECT
+        return QuestionResult.MEDIUM
     }
 
     override fun getClozeTextCardAnswerResult(): QuestionResult {
@@ -30,13 +30,13 @@ class CardAnswerValidatorImpl(
     }
 
     private fun answerTokensMatch(questionTokenList: List<QuestionToken>): QuestionResult {
-        if(!answerListSizeMatches(questionTokenList)) return QuestionResult.INCORRECT
+        if(!answerListSizeMatches(questionTokenList)) return QuestionResult.WRONG
         for((index, questionToken) in questionTokenList.withIndex()) {
             if(questionToken.content != givenAnswer.answerList[index]) {
-                return QuestionResult.INCORRECT
+                return QuestionResult.WRONG
             }
         }
-        return QuestionResult.CORRECT
+        return QuestionResult.EASY
     }
 
     private fun answerListSizeMatches(questionTokenList: List<QuestionToken>): Boolean {

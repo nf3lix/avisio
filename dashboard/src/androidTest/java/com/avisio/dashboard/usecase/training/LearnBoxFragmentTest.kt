@@ -7,7 +7,6 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -20,10 +19,14 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
-import com.avisio.dashboard.persistence.ToastMatcher
+import com.avisio.dashboard.view_actions.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
+import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.flexbox.FlexboxLayout
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNot.not
@@ -31,6 +34,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class LearnBoxFragmentTest {
 
@@ -48,7 +52,9 @@ class LearnBoxFragmentTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         cardDao = database.cardDao()
-        val card1 = Card(boxId = 1, type = CardType.STRICT)
+        val card1 = Card(boxId = 1, type = CardType.STRICT, question = CardQuestion(arrayListOf(
+            QuestionToken("QUESTION_1", QuestionTokenType.TEXT)
+        )))
         cardDao.insert(card1)
         Intents.init()
         val fragmentArgs = bundleOf(
@@ -64,6 +70,7 @@ class LearnBoxFragmentTest {
 
     @Test
     fun showResultButtonsAfterQuestionResolved() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
         onView(withId(R.id.resolve_question_button)).perform(click())
         onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
     }
@@ -84,10 +91,11 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
-    @Test(expected = NoMatchingViewException::class)
+    @Test
     fun resetQuestionTextLayoutOnResultOptionSelected() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
         scenario.onFragment { fragment ->
-            fragment.onResultOptionSelected(QuestionResult.CORRECT)
+            fragment.onResultOptionSelected(QuestionResult.EASY)
         }
         onView(withParent(withClassName(`is`(
             FlexboxLayout::class.java.name)))).check(matches(withText("")))
