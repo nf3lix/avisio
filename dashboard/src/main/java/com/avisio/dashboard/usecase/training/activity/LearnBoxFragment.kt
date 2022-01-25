@@ -69,7 +69,8 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         return inflater.inflate(R.layout.fragment_learn_box, container, false)
     }
 
-    override fun showCard(card: Card) {
+    override fun onCardLoadSuccess(card: Card) {
+        enableButtons()
         currentCard = card
         cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
         requireActivity().runOnUiThread {
@@ -129,6 +130,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onCardLoading() {
+        disableButtons()
     }
 
     private fun setupFab() {
@@ -178,6 +180,18 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             correctAnswerLayoutInput.visibility = View.GONE
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
+        }
+    }
+
+    private fun disableButtons() {
+        requireActivity().runOnUiThread {
+            resolveQuestionButton.isEnabled = false
+        }
+    }
+
+    private fun enableButtons() {
+        requireActivity().runOnUiThread {
+            resolveQuestionButton.isEnabled = true
         }
     }
 

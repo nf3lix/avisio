@@ -31,13 +31,9 @@ import org.junit.Test
 
 class BoxListFragmentTest {
 
-    private var intent: Intent
+    private var intent: Intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
     private lateinit var boxDao: AvisioBoxDao
     private lateinit var database: AppDatabase
-
-    init {
-        intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-    }
 
 
     @get:Rule
