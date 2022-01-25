@@ -68,12 +68,12 @@ class LearnBoxFragmentTest {
         Intents.release()
     }
 
-    // @Test
-    // fun showResultButtonsAfterQuestionResolved() {
-    //     onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
-    //     onView(withId(R.id.resolve_question_button)).perform(click())
-    //     onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
-    // }
+    @Test
+    fun showResultButtonsAfterQuestionResolved() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+        onView(withId(R.id.resolve_question_button)).perform(click())
+        onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
+    }
 
     @Test
     fun showCorrectAnswerAfterIncorrectInputResolved() {
@@ -91,15 +91,15 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
-    // @Test
-    // fun resetQuestionTextLayoutOnResultOptionSelected() {
-    //     onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
-    //     scenario.onFragment { fragment ->
-    //         fragment.onResultOptionSelected(QuestionResult.EASY)
-    //     }
-    //     onView(withParent(withClassName(`is`(
-    //         FlexboxLayout::class.java.name)))).check(matches(withText("")))
-    // }
+    @Test
+    fun resetQuestionTextLayoutOnResultOptionSelected() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+        scenario.onFragment { fragment ->
+            fragment.onResultOptionSelected(QuestionResult.EASY)
+        }
+        onView(withParent(withClassName(`is`(
+            FlexboxLayout::class.java.name)))).check(matches(withText("")))
+    }
 
     @Test
     fun showToastOnCardLoadFailure() {

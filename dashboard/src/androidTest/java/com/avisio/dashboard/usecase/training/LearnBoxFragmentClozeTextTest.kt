@@ -75,19 +75,19 @@ class LearnBoxFragmentClozeTextTest {
         Intents.release()
     }
 
-    // @Test
-    // fun showClozeTextChipOfQuestion() {
-    //     onView(isRoot()).perform(WaitForView.withText("TOKEN_1", TimeUnit.SECONDS.toMillis(15)))
-    //     onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_1"))).check(matches(isDisplayed()))
-    //     onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
-    //     onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_3"))).check(matches(isDisplayed()))
-    // }
+    @Test
+    fun showClozeTextChipOfQuestion() {
+        onView(isRoot()).perform(WaitForView.withText("TOKEN_1", TimeUnit.SECONDS.toMillis(15)))
+        onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_1"))).check(matches(isDisplayed()))
+        onView(allOf(withClassName(`is`(Chip::class.java.name)), withText(getQuestionPlaceholder("TOKEN_2")))).check(matches(isDisplayed()))
+        onView(allOf(withClassName(`is`(TextView::class.java.name)), withText("TOKEN_3"))).check(matches(isDisplayed()))
+    }
 
-    // @Test
-    // fun setDialogInputToChip() {
-    //     setChipText("ANSWER_TOKEN")
-    //     onView(allOf(withText("ANSWER_TOKEN"), withClassName(`is`(Chip::class.java.name)))).check(matches(isDisplayed()))
-    // }
+    @Test
+    fun setDialogInputToChip() {
+        setChipText("ANSWER_TOKEN")
+        onView(allOf(withText("ANSWER_TOKEN"), withClassName(`is`(Chip::class.java.name)))).check(matches(isDisplayed()))
+    }
 
     private fun setChipText(text: String) {
         onView(isRoot()).perform(WaitForView.withClassName(Chip::class.java.name, TimeUnit.SECONDS.toMillis(15)))
