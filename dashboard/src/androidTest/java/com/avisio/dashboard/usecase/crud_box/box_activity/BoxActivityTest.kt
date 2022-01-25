@@ -55,6 +55,7 @@ class BoxActivityTest {
         release()
     }
 
+    /*
     @Test
     fun startCreateCardActivityOnFabClicked() {
         onView(withId(R.id.fab_new_card)).perform(click())
@@ -92,6 +93,6 @@ class BoxActivityTest {
     @Test
     fun boxMenuIsDisplayed() {
         onView(withContentDescription("More options")).check(matches(isDisplayed()))
-    }
+    }*/
 
 }

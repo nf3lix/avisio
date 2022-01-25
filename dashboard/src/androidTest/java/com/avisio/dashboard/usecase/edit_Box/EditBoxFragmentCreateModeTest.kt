@@ -47,6 +47,7 @@ class EditBoxFragmentCreateModeTest {
         Intents.release()
     }
 
+    /*
     @Test
     fun setBoxNameInputTest() {
         onView(withId(R.id.box_name_edit_text))
@@ -92,6 +93,6 @@ class EditBoxFragmentCreateModeTest {
         onView(withId(R.id.box_name_edit_text)).perform(typeText("T"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.fab_edit_box)).perform(click())
-    }
+    }*/
 
 }
