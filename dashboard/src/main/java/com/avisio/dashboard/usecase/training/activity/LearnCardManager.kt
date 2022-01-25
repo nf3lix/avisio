@@ -19,7 +19,7 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     }
 
     private fun loadNextCard() {
-        // view.onCardLoading()
+        view.onCardLoading()
         GlobalScope.launch {
             val card = strategy.nextCard()
             if(card == null) {

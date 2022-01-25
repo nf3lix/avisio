@@ -109,4 +109,15 @@ class LearnBoxFragmentTest {
         onView(withText("TEST_MESSAGE")).inRoot(ToastMatcher().apply { matches(isDisplayed()) })
     }
 
+    @Test
+    fun answerButtonIsDisabledOnCardLoad() {
+        onView(withId(R.id.resolve_question_button)).check(matches(not(isEnabled())))
+    }
+
+    @Test
+    fun answerButtonIsDisabledOnCardLoadEnd() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+        onView(withId(R.id.resolve_question_button)).check(matches(isEnabled()))
+    }
+
 }
