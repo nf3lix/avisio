@@ -1,4 +1,4 @@
-package com.avisio.dashboard.persistence
+package com.avisio.dashboard.view_actions
 
 import android.view.View
 import android.view.ViewGroup

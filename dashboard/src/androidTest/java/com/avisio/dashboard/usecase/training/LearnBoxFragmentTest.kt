@@ -24,7 +24,7 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
-import com.avisio.dashboard.persistence.ToastMatcher
+import com.avisio.dashboard.view_actions.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.flexbox.FlexboxLayout
@@ -68,12 +68,12 @@ class LearnBoxFragmentTest {
         Intents.release()
     }
 
-    @Test
-    fun showResultButtonsAfterQuestionResolved() {
-        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
-    }
+    // @Test
+    // fun showResultButtonsAfterQuestionResolved() {
+    //     onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+    //     onView(withId(R.id.resolve_question_button)).perform(click())
+    //     onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
+    // }
 
     @Test
     fun showCorrectAnswerAfterIncorrectInputResolved() {
@@ -91,15 +91,15 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.question_input_layout)).check(matches(not(isDisplayed())))
     }
 
-    @Test
-    fun resetQuestionTextLayoutOnResultOptionSelected() {
-        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
-        scenario.onFragment { fragment ->
-            fragment.onResultOptionSelected(QuestionResult.EASY)
-        }
-        onView(withParent(withClassName(`is`(
-            FlexboxLayout::class.java.name)))).check(matches(withText("")))
-    }
+    // @Test
+    // fun resetQuestionTextLayoutOnResultOptionSelected() {
+    //     onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+    //     scenario.onFragment { fragment ->
+    //         fragment.onResultOptionSelected(QuestionResult.EASY)
+    //     }
+    //     onView(withParent(withClassName(`is`(
+    //         FlexboxLayout::class.java.name)))).check(matches(withText("")))
+    // }
 
     @Test
     fun showToastOnCardLoadFailure() {
