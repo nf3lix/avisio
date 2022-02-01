@@ -15,6 +15,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
+import com.avisio.dashboard.common.data.model.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
@@ -24,6 +25,7 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.SMCardItemDao
 import com.avisio.dashboard.view_actions.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
@@ -44,6 +46,7 @@ class LearnBoxFragmentTest {
     val rule = InstantTaskExecutorRule()
 
     private lateinit var cardDao: CardDao
+    private lateinit var smCardDao: SMCardItemDao
     private lateinit var database: AppDatabase
 
     private lateinit var scenario: FragmentScenario<LearnBoxFragment>
@@ -53,10 +56,12 @@ class LearnBoxFragmentTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         cardDao = database.cardDao()
-        val card1 = Card(boxId = 1, type = CardType.STRICT, question = CardQuestion(arrayListOf(
+        smCardDao = database.smCardItemDao()
+        val card1 = Card(boxId = 1, id = 1, type = CardType.STRICT, question = CardQuestion(arrayListOf(
             QuestionToken("QUESTION_1", QuestionTokenType.TEXT)
         )))
         cardDao.insert(card1)
+        smCardDao.insert(SMCardItem(cardId = 1))
         Intents.init()
         val fragmentArgs = bundleOf(
             IntentKeys.BOX_OBJECT to ParcelableAvisioBox.createFromEntity(AvisioBox(id = 1)))
@@ -66,6 +71,7 @@ class LearnBoxFragmentTest {
     @After
     fun releaseIntents() {
         cardDao.deleteAll()
+        smCardDao.deleteAll()
         Intents.release()
     }
 
