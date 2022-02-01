@@ -49,7 +49,7 @@ class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : T
         return sm.queue().nextCard() != null
     }
 
-    private suspend fun updateForgettingCurves() {
+    private fun updateForgettingCurves() {
         val forgettingCurveEntity = ForgettingCurveEntity(
             repetition = currentCardItem!!.repetition(),
             afIndex = currentCardItem!!.afIndex(),
@@ -109,7 +109,7 @@ class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : T
     }
 
     private fun forgettingCurvesArePersistent(): Boolean {
-        return !tempCurves!!.complyInitialCurves()
+        return !forgettingCurveRepository.isEmpty()
     }
 
     private fun isFirstCardInTraining(): Boolean {

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
@@ -35,6 +32,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
+    lateinit var progressBar: ProgressBar
     private lateinit var correctAnswerLayoutInput: TextInputLayout
     lateinit var answerEditText: EditText
     lateinit var correctAnswerEditText: EditText
@@ -57,6 +55,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
+        progressBar = requireView().findViewById(R.id.load_card_progressBar)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)
         addAllQuestionResultChips()
         trainingStrategy = SM15TrainingStrategy(box, requireActivity().application)
@@ -69,7 +68,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         return inflater.inflate(R.layout.fragment_learn_box, container, false)
     }
 
-    override fun showCard(card: Card) {
+    override fun onCardLoadSuccess(card: Card) {
+        enableButtons()
+        hideProgressBar()
+        showAnswerEditText()
         currentCard = card
         cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
         requireActivity().runOnUiThread {
@@ -129,6 +131,9 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onCardLoading() {
+        disableButtons()
+        showProgressBar()
+        hideAnswerEditText()
     }
 
     private fun setupFab() {
@@ -152,11 +157,15 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     fun showAnswerEditText() {
-        answerInputLayout.visibility = View.VISIBLE
+        requireActivity().runOnUiThread {
+            answerInputLayout.visibility = View.VISIBLE
+        }
     }
 
     fun hideAnswerEditText() {
-        answerInputLayout.visibility = View.GONE
+        requireActivity().runOnUiThread {
+            answerInputLayout.visibility = View.GONE
+        }
     }
 
     private fun addAllQuestionResultChips() {
@@ -178,6 +187,30 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             correctAnswerLayoutInput.visibility = View.GONE
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
+        }
+    }
+
+    private fun disableButtons() {
+        requireActivity().runOnUiThread {
+            resolveQuestionButton.isEnabled = false
+        }
+    }
+
+    private fun enableButtons() {
+        requireActivity().runOnUiThread {
+            resolveQuestionButton.isEnabled = true
+        }
+    }
+
+    private fun hideProgressBar() {
+        requireActivity().runOnUiThread {
+            progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun showProgressBar() {
+        requireActivity().runOnUiThread {
+            progressBar.visibility = View.VISIBLE
         }
     }
 

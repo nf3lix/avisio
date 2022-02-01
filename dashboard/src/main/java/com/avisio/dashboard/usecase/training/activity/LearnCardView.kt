@@ -9,9 +9,9 @@ interface LearnCardView {
     fun onIncorrectAnswer()
     fun onPartiallyCorrectAnswer()
 
-    fun showCard(card: Card)
-    fun onCardLoadFailure(message: String)
+    fun onCardLoadSuccess(card: Card)
     fun onCardLoading()
+    fun onCardLoadFailure(message: String)
 
     fun onResultOptionSelected(result: QuestionResult)
 

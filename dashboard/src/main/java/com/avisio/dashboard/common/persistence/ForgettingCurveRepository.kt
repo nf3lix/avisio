@@ -18,6 +18,10 @@ class ForgettingCurveRepository(application: Application) {
         dao.updateForgettingCurve(forgettingCurveEntity)
     }
 
+    fun isEmpty(): Boolean {
+        return dao.getSize() == 0
+    }
+
     fun getForgettingCurves(): ForgettingCurves {
         val curves = dao.getAll()
         return ForgettingCurves(curves)

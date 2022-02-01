@@ -18,4 +18,7 @@ interface SMCardItemDao {
     @Update
     fun update(cardItem: SMCardItem)
 
+    @Query("SELECT COUNT(*) FROM SMCardItem")
+    fun getSize(): Int
+
 }

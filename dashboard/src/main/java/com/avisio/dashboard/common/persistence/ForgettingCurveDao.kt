@@ -18,4 +18,7 @@ interface ForgettingCurveDao {
     @Insert
     fun insert(curve: ForgettingCurveEntity)
 
+    @Query("SELECT COUNT(*) FROM forgettingCurve")
+    fun getSize(): Int
+
 }

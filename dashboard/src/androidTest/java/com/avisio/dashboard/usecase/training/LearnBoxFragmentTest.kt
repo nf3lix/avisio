@@ -26,6 +26,7 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.view_actions.ToastMatcher
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
+import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.flexbox.FlexboxLayout
 import org.hamcrest.core.Is.`is`
@@ -107,6 +108,28 @@ class LearnBoxFragmentTest {
             fragment.onCardLoadFailure("TEST_MESSAGE")
         }
         onView(withText("TEST_MESSAGE")).inRoot(ToastMatcher().apply { matches(isDisplayed()) })
+    }
+
+    @Test
+    fun answerButtonIsDisabledOnCardLoad() {
+        onView(withId(R.id.resolve_question_button)).check(matches(not(isEnabled())))
+    }
+
+    @Test
+    fun answerButtonIsDisabledOnCardLoadEnd() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+        onView(withId(R.id.resolve_question_button)).check(matches(isEnabled()))
+    }
+
+    @Test
+    fun showProgressBarOnCardLoad() {
+        onView(withId(R.id.load_card_progressBar)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideProgressBarOnCardLoadEnd() {
+        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
+        onView(withId(R.id.load_card_progressBar)).check(matches(isGone()))
     }
 
 }
