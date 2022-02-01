@@ -3,6 +3,7 @@ package com.avisio.dashboard.common.persistence
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 
 @Dao
 interface CardDao {
@@ -30,5 +31,9 @@ interface CardDao {
 
     @Update
     fun updateCard(card: Card)
+
+    @Transaction
+    @Query("SELECT * FROM card WHERE boxId = :boxId")
+    fun getAllWithSMDetails(boxId: Long): LiveData<List<CardViewHolderItem>>
 
 }

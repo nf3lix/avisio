@@ -11,6 +11,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
@@ -22,8 +23,10 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import com.avisio.dashboard.usecase.training.activity.LearnBoxActivity
+import com.avisio.dashboard.view_actions.WaitForView
 import org.hamcrest.core.IsNot.not
 import org.junit.*
+import java.util.concurrent.TimeUnit
 
 class BoxActivityTest {
 
@@ -36,7 +39,6 @@ class BoxActivityTest {
         intent = Intent(ApplicationProvider.getApplicationContext(), BoxActivity::class.java)
         intent.putExtra(IntentKeys.BOX_OBJECT, box)
     }
-
 
     @get:Rule
     val activityScenario = ActivityScenarioRule<BoxActivity>(intent)
@@ -58,13 +60,7 @@ class BoxActivityTest {
     @Test
     fun startCreateCardActivityOnFabClicked() {
         onView(withId(R.id.fab_new_card)).perform(click())
-        intended(hasComponent(CreateCardActivity::class.java.name))
-    }
-
-    @Test
-    fun startLearnActivityOnFabClicked() {
-        onView(withId(R.id.fab_learn)).perform(click())
-        intended(hasComponent(LearnBoxActivity::class.java.name))
+        onView(isRoot()).perform(WaitForView.withText("Neue Karte", TimeUnit.SECONDS.toMillis(15)))
     }
 
     @Test

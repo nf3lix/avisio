@@ -77,14 +77,6 @@ class LearnBoxFragmentTest {
     }
 
     @Test
-    fun showCorrectAnswerAfterIncorrectInputResolved() {
-        onView(withId(R.id.answer_edit_text)).perform(typeText("ANSWER"))
-        onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(withId(R.id.correct_answer_input_layout)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun hideViewsAfterTrainingFinished() {
         scenario.onFragment { fragment ->
             fragment.onTrainingFinished()

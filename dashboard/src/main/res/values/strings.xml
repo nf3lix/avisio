@@ -83,4 +83,45 @@
 
     <string name="search_box_title">search box</string>
 
+    <string name="remaining_time_minutes_singular">min</string>
+    <string name="remaining_time_hours_singular">h</string>
+    <string name="remaining_time_days_singular">Tag</string>
+    <string name="remaining_time_days_plural">Tagen</string>
+
+    <string name="remaining_time_month_singular">Monat</string>
+    <string name="remaining_time_month_plural">Monaten</string>
+
+    <string name="remaining_time_year_singular">Jahr</string>
+    <string name="remaining_time_year_plural">Jahren</string>
+
+    <plurals name="minutes">
+        <item quantity="one">min</item>
+        <item quantity="other">min</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">h</item>
+        <item quantity="other">h</item>
+    </plurals>
+
+    <plurals name="days">
+        <item quantity="one">Tag</item>
+        <item quantity="other">Tagen</item>
+    </plurals>
+
+    <plurals name="months">
+        <item quantity="one">Monat</item>
+        <item quantity="other">Monaten</item>
+    </plurals>
+
+    <plurals name="years">
+        <item quantity="one">Jahr</item>
+        <item quantity="other">Jahren</item>
+    </plurals>
+
+    <string name="due_date_in_future_displayed_template">Fällig in %s %s</string>
+    <string name="due_date_in_past_displayed_template">Fällig seit %s %s</string>
+
+    <string name="card_not_learned_yet">Noch nicht gelernt</string>
+
 </resources>

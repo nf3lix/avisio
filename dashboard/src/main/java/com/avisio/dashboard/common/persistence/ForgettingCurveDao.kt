@@ -21,4 +21,7 @@ interface ForgettingCurveDao {
     @Query("SELECT COUNT(*) FROM forgettingCurve")
     fun getSize(): Int
 
+    @Query("DELETE FROM forgettingCurve")
+    fun deleteAll()
+
 }

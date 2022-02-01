@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,10 @@ class CardRepository(application: Application) {
 
     fun getCardsLiveDataByBoxId(boxId: Long): LiveData<List<Card>> {
         return dao.getCardsLiveDataByBox(boxId)
+    }
+
+    fun getCardsLiveDataByBoxIdWithSMDetails(boxId: Long): LiveData<List<CardViewHolderItem>> {
+        return dao.getAllWithSMDetails(boxId)
     }
 
     fun insertCard(card: Card) {
