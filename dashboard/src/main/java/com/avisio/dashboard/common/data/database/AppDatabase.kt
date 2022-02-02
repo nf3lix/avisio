@@ -15,6 +15,7 @@ import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.common.persistence.ForgettingCurveDao
 import com.avisio.dashboard.common.persistence.SMCardItemDao
 import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
+import com.avisio.dashboard.common.persistence.FolderDao
 
 @Database(
     version = 1,
@@ -35,6 +36,7 @@ import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
 )
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun folderDao(): FolderDao
     abstract fun boxDao(): AvisioBoxDao
     abstract fun cardDao(): CardDao
     abstract fun forgettingCurveDao(): ForgettingCurveDao
