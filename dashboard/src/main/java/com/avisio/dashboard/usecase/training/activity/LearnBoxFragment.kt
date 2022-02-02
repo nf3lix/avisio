@@ -21,8 +21,6 @@ import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlex
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import io.noties.markwon.Markwon
-import java.lang.Exception
-import java.lang.IllegalStateException
 
 class LearnBoxFragment : Fragment(), LearnCardView {
 
@@ -85,7 +83,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
                 correctAnswerLayoutInput.visibility = View.GONE
                 cardTypeLayoutStrategy.onShowCard()
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     override fun onCorrectAnswer() {
@@ -165,7 +163,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 answerInputLayout.visibility = View.VISIBLE
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     fun hideAnswerEditText() {
@@ -173,7 +171,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 answerInputLayout.visibility = View.GONE
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun addAllQuestionResultChips() {
@@ -203,7 +201,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 resolveQuestionButton.isEnabled = false
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun enableButtons() {
@@ -211,7 +209,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 resolveQuestionButton.isEnabled = true
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun hideProgressBar() {
@@ -219,7 +217,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 progressBar.visibility = View.GONE
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun showProgressBar() {
@@ -227,7 +225,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             requireActivity().runOnUiThread {
                 progressBar.visibility = View.VISIBLE
             }
-        } catch (e: IllegalStateException) { }
+        } catch (ignore: IllegalStateException) { }
     }
 
 }
