@@ -114,13 +114,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     private fun setupCardViewModel() {
         cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, box)).get(
             CardViewModel::class.java)
-        cardViewModel.getCardList().observe(this) { cardList ->
+        cardViewModel.getCardListWithSMDetails().observe(this) { cardList ->
             cardListAdapter.submitList(cardList)
         }
     }
 
     override fun onClick(index: Int) {
-        startEditCardActivity(UPDATE, cardListAdapter.currentList[index])
+        startEditCardActivity(UPDATE, cardListAdapter.currentList[index].card)
     }
 
     private fun startEditCardActivity(workflow: CRUD, card: Card) {

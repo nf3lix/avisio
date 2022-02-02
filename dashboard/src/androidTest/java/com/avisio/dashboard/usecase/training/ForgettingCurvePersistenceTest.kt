@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.training
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
@@ -11,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
+import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
@@ -21,6 +23,9 @@ import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.common.persistence.ForgettingCurveDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
+import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurves
+import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
 import com.avisio.dashboard.view_actions.WaitForView
 import org.junit.*
 import java.util.*

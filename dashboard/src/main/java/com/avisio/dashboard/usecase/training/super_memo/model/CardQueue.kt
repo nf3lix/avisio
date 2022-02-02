@@ -16,6 +16,9 @@ class CardQueue {
             }
             return 0
         }
+        if(list[0].dueDate.time >= cardItem.dueDate.time) {
+            return 0
+        }
         for(i in 1 until list.size) {
             val prevCard = list[i - 1]
             val currentCard = list[i]

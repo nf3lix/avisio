@@ -1,6 +1,6 @@
 package com.avisio.dashboard.usecase.training
 
-import android.app.Application
+ import android.app.Application
 import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
 import com.avisio.dashboard.common.data.model.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
@@ -8,12 +8,12 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.CardRepository
 import com.avisio.dashboard.common.persistence.ForgettingCurveRepository
 import com.avisio.dashboard.common.persistence.SMCardItemRepository
+import com.avisio.dashboard.usecase.training.super_memo.MalformedForgettingCurves
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.model.CardItem
 import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurves
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 import kotlin.math.max
 
 class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : TrainingStrategy(box) {
@@ -81,11 +81,25 @@ class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : T
     }
 
     private suspend fun fetchForgettingCurves() {
+        var forgettingCurvesLoadSuccess = true
         withContext(Dispatchers.Default) {
-            tempCurves = forgettingCurveRepository.getForgettingCurves()
+            try {
+                tempCurves = forgettingCurveRepository.getForgettingCurves()
+            } catch (e: MalformedForgettingCurves) {
+                forgettingCurvesLoadSuccess = false
+            }
         }
-        sm = SuperMemo(tempCurves!!)
+        sm = if(!forgettingCurvesLoadSuccess) {
+            startForgettingCurvesRecoveryRoutine()
+            SuperMemo()
+        } else {
+            SuperMemo(tempCurves!!)
+        }
         fetchCards()
+    }
+
+    private fun startForgettingCurvesRecoveryRoutine() {
+        forgettingCurveRepository.deleteAll()
     }
 
     private fun getCardFromQueue(): Card? {

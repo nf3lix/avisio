@@ -4,11 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 
 class CardListAdapter(
-    diffCallback: DiffUtil.ItemCallback<Card>,
+    diffCallback: DiffUtil.ItemCallback<CardViewHolderItem>,
     private val onClickListener: CardListOnClickListener
-) : ListAdapter<Card, CardViewHolder>(diffCallback) {
+) : ListAdapter<CardViewHolderItem, CardViewHolder>(diffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -20,13 +21,13 @@ class CardListAdapter(
         holder.bind(currentCard)
     }
 
-    class CardDifference : DiffUtil.ItemCallback<Card>() {
+    class CardDifference : DiffUtil.ItemCallback<CardViewHolderItem>() {
 
-        override fun areItemsTheSame(oldItem: Card, newItem: Card): Boolean {
+        override fun areItemsTheSame(oldItem: CardViewHolderItem, newItem: CardViewHolderItem): Boolean {
             return false
         }
 
-        override fun areContentsTheSame(oldItem: Card, newItem: Card): Boolean {
+        override fun areContentsTheSame(oldItem: CardViewHolderItem, newItem: CardViewHolderItem): Boolean {
             return false
         }
 

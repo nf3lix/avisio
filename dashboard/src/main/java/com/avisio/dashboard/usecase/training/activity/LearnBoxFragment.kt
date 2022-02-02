@@ -74,14 +74,16 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         showAnswerEditText()
         currentCard = card
         cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
-        requireActivity().runOnUiThread {
-            requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
-            showResolveQuestionButton()
-            answerInputLayout.visibility = View.VISIBLE
-            resultChipGroup.visibility = View.GONE
-            correctAnswerLayoutInput.visibility = View.GONE
-            cardTypeLayoutStrategy.onShowCard()
-        }
+        try {
+            requireActivity().runOnUiThread {
+                requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
+                showResolveQuestionButton()
+                answerInputLayout.visibility = View.VISIBLE
+                resultChipGroup.visibility = View.GONE
+                correctAnswerLayoutInput.visibility = View.GONE
+                cardTypeLayoutStrategy.onShowCard()
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     override fun onCorrectAnswer() {
@@ -157,15 +159,19 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     fun showAnswerEditText() {
-        requireActivity().runOnUiThread {
-            answerInputLayout.visibility = View.VISIBLE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.VISIBLE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     fun hideAnswerEditText() {
-        requireActivity().runOnUiThread {
-            answerInputLayout.visibility = View.GONE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.GONE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun addAllQuestionResultChips() {
@@ -191,27 +197,35 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     private fun disableButtons() {
-        requireActivity().runOnUiThread {
-            resolveQuestionButton.isEnabled = false
-        }
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = false
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun enableButtons() {
-        requireActivity().runOnUiThread {
-            resolveQuestionButton.isEnabled = true
-        }
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = true
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun hideProgressBar() {
-        requireActivity().runOnUiThread {
-            progressBar.visibility = View.GONE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.GONE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     private fun showProgressBar() {
-        requireActivity().runOnUiThread {
-            progressBar.visibility = View.VISIBLE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.VISIBLE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
 }

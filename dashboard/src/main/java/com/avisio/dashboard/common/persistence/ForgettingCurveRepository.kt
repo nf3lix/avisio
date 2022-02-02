@@ -22,6 +22,10 @@ class ForgettingCurveRepository(application: Application) {
         return dao.getSize() == 0
     }
 
+    fun deleteAll() {
+        dao.deleteAll()
+    }
+
     fun getForgettingCurves(): ForgettingCurves {
         val curves = dao.getAll()
         return ForgettingCurves(curves)

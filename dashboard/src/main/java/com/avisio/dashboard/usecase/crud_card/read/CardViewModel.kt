@@ -7,14 +7,20 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.CardRepository
+import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 
 class CardViewModel(application: Application, val box: AvisioBox) : AndroidViewModel(application) {
 
     private val repository: CardRepository = CardRepository(application)
     private var cardList: LiveData<List<Card>> = repository.getCardsLiveDataByBoxId(box.id)
+    private var cardListWithSMDetails: LiveData<List<CardViewHolderItem>> = repository.getCardsLiveDataByBoxIdWithSMDetails(box.id)
 
     fun getCardList(): LiveData<List<Card>> {
         return cardList
+    }
+
+    fun getCardListWithSMDetails(): LiveData<List<CardViewHolderItem>> {
+        return cardListWithSMDetails
     }
 
     fun insertCard(card: Card) {
