@@ -81,13 +81,12 @@ class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : T
     }
 
     private suspend fun fetchForgettingCurves() {
-        var forgettingCurvesLoadSuccess = false
+        var forgettingCurvesLoadSuccess = true
         withContext(Dispatchers.Default) {
             try {
                 tempCurves = forgettingCurveRepository.getForgettingCurves()
-                forgettingCurvesLoadSuccess = true
             } catch (e: MalformedForgettingCurves) {
-
+                forgettingCurvesLoadSuccess = false
             }
         }
         sm = if(!forgettingCurvesLoadSuccess) {
