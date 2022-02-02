@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
 import androidx.test.espresso.NoMatchingViewException
@@ -19,6 +20,10 @@ import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
@@ -48,12 +53,14 @@ class BoxActivityTest {
         init()
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
+        database.clearAllTables()
         cardDao = database.cardDao()
         cardDao.deleteAll()
     }
 
     @After
     fun releaseIntents() {
+        database.clearAllTables()
         release()
     }
 
@@ -88,6 +95,28 @@ class BoxActivityTest {
     @Test
     fun boxMenuIsDisplayed() {
         onView(withContentDescription("More options")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun cardQueueTest() {
+        for(i in 0 until 5) {
+            cardDao.insert(Card(boxId = 1, question = CardQuestion(arrayListOf(QuestionToken(i.toString(), QuestionTokenType.TEXT)))))
+        }
+        onView(withId(R.id.fab_learn)).perform(click())
+
+        for(i in 0 until 3) {
+            processCard(i.toString())
+        }
+        Espresso.pressBack()
+        onView(withId(R.id.fab_learn)).perform(click())
+        processCard("3")
+        processCard("4")
+    }
+
+    private fun processCard(cardQuestion: String) {
+        onView(isRoot()).perform(WaitForView.withText(cardQuestion, TimeUnit.SECONDS.toMillis(15)))
+        onView(withId(R.id.resolve_question_button)).perform(click())
+        onView(withText(R.string.learn_activity_result_easy)).perform(click())
     }
 
 }

@@ -13,7 +13,6 @@ import com.avisio.dashboard.usecase.training.super_memo.model.CardItem
 import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurves
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 import kotlin.math.max
 
 class SM15TrainingStrategy(val box: AvisioBox, val application: Application) : TrainingStrategy(box) {
