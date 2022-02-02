@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.data.model
+package com.avisio.dashboard.common.data.model.sm
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

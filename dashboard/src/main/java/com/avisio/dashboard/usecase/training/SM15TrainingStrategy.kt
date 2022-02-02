@@ -1,8 +1,8 @@
 package com.avisio.dashboard.usecase.training
 
  import android.app.Application
-import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
-import com.avisio.dashboard.common.data.model.SMCardItem
+import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
+import com.avisio.dashboard.common.data.model.sm.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.CardRepository

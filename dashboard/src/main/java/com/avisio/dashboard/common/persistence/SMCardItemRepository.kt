@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.persistence
 
 import android.app.Application
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.data.model.SMCardItem
+import com.avisio.dashboard.common.data.model.sm.SMCardItem
 
 class SMCardItemRepository(application: Application) {
 

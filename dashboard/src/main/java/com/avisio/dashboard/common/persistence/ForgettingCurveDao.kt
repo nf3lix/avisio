@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
+import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
 
 @Dao
 interface ForgettingCurveDao {

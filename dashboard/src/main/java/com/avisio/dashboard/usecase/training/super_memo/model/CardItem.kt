@@ -1,6 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
-import com.avisio.dashboard.common.data.model.SMCardItem
+import com.avisio.dashboard.common.data.model.sm.SMCardItem
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.INTERVAL_BASE
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MAX_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF

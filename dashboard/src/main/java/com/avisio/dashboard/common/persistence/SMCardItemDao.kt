@@ -1,7 +1,7 @@
 package com.avisio.dashboard.common.persistence
 
 import androidx.room.*
-import com.avisio.dashboard.common.data.model.SMCardItem
+import com.avisio.dashboard.common.data.model.sm.SMCardItem
 
 @Dao
 interface SMCardItemDao {

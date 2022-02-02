@@ -2,7 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.avisio.dashboard.common.data.model.SMCardItem
+import com.avisio.dashboard.common.data.model.sm.SMCardItem
 import com.avisio.dashboard.common.data.model.card.Card
 
 data class CardViewHolderItem(

@@ -2,7 +2,7 @@ package com.avisio.dashboard.common.persistence
 
 import android.app.Application
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
+import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
 import com.avisio.dashboard.usecase.training.super_memo.model.ForgettingCurves
 
 class ForgettingCurveRepository(application: Application) {

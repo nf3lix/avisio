@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.data.model
+package com.avisio.dashboard.common.data.model.sm
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
