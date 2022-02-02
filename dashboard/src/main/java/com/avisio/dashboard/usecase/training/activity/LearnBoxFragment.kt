@@ -21,6 +21,8 @@ import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlex
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import io.noties.markwon.Markwon
+import java.lang.Exception
+import java.lang.IllegalStateException
 
 class LearnBoxFragment : Fragment(), LearnCardView {
 
@@ -74,14 +76,16 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         showAnswerEditText()
         currentCard = card
         cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
-        requireActivity().runOnUiThread {
-            requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
-            showResolveQuestionButton()
-            answerInputLayout.visibility = View.VISIBLE
-            resultChipGroup.visibility = View.GONE
-            correctAnswerLayoutInput.visibility = View.GONE
-            cardTypeLayoutStrategy.onShowCard()
-        }
+        try {
+            requireActivity().runOnUiThread {
+                requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
+                showResolveQuestionButton()
+                answerInputLayout.visibility = View.VISIBLE
+                resultChipGroup.visibility = View.GONE
+                correctAnswerLayoutInput.visibility = View.GONE
+                cardTypeLayoutStrategy.onShowCard()
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     override fun onCorrectAnswer() {
@@ -157,15 +161,19 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     fun showAnswerEditText() {
-        requireActivity().runOnUiThread {
-            answerInputLayout.visibility = View.VISIBLE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.VISIBLE
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     fun hideAnswerEditText() {
-        requireActivity().runOnUiThread {
-            answerInputLayout.visibility = View.GONE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.GONE
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     private fun addAllQuestionResultChips() {
@@ -191,27 +199,35 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     private fun disableButtons() {
-        requireActivity().runOnUiThread {
-            resolveQuestionButton.isEnabled = false
-        }
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = false
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     private fun enableButtons() {
-        requireActivity().runOnUiThread {
-            resolveQuestionButton.isEnabled = true
-        }
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = true
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     private fun hideProgressBar() {
-        requireActivity().runOnUiThread {
-            progressBar.visibility = View.GONE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.GONE
+            }
+        } catch (e: IllegalStateException) { }
     }
 
     private fun showProgressBar() {
-        requireActivity().runOnUiThread {
-            progressBar.visibility = View.VISIBLE
-        }
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.VISIBLE
+            }
+        } catch (e: IllegalStateException) { }
     }
 
 }
