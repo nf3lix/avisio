@@ -19,6 +19,9 @@ data class AvisioFolder(
     val id: Long = 0,
 
     @ColumnInfo(name = "parentFolder")
-    val parentFolder: Long? = null
+    val parentFolder: Long? = null,
+
+    @ColumnInfo(name = "folderName")
+    val name: String = "unnamed_folder"
 
 )
