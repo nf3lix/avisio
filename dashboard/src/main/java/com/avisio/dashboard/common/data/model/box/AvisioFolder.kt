@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     foreignKeys = [ForeignKey(entity = AvisioFolder::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("parentFolder"),
-        onDelete = ForeignKey.CASCADE
+        onDelete = ForeignKey.CASCADE,
     )]
 )
 data class AvisioFolder(

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.sm_card_items
 
 import android.app.Application
 import com.avisio.dashboard.common.data.database.AppDatabase

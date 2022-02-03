@@ -5,9 +5,9 @@ import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
 import com.avisio.dashboard.common.data.model.sm.SMCardItem
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.persistence.CardRepository
-import com.avisio.dashboard.common.persistence.ForgettingCurveRepository
-import com.avisio.dashboard.common.persistence.SMCardItemRepository
+import com.avisio.dashboard.common.persistence.card.CardRepository
+import com.avisio.dashboard.common.persistence.forgetting_curves.ForgettingCurveRepository
+import com.avisio.dashboard.common.persistence.sm_card_items.SMCardItemRepository
 import com.avisio.dashboard.usecase.training.super_memo.MalformedForgettingCurves
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.model.CardItem

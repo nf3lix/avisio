@@ -1,9 +1,9 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.card
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
+import com.avisio.dashboard.usecase.crud_card.read.CardViewHolderItem
 
 @Dao
 interface CardDao {

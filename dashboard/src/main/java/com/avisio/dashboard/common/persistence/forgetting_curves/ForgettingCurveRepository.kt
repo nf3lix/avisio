@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.forgetting_curves
 
 import android.app.Application
 import com.avisio.dashboard.common.data.database.AppDatabase

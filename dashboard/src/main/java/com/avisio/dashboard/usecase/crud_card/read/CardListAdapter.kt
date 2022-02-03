@@ -3,8 +3,6 @@ package com.avisio.dashboard.usecase.crud_card.read
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 
 class CardListAdapter(
     diffCallback: DiffUtil.ItemCallback<CardViewHolderItem>,

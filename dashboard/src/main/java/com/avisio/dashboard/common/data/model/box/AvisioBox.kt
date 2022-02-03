@@ -25,7 +25,7 @@ data class AvisioBox(
     val name: String = "",
 
     @ColumnInfo(name = "folderId")
-    val folderId: Long? = null,
+    val parentFolder: Long? = null,
 
     @ColumnInfo(name = "create_date")
     val createDate: Date = Date(System.currentTimeMillis()),

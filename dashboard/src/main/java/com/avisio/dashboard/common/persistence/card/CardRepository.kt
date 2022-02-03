@@ -1,10 +1,10 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.card
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
+import com.avisio.dashboard.usecase.crud_card.read.CardViewHolderItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

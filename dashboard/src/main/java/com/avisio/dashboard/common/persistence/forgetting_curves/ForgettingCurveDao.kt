@@ -1,4 +1,4 @@
-package com.avisio.dashboard.common.persistence
+package com.avisio.dashboard.common.persistence.forgetting_curves
 
 import androidx.room.Dao
 import androidx.room.Insert

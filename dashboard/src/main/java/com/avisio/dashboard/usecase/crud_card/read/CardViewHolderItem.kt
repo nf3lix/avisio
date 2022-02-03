@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.read
+package com.avisio.dashboard.usecase.crud_card.read
 
 import androidx.room.Embedded
 import androidx.room.Relation

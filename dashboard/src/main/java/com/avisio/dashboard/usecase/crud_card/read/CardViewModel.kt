@@ -4,10 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.data.model.box.AvisioBox
-import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.persistence.CardRepository
-import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
+import com.avisio.dashboard.common.persistence.card.CardRepository
 
 class CardViewModel(application: Application, val box: AvisioBox) : AndroidViewModel(application) {
 
