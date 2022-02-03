@@ -14,7 +14,7 @@ interface FolderDao {
     fun getAll(): LiveData<List<AvisioFolder>>
 
     @Insert
-    fun createFolder(folder: AvisioFolder)
+    fun insertFolder(folder: AvisioFolder)
 
     @Query("UPDATE folder SET parentFolder = :destinationFolder WHERE id = :folderToMove")
     fun moveFolder(folderToMove: Long, destinationFolder: Long)

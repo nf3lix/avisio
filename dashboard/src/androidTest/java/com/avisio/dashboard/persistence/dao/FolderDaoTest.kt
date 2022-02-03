@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.avisio.dashboard.common.data.database.AppDatabase
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.persistence.FolderDao
+import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -18,6 +20,7 @@ class FolderDaoTest : DaoTest() {
     val rule = InstantTaskExecutorRule()
 
     private lateinit var folderDao: FolderDao
+    private lateinit var boxDao: AvisioBoxDao
     private lateinit var database: AppDatabase
 
     @Before
@@ -25,6 +28,7 @@ class FolderDaoTest : DaoTest() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         folderDao = database.folderDao()
+        boxDao = database.boxDao()
         database.clearAllTables()
     }
 
@@ -33,9 +37,9 @@ class FolderDaoTest : DaoTest() {
         val folder1 = AvisioFolder(id = 1, parentFolder = null)
         val folder2 = AvisioFolder(id = 2, parentFolder = 1)
         val folder3 = AvisioFolder(id = 3, parentFolder = 2)
-        folderDao.createFolder(folder1)
-        folderDao.createFolder(folder2)
-        folderDao.createFolder(folder3)
+        folderDao.insertFolder(folder1)
+        folderDao.insertFolder(folder2)
+        folderDao.insertFolder(folder3)
         val fetchedFolders = folderDao.getAll().blockingObserve()
         Assert.assertEquals(fetchedFolders?.size, 3)
     }
@@ -43,7 +47,7 @@ class FolderDaoTest : DaoTest() {
     @Test
     fun deleteFolderTest() {
         val folder1 = AvisioFolder(id = 1, parentFolder = null)
-        folderDao.createFolder(folder1)
+        folderDao.insertFolder(folder1)
         val fetchedFolders1 = folderDao.getAll().blockingObserve()
         Assert.assertEquals(fetchedFolders1?.size, 1)
         folderDao.deleteFolder(folder1)
@@ -56,14 +60,30 @@ class FolderDaoTest : DaoTest() {
         val folder1 = AvisioFolder(id = 1, parentFolder = null)
         val folder2 = AvisioFolder(id = 2, parentFolder = null)
         val folder3 = AvisioFolder(id = 3, parentFolder = 1)
-        folderDao.createFolder(folder1)
-        folderDao.createFolder(folder2)
-        folderDao.createFolder(folder3)
+        folderDao.insertFolder(folder1)
+        folderDao.insertFolder(folder2)
+        folderDao.insertFolder(folder3)
         val fetchedFolders1 = folderDao.getAll().blockingObserve()
         Assert.assertEquals(fetchedFolders1?.get(2), AvisioFolder(3, 1))
         folderDao.moveFolder(3, 2)
         val fetchedFolders2 = folderDao.getAll().blockingObserve()
         Assert.assertEquals(fetchedFolders2?.get(2), AvisioFolder(3, 2))
+    }
+
+    @Test
+    fun onDeleteCascadeBoxes() {
+        val folder = AvisioFolder(id = 1, parentFolder = null)
+        val box1 = AvisioBox(id = 1, name = "BOX_1", folderId = 1)
+        val box2 = AvisioBox(id = 2, name = "BOX_2", folderId = 1)
+        val box3 = AvisioBox(id = 3, name = "BOX_3")
+        folderDao.insertFolder(folder)
+        boxDao.insertBox(box1)
+        boxDao.insertBox(box2)
+        boxDao.insertBox(box3)
+        folderDao.deleteFolder(folder)
+        val fetchedBoxes = boxDao.getBoxList().blockingObserve()
+        Assert.assertEquals(fetchedBoxes?.size, 1)
+        Assert.assertEquals(fetchedBoxes?.get(0), box3)
     }
 
 }
