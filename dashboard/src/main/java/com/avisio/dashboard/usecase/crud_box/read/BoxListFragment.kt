@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
@@ -116,7 +117,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
 
         fabCreateFolder.setOnClickListener {
-            startActivity(Intent(context, CreateFolderActivity::class.java))
+            val intent = Intent(context, CreateFolderActivity::class.java)
+            intent.setCurrentFolder(currentFolderItem)
+            startActivity(Intent(intent))
         }
 
     }

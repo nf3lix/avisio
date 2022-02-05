@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Avisio" >
         <activity
-            android:name=".usecase.crud_box.create_folder.CreateFolderActivity"
-            android:exported="false" />
-        <activity
             android:name=".usecase.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Avisio.FullScreen" >
@@ -32,6 +29,11 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".usecase.crud_card.update.EditCardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Avisio.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".usecase.crud_box.create_folder.CreateFolderActivity"
             android:exported="false"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
