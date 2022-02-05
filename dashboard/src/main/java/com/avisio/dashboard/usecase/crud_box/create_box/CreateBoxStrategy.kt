@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.create
+package com.avisio.dashboard.usecase.crud_box.create_box
 
 import android.widget.Toast
 import com.avisio.dashboard.R

@@ -33,8 +33,42 @@
             app:layout_constraintTop_toBottomOf="@+id/main_activity_appbar"/>
 
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_new_box"
+        android:text="@string/fab_create_box_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintVertical_bias="0.989"
+        app:icon="@drawable/dashboard_item_icon_default"
+        android:contentDescription="@string/box_list_fab_content_description" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_new_folder"
+        android:text="@string/fab_create_folder_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintVertical_bias="0.989"
+        app:icon="@drawable/ic_create_folder"
+        android:contentDescription="@string/box_list_fab_content_description" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_new_box"
+            android:id="@+id/fab_expand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -47,4 +81,5 @@
             app:layout_constraintHorizontal_bias="0.954"
             app:layout_constraintVertical_bias="0.989"
             android:contentDescription="@string/box_list_fab_content_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

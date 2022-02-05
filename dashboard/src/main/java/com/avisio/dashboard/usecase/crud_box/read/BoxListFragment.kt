@@ -15,9 +15,11 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.usecase.MainActivity
-import com.avisio.dashboard.usecase.crud_box.create.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener {
@@ -30,6 +32,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private var currentFolder: Long? = null
     private var currentFolderItem: DashboardItem? = null
     private var allItems = listOf<DashboardItem>()
+
+    private var fabMenuShown = false
+
+    private lateinit var fabCreateBox: ExtendedFloatingActionButton
+    private lateinit var fabCreateFolder: ExtendedFloatingActionButton
+    private lateinit var fabExpand: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = requireView().findViewById<Toolbar>(R.id.box_list_app_bar)
+        fabCreateBox = requireView().findViewById(R.id.fab_new_box)
+        fabCreateFolder = requireView().findViewById(R.id.fab_new_folder)
+        fabExpand = requireView().findViewById(R.id.fab_expand)
         (requireActivity() as MainActivity).setSupportActionBar(toolbar)
         (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(R.string.main_activity_app_bar_title)
         setHasOptionsMenu(true)
@@ -60,6 +71,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun setupView() {
         setupRecyclerView()
         setupBoxViewModel()
+        closeFabMenu()
     }
 
     private fun setupRecyclerView() {
@@ -91,9 +103,40 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun setupFab() {
-        view?.findViewById<FloatingActionButton>(R.id.fab_new_box)?.setOnClickListener { _ ->
+        fabExpand.setOnClickListener {
+            if(!fabMenuShown) {
+                showFabMenu()
+            } else {
+                closeFabMenu()
+            }
+        }
+
+        fabCreateBox.setOnClickListener {
             startActivity(Intent(context, CreateBoxActivity::class.java))
         }
+
+        fabCreateFolder.setOnClickListener {
+            startActivity(Intent(context, CreateFolderActivity::class.java))
+        }
+
+    }
+
+    private fun showFabMenu() {
+        fabMenuShown = true
+        fabExpand.setImageResource(R.drawable.ic_close)
+        fabCreateBox.visibility = View.VISIBLE
+        fabCreateFolder.visibility = View.VISIBLE
+        fabCreateBox.animate().translationY(-resources.getDimension(R.dimen.create_box_fab_position))
+        fabCreateFolder.animate().translationY(-resources.getDimension(R.dimen.create_folder_fab_position))
+    }
+
+    private fun closeFabMenu() {
+        fabMenuShown = false
+        fabCreateBox.visibility = View.GONE
+        fabExpand.setImageResource(R.drawable.ic_add_entry)
+        fabCreateFolder.visibility = View.GONE
+        fabCreateBox.animate().translationY(0F)
+        fabCreateFolder.animate().translationY(0F)
     }
 
     fun deleteBox(box: ParcelableAvisioBox) {
