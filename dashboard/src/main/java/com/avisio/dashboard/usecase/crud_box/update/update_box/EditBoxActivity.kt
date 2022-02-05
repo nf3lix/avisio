@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.update
+package com.avisio.dashboard.usecase.crud_box.update.update_box
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,8 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.data.transfer.getBoxObject
-import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.common.workflow.CRUD.*
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 
 class EditBoxActivity : AppCompatActivity() {
 

@@ -28,4 +28,7 @@ interface AvisioBoxDao {
     @Query("SELECT * FROM box WHERE id = :boxId")
     fun getBoxById(boxId: Long): AvisioBox
 
+    @Query("DELETE FROM box WHERE id = :boxId")
+    fun deleteBox(boxId: Long)
+
 }

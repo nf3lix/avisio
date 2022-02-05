@@ -7,6 +7,7 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableDashboardItem
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 
@@ -72,4 +73,13 @@ fun Intent.getCardObject(): Card? {
     val parcelableCard = getParcelableExtra<ParcelableCard>(IntentKeys.CARD_OBJECT)
         ?: return null
     return ParcelableCard.createEntity(parcelableCard)
+}
+
+fun Bundle.setCRUDWorkflow(crud: CRUD) {
+    putInt("CRUD_WORKFLOW", crud.ordinal)
+}
+
+fun Bundle.getCRUDWorkflow(): CRUD {
+    val crudId = getInt("CRUD_WORKFLOW", CRUD.CREATE.ordinal)
+    return CRUD.values()[crudId]
 }

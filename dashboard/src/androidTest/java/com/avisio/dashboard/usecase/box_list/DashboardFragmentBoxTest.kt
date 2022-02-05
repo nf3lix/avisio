@@ -35,7 +35,6 @@ class DashboardFragmentBoxTest {
     private lateinit var boxDao: AvisioBoxDao
     private lateinit var database: AppDatabase
 
-
     @get:Rule
     val activityScenario = ActivityScenarioRule<MainActivity>(intent)
 

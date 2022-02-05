@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.update
+package com.avisio.dashboard.usecase.crud_box.update.update_box
 
 import android.content.Intent
 import android.widget.Toast
@@ -6,7 +6,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 

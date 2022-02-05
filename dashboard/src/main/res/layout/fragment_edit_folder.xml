@@ -12,17 +12,47 @@
         android:theme="@style/Theme.Avisio.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/card_activity_app_bar"
+            android:id="@+id/folder_activity_app_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <Spinner
+            android:id="@+id/parent_folder_spinner"
+            android:layout_width="277dp"
+            android:layout_height="61dp"
+            android:contentDescription="@string/parent_folder_spinner_content_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.102" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/folder_name_input_layout"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/folder_name_hint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/parent_folder_spinner"
+            app:layout_constraintVertical_bias="0.05">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/folder_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

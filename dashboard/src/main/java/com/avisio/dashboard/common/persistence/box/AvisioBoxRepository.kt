@@ -46,6 +46,12 @@ class AvisioBoxRepository(application: Application) {
         }
     }
 
+    fun deleteBox(boxId: Long) {
+        GlobalScope.launch {
+            boxDao.deleteBox(boxId)
+        }
+    }
+
     fun updateBox(box: AvisioBox) {
         GlobalScope.launch {
             boxDao.updateBox(box.id, box.name, box.icon.iconId)

@@ -18,7 +18,7 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 import com.avisio.dashboard.view_actions.IndexMatcher
 import org.hamcrest.Matchers.*
 import org.hamcrest.core.IsNot

@@ -13,7 +13,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
-import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
+import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCardObject

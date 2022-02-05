@@ -8,7 +8,11 @@
     <string name="title_activity_create_box">Create Box</string>
 
     <string name="fab_create_box_label">Neue Box</string>
+
     <string name="fab_create_folder_label">Neuer Ordner</string>
+    <string name="edit_folder">Ordner Bearbeiten</string>
+    <string name="folder_name_hint">Ordnername</string>
+    <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
 
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>

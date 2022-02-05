@@ -29,7 +29,7 @@ class DashboardItemViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun deleteDashboardItem(item: DashboardItem) {
-        repository
+        repository.deleteBox(item.id)
     }
 
 }

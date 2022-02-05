@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.common
+package com.avisio.dashboard.usecase.crud_box.create_box
 
 import android.os.Bundle
 import android.view.*
@@ -12,6 +12,8 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.workflow.CRUD
+import com.avisio.dashboard.usecase.crud_box.common.BoxIconSelectionPopup
+import com.avisio.dashboard.usecase.crud_box.common.ResetInputErrorTextWatcher
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout

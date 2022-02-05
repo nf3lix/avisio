@@ -38,7 +38,7 @@
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".usecase.crud_box.update.EditBoxActivity"
+            android:name=".usecase.crud_box.update.update_box.EditBoxActivity"
             android:label="@string/activity_edit_box"
             android:theme="@style/Theme.Avisio.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
