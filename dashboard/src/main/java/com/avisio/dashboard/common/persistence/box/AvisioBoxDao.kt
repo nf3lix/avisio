@@ -25,4 +25,7 @@ interface AvisioBoxDao {
     @Query("SELECT name FROM box")
     fun getBoxNameList(): List<String>
 
+    @Query("SELECT * FROM box WHERE id = :boxId")
+    fun getBoxById(boxId: Long): AvisioBox
+
 }

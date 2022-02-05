@@ -12,22 +12,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.box.AvisioBoxViewModel
+import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener {
+class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener {
 
-    private lateinit var boxViewModel: AvisioBoxViewModel
-    private lateinit var boxAdapter: AvisioBoxListAdapter
+    private lateinit var dashboardItemViewModel: DashboardItemViewModel
+    private lateinit var dashboardItemAdapter: DashboardItemListAdapter
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
+    private var currentFolder: Long? = null
+    private var currentFolderItem: DashboardItem? = null
+    private var allItems = listOf<DashboardItem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry)
+        boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry, requireActivity().application)
         lifecycle.addObserver(boxActivityObserver)
     }
 
@@ -57,17 +63,31 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     }
 
     private fun setupRecyclerView() {
-        val boxListRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
-        boxAdapter = AvisioBoxListAdapter(AvisioBoxListAdapter.AvisioBoxDifference(), this)
-        boxListRecyclerView?.adapter = boxAdapter
-        boxListRecyclerView?.layoutManager = LinearLayoutManager(context)
+        val dashboardItemRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
+        dashboardItemAdapter = DashboardItemListAdapter(DashboardItemListAdapter.DashboardItemDifference(), this)
+        dashboardItemRecyclerView?.adapter = dashboardItemAdapter
+        dashboardItemRecyclerView?.layoutManager = LinearLayoutManager(context)
     }
 
     private fun setupBoxViewModel() {
-        boxViewModel = ViewModelProvider(this).get(AvisioBoxViewModel::class.java)
-        boxViewModel.getBoxList().observe(this) { boxList ->
-            boxAdapter.updateList(boxList)
+        dashboardItemViewModel = ViewModelProvider(this).get(DashboardItemViewModel::class.java)
+        attachDashboardItemAdapter()
+    }
+
+    private fun attachDashboardItemAdapter() {
+        dashboardItemViewModel.getDashboardItemList().observe(this) { itemList ->
+            allItems = itemList
+            val filteredList = filterItemsOfCurrentFolder(itemList)
+            dashboardItemAdapter.updateList(filteredList)
         }
+    }
+
+    private fun filterItemsOfCurrentFolder(itemList: List<DashboardItem>): List<DashboardItem> {
+        val list = arrayListOf<DashboardItem>()
+        for(item in itemList) {
+            if(item.parentFolder == currentFolder) list.add(item)
+        }
+        return list
     }
 
     private fun setupFab() {
@@ -77,16 +97,32 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
     }
 
     fun deleteBox(box: ParcelableAvisioBox) {
-        val boxToDelete = boxAdapter.getBoxById(box.boxId)
+        val boxToDelete = dashboardItemAdapter.getDashboardItemById(box.boxId)
         if(boxToDelete == null) {
             Toast.makeText(context, getString(R.string.delete_box_error_occurred), Toast.LENGTH_LONG).show()
             return
         }
-        boxViewModel.deleteBox(boxToDelete)
+        dashboardItemViewModel.deleteDashboardItem(boxToDelete)
     }
 
-    override fun onClick(index: Int) {
-        boxActivityObserver.startBoxActivity(boxAdapter.currentList[index])
+    override suspend fun onClick(index: Int) {
+        val clickedItem = dashboardItemAdapter.currentList[index]
+        return when(clickedItem.type) {
+            DashboardItemType.BOX -> {
+                boxActivityObserver.startBoxActivity(clickedItem)
+            }
+            DashboardItemType.FOLDER -> {
+                openFolder(clickedItem)
+            }
+        }
+    }
+
+    private fun openFolder(item: DashboardItem?) {
+        requireActivity().runOnUiThread {
+            currentFolder = item?.id
+            currentFolderItem = item
+            dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -98,12 +134,12 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
         searchItem.actionView = searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                boxAdapter.getFilter().filter(query)
+                dashboardItemAdapter.getFilter().filter(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                boxAdapter.getFilter().filter(newText)
+                dashboardItemAdapter.getFilter().filter(newText)
                 return false
             }
         })
@@ -115,13 +151,33 @@ class BoxListFragment : Fragment(), AvisioBoxListAdapter.BoxListOnClickListener 
             override fun handleOnBackPressed() {
                 val searchView = requireView().findViewById<SearchView>(R.id.box_list_search)
                 if(!searchView.isIconified) {
-                    searchView.isIconified = true
-                    searchView.onActionViewCollapsed()
+                    closeSearchView(searchView)
                     return
                 }
+                openParentFolder()
             }
         })
     }
 
+    private fun closeSearchView(searchView: SearchView) {
+        searchView.isIconified = true
+        searchView.onActionViewCollapsed()
+    }
+
+    private fun openParentFolder() {
+        val parentFolder = getParentFolder()
+        openFolder(parentFolder)
+    }
+
+    private fun getParentFolder(): DashboardItem? {
+        if(currentFolderItem == null) return null
+        val parentFolderId = currentFolderItem!!.parentFolder
+        for(item in allItems) {
+            if(item.id == parentFolderId && item.type == DashboardItemType.FOLDER) {
+                return item
+            }
+        }
+        return null
+    }
 
 }

@@ -1,7 +1,9 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -11,10 +13,15 @@ import androidx.lifecycle.LifecycleOwner
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.setBoxObject
+import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class BoxActivityResultObserver(
     private val boxFragment: BoxListFragment,
-    private val registry: ActivityResultRegistry
+    private val registry: ActivityResultRegistry,
+    application: Application
 ): DefaultLifecycleObserver {
 
     companion object {
@@ -22,6 +29,7 @@ class BoxActivityResultObserver(
     }
 
     private lateinit var content: ActivityResultLauncher<Intent>
+    private val boxRepository: AvisioBoxRepository = AvisioBoxRepository(application)
 
     override fun onCreate(owner: LifecycleOwner) {
         content = registry.register(OBSERVER_REGISTRY_KEY, ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -38,10 +46,18 @@ class BoxActivityResultObserver(
         }
     }
 
-    fun startBoxActivity(box: AvisioBox) {
-        val intent = Intent(boxFragment.context, BoxActivity::class.java)
-        intent.setBoxObject(box)
-        content.launch(intent)
+    suspend fun startBoxActivity(item: DashboardItem) {
+        val box: AvisioBox?
+        withContext(Dispatchers.Default) {
+            box = boxRepository.getBoxById(item.id)
+        }
+        if(box != null) {
+            val intent = Intent(boxFragment.context, BoxActivity::class.java)
+            intent.setBoxObject(box)
+            content.launch(intent)
+            return
+        }
+        Toast.makeText(boxFragment.context, "Could not load box", Toast.LENGTH_LONG).show()
     }
 
 }

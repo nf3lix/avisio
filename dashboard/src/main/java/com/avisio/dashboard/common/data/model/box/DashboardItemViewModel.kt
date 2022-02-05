@@ -4,11 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 
-class AvisioBoxViewModel(application: Application) : AndroidViewModel(application) {
+class DashboardItemViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: AvisioBoxRepository = AvisioBoxRepository(application)
     private val boxList: LiveData<List<AvisioBox>> = repository.getBoxList()
+    private val dashboardItemList: LiveData<List<DashboardItem>> = repository.getDashboardItemList()
+
+    fun getDashboardItemList(): LiveData<List<DashboardItem>> {
+        return dashboardItemList
+    }
 
     fun getBoxList(): LiveData<List<AvisioBox>> {
         return boxList
@@ -20,6 +26,10 @@ class AvisioBoxViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun deleteBox(box: AvisioBox) {
         repository.deleteBox(box)
+    }
+
+    fun deleteDashboardItem(item: DashboardItem) {
+        repository
     }
 
 }

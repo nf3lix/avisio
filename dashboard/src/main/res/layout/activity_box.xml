@@ -61,6 +61,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.989"
         app:shapeAppearance="@style/ShapeAppearance.avisio.SmallComponent"
-        app:icon="@drawable/box_icon_default" />
+        app:icon="@drawable/dashboard_item_icon_default" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

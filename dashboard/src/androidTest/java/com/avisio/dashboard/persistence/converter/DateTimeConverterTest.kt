@@ -1,4 +1,4 @@
-package com.avisio.dashboard
+package com.avisio.dashboard.persistence.converter
 
 import com.avisio.dashboard.common.data.database.converters.DateTimeConverter
 import org.junit.Assert.assertEquals

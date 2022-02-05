@@ -29,7 +29,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class BoxListFragmentTest {
+class DashboardFragmentBoxTest {
 
     private var intent: Intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
     private lateinit var boxDao: AvisioBoxDao
@@ -95,7 +95,6 @@ class BoxListFragmentTest {
     fun resetSearchCriteriaOnBackPressed() {
         onView(withId(R.id.box_list_search)).perform(click())
         typeInSearchView("A")
-        Espresso.pressBack()
         Espresso.pressBack()
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
         onView(allOf(withText("CCC"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))

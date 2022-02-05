@@ -13,6 +13,12 @@ data class DashboardItem(
     val parentFolder: Long?,
 
     @ColumnInfo(name = "type")
-    val type: DashboardItemType
+    val type: DashboardItemType,
+
+    @ColumnInfo(name = "name")
+    val name: String?,
+
+    @ColumnInfo(name = "icon")
+    val icon: Int
 
 )

@@ -56,7 +56,7 @@ class EditBoxFragmentCreateModeTest {
     @Test
     fun setBoxIconTest() {
         onView(withId(R.id.box_icon_imageview))
-            .check(matches(withTagValue(equalTo(R.drawable.box_icon_default))))
+            .check(matches(withTagValue(equalTo(R.drawable.dashboard_item_icon_default))))
     }
 
     @Test
