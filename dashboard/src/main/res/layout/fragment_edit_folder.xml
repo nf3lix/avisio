@@ -51,13 +51,13 @@
                 android:id="@+id/folder_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit_card"
+        android:id="@+id/fab_edit_folder"
         android:contentDescription="@string/create_card_fab_content_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

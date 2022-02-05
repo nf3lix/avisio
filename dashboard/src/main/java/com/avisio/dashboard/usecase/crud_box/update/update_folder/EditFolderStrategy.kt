@@ -6,4 +6,8 @@ import com.avisio.dashboard.usecase.crud_box.create_folder.EditFolderFragment
 
 class EditFolderStrategy(private val fragment: EditFolderFragment)
     : FolderFragmentStrategy(fragment, R.string.edit_folder) {
+
+    override fun saveFolder() {
+    }
+
 }

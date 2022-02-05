@@ -3,8 +3,10 @@ package com.avisio.dashboard.usecase.create_folder
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
@@ -49,6 +51,39 @@ class CreateFolderTest {
         onView(withId(R.id.fab_new_folder)).perform(click())
         Intents.intended(IntentMatchers.hasComponent(CreateFolderActivity::class.java.name))
         onView(withText(R.string.fab_create_folder_label)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun createFolderInRootTest() {
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("FOLDER_1"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText("FOLDER_1")).check(matches(isDisplayed()))
+        onView(withText(R.string.main_activity_app_bar_title)).check(matches(isDisplayed()))
+        onView(withText("FOLDER_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun createNestedFolderTest() {
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("FOLDER_1"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("FOLDER_2"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText("FOLDER_2")).check(matches(isDisplayed()))
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("FOLDER_3"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText("FOLDER_2")).check(matches(isDisplayed()))
+        onView(withText("FOLDER_3")).check(matches(isDisplayed()))
+        Espresso.pressBack()
+        onView(withText("FOLDER_1")).perform(click())
     }
 
 }
