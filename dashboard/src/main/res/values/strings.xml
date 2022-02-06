@@ -10,13 +10,15 @@
     <string name="fab_create_box_label">Neue Box</string>
 
     <string name="fab_create_folder_label">Neuer Ordner</string>
-    <string name="action_delete_folder">Ordner Löschen</string>
+    <string name="action_delete_folder">Ordner löschen</string>
     <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
     <string name="no_folder_name_specified">Bitte trage einen Namen für den Ordner ein</string>
     <string name="create_folder_success">Ordner wurde erfolgreich erstellt</string>
+    <string name="delete_all_selected_items_confirm_dialog_title">Elemente löschen</string>
+    <string name="delete_all_selected_items_confirm_dialog_message">Möchtest Du wirklich alle markierten Elemente löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
 
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>

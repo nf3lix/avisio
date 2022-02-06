@@ -94,7 +94,7 @@ class BoxActivityTest {
 
     @Test
     fun cardQueueTest() {
-        for(i in 0 until 5) {
+        for(i in 0 until 4) {
             cardDao.insert(Card(boxId = 1, question = CardQuestion(arrayListOf(QuestionToken(i.toString(), QuestionTokenType.TEXT)))))
         }
         onView(withId(R.id.fab_learn)).perform(click())
@@ -105,7 +105,6 @@ class BoxActivityTest {
         Espresso.pressBack()
         onView(withId(R.id.fab_learn)).perform(click())
         processCard("3")
-        processCard("4")
     }
 
     private fun processCard(cardQuestion: String) {

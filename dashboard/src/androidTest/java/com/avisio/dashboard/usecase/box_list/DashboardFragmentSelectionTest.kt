@@ -138,7 +138,7 @@ class DashboardFragmentSelectionTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         folderDao.insertFolder(AvisioFolder(id = 3, name = "F_3"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("F_2")).perform(longClick())
@@ -147,19 +147,19 @@ class DashboardFragmentSelectionTest {
         onView(isRoot()).perform(waitFor(200))
 
         onView(withText("F_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         itemIsUnselected("F_1")
         itemIsSelected("F_2")
         itemIsSelected("F_3")
 
         onView(withText("F_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         itemIsUnselected("F_1")
         itemIsUnselected("F_2")
         itemIsSelected("F_3")
 
         onView(withText("F_3")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         itemIsUnselected("F_1")
         itemIsUnselected("F_2")
         itemIsUnselected("F_2")
@@ -240,6 +240,7 @@ class DashboardFragmentSelectionTest {
         onView(withText("B_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
         onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
         onView(withText("F_1")).check(matches(isDisplayed()))
     }
 
@@ -247,10 +248,11 @@ class DashboardFragmentSelectionTest {
     fun keepUnselectedItemsOnDeleteClicked() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         boxDao.insertBox(AvisioBox(name = "B_1"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(1000))
         onView(withText("B_1")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
         onView(isRoot()).perform(waitFor(1000))
         onView(withText("F_1")).check(matches(isDisplayed()))
     }
@@ -263,8 +265,23 @@ class DashboardFragmentSelectionTest {
         onView(withText("B_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
         onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.fab_expand)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun cancelDeletionOnCancelButtonClicked() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("B_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
+        onView(isRoot()).perform(waitFor(1000))
+        onView(withText("F_1")).check(matches(isDisplayed()))
+        onView(withText("B_1")).check(matches(isDisplayed()))
     }
 
     private fun itemIsSelected(name: String) {

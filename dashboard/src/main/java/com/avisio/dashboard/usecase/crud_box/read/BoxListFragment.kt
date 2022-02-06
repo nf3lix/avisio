@@ -21,6 +21,7 @@ import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.usecase.MainActivity
+import com.avisio.dashboard.usecase.crud_box.common.ConfirmDeleteSelectedItemsDialog
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
@@ -291,9 +292,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun setupSelectedItemsActionButtons() {
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
         deleteSelectedItemsButton.setOnClickListener {
-            deleteAllSelectedItems()
-            hideSelectedItemsActionButtons()
-            fabExpand.visibility = View.VISIBLE
+            ConfirmDeleteSelectedItemsDialog.showDialog(this)
         }
         moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
     }
@@ -308,13 +307,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         moveSelectedItemsButton.visibility = View.GONE
     }
 
-    private fun deleteAllSelectedItems() {
+    fun deleteAllSelectedItems() {
         for(item in dashboardItemAdapter.selectedItems()) {
             when(item.type) {
                 DashboardItemType.FOLDER -> deleteFolder(item.id)
                 DashboardItemType.BOX -> deleteBox(item.id)
             }
         }
+        hideSelectedItemsActionButtons()
+        fabExpand.visibility = View.VISIBLE
     }
 
 }
