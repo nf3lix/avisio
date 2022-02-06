@@ -93,8 +93,23 @@ class DashboardFragmentFolderTest {
         onView(withText("FOLDER_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.action_delete_folder)).perform(click())
+        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withText("BOX_1")).check(matches(isDisplayed()))
         onView(withText("FOLDER_1")).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun cancelDeletionOnCancelClicked() {
+        boxDao.insertBox(AvisioBox(name = "BOX_1"))
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        boxDao.insertBox(AvisioBox(name = "NESTED_BOX", parentFolder = 1))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_delete_folder)).perform(click())
+        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("NESTED_BOX")).check(matches(isDisplayed()))
     }
 
     private fun testWithDepth(depth: Int) {

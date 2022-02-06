@@ -11,6 +11,7 @@
 
     <string name="fab_create_folder_label">Neuer Ordner</string>
     <string name="action_delete_folder">Ordner Löschen</string>
+    <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>

@@ -62,7 +62,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun selectSingleFolderOnLongClick() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(800))
         itemIsSelected("F_1")
@@ -113,6 +113,7 @@ class DashboardFragmentSelectionTest {
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         folderDao.insertFolder(AvisioFolder(id = 3, name = "F_3"))
 
+        onView(isRoot()).perform(waitFor(200))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         itemIsSelected("F_1")

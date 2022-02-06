@@ -23,6 +23,7 @@ import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
+import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -228,13 +229,17 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_delete_folder -> {
-                deleteCurrentFolder()
+                deleteFolderOnConfirm()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteCurrentFolder() {
+    private fun deleteFolderOnConfirm() {
+        ConfirmDeleteFolderDialog.showDialog(this)
+    }
+
+    fun deleteCurrentFolder() {
         if(currentFolderItem != null) {
             deleteFolder(currentFolderItem!!.id)
         }
