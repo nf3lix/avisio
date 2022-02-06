@@ -16,6 +16,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
+import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -78,6 +79,7 @@ class CreateFolderTest {
         onView(withId(R.id.fab_new_folder)).perform(click())
         onView(withId(R.id.folder_name_edit_text)).perform(typeText("F_3"))
         onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(isRoot()).perform(waitFor(100))
         onView(withText("F_2")).check(matches(isDisplayed()))
         onView(withText("F_3")).check(matches(isDisplayed()))
         Espresso.pressBack()

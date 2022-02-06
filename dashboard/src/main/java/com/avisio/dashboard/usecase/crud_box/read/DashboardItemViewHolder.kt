@@ -53,6 +53,7 @@ class DashboardItemViewHolder(
             unselect(listAdapter.currentList[listAdapter.selectedItemPos])
         } else {
             listAdapter.currentList[adapterPosition].selected = true
+            onClickListener.onItemSelected(adapterPosition)
         }
         listAdapter.notifyItemChanged(listAdapter.selectedItemPos)
     }

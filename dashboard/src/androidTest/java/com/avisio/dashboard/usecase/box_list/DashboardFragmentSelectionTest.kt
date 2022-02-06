@@ -20,6 +20,7 @@ import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.BackgroundColorMatcher.Companion.hasBackgroundColor
+import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.Is.`is`
@@ -178,6 +179,53 @@ class DashboardFragmentSelectionTest {
 
         onView(withText("F_1")).perform(click())
         onView(withText("F_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideUnexpandedFabMenuOnItemSelected() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withId(R.id.fab_expand)).check(matches(isGone()))
+    }
+
+    @Test
+    fun hideExpandedFabMenuOnItemSelected() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withId(R.id.fab_expand)).check(matches(isGone()))
+        onView(withId(R.id.fab_new_folder)).check(matches(isGone()))
+        onView(withId(R.id.fab_new_box)).check(matches(isGone()))
+    }
+
+    @Test
+    fun showExpandFabMenuButtonOnUnselectLastSelectedItem() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withText("F_1")).perform(click())
+        onView(withId(R.id.fab_expand)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showSelectedItemsActionButtonsOnSelectItem() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withId(R.id.btn_delete_all)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_move_all)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideSelectedItemsActionButtonsOnUnselectLastSelectedItem() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withText("F_1")).perform(click())
+        onView(withId(R.id.btn_delete_all)).check(matches(isGone()))
+        onView(withId(R.id.btn_move_all)).check(matches(isGone()))
     }
 
     private fun itemIsSelected(name: String) {

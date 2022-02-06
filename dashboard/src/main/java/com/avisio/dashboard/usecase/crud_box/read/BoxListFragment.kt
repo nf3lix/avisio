@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -39,6 +40,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private var fabMenuShown = false
     private lateinit var menu: Menu
+
+    private lateinit var deleteSelectedItemsButton: Button
+    private lateinit var moveSelectedItemsButton: Button
 
     private lateinit var fabCreateBox: ExtendedFloatingActionButton
     private lateinit var fabCreateFolder: ExtendedFloatingActionButton
@@ -78,6 +82,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         setupRecyclerView()
         setupBoxViewModel()
         closeFabMenu()
+        setupSelectedItemsActionButtons()
     }
 
     private fun setupRecyclerView() {
@@ -173,9 +178,16 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun onItemSelected(position: Int) {
+        closeFabMenu()
+        showSelectedItemsActionButtons()
+        fabExpand.visibility = View.GONE
     }
 
     override fun onItemUnselected(position: Int) {
+        if(dashboardItemAdapter.selectedItems().isEmpty()) {
+            hideSelectedItemsActionButtons()
+            fabExpand.visibility = View.VISIBLE
+        }
     }
 
     private fun openFolder(item: DashboardItem?) {
@@ -258,6 +270,21 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             }
         }
         return null
+    }
+
+    private fun setupSelectedItemsActionButtons() {
+        deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
+        moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
+    }
+
+    private fun showSelectedItemsActionButtons() {
+        deleteSelectedItemsButton.visibility = View.VISIBLE
+        moveSelectedItemsButton.visibility = View.VISIBLE
+    }
+
+    private fun hideSelectedItemsActionButtons() {
+        deleteSelectedItemsButton.visibility = View.GONE
+        moveSelectedItemsButton.visibility = View.GONE
     }
 
 }
