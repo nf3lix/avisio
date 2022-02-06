@@ -19,6 +19,7 @@ import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -83,6 +84,17 @@ class DashboardFragmentFolderTest {
         onView(withText("FOLDER_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.action_delete_folder)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun deleteFolderOnDeleteOptionSelected() {
+        boxDao.insertBox(AvisioBox(name = "BOX_1"))
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_delete_folder)).perform(click())
+        onView(withText("BOX_1")).check(matches(isDisplayed()))
+        onView(withText("FOLDER_1")).check(matches(not(isDisplayed())))
     }
 
     private fun testWithDepth(depth: Int) {

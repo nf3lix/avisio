@@ -23,6 +23,9 @@ interface FolderDao {
     @Delete
     fun deleteFolder(folder: AvisioFolder)
 
+    @Query("DELETE FROM folder WHERE id = :folderId")
+    fun deleteFolder(folderId: Long)
+
     @Query("SELECT id, parentFolder, 0 AS type, folderName AS name, -1 AS icon FROM folder UNION ALL SELECT id, folderId AS parentFolder, 1 AS type, name, icon FROM box")
     fun getAllDashboardItems(): LiveData<List<DashboardItem>>
 

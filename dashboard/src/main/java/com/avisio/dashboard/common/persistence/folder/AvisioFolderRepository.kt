@@ -17,4 +17,10 @@ class AvisioFolderRepository(application: Application) {
         }
     }
 
+    fun deleteFolder(folder: AvisioFolder) {
+        GlobalScope.launch {
+            folderDao.deleteFolder(folder.id)
+        }
+    }
+
 }

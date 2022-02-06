@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -12,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.setCurrentFolder
+import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
@@ -27,6 +30,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private lateinit var dashboardItemViewModel: DashboardItemViewModel
     private lateinit var dashboardItemAdapter: DashboardItemListAdapter
+    private lateinit var folderRepository: AvisioFolderRepository
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
@@ -56,6 +60,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabCreateBox = requireView().findViewById(R.id.fab_new_box)
         fabCreateFolder = requireView().findViewById(R.id.fab_new_folder)
         fabExpand = requireView().findViewById(R.id.fab_expand)
+        folderRepository = AvisioFolderRepository(requireActivity().application)
         (requireActivity() as MainActivity).setSupportActionBar(toolbar)
         (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(R.string.main_activity_app_bar_title)
         setHasOptionsMenu(true)
@@ -179,7 +184,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         this.menu = menu
         menu.clear()
         inflater.inflate(R.menu.menu_main, menu)
-        menu.findItem(R.id.action_delete_folder).isVisible = currentFolderItem != null
+        val deleteFolderOption = menu.findItem(R.id.action_delete_folder)
+        deleteFolderOption.isVisible = currentFolderItem != null
         val searchItem = menu.findItem(R.id.dashboard_list_search)
         val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -196,6 +202,22 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             }
         })
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_delete_folder -> {
+                deleteFolder()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteFolder() {
+        if(currentFolderItem != null) {
+            folderRepository.deleteFolder(AvisioFolder(id = currentFolderItem!!.id))
+        }
+        openParentFolder()
     }
 
     private fun setOnBackPressedDispatcher() {
