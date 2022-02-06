@@ -10,6 +10,7 @@
     <string name="fab_create_box_label">Neue Box</string>
 
     <string name="fab_create_folder_label">Neuer Ordner</string>
+    <string name="action_delete_folder">Ordner Löschen</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
@@ -91,7 +92,7 @@
     <string name="learn_activity_result_ok">Ok</string>
     <string name="learn_activity_result_easy">Einfach</string>
 
-    <string name="search_box_title">search box</string>
+    <string name="search_dashboard_item_title">search box</string>
 
     <string name="remaining_time_minutes_singular">min</string>
     <string name="remaining_time_hours_singular">h</string>

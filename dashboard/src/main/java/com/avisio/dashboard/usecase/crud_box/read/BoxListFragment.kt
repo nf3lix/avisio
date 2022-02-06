@@ -30,11 +30,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
-    private var currentFolder: Long? = null
     private var currentFolderItem: DashboardItem? = null
     private var allItems = listOf<DashboardItem>()
 
     private var fabMenuShown = false
+    private lateinit var menu: Menu
 
     private lateinit var fabCreateBox: ExtendedFloatingActionButton
     private lateinit var fabCreateFolder: ExtendedFloatingActionButton
@@ -98,18 +98,14 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun filterItemsOfCurrentFolder(itemList: List<DashboardItem>): List<DashboardItem> {
         val list = arrayListOf<DashboardItem>()
         for(item in itemList) {
-            if(item.parentFolder == currentFolder) list.add(item)
+            if(item.parentFolder == currentFolderItem?.id) list.add(item)
         }
         return list
     }
 
     private fun setupFab() {
         fabExpand.setOnClickListener {
-            if(!fabMenuShown) {
-                showFabMenu()
-            } else {
-                closeFabMenu()
-            }
+            toggleFabMenu()
         }
 
         fabCreateBox.setOnClickListener {
@@ -122,6 +118,14 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             startActivity(Intent(intent))
         }
 
+    }
+
+    private fun toggleFabMenu() {
+        if(!fabMenuShown) {
+            showFabMenu()
+        } else {
+            closeFabMenu()
+        }
     }
 
     private fun showFabMenu() {
@@ -165,16 +169,18 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun openFolder(item: DashboardItem?) {
         requireActivity().runOnUiThread {
-            currentFolder = item?.id
             currentFolderItem = item
             dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
+            menu.findItem(R.id.action_delete_folder).isVisible = item != null
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
         menu.clear()
         inflater.inflate(R.menu.menu_main, menu)
-        val searchItem = menu.findItem(R.id.box_list_search)
+        menu.findItem(R.id.action_delete_folder).isVisible = currentFolderItem != null
+        val searchItem = menu.findItem(R.id.dashboard_list_search)
         val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         searchItem.actionView = searchView
@@ -195,7 +201,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun setOnBackPressedDispatcher() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val searchView = requireView().findViewById<SearchView>(R.id.box_list_search)
+                val searchView = requireView().findViewById<SearchView>(R.id.dashboard_list_search)
                 if(!searchView.isIconified) {
                     closeSearchView(searchView)
                     return

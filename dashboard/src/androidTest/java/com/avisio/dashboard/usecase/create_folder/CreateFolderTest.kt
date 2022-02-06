@@ -14,7 +14,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import org.junit.After
@@ -25,7 +24,6 @@ import org.junit.Test
 class CreateFolderTest {
 
     private var intent: Intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-    private lateinit var boxDao: AvisioBoxDao
     private lateinit var database: AppDatabase
 
     @get:Rule

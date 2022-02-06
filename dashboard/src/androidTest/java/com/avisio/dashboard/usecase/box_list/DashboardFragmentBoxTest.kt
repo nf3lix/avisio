@@ -17,7 +17,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.AvisioBox
-import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.google.android.material.textview.MaterialTextView
@@ -59,12 +58,12 @@ class DashboardFragmentBoxTest {
 
     @Test
     fun searchViewIsDisplayed() {
-        onView(withId(R.id.box_list_search)).check(matches(isDisplayed()))
+        onView(withId(R.id.dashboard_list_search)).check(matches(isDisplayed()))
     }
 
     @Test
     fun findFilteredItems() {
-        onView(withId(R.id.box_list_search)).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         onView(allOf(withText("AAA"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
         typeInSearchView("A")
@@ -75,14 +74,14 @@ class DashboardFragmentBoxTest {
 
     @Test(expected = NoMatchingViewException::class)
     fun hideNonMatchingItems() {
-        onView(withId(R.id.box_list_search)).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(not(isDisplayed())))
     }
 
     @Test
     fun resetFilter() {
-        onView(withId(R.id.box_list_search)).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         resetSearchView()
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
@@ -92,7 +91,7 @@ class DashboardFragmentBoxTest {
 
     @Test
     fun resetSearchCriteriaOnBackPressed() {
-        onView(withId(R.id.box_list_search)).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         Espresso.pressBack()
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
@@ -102,7 +101,7 @@ class DashboardFragmentBoxTest {
 
     @Test(expected = NoMatchingViewException::class)
     fun hideSearchAutoCompleteOnBackPressed() {
-        onView(withId(R.id.box_list_search)).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         Espresso.pressBack()
         Espresso.pressBack()

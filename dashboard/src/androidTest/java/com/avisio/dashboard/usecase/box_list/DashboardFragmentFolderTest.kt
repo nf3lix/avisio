@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -53,31 +54,38 @@ class DashboardFragmentFolderTest {
     }
 
     @Test
-    fun depth1Test() {
-        depthTest(1)
+    fun folderDepthTest() {
+        testWithDepth(1)
+        testWithDepth(2)
+        testWithDepth(3)
+        testWithDepth(5)
+        testWithDepth(10)
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun deleteFolderOptionNotVisibleInRootFolder() {
+        onView(withContentDescription("More options")).perform(click())
+        onView(withId(R.id.action_delete_folder)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun deleteFolderOptionNotVisibleOnReturnToRootFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        Espresso.pressBack()
+        onView(withContentDescription("More options")).perform(click())
+        onView(withId(R.id.action_delete_folder)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun depth2Test() {
-        depthTest(2)
+    fun deleteFolderOptionVisibleInNestedFolders() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_delete_folder)).check(matches(isDisplayed()))
     }
 
-    @Test
-    fun depth3Test() {
-        depthTest(3)
-    }
-
-    @Test
-    fun depth5Test() {
-        depthTest(5)
-    }
-
-    @Test
-    fun depth10Test() {
-        depthTest(10)
-    }
-
-    private fun depthTest(depth: Int) {
+    private fun testWithDepth(depth: Int) {
         database.clearAllTables()
         boxDao.deleteAll()
         folderDao.deleteAll()
