@@ -136,6 +136,7 @@ class DashboardFragmentSelectionTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         folderDao.insertFolder(AvisioFolder(id = 3, name = "F_3"))
+        onView(isRoot()).perform(waitFor(200))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("F_2")).perform(longClick())

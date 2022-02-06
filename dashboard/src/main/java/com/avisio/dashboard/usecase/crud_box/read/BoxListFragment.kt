@@ -24,6 +24,7 @@ import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.list_search.SearchQueryListener
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -208,17 +209,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         searchItem.actionView = searchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(query)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(newText)
-                return false
-            }
-        })
+        searchView.setOnQueryTextListener(SearchQueryListener(dashboardItemAdapter))
         super.onCreateOptionsMenu(menu, inflater)
     }
 
