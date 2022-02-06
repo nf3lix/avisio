@@ -42,8 +42,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private var fabMenuShown = false
     private lateinit var menu: Menu
 
-    private lateinit var deleteSelectedItemsButton: Button
-    private lateinit var moveSelectedItemsButton: Button
+    private lateinit var deleteSelectedItemsButton: ExtendedFloatingActionButton
+    private lateinit var moveSelectedItemsButton: ExtendedFloatingActionButton
 
     private lateinit var fabCreateBox: ExtendedFloatingActionButton
     private lateinit var fabCreateFolder: ExtendedFloatingActionButton

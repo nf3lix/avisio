@@ -84,27 +84,33 @@
         app:layout_constraintVertical_bias="0.989"
         android:contentDescription="@string/box_list_fab_content_description" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_move_all"
+        android:text="@string/delete_selected_dashboard_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btn_delete_all"
-        android:id="@+id/btn_move_all"
-        android:layout_gravity="bottom"
         android:visibility="gone"
-        android:text="@string/delete_selected_dashboard_items" />
-
-    <Button
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:icon="@drawable/ic_move_item"
+        android:contentDescription="@string/delete_selected_dashboard_items" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_delete_all"
+        android:text="@string/delete_selected_dashboard_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btn_move_all"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/btn_delete_all"
-        android:layout_gravity="bottom"
         android:visibility="gone"
-        android:text="@string/move_selected_dashboard_items" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:icon="@drawable/ic_delete_item"
+        android:contentDescription="@string/delete_selected_dashboard_items" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
