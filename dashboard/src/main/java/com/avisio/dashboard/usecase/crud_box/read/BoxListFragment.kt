@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -12,10 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.setCurrentFolder
+import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
@@ -30,6 +33,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private lateinit var dashboardItemViewModel: DashboardItemViewModel
     private lateinit var dashboardItemAdapter: DashboardItemListAdapter
     private lateinit var folderRepository: AvisioFolderRepository
+    private lateinit var boxRepository: AvisioBoxRepository
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
@@ -63,6 +67,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabCreateFolder = requireView().findViewById(R.id.fab_new_folder)
         fabExpand = requireView().findViewById(R.id.fab_expand)
         folderRepository = AvisioFolderRepository(requireActivity().application)
+        boxRepository = AvisioBoxRepository(requireActivity().application)
         (requireActivity() as MainActivity).setSupportActionBar(toolbar)
         (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(R.string.main_activity_app_bar_title)
         setHasOptionsMenu(true)
@@ -223,17 +228,25 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_delete_folder -> {
-                deleteFolder()
+                deleteCurrentFolder()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteFolder() {
+    private fun deleteCurrentFolder() {
         if(currentFolderItem != null) {
-            folderRepository.deleteFolder(AvisioFolder(id = currentFolderItem!!.id))
+            deleteFolder(currentFolderItem!!.id)
         }
         openParentFolder()
+    }
+
+    private fun deleteFolder(folderId: Long) {
+        folderRepository.deleteFolder(AvisioFolder(id = folderId))
+    }
+
+    private fun deleteBox(boxId: Long) {
+        boxRepository.deleteBox(AvisioBox(id = boxId))
     }
 
     private fun setOnBackPressedDispatcher() {
@@ -272,6 +285,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun setupSelectedItemsActionButtons() {
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
+        deleteSelectedItemsButton.setOnClickListener {
+            deleteAllSelectedItems()
+            hideSelectedItemsActionButtons()
+            fabExpand.visibility = View.VISIBLE
+        }
         moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
     }
 
@@ -283,6 +301,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun hideSelectedItemsActionButtons() {
         deleteSelectedItemsButton.visibility = View.GONE
         moveSelectedItemsButton.visibility = View.GONE
+    }
+
+    private fun deleteAllSelectedItems() {
+        for(item in dashboardItemAdapter.selectedItems()) {
+            when(item.type) {
+                DashboardItemType.FOLDER -> deleteFolder(item.id)
+                DashboardItemType.BOX -> deleteBox(item.id)
+            }
+        }
     }
 
 }

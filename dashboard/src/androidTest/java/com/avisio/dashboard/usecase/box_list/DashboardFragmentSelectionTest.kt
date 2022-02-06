@@ -230,6 +230,42 @@ class DashboardFragmentSelectionTest {
         onView(withId(R.id.btn_move_all)).check(matches(isGone()))
     }
 
+    @Test(expected = NoMatchingViewException::class)
+    fun deleteAllSelectedItemsOnActionButtonClicked() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(100))
+        onView(withText("F_1")).perform(longClick())
+        onView(withText("B_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(100))
+        onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(withText("F_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun keepUnselectedItemsOnDeleteClicked() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("B_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(isRoot()).perform(waitFor(1000))
+        onView(withText("F_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showFabMenuOnDeleteClicked() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("B_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_delete_all)).perform(click())
+        onView(isRoot()).perform(waitFor(1000))
+        onView(withId(R.id.fab_expand)).check(matches(isDisplayed()))
+    }
+
     private fun itemIsSelected(name: String) {
         onView(allOf(withChild(withChild(withText(name))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.primaryLightColor)))
     }

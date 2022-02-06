@@ -86,7 +86,7 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_move_all"
-        android:text="@string/delete_selected_dashboard_items"
+        android:text="@string/move_selected_dashboard_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
@@ -97,7 +97,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
         app:icon="@drawable/ic_move_item"
-        android:contentDescription="@string/delete_selected_dashboard_items" />
+        android:contentDescription="@string/move_selected_dashboard_items" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_delete_all"
