@@ -11,15 +11,33 @@ class DashboardItemListAdapter(
     private val onClickListener: DashboardItemOnClickListener
 ) : ListAdapter<DashboardItem, DashboardItemViewHolder>(diffCallback) {
 
+    companion object {
+        const val NO_ITEM_SELECTED: Int = -1
+    }
+
     private var initialList = currentList
+    var selectedItemPos = NO_ITEM_SELECTED
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardItemViewHolder {
-        return DashboardItemViewHolder.create(parent, onClickListener)
+        return DashboardItemViewHolder.create(parent, this, onClickListener)
     }
 
     override fun onBindViewHolder(holder: DashboardItemViewHolder, position: Int) {
         val currentItem = getItem(position)
+        if(position == selectedItemPos) {
+            holder.select(currentList[position])
+        } else {
+            holder.unselect(currentList[position])
+        }
         holder.bind(currentItem)
+    }
+
+    fun selectedItems(): List<DashboardItem> {
+        val selectedItems = arrayListOf<DashboardItem>()
+        for(dashboardItem in currentList) {
+            if(dashboardItem.selected) selectedItems.add(dashboardItem)
+        }
+        return selectedItems
     }
 
     class DashboardItemDifference : DiffUtil.ItemCallback<DashboardItem>() {
@@ -49,6 +67,8 @@ class DashboardItemListAdapter(
 
     interface DashboardItemOnClickListener {
         suspend fun onClick(index: Int)
+        fun onItemSelected(position: Int)
+        fun onItemUnselected(position: Int)
     }
 
     fun updateList(list: List<DashboardItem>?) {

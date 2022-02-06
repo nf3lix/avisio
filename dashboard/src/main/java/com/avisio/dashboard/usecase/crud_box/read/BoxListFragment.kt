@@ -172,6 +172,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
     }
 
+    override fun onItemSelected(position: Int) {
+    }
+
+    override fun onItemUnselected(position: Int) {
+    }
+
     private fun openFolder(item: DashboardItem?) {
         requireActivity().runOnUiThread {
             currentFolderItem = item

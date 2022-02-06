@@ -67,7 +67,7 @@ class BoxActivityCreateCardTest {
         onView(allOf(withParent(withParent(withParent(withParent(withParent(withClassName(`is`(
             QuestionFlexBox::class.java.name))))))),
             withClassName(`is`(EditText::class.java.name))))
-            .perform(typeText("QUESTION"))
+            .perform(typeText("Q_1"))
         onView(withId(R.id.fab_edit_card)).perform(click())
         onView(withResourceName("card_text_view")).check(matches(isDisplayed()))
     }

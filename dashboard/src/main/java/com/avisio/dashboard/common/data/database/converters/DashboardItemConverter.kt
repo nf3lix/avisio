@@ -17,4 +17,12 @@ class DashboardItemConverter {
         return DashboardItemType.values()[ordinal]
     }
 
+    @TypeConverter
+    fun intToSelectedBoolean(selected: Int): Boolean {
+        return when(selected) {
+            1 -> true
+            else -> false
+        }
+    }
+
 }

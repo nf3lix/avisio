@@ -14,7 +14,7 @@ class IsGoneMatcher : TypeSafeDiagnosingMatcher<View>() {
     }
 
     override fun describeTo(description: Description) {
-        description.appendText("view is gone");
+        description.appendText("view is gone")
     }
 
     override fun matchesSafely(item: View, mismatchDescription: Description?): Boolean {
