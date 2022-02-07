@@ -45,6 +45,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private var fabMenuShown = false
     private lateinit var menu: Menu
 
+    private lateinit var editSelectedItemButton: ExtendedFloatingActionButton
     private lateinit var deleteSelectedItemsButton: ExtendedFloatingActionButton
     private lateinit var moveSelectedItemsButton: ExtendedFloatingActionButton
 
@@ -191,6 +192,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun onItemUnselected(position: Int) {
+        toggleEditSelectedItemButtonVisibility()
         if(dashboardItemAdapter.selectedItems().isEmpty()) {
             hideSelectedItemsActionButtons()
             fabExpand.visibility = View.VISIBLE
@@ -304,6 +306,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun setupSelectedItemsActionButtons() {
+        editSelectedItemButton = requireView().findViewById(R.id.btn_edit_item)
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
         deleteSelectedItemsButton.setOnClickListener {
             ConfirmDeleteSelectedItemsDialog.showDialog(this)
@@ -312,13 +315,23 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun showSelectedItemsActionButtons() {
+        toggleEditSelectedItemButtonVisibility()
         deleteSelectedItemsButton.visibility = View.VISIBLE
         moveSelectedItemsButton.visibility = View.VISIBLE
     }
 
     private fun hideSelectedItemsActionButtons() {
+        editSelectedItemButton.visibility = View.GONE
         deleteSelectedItemsButton.visibility = View.GONE
         moveSelectedItemsButton.visibility = View.GONE
+    }
+
+    private fun toggleEditSelectedItemButtonVisibility() {
+        if(dashboardItemAdapter.selectedItems().size == 1) {
+            editSelectedItemButton.visibility = View.VISIBLE
+        } else {
+            editSelectedItemButton.visibility = View.GONE
+        }
     }
 
     fun deleteAllSelectedItems() {

@@ -286,6 +286,38 @@ class DashboardFragmentSelectionTest {
         onView(withText("B_1")).check(matches(isDisplayed()))
     }
 
+    @Test
+    fun showEditButtonIfOneItemIsSelected() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("B_1")).perform(longClick())
+        onView(withId(R.id.btn_edit_item)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideEditButtonOnUnselectItem() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("F_1")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_edit_item)).check(matches(isGone()))
+    }
+
+    @Test
+    fun hideEditButtonIfMoreThanOneItemIsSelected() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("F_2")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_edit_item)).check(matches(isGone()))
+    }
+
     private fun itemIsSelected(name: String) {
         onView(allOf(withChild(withChild(withText(name))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.primaryLightColor)))
     }

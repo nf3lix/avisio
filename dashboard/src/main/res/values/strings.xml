@@ -101,6 +101,7 @@
     <string name="finish_selection_menu_item">Auswahl beenden</string>
     <string name="delete_selected_dashboard_items">Löschen</string>
     <string name="move_selected_dashboard_items">Verschieben</string>
+    <string name="edit_selected_dashboard_items">Bearbeiten</string>
 
     <string name="remaining_time_minutes_singular">min</string>
     <string name="remaining_time_hours_singular">h</string>
