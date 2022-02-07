@@ -6,8 +6,7 @@ import androidx.cardview.widget.CardView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.longClick
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -316,6 +315,32 @@ class DashboardFragmentSelectionTest {
         onView(withText("F_2")).perform(click())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_edit_item)).check(matches(isGone()))
+    }
+
+    @Test
+    fun editFolderOnEditItemActionButtonClicked() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("F_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.btn_edit_item)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("_1"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText("F_1_1")).check(matches(isDisplayed()))
+        onView(withContentDescription("More options")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun editBoxOnEditItemActionButtonClicked() {
+        boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("B_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.btn_edit_item)).perform(click())
+        onView(withId(R.id.box_name_edit_text)).perform(typeText("_1"))
+        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withText("B_1_1")).check(matches(isDisplayed()))
+        onView(withContentDescription("More options")).check(matches(isDisplayed()))
     }
 
     private fun itemIsSelected(name: String) {

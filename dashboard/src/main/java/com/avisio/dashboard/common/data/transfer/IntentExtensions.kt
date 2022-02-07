@@ -83,3 +83,11 @@ fun Bundle.getCRUDWorkflow(): CRUD {
     val crudId = getInt("CRUD_WORKFLOW", CRUD.CREATE.ordinal)
     return CRUD.values()[crudId]
 }
+
+fun Intent.editJobFromOuterScope(outerScope: Boolean) {
+    putExtra(IntentKeys.EDIT_JOB_FROM_OUTER_SCOPE, outerScope)
+}
+
+fun Bundle.isEditJobFromOuterScope(): Boolean {
+    return getBoolean(IntentKeys.EDIT_JOB_FROM_OUTER_SCOPE, false)
+}

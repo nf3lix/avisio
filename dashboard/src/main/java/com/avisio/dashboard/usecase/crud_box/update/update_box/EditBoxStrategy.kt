@@ -20,9 +20,11 @@ class EditBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrate
     override fun saveBox() {
         val updatedBox = getUpdatedBox()
         fragment.boxRepository.updateBox(getUpdatedBox())
-        val intent = Intent(fragment.requireContext(), BoxActivity::class.java)
-        intent.setBoxObject(updatedBox)
-        fragment.requireActivity().startActivity(intent)
+        if(!fragment.isEditJobFromOuterScope) {
+            val intent = Intent(fragment.requireContext(), BoxActivity::class.java)
+            intent.setBoxObject(updatedBox)
+            fragment.requireActivity().startActivity(intent)
+        }
         fragment.requireActivity().finish()
         Toast.makeText(fragment.requireContext(), R.string.edit_box_successful, Toast.LENGTH_LONG).show()
     }

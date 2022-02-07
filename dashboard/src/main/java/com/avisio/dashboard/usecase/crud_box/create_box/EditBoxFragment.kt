@@ -11,6 +11,7 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.data.transfer.getCurrentFolder
+import com.avisio.dashboard.common.data.transfer.isEditJobFromOuterScope
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.BoxIconSelectionPopup
@@ -32,6 +33,7 @@ class EditBoxFragment : Fragment() {
     internal lateinit var box: AvisioBox
     internal lateinit var currentFolder: DashboardItem
     internal var workflow: CRUD = CRUD.CREATE
+    internal var isEditJobFromOuterScope = false
 
     lateinit var boxFragmentStrategy: BoxFragmentStrategy
     internal lateinit var boxNameTextInputLayout: TextInputLayout
@@ -49,8 +51,8 @@ class EditBoxFragment : Fragment() {
         arguments?.let {
             box = it.getBoxObject()!!
             val fetchedFolder = it.getCurrentFolder()
-            currentFolder =
-                fetchedFolder ?: DashboardItem(id = -1, -1, DashboardItemType.FOLDER, "none", -1)
+            currentFolder = fetchedFolder ?: DashboardItem(id = -1, -1, DashboardItemType.FOLDER, "none", -1)
+            isEditJobFromOuterScope = it.isEditJobFromOuterScope()
             workflow = CRUD.values()[it.getInt(BOX_CRUD_WORKFLOW)]
             boxFragmentStrategy = BoxFragmentStrategy.getStrategy(this)
         }

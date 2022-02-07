@@ -16,6 +16,7 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
+import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
@@ -26,6 +27,7 @@ import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -240,7 +242,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 deleteFolderOnConfirm()
             }
             R.id.action_rename_folder -> {
-                startEditFolderActivity()
+                startEditFolderActivity(currentFolder)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -250,9 +252,16 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         ConfirmDeleteFolderDialog.showDialog(this)
     }
 
-    private fun startEditFolderActivity() {
+    private fun startEditFolderActivity(folder: DashboardItem?) {
         val intent = Intent(requireContext(), EditFolderActivity::class.java)
-        intent.setCurrentFolder(currentFolder)
+        intent.setCurrentFolder(folder)
+        startActivity(intent)
+    }
+
+    private fun startEditBoxActivity(box: DashboardItem) {
+        val box = AvisioBox(id = box.id, name = box.name!!, parentFolder = box.parentFolder)
+        val intent = Intent(requireContext(), EditBoxActivity::class.java)
+        intent.setBoxObject(box)
         startActivity(intent)
     }
 
@@ -307,6 +316,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun setupSelectedItemsActionButtons() {
         editSelectedItemButton = requireView().findViewById(R.id.btn_edit_item)
+        editSelectedItemButton.setOnClickListener {
+            val selectedItem = dashboardItemAdapter.selectedItems()[0]
+            when(selectedItem.type) {
+                DashboardItemType.FOLDER -> startEditFolderActivity(selectedItem)
+                DashboardItemType.BOX -> startEditBoxActivity(selectedItem)
+            }
+        }
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
         deleteSelectedItemsButton.setOnClickListener {
             ConfirmDeleteSelectedItemsDialog.showDialog(this)
