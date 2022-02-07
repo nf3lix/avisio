@@ -169,6 +169,7 @@ class DashboardFragmentSelectionTest {
     fun leaveSelectModeOnUnselectLastSelectedItem() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
+        onView(isRoot()).perform(waitFor(200))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("F_2")).perform(longClick())
@@ -187,6 +188,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun hideUnexpandedFabMenuOnItemSelected() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
         onView(withId(R.id.fab_expand)).check(matches(isGone()))
@@ -235,7 +237,7 @@ class DashboardFragmentSelectionTest {
     fun deleteAllSelectedItemsOnActionButtonClicked() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         boxDao.insertBox(AvisioBox(name = "B_1"))
-        onView(isRoot()).perform(waitFor(100))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(withText("B_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
@@ -274,9 +276,9 @@ class DashboardFragmentSelectionTest {
     fun cancelDeletionOnCancelButtonClicked() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         boxDao.insertBox(AvisioBox(name = "B_1"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("B_1")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.btn_delete_all)).perform(click())
         onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
         onView(isRoot()).perform(waitFor(1000))

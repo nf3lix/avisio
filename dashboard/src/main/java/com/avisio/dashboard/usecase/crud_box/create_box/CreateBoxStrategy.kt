@@ -20,10 +20,26 @@ class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStra
     }
 
     private fun getBoxToCreate(): AvisioBox {
+        if(fragment.currentFolder.id == -1L) {
+            return boxInRootFolder()
+        }
+        return boxInNestedFolder()
+    }
+
+    private fun boxInRootFolder(): AvisioBox {
         return AvisioBox(
             name = fragment.nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
-            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int)
+            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int),
+        )
+    }
+
+    private fun boxInNestedFolder(): AvisioBox {
+        return AvisioBox(
+            name = fragment.nameInput.text.toString(),
+            createDate = Date(System.currentTimeMillis()),
+            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int),
+            parentFolder = fragment.currentFolder.id
         )
     }
 

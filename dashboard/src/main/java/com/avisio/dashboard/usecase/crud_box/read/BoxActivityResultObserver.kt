@@ -13,8 +13,10 @@ import androidx.lifecycle.LifecycleOwner
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.setBoxObject
+import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

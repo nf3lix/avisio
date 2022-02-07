@@ -9,8 +9,11 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.common.data.transfer.getCurrentFolder
+import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.workflow.CRUD.*
 import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 
 class EditBoxActivity : AppCompatActivity() {
 

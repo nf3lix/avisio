@@ -124,7 +124,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
 
         fabCreateBox.setOnClickListener {
-            startActivity(Intent(context, CreateBoxActivity::class.java))
+            val intent = Intent(context, CreateBoxActivity::class.java)
+            intent.setCurrentFolder(currentFolder)
+            startActivity(intent)
         }
 
         fabCreateFolder.setOnClickListener {

@@ -20,6 +20,7 @@ import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import com.squareup.javawriter.JavaWriter.type
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
@@ -157,6 +158,34 @@ class DashboardFragmentFolderTest {
         onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("NESTED_BOX")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun createBoxInNestedFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_box)).perform(click())
+        onView(withId(R.id.box_name_edit_text)).perform(typeText("B_1"))
+        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withText("B_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun editBoxInNestedFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        boxDao.insertBox(AvisioBox(name = "BOX_1", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withText("BOX_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.box_activity_menu_edit)).perform(click())
+        onView(withId(R.id.box_name_edit_text)).perform(typeText("_1"))
+        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withText("BOX_1_1")).check(matches(isDisplayed()))
+        onView(withContentDescription("More options")).check(matches(isDisplayed()))
+        Espresso.pressBack()
+        onView(withText("BOX_1_1")).check(matches(isDisplayed()))
     }
 
     private fun testWithDepth(depth: Int) {

@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.common.data.transfer.getCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.BoxIconSelectionPopup
 import com.avisio.dashboard.usecase.crud_box.common.ResetInputErrorTextWatcher
 import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.BoxFragmentStrategy
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.GlobalScope
@@ -27,6 +30,7 @@ class EditBoxFragment : Fragment() {
     }
 
     internal lateinit var box: AvisioBox
+    internal lateinit var currentFolder: DashboardItem
     internal var workflow: CRUD = CRUD.CREATE
 
     lateinit var boxFragmentStrategy: BoxFragmentStrategy
@@ -44,6 +48,9 @@ class EditBoxFragment : Fragment() {
         }
         arguments?.let {
             box = it.getBoxObject()!!
+            val fetchedFolder = it.getCurrentFolder()
+            currentFolder =
+                fetchedFolder ?: DashboardItem(id = -1, -1, DashboardItemType.FOLDER, "none", -1)
             workflow = CRUD.values()[it.getInt(BOX_CRUD_WORKFLOW)]
             boxFragmentStrategy = BoxFragmentStrategy.getStrategy(this)
         }
