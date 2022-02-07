@@ -19,6 +19,7 @@ abstract class FolderFragmentStrategy(private val fragment: EditFolderFragment, 
     }
 
     abstract fun saveFolder()
+    abstract fun fillFolderInformation()
 
     fun handleInput() {
         when(hasValidInput()) {

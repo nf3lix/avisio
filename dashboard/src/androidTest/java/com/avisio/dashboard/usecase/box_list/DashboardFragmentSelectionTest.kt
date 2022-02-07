@@ -113,7 +113,7 @@ class DashboardFragmentSelectionTest {
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         folderDao.insertFolder(AvisioFolder(id = 3, name = "F_3"))
 
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(1000))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         itemIsSelected("F_1")
@@ -261,9 +261,9 @@ class DashboardFragmentSelectionTest {
     fun showFabMenuOnDeleteClicked() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         boxDao.insertBox(AvisioBox(name = "B_1"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("B_1")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.btn_delete_all)).perform(click())
         onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
         onView(isRoot()).perform(waitFor(1000))

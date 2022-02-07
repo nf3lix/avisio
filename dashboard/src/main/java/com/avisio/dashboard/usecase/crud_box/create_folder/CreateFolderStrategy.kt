@@ -14,6 +14,8 @@ class CreateFolderStrategy(private val fragment: EditFolderFragment)
         Toast.makeText(fragment.requireContext(), R.string.create_folder_success, Toast.LENGTH_LONG).show()
     }
 
+    override fun fillFolderInformation() { }
+
     private fun getFolderToCreate(): AvisioFolder {
         if(fragment.dashboardItem.parentFolder == -1L) {
             return AvisioFolder(name = fragment.nameInput.text.toString())

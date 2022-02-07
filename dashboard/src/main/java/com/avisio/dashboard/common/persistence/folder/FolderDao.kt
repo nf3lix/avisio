@@ -38,4 +38,7 @@ interface FolderDao {
     @Query("DELETE FROM folder")
     fun deleteAll()
 
+    @Query("UPDATE folder SET folderName = :folderName WHERE id = :folderId")
+    fun updateFolderName(folderId: Long, folderName: String)
+
 }

@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -27,6 +26,7 @@ import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -39,7 +39,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
-    private var currentFolderItem: DashboardItem? = null
+    private var currentFolder: DashboardItem? = null
     private var allItems = listOf<DashboardItem>()
 
     private var fabMenuShown = false
@@ -113,7 +113,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun filterItemsOfCurrentFolder(itemList: List<DashboardItem>): List<DashboardItem> {
         val list = arrayListOf<DashboardItem>()
         for(item in itemList) {
-            if(item.parentFolder == currentFolderItem?.id) list.add(item)
+            if(item.parentFolder == currentFolder?.id) list.add(item)
         }
         return list
     }
@@ -129,7 +129,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
         fabCreateFolder.setOnClickListener {
             val intent = Intent(context, CreateFolderActivity::class.java)
-            intent.setCurrentFolder(currentFolderItem)
+            intent.setCurrentFolder(currentFolder)
             startActivity(Intent(intent))
         }
 
@@ -197,9 +197,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun openFolder(item: DashboardItem?) {
         requireActivity().runOnUiThread {
-            currentFolderItem = item
+            currentFolder = item
             dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
             menu.findItem(R.id.action_delete_folder).isVisible = item != null
+            menu.findItem(R.id.action_rename_folder).isVisible = item != null
         }
     }
 
@@ -208,7 +209,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         menu.clear()
         inflater.inflate(R.menu.menu_main, menu)
         val deleteFolderOption = menu.findItem(R.id.action_delete_folder)
-        deleteFolderOption.isVisible = currentFolderItem != null
+        deleteFolderOption.isVisible = currentFolder != null
+        val renameFolderOption = menu.findItem(R.id.action_rename_folder)
+        renameFolderOption.isVisible = currentFolder != null
         val searchItem = menu.findItem(R.id.dashboard_list_search)
         val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
@@ -232,6 +235,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             R.id.action_delete_folder -> {
                 deleteFolderOnConfirm()
             }
+            R.id.action_rename_folder -> {
+                startEditFolderActivity()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -240,9 +246,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         ConfirmDeleteFolderDialog.showDialog(this)
     }
 
+    private fun startEditFolderActivity() {
+        val intent = Intent(requireContext(), EditFolderActivity::class.java)
+        intent.setCurrentFolder(currentFolder)
+        startActivity(intent)
+    }
+
     fun deleteCurrentFolder() {
-        if(currentFolderItem != null) {
-            deleteFolder(currentFolderItem!!.id)
+        if(currentFolder != null) {
+            deleteFolder(currentFolder!!.id)
         }
         openParentFolder()
     }
@@ -279,8 +291,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun getParentFolder(): DashboardItem? {
-        if(currentFolderItem == null) return null
-        val parentFolderId = currentFolderItem!!.parentFolder
+        if(currentFolder == null) return null
+        val parentFolderId = currentFolder!!.parentFolder
         for(item in allItems) {
             if(item.id == parentFolderId && item.type == DashboardItemType.FOLDER) {
                 return item

@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -19,6 +19,7 @@ import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import com.squareup.javawriter.JavaWriter.type
 import org.hamcrest.core.IsNot.not
 import org.junit.After
 import org.junit.Before
@@ -87,6 +88,29 @@ class DashboardFragmentFolderTest {
     }
 
     @Test(expected = NoMatchingViewException::class)
+    fun renameFolderOptionNotVisibleInRootFolder() {
+        onView(withContentDescription("More options")).perform(click())
+        onView(withId(R.id.action_rename_folder)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun renameFolderOptionNotVisibleOnReturnToRootFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        Espresso.pressBack()
+        onView(withContentDescription("More options")).perform(click())
+        onView(withId(R.id.action_rename_folder)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun renameFolderOptionVisibleInNestedFolders() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_rename_folder)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
     fun deleteFolderOnDeleteOptionSelected() {
         boxDao.insertBox(AvisioBox(name = "BOX_1"))
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
@@ -97,6 +121,29 @@ class DashboardFragmentFolderTest {
         onView(isRoot()).perform(waitFor(200))
         onView(withText("BOX_1")).check(matches(isDisplayed()))
         onView(withText("FOLDER_1")).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun renameFolderOnNewFolderNameTyped() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_rename_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("_TEST"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        Espresso.pressBack()
+        onView(withText("FOLDER_1_TEST")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showErrorIfNewFolderNameIsEmpty() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withContentDescription("More options")).perform(click())
+        onView(withText(R.string.action_rename_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(clearText())
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText(R.string.no_folder_name_specified)).check(matches(isDisplayed()))
     }
 
     @Test

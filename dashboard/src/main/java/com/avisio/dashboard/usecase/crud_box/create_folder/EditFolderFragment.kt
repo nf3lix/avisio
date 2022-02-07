@@ -46,6 +46,7 @@ class EditFolderFragment : Fragment() {
         super.onStart()
         setTitle()
         setupViews()
+        folderFragmentStrategy.fillFolderInformation()
     }
 
     private fun setTitle() {

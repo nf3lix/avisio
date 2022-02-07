@@ -23,4 +23,10 @@ class AvisioFolderRepository(application: Application) {
         }
     }
 
+    fun updateFolderName(folder: AvisioFolder) {
+        GlobalScope.launch {
+            folderDao.updateFolderName(folder.id, folder.name)
+        }
+    }
+
 }
