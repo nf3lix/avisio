@@ -18,6 +18,8 @@ class DashboardItemListAdapter(
     private var initialList = currentList
     var selectedItemPos = NO_ITEM_SELECTED
 
+    private var allItems = listOf<DashboardItem>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardItemViewHolder {
         return DashboardItemViewHolder.create(parent, this, onClickListener)
     }
@@ -62,7 +64,7 @@ class DashboardItemListAdapter(
     }
 
     fun getFilter(): Filter {
-        return DashboardItemFilter(this, initialList)
+        return DashboardItemFilter(this, initialList, allItems)
     }
 
     interface DashboardItemOnClickListener {
@@ -76,6 +78,10 @@ class DashboardItemListAdapter(
         if (list != null) {
             initialList = list
         }
+    }
+
+    fun updateAllItemList(list: List<DashboardItem>) {
+        allItems = list
     }
 
 }

@@ -31,6 +31,7 @@ import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener {
 
@@ -109,6 +110,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardItemViewModel.getDashboardItemList().observe(this) { itemList ->
             allItems = itemList
             val filteredList = filterItemsOfCurrentFolder(itemList)
+            dashboardItemAdapter.updateAllItemList(itemList)
             dashboardItemAdapter.updateList(filteredList)
         }
     }
