@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read.dashboard_item
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchQueryResultDetails
 
 @Entity(primaryKeys = ["id", "type"])
 data class DashboardItem(
@@ -22,6 +23,9 @@ data class DashboardItem(
     val icon: Int,
 
     @ColumnInfo(name = "selected")
-    var selected: Boolean = false
+    var selected: Boolean = false,
+
+    @ColumnInfo(name = "searchQueryDetails")
+    var searchQueryResults: SearchQueryResultDetails? = null
 
 )

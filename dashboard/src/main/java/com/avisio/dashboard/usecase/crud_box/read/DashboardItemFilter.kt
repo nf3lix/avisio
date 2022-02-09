@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.widget.Filter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchQueryResultDetails
 
 class DashboardItemFilter(
     private val adapter: DashboardItemListAdapter,
@@ -10,13 +11,17 @@ class DashboardItemFilter(
     private val allItemsList: List<DashboardItem>) : Filter() {
 
     private var filteredList: List<DashboardItem> = listOf()
+    private var constraints = ""
 
     override fun performFiltering(sequence: CharSequence?): FilterResults {
-        val constraints = sequence.toString()
+        constraints = sequence.toString()
         val filterResult =  FilterResults()
         if(constraints.isEmpty()) {
             filteredList = initialList
             filterResult.values = initialList
+            for(items in allItemsList) {
+                items.searchQueryResults = null
+            }
             return filterResult
         }
         val filteredList = getFilteredList(constraints)
@@ -27,13 +32,29 @@ class DashboardItemFilter(
 
     private fun getFilteredList(constraints: String): List<DashboardItem> {
         val filteredList = arrayListOf<DashboardItem>()
-        val matchesInFolders = arrayListOf<DashboardItem>()
         for(listItem in initialList) {
+            var isAddedThroughRootFolderMatch = false
             if(listItem.name!!.lowercase().contains(constraints.lowercase())) {
+                isAddedThroughRootFolderMatch = true
                 filteredList.add(listItem)
+                listItem.searchQueryResults = SearchQueryResultDetails(
+                    constraints,
+                    true,
+                    matchesInFolder = arrayListOf()
+                )
             }
             if(listItem.type == DashboardItemType.FOLDER) {
                 val matches = getAllMatchesInNestedFolder(listItem, constraints)
+                if(matches.isNotEmpty()) {
+                    if(!isAddedThroughRootFolderMatch) {
+                        filteredList.add(listItem)
+                    }
+                    listItem.searchQueryResults = SearchQueryResultDetails(
+                        constraints,
+                        false,
+                        matchesInFolder = matches
+                    )
+                }
             }
         }
         return filteredList

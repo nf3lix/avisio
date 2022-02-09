@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchResultViewHolder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,7 @@ class DashboardItemViewHolder(
 
     private val itemTextView: TextView = itemView.findViewById(R.id.dashboard_item_text_view)
     private val itemImageView: ImageView = itemView.findViewById(R.id.dashboard_item_image)
+    private val searchResultTextView: TextView = itemView.findViewById(R.id.dashboard_item_search_result)
 
     fun bind(item: DashboardItem) {
 
@@ -39,7 +41,13 @@ class DashboardItemViewHolder(
             return@setOnLongClickListener true
         }
 
-        itemTextView.text = item.name
+        if(item.searchQueryResults != null) {
+            SearchResultViewHolder(item, searchResultTextView, itemTextView).displaySearchResult()
+        } else {
+            searchResultTextView.visibility = View.GONE
+            itemTextView.text = item.name
+        }
+
         itemView.setOnClickListener(this)
         return when(item.type) {
             DashboardItemType.FOLDER -> itemImageView.setImageResource(R.drawable.folder_icon)
