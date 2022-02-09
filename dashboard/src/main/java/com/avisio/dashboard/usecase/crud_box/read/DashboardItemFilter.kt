@@ -24,40 +24,50 @@ class DashboardItemFilter(
             }
             return filterResult
         }
-        val filteredList = getFilteredList(constraints)
+        val filteredList = getFilteredList()
         this.filteredList = filteredList
         filterResult.values = filteredList
         return filterResult
     }
 
-    private fun getFilteredList(constraints: String): List<DashboardItem> {
+    private fun getFilteredList(): List<DashboardItem> {
+        for(listItem in initialList) {
+            processSearchForCurrentlyDisplayedItem(listItem)
+            processSearchForCurrentlyDisplayedFolder(listItem)
+        }
+        return getMatchedItems()
+    }
+
+    private fun getMatchedItems(): List<DashboardItem> {
         val filteredList = arrayListOf<DashboardItem>()
         for(listItem in initialList) {
-            var isAddedThroughRootFolderMatch = false
-            if(listItem.name!!.lowercase().contains(constraints.lowercase())) {
-                isAddedThroughRootFolderMatch = true
+            if(listItem.searchQueryResults != null) {
                 filteredList.add(listItem)
-                listItem.searchQueryResults = SearchQueryResultDetails(
-                    constraints,
-                    true,
-                    matchesInFolder = arrayListOf()
-                )
-            }
-            if(listItem.type == DashboardItemType.FOLDER) {
-                val matches = getAllMatchesInNestedFolder(listItem, constraints)
-                if(matches.isNotEmpty()) {
-                    if(!isAddedThroughRootFolderMatch) {
-                        filteredList.add(listItem)
-                    }
-                    listItem.searchQueryResults = SearchQueryResultDetails(
-                        constraints,
-                        false,
-                        matchesInFolder = matches
-                    )
-                }
             }
         }
         return filteredList
+    }
+
+    private fun processSearchForCurrentlyDisplayedItem(dashboardItem: DashboardItem) {
+        if(!dashboardItem.name!!.lowercase().contains(constraints.lowercase())) {
+            dashboardItem.searchQueryResults = null
+            return
+        }
+        dashboardItem.searchQueryResults = SearchQueryResultDetails(
+            constraints,
+            true,
+            matchesInFolder = arrayListOf()
+        )
+    }
+
+    private fun processSearchForCurrentlyDisplayedFolder(dashboardItem: DashboardItem) {
+        if(dashboardItem.type == DashboardItemType.FOLDER) {
+            val matches = getAllMatchesInNestedFolder(dashboardItem, constraints)
+            if(matches.isNotEmpty()) {
+                dashboardItem.searchQueryResults = SearchQueryResultDetails(
+                    constraints, false, matchesInFolder = matches)
+            }
+        }
     }
 
     private fun getAllMatchesInNestedFolder(folder: DashboardItem, constraints: String): List<DashboardItem> {

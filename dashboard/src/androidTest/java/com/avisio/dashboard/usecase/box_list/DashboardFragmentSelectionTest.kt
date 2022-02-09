@@ -344,11 +344,11 @@ class DashboardFragmentSelectionTest {
     }
 
     private fun itemIsSelected(name: String) {
-        onView(allOf(withChild(withChild(withText(name))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.primaryLightColor)))
+        onView(allOf(withChild(withChild(withChild(withText(name)))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.primaryLightColor)))
     }
 
     private fun itemIsUnselected(name: String) {
-        onView(allOf(withChild(withChild(withText(name))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.white)))
+        onView(allOf(withChild(withChild(withChild(withText(name)))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.white)))
     }
 
 }

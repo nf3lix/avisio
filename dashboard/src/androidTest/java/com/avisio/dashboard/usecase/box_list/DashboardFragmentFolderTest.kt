@@ -152,6 +152,7 @@ class DashboardFragmentFolderTest {
         boxDao.insertBox(AvisioBox(name = "BOX_1"))
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
         boxDao.insertBox(AvisioBox(name = "NESTED_BOX", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.action_delete_folder)).perform(click())
