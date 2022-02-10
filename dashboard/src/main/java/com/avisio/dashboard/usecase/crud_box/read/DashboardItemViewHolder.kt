@@ -1,8 +1,5 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.getSpans
-import androidx.core.text.toSpannable
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
@@ -38,6 +33,9 @@ class DashboardItemViewHolder(
     private val itemTextView: TextView = itemView.findViewById(R.id.dashboard_item_text_view)
     private val itemImageView: ImageView = itemView.findViewById(R.id.dashboard_item_image)
     private val searchResultTextView: TextView = itemView.findViewById(R.id.dashboard_item_search_result)
+    private val subdirectoryIndicator: ImageView = itemView.findViewById(R.id.sub_directory_indicator)
+
+    private val searchResultViewHolder = SearchResultViewHolder(searchResultTextView, itemTextView, subdirectoryIndicator)
 
     fun bind(item: DashboardItem) {
 
@@ -47,10 +45,9 @@ class DashboardItemViewHolder(
         }
 
         if(item.searchQueryResults != null) {
-            SearchResultViewHolder(item, searchResultTextView, itemTextView).displaySearchResult()
+            searchResultViewHolder.displaySearchResult(item)
         } else {
-            searchResultTextView.visibility = View.GONE
-            itemTextView.text = item.name
+            searchResultViewHolder.hideSearchResult(item)
         }
         itemView.setOnClickListener(this)
         return when(item.type) {

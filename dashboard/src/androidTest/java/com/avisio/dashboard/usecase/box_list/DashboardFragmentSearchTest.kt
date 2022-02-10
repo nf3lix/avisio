@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -19,11 +20,13 @@ import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
+import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.SearchResultMatcher.Companion.isSearchResultHighlighted
 import com.avisio.dashboard.view_actions.SearchResultMatcher.Companion.nonMatchingPartIsNotHighlighted
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.Is.`is`
 import org.junit.After
 import org.junit.Before
@@ -184,6 +187,42 @@ class DashboardFragmentSearchTest {
         onView(withText("B")).perform(clearText())
         onView(isRoot()).perform(waitFor(800))
         onView(withText("B2")).check(nonMatchingPartIsNotHighlighted(0, 1))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun doNotFindRootFolderAsSearchResultIfCurrentFolderIsChildFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "A"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "BB2", parentFolder = 1))
+        folderDao.insertFolder(AvisioFolder(id = 3, name = "BB3", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("A")).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("B")
+        onView(withText("BB2")).check(isSearchResultHighlighted(0, 1))
+        onView(withText("BB3")).check(isSearchResultHighlighted(0, 1))
+        onView(withText("A")).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun showSubDirectoryResultIndicator() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
+        boxDao.insertBox(AvisioBox(name = "B2", parentFolder = 1))
+        boxDao.insertBox(AvisioBox(name = "B3", parentFolder = 1))
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("B")
+        onView(withId(R.id.sub_directory_indicator)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideSubDirectoryResultIndicator() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
+        boxDao.insertBox(AvisioBox(name = "B2", parentFolder = 1))
+        boxDao.insertBox(AvisioBox(name = "B3", parentFolder = 1))
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("B")
+        onView(withText("B")).perform(clearText())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.sub_directory_indicator)).check(matches(isGone()))
     }
 
     private fun typeInSearchView(text: String) {

@@ -1,23 +1,38 @@
 package com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 
-class SearchResultViewHolder(private val item: DashboardItem, private val searchResultTextView: TextView, private val itemTextView: TextView) {
+class SearchResultViewHolder(
+    private val searchResultTextView: TextView,
+    private val itemTextView: TextView,
+    private val subdirectoryIndicator: ImageView) {
 
     private val color = ResourcesCompat.getColor(itemTextView.resources, R.color.primaryColor, null)
-    private val searchResults = item.searchQueryResults!!
+    private lateinit var item: DashboardItem
+    private lateinit var searchResults: SearchQueryResultDetails
 
-    fun displaySearchResult() {
+    fun displaySearchResult(item: DashboardItem) {
+        this.item = item
+        searchResults = item.searchQueryResults!!
         if (!hasMatchesInChildFolders()) {
             searchResultTextView.visibility = View.GONE
+            subdirectoryIndicator.visibility = View.GONE
         } else {
             displayResultsInChildFolders()
+            subdirectoryIndicator.visibility = View.VISIBLE
         }
         displayResultInRootFolder()
+    }
+
+    fun hideSearchResult(item: DashboardItem) {
+        searchResultTextView.visibility = View.GONE
+        itemTextView.text = item.name
+        subdirectoryIndicator.visibility = View.GONE
     }
 
     private fun displayResultsInChildFolders() {
