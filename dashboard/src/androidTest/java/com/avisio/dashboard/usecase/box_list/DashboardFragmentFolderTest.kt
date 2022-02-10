@@ -127,12 +127,14 @@ class DashboardFragmentFolderTest {
     @Test
     fun renameFolderOnNewFolderNameTyped() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.action_rename_folder)).perform(click())
         onView(withId(R.id.folder_name_edit_text)).perform(typeText("_TEST"))
         onView(withId(R.id.fab_edit_folder)).perform(click())
         Espresso.pressBack()
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1_TEST")).check(matches(isDisplayed()))
     }
 

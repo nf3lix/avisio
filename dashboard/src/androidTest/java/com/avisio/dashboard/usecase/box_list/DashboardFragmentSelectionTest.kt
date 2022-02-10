@@ -70,6 +70,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun selectSingleBoxOnLongClick() {
         boxDao.insertBox(AvisioBox(name = "B_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("B_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         itemIsSelected("B_1")

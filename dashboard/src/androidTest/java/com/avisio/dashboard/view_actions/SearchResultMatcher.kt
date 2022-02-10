@@ -1,5 +1,7 @@
 package com.avisio.dashboard.view_actions
 
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
 import android.view.View
 import android.widget.TextView
@@ -34,8 +36,13 @@ class SearchResultMatcher {
             if(view !is TextView) {
                 throw IllegalStateException()
             }
-            ViewMatchers.assertThat("background color span",
-                view.text.toSpannable().getSpans<BackgroundColorSpan>(start, end).size, CoreMatchers.not(0))
+
+            val spannableText: Spannable = SpannableString.valueOf(view.text)
+            val spans = spannableText.getSpans(start, end, BackgroundColorSpan::class.java)
+            ViewMatchers.assertThat("text is highlighted", spans.size, CoreMatchers.not(0))
+
+            //ViewMatchers.assertThat("background color span",
+            //    view.text.toSpannable().getSpans<BackgroundColorSpan>(start, end).size, CoreMatchers.not(0))
         }
 
     }
@@ -48,8 +55,12 @@ class SearchResultMatcher {
             if(view !is TextView) {
                 throw IllegalStateException()
             }
-            ViewMatchers.assertThat("background color span",
-                view.text.toSpannable().getSpans<BackgroundColorSpan>(start, end).size, CoreMatchers.equalTo(0))
+
+            val spannableText: Spannable = SpannableString.valueOf(view.text)
+            val spans = spannableText.getSpans(start, end, BackgroundColorSpan::class.java)
+            ViewMatchers.assertThat("text is highlighted", spans.size, CoreMatchers.equalTo(0))
+            //ViewMatchers.assertThat("background color span",
+            //    view.text.toSpannable().getSpans<BackgroundColorSpan>(start, end).size, CoreMatchers.equalTo(0))
         }
 
     }

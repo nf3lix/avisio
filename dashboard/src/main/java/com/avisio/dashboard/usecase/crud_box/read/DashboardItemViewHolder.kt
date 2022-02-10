@@ -1,5 +1,7 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -50,8 +52,6 @@ class DashboardItemViewHolder(
             searchResultTextView.visibility = View.GONE
             itemTextView.text = item.name
         }
-        itemTextView.text.toSpannable().getSpans<BackgroundColorSpan>(0, itemTextView.text.length - 1)
-
         itemView.setOnClickListener(this)
         return when(item.type) {
             DashboardItemType.FOLDER -> itemImageView.setImageResource(R.drawable.folder_icon)
