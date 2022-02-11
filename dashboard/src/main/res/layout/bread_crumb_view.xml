@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:id="@+id/holder"
+        android:id="@+id/breadcrumb_holder"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 

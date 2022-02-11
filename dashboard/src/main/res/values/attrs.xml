@@ -3,8 +3,7 @@
 
     <declare-styleable name="BreadCrumb">
 
-        <attr name="maxDisplayedItemLength" format="integer" />
-        <attr name="testAttr" format="string" />
+        <attr name="breadCrumbScrollbarSize" format="integer" />
 
     </declare-styleable>
 

@@ -13,11 +13,13 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     private val views: HashMap<BreadCrumbDirectoryElement, TextView> = HashMap()
 
     private var holder: LinearLayout
+    private var scrollbarSize = 0
 
     init {
         inflate(context, R.layout.bread_crumb_view, this)
-        holder = findViewById(R.id.holder)
+        holder = findViewById(R.id.breadcrumb_holder)
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.BreadCrumb)
+        attributes.getInt(R.styleable.BreadCrumb_breadCrumbScrollbarSize, 0)
         attributes.recycle()
     }
 
@@ -61,7 +63,7 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
-                scrollBarSize = 4
+                scrollBarSize = scrollbarSize
                 scrollTo(width, 0)
             }
         })
