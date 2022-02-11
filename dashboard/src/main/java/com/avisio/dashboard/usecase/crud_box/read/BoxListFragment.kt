@@ -46,11 +46,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private lateinit var breadCrumb: BreadCrumb
     private lateinit var breadCrumbAdapter: DashboardBreadCrumbAdapter
+    private lateinit var dashboardBreadCrumb: DashboardBreadCrumb
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
     private var currentFolder: DashboardItem? = null
-    private var allItems = listOf<DashboardItem>()
+    internal var allItems = listOf<DashboardItem>()
 
     private var fabMenuShown = false
     private lateinit var menu: Menu
@@ -113,7 +114,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumb = requireView().findViewById(R.id.breadCrumb)
         breadCrumbAdapter = DashboardBreadCrumbAdapter()
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
-        DashboardBreadCrumb.setToHomeFolder(breadCrumbAdapter)
+        dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
+        dashboardBreadCrumb.setToHomeFolder()
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
             Log.d("item clicked", index.toString())
         }
@@ -227,7 +229,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
             menu.findItem(R.id.action_delete_folder).isVisible = item != null
             menu.findItem(R.id.action_rename_folder).isVisible = item != null
-            DashboardBreadCrumb.updateBreadCrumb(breadCrumbAdapter, item, allItems)
+            dashboardBreadCrumb.updateBreadCrumb(item)
         }
     }
 
