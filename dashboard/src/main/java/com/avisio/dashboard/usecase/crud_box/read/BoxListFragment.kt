@@ -20,18 +20,20 @@ import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
+import com.avisio.dashboard.common.ui.breadcrump.BreadCrumb
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.common.ConfirmDeleteSelectedItemsDialog
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
+import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumb
+import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener {
 
@@ -39,6 +41,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private lateinit var dashboardItemAdapter: DashboardItemListAdapter
     private lateinit var folderRepository: AvisioFolderRepository
     private lateinit var boxRepository: AvisioBoxRepository
+
+    private lateinit var breadCrumb: BreadCrumb
+    private lateinit var breadCrumbAdapter: DashboardBreadCrumbAdapter
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
@@ -89,6 +94,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun setupView() {
         setupRecyclerView()
+        setupBreadCrumb()
         setupBoxViewModel()
         closeFabMenu()
         setupSelectedItemsActionButtons()
@@ -99,6 +105,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardItemAdapter = DashboardItemListAdapter(DashboardItemListAdapter.DashboardItemDifference(), this)
         dashboardItemRecyclerView?.adapter = dashboardItemAdapter
         dashboardItemRecyclerView?.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun setupBreadCrumb() {
+        breadCrumb = requireView().findViewById(R.id.breadCrumb)
+        breadCrumbAdapter = DashboardBreadCrumbAdapter()
+        breadCrumbAdapter.setBreadCrumb(breadCrumb)
+        DashboardBreadCrumb.setToHomeFolder(breadCrumbAdapter)
     }
 
     private fun setupBoxViewModel() {
@@ -209,6 +222,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
             menu.findItem(R.id.action_delete_folder).isVisible = item != null
             menu.findItem(R.id.action_rename_folder).isVisible = item != null
+            DashboardBreadCrumb.updateBreadCrumb(breadCrumbAdapter, item, allItems)
         }
     }
 
