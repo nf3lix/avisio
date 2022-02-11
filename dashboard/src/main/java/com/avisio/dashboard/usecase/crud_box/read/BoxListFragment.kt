@@ -117,7 +117,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.setToHomeFolder()
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
-            Log.d("item clicked", index.toString())
+            Log.d("item clicked", dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index).toString())
         }
     }
 
