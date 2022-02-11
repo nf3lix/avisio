@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -22,7 +21,6 @@ import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.common.ui.breadcrump.BreadCrumb
-import com.avisio.dashboard.common.ui.breadcrump.BreadCrumbElementClickedListener
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.common.ConfirmDeleteSelectedItemsDialog
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
@@ -117,7 +115,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.setToHomeFolder()
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
-            Log.d("item clicked", dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index).toString())
+            val clickedItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
+            if(clickedItem.id == -1L) {
+                openFolder(null)
+            } else {
+                openFolder(clickedItem)
+            }
         }
     }
 
