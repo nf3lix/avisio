@@ -114,11 +114,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumbAdapter = DashboardBreadCrumbAdapter()
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
         DashboardBreadCrumb.setToHomeFolder(breadCrumbAdapter)
-        breadCrumb.setOnBreadCrumbElementClickListener(object : BreadCrumbElementClickedListener {
-            override fun elementClicked(index: Int) {
-                Log.d("item clicked", index.toString())
-            }
-        })
+        breadCrumb.setOnBreadCrumbElementClickListener { index ->
+            Log.d("item clicked", index.toString())
+        }
     }
 
     private fun setupBoxViewModel() {
