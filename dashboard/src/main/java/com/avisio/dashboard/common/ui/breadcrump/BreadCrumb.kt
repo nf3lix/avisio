@@ -3,9 +3,11 @@ package com.avisio.dashboard.common.ui.breadcrump
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.avisio.dashboard.R
+import kotlinx.android.synthetic.main.box_detail_view.view.*
 
 class BreadCrumb(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
@@ -26,13 +28,8 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
     internal fun addElement(element: BreadCrumbDirectoryElement) {
         elements.add(element)
-        val textView = TextView(context)
-        textView.text = element.displayName + " > "
-        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params.setMargins(16, 0 , 0, 0)
-        textView.layoutParams = params
-        addView(textView)
-        views[element] = textView
+        addElementTextView(element)
+        addBreadCrumbSeparator()
     }
 
     internal fun addElement(index: Int, element: BreadCrumbDirectoryElement) {
@@ -43,6 +40,20 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         this.elements = elements
     }
 
+    private fun addElementTextView(element: BreadCrumbDirectoryElement) {
+        val textView = TextView(context)
+        textView.text = element.displayName
+        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.setMargins(16, 0 , 16, 0)
+        textView.layoutParams = params
+        addView(textView)
+        views[element] = textView
+    }
 
+    private fun addBreadCrumbSeparator() {
+        val separator = ImageView(context)
+        separator.setImageResource(R.drawable.ic_breadcrumb_separator)
+        addView(separator)
+    }
 
 }
