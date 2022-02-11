@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -113,7 +114,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumbAdapter = DashboardBreadCrumbAdapter()
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
-        dashboardBreadCrumb.setToHomeFolder()
+        dashboardBreadCrumb.updateBreadCrumb(currentFolder)
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
             val clickedItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
             if(clickedItem.id == -1L) {

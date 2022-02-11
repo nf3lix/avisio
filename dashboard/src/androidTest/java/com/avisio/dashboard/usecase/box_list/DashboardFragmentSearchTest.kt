@@ -200,7 +200,7 @@ class DashboardFragmentSearchTest {
         typeInSearchView("B")
         onView(withText("BB2")).check(isSearchResultHighlighted(0, 1))
         onView(withText("BB3")).check(isSearchResultHighlighted(0, 1))
-        onView(withText("A")).check(matches(not(isDisplayed())))
+        onView(allOf(withText("A"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(not(isDisplayed())))
     }
 
     @Test

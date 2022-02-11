@@ -10,6 +10,11 @@ class DashboardBreadCrumb(private val fragment: BoxListFragment, private val ada
 
     companion object {
         private val HOME = DashboardItem(id = -1, parentFolder = -1, type = DashboardItemType.FOLDER, icon = -1, name = "home")
+
+        fun isHomeItem(item: DashboardItem): Boolean {
+            return item == HOME
+        }
+
     }
 
     fun updateBreadCrumb(currentItem: DashboardItem?) {
@@ -22,7 +27,7 @@ class DashboardBreadCrumb(private val fragment: BoxListFragment, private val ada
         }
     }
 
-    fun setToHomeFolder() {
+    private fun setToHomeFolder() {
         adapter.setElements(arrayListOf(HOME))
         currentPath = arrayListOf(HOME)
     }

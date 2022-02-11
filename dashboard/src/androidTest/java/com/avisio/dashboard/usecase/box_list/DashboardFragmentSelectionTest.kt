@@ -21,6 +21,7 @@ import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.BackgroundColorMatcher.Companion.hasBackgroundColor
 import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.Is.`is`
 import org.junit.After
@@ -170,19 +171,19 @@ class DashboardFragmentSelectionTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         onView(isRoot()).perform(waitFor(200))
-        onView(withText("F_1")).perform(longClick())
+        onView(allOf(withText("F_1"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
-        onView(withText("F_2")).perform(longClick())
+        onView(allOf(withText("F_2"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+
+        onView(allOf(withText("F_1"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+
+        onView(allOf(withText("F_2"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(click())
         onView(isRoot()).perform(waitFor(200))
 
         onView(withText("F_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-
-        onView(withText("F_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-
-        onView(withText("F_1")).perform(click())
-        onView(withText("F_1")).check(matches(isDisplayed()))
+        onView(allOf(withText("F_1"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
     }
 
     @Test

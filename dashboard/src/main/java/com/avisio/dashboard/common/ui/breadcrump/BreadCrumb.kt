@@ -13,7 +13,6 @@ import com.avisio.dashboard.R
 class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(context, attrs) {
 
     private var elements: ArrayList<BreadCrumbDirectoryElement> = arrayListOf()
-    private val views: HashMap<BreadCrumbDirectoryElement, TextView> = HashMap()
 
     private var holder: LinearLayout
     private var scrollbarSize = 0
@@ -35,17 +34,13 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
 
     internal fun addElement(element: BreadCrumbDirectoryElement) {
         elements.add(element)
-        addElementTextView(element)
+        if(element.iconId != null) {
+            addElementIcon(element)
+        } else {
+            addElementTextView(element)
+        }
         addBreadCrumbSeparator()
         scrollToEnd()
-    }
-
-    internal fun addElement(index: Int, element: BreadCrumbDirectoryElement) {
-        elements.add(index, element)
-    }
-
-    internal fun setElements(elements: ArrayList<BreadCrumbDirectoryElement>) {
-        this.elements = elements
     }
 
     private fun addElementTextView(element: BreadCrumbDirectoryElement) {
@@ -59,7 +54,19 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
             onElementClicked(index)
         }
         holder.addView(textView)
-        views[element] = textView
+    }
+
+    private fun addElementIcon(element: BreadCrumbDirectoryElement) {
+        val iconElement = ImageView(context)
+        iconElement.setImageResource(element.iconId!!)
+        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.setMargins(16, 0 , 16, 0)
+        iconElement.layoutParams = params
+        iconElement.setOnClickListener {
+            val index = (iconElement.parent as ViewGroup).indexOfChild(iconElement) / 2
+            onElementClicked(index)
+        }
+        holder.addView(iconElement)
     }
 
     fun setOnBreadCrumbElementClickListener(onClick: (itemIndex: Int) -> Unit) {
