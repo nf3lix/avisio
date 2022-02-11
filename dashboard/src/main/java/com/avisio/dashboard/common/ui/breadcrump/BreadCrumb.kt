@@ -20,11 +20,7 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : LinearLayout(context, 
     }
 
     internal fun clearElements() {
-        for(element in elements) {
-            val textView = views[element]
-            removeView(textView)
-            views.remove(element)
-        }
+        removeAllViews()
         elements.clear()
     }
 
