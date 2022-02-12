@@ -75,7 +75,11 @@ class DashboardItemViewHolder(
     }
 
     private fun clickedItemIsSelected(): Boolean {
-        return listAdapter.currentList[adapterPosition].selected
+        return try {
+            listAdapter.currentList[adapterPosition].selected
+        } catch (ignored: ArrayIndexOutOfBoundsException) {
+            false
+        }
     }
 
     private fun anyItemIsSelected(): Boolean {

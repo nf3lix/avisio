@@ -37,6 +37,7 @@ import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActi
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.lang.IllegalStateException
+import java.lang.IndexOutOfBoundsException
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
 
@@ -204,7 +205,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override suspend fun onClick(index: Int) {
-        val clickedItem = dashboardItemAdapter.currentList[index]
+        val clickedItem: DashboardItem?
+        try {
+            clickedItem = dashboardItemAdapter.currentList[index]
+        } catch (ignored: IndexOutOfBoundsException) {
+            return
+        }
         return when(clickedItem.type) {
             DashboardItemType.BOX -> {
                 boxActivityObserver.startBoxActivity(clickedItem)
