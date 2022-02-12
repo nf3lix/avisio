@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -35,6 +36,7 @@ import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.IllegalStateException
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
 
@@ -221,10 +223,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun onItemUnselected(position: Int) {
         toggleEditSelectedItemButtonVisibility()
-        if(dashboardItemAdapter.selectedItems().isEmpty()) {
-            hideSelectedItemsActionButtons()
-            fabExpand.visibility = View.VISIBLE
-            moveItemsWorkflow.finishWorkflow()
+        requireActivity().runOnUiThread {
+            if(dashboardItemAdapter.selectedItems().isEmpty()) {
+                hideSelectedItemsActionButtons()
+                fabExpand.visibility = View.VISIBLE
+                moveItemsWorkflow.finishWorkflow()
+            }
         }
     }
 
@@ -273,6 +277,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             }
             R.id.action_rename_folder -> {
                 startEditFolderActivity(currentFolder)
+            }
+            R.id.action_stop_workflow -> {
+                moveItemsWorkflow.finishWorkflow()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -370,16 +377,20 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun hideSelectedItemsActionButtons() {
-        editSelectedItemButton.visibility = View.GONE
-        deleteSelectedItemsButton.visibility = View.GONE
-        moveSelectedItemsButton.visibility = View.GONE
+        requireActivity().runOnUiThread {
+            editSelectedItemButton.visibility = View.GONE
+            deleteSelectedItemsButton.visibility = View.GONE
+            moveSelectedItemsButton.visibility = View.GONE
+        }
     }
 
     private fun toggleEditSelectedItemButtonVisibility() {
-        if(dashboardItemAdapter.selectedItems().size == 1) {
-            editSelectedItemButton.visibility = View.VISIBLE
-        } else {
-            editSelectedItemButton.visibility = View.GONE
+        requireActivity().runOnUiThread {
+            if(dashboardItemAdapter.selectedItems().size == 1) {
+                editSelectedItemButton.visibility = View.VISIBLE
+            } else {
+                editSelectedItemButton.visibility = View.GONE
+            }
         }
     }
 
@@ -397,6 +408,16 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun setAppBarTitle(titleId: Int) {
         requireActivity().runOnUiThread {
             (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(titleId)
+        }
+    }
+
+    override fun displayCancelWorkflowMenuItem(displayed: Boolean) {
+        requireActivity().runOnUiThread {
+            if(this::menu.isInitialized) {
+                for(menuItem in moveItemsWorkflow.getDisplayedMenuItems()) {
+                    menu.findItem(menuItem.key).isVisible = if(displayed) menuItem.value else !menuItem.value
+                }
+            }
         }
     }
 

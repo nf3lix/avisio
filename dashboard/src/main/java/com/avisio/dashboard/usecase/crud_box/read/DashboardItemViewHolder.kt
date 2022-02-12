@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,10 @@ class DashboardItemViewHolder(
     private val searchResultViewHolder = SearchResultViewHolder(searchResultTextView, itemTextView, subdirectoryIndicator)
 
     fun bind(item: DashboardItem) {
-
+        Log.d("test", item.toString())
+        if(!item.selected) {
+            unselect(item)
+        }
         itemView.setOnLongClickListener {
             selectClickedItem()
             return@setOnLongClickListener true
