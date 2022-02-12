@@ -388,7 +388,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun toggleEditSelectedItemButtonVisibility() {
         requireActivity().runOnUiThread {
-            if(dashboardItemAdapter.selectedItems().size == 1) {
+            if(dashboardItemAdapter.selectedItems().size == 1 && !moveItemsWorkflow.isActive()) {
                 editSelectedItemButton.visibility = View.VISIBLE
             } else {
                 editSelectedItemButton.visibility = View.GONE

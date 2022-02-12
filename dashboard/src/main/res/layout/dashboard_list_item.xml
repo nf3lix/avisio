@@ -27,6 +27,7 @@
             app:srcCompat="@drawable/dashboard_item_icon_default" />
 
         <LinearLayout
+            android:id="@+id/item_content_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -72,7 +73,18 @@
 
         </LinearLayout>
 
-
+        <ImageView
+            android:id="@+id/btn_move_selected_items"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_content_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_move_item"
+            android:visibility="gone"
+            app:tint="@color/secondaryColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
