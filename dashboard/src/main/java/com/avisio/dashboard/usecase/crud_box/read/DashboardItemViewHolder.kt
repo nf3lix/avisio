@@ -1,6 +1,5 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,12 +34,19 @@ class DashboardItemViewHolder(
     private val itemImageView: ImageView = itemView.findViewById(R.id.dashboard_item_image)
     private val searchResultTextView: TextView = itemView.findViewById(R.id.dashboard_item_search_result)
     private val subdirectoryIndicator: ImageView = itemView.findViewById(R.id.sub_directory_indicator)
+    private val moveItemsButton: ImageView = itemView.findViewById(R.id.btn_move_selected_items)
 
     private val searchResultViewHolder = SearchResultViewHolder(searchResultTextView, itemTextView, subdirectoryIndicator)
 
     fun bind(item: DashboardItem) {
         if(!item.selected) {
-            unselect(item)
+            setBackground(R.color.white)
+        }
+
+        if(listAdapter.moveWorkflowActive && !item.selected && item.type == DashboardItemType.FOLDER) {
+            moveItemsButton.visibility = View.VISIBLE
+        } else {
+            moveItemsButton.visibility = View.GONE
         }
         itemView.setOnLongClickListener {
             selectClickedItem()
@@ -87,15 +93,13 @@ class DashboardItemViewHolder(
     }
 
     fun select(item: DashboardItem) {
-        val colorFromResources = ResourcesCompat.getColor(itemView.resources, R.color.primaryLightColor, null)
-        itemView.findViewById<CardView>(R.id.dashboard_item_card_view).setBackgroundColor(colorFromResources)
+        setBackground(R.color.primaryLightColor)
         item.selected = true
         onClickListener.onItemSelected(adapterPosition)
     }
 
-    fun unselect(item: DashboardItem) {
-        val colorFromResources = ResourcesCompat.getColor(itemView.resources, R.color.white, null)
-        itemView.findViewById<CardView>(R.id.dashboard_item_card_view).setBackgroundColor(colorFromResources)
+    private fun unselect(item: DashboardItem) {
+        setBackground(R.color.white)
         item.selected = false
         onClickListener.onItemUnselected(adapterPosition)
     }
@@ -104,6 +108,11 @@ class DashboardItemViewHolder(
         for(dashboardItem in listAdapter.currentList) {
             unselect(dashboardItem)
         }
+    }
+
+    private fun setBackground(colorId: Int) {
+        val colorFromResources = ResourcesCompat.getColor(itemView.resources, colorId, null)
+        itemView.findViewById<CardView>(R.id.dashboard_item_card_view).setBackgroundColor(colorFromResources)
     }
 
     override fun onClick(v: View?) {

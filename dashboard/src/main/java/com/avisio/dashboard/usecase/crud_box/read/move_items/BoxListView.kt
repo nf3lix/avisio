@@ -11,4 +11,8 @@ interface BoxListView {
     fun showSelectedItemsActionButtons()
     fun hideSelectedItemsActionButtons()
 
+    fun updateItemList()
+
+    fun setMoveWorkflowActive(active: Boolean)
+
 }

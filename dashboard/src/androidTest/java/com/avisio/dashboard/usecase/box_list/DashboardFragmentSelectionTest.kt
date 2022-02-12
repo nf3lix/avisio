@@ -227,6 +227,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun hideSelectedItemsActionButtonsOnUnselectLastSelectedItem() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
         onView(withText("F_1")).perform(click())
@@ -346,6 +347,7 @@ class DashboardFragmentSelectionTest {
     }
 
     private fun itemIsSelected(name: String) {
+        //onView(allOf(withChild(withChild(withChild(withText(name)))), withClassName(`is`(CardView::class.java.name))))
         onView(allOf(withChild(withChild(withChild(withText(name)))), withClassName(`is`(CardView::class.java.name)))).check(matches(hasBackgroundColor(R.color.primaryLightColor)))
     }
 

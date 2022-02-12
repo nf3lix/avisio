@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -36,6 +35,7 @@ import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.box_list_fragment.*
 import java.lang.IllegalStateException
 import java.lang.IndexOutOfBoundsException
 
@@ -235,6 +235,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             if(dashboardItemAdapter.selectedItems().isEmpty()) {
                 hideSelectedItemsActionButtons()
                 fabExpand.visibility = View.VISIBLE
+                dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
             }
         }
@@ -287,6 +288,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 startEditFolderActivity(currentFolder)
             }
             R.id.action_stop_workflow -> {
+                dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
             }
         }
@@ -375,6 +377,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
         moveSelectedItemsButton.setOnClickListener {
             moveItemsWorkflow.initWorkflow()
+            dashboardItemAdapter.moveWorkflowActive = true
         }
     }
 
@@ -446,5 +449,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         } else {
             showSelectedItemsActionButtons()
         }
+    }
+
+    override fun updateItemList() {
+        dashboardItemAdapter.notifyDataSetChanged()
+    }
+
+    override fun setMoveWorkflowActive(active: Boolean) {
+        dashboardItemAdapter.moveWorkflowActive = false
     }
 }

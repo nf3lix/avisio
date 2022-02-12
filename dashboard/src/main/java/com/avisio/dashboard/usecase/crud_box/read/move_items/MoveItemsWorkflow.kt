@@ -12,13 +12,17 @@ class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow(
         boxListView.setAppBarTitle(R.string.move_items_title)
         boxListView.displayCancelWorkflowMenuItem(true)
         boxListView.hideSelectedItemsActionButtons()
+        boxListView.updateItemList()
         boxListView.displayCancelWorkflowButton {
+            boxListView.updateItemList()
             finishWorkflow()
         }
     }
 
     fun finishWorkflow() {
         isActive = false
+        boxListView.setMoveWorkflowActive(false)
+        boxListView.updateItemList()
         boxListView.setAppBarTitle(R.string.main_activity_app_bar_title)
         boxListView.displayCancelWorkflowMenuItem(false)
         boxListView.hideCancelWorkflowButton()

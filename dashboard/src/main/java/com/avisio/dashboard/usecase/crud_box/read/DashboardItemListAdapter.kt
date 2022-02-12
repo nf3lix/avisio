@@ -17,6 +17,7 @@ class DashboardItemListAdapter(
 
     private var initialList = currentList
     var selectedItemPos = NO_ITEM_SELECTED
+    var moveWorkflowActive = false
 
     private var allItems = listOf<DashboardItem>()
 
@@ -29,7 +30,7 @@ class DashboardItemListAdapter(
         if(position == selectedItemPos) {
             holder.select(currentList[position])
         } else {
-            holder.unselect(currentList[position])
+            // holder.unselect(currentList[position])
         }
         holder.bind(currentItem)
     }

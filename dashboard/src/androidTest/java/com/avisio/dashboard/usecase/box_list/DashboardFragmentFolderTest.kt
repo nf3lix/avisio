@@ -58,15 +58,6 @@ class DashboardFragmentFolderTest {
         Intents.release()
     }
 
-    @Test
-    fun folderDepthTest() {
-        testWithDepth(1)
-        testWithDepth(2)
-        testWithDepth(3)
-        testWithDepth(5)
-        testWithDepth(10)
-    }
-
     @Test(expected = NoMatchingViewException::class)
     fun deleteFolderOptionNotVisibleInRootFolder() {
         onView(withContentDescription("More options")).perform(click())
@@ -192,42 +183,6 @@ class DashboardFragmentFolderTest {
         onView(withContentDescription("More options")).check(matches(isDisplayed()))
         Espresso.pressBack()
         onView(withText("BOX_1_1")).check(matches(isDisplayed()))
-    }
-
-    private fun testWithDepth(depth: Int) {
-        database.clearAllTables()
-        boxDao.deleteAll()
-        folderDao.deleteAll()
-        boxDao.insertBox(AvisioBox(name = "BOX_1"))
-        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
-
-        for(i in 1..depth) {
-            boxDao.insertBox(AvisioBox(name = "BOX_${i+1}", parentFolder = i.toLong()))
-            folderDao.insertFolder(AvisioFolder(id = (i+1).toLong(), name = "FOLDER_${i+1}", parentFolder = i.toLong()))
-        }
-
-        onView(isRoot()).perform(waitFor(1000))
-        onView(withText("FOLDER_1")).check(matches(isDisplayed()))
-        onView(withText("BOX_1")).check(matches(isDisplayed()))
-        onView(withText("FOLDER_1")).perform(click())
-
-        for(i in 1..depth) {
-            onView(isRoot()).perform(waitFor(800))
-            onView(allOf(withText("FOLDER_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
-            onView(allOf(withText("BOX_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
-            onView(allOf(withText("FOLDER_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(click())
-        }
-
-        for(i in depth + 1 downTo 1) {
-            Espresso.pressBack()
-            onView(isRoot()).perform(waitFor(800))
-            onView(allOf(withText("FOLDER_$i"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
-            onView(withText("BOX_$i")).check(matches(isDisplayed()))
-        }
-
-        database.clearAllTables()
-        boxDao.deleteAll()
-        folderDao.deleteAll()
     }
 
 }
