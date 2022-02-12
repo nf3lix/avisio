@@ -395,7 +395,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun setAppBarTitle(titleId: Int) {
-        (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(titleId)
+        requireActivity().runOnUiThread {
+            (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(titleId)
+        }
     }
 
 }
