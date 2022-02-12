@@ -224,6 +224,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         if(dashboardItemAdapter.selectedItems().isEmpty()) {
             hideSelectedItemsActionButtons()
             fabExpand.visibility = View.VISIBLE
+            moveItemsWorkflow.finishWorkflow()
         }
     }
 
@@ -358,7 +359,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
         moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
         moveSelectedItemsButton.setOnClickListener {
-            moveItemsWorkflow.initMoveItemsWorkflow()
+            moveItemsWorkflow.initWorkflow()
         }
     }
 

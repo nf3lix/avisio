@@ -4,8 +4,12 @@ import com.avisio.dashboard.R
 
 class MoveItemsWorkflow(private val boxListView: BoxListView) {
 
-    fun initMoveItemsWorkflow() {
+    fun initWorkflow() {
         boxListView.setAppBarTitle(R.string.move_items_title)
+    }
+
+    fun finishWorkflow() {
+        boxListView.setAppBarTitle(R.string.main_activity_app_bar_title)
     }
 
 }
