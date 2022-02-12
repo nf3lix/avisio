@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -30,12 +29,14 @@ import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrum
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
+import com.avisio.dashboard.usecase.crud_box.read.move_items.MoveItemsWorkflow
 import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener {
+class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
 
     private lateinit var dashboardItemViewModel: DashboardItemViewModel
     private lateinit var dashboardItemAdapter: DashboardItemListAdapter
@@ -45,6 +46,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private lateinit var breadCrumb: BreadCrumb
     private lateinit var breadCrumbAdapter: DashboardBreadCrumbAdapter
     private lateinit var dashboardBreadCrumb: DashboardBreadCrumb
+
+    private val moveItemsWorkflow = MoveItemsWorkflow(this)
 
     private lateinit var boxActivityObserver: BoxActivityResultObserver
 
@@ -105,7 +108,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         val dashboardItemRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
         dashboardItemAdapter = DashboardItemListAdapter(DashboardItemListAdapter.DashboardItemDifference(), this)
         dashboardItemRecyclerView?.adapter = dashboardItemAdapter
-        dashboardItemRecyclerView?.layoutManager = LinearLayoutManager(context)
+        dashboardItemRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setupBreadCrumb() {
@@ -154,13 +157,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
 
         fabCreateBox.setOnClickListener {
-            val intent = Intent(context, CreateBoxActivity::class.java)
+            val intent = Intent(requireContext(), CreateBoxActivity::class.java)
             intent.setCurrentFolder(currentFolder)
             startActivity(intent)
         }
 
         fabCreateFolder.setOnClickListener {
-            val intent = Intent(context, CreateFolderActivity::class.java)
+            val intent = Intent(requireContext(), CreateFolderActivity::class.java)
             intent.setCurrentFolder(currentFolder)
             startActivity(Intent(intent))
         }
@@ -195,11 +198,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     fun deleteBox(box: ParcelableAvisioBox) {
         val boxToDelete = dashboardItemAdapter.getDashboardItemById(box.boxId)
-        if(boxToDelete == null) {
-            Toast.makeText(context, getString(R.string.delete_box_error_occurred), Toast.LENGTH_LONG).show()
-            return
-        }
-        dashboardItemViewModel.deleteDashboardItem(boxToDelete)
+        dashboardItemViewModel.deleteDashboardItem(boxToDelete!!)
     }
 
     override suspend fun onClick(index: Int) {
@@ -358,6 +357,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             ConfirmDeleteSelectedItemsDialog.showDialog(this)
         }
         moveSelectedItemsButton = requireView().findViewById(R.id.btn_move_all)
+        moveSelectedItemsButton.setOnClickListener {
+            moveItemsWorkflow.initMoveItemsWorkflow()
+        }
     }
 
     private fun showSelectedItemsActionButtons() {
@@ -389,6 +391,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
         hideSelectedItemsActionButtons()
         fabExpand.visibility = View.VISIBLE
+    }
+
+    override fun setAppBarTitle(titleId: Int) {
+        (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(titleId)
     }
 
 }

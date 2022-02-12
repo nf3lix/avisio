@@ -54,12 +54,12 @@ class BoxActivityResultObserver(
             box = boxRepository.getBoxById(item.id)
         }
         if(box != null) {
-            val intent = Intent(boxFragment.context, BoxActivity::class.java)
+            val intent = Intent(boxFragment.requireContext(), BoxActivity::class.java)
             intent.setBoxObject(box)
             content.launch(intent)
             return
         }
-        Toast.makeText(boxFragment.context, "Could not load box", Toast.LENGTH_LONG).show()
+        Toast.makeText(boxFragment.requireContext(), "Could not load box", Toast.LENGTH_LONG).show()
     }
 
 }
