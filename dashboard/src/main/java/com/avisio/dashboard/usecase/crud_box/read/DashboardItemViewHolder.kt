@@ -39,7 +39,6 @@ class DashboardItemViewHolder(
     private val searchResultViewHolder = SearchResultViewHolder(searchResultTextView, itemTextView, subdirectoryIndicator)
 
     fun bind(item: DashboardItem) {
-        Log.d("test", item.toString())
         if(!item.selected) {
             unselect(item)
         }

@@ -216,9 +216,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun onItemSelected(position: Int) {
-        closeFabMenu()
-        showSelectedItemsActionButtons()
-        fabExpand.visibility = View.GONE
+        if(!moveItemsWorkflow.isActive()) {
+            closeFabMenu()
+            showSelectedItemsActionButtons()
+            fabExpand.visibility = View.GONE
+        }
     }
 
     override fun onItemUnselected(position: Int) {
@@ -370,13 +372,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
     }
 
-    private fun showSelectedItemsActionButtons() {
+    override fun showSelectedItemsActionButtons() {
         toggleEditSelectedItemButtonVisibility()
         deleteSelectedItemsButton.visibility = View.VISIBLE
         moveSelectedItemsButton.visibility = View.VISIBLE
     }
 
-    private fun hideSelectedItemsActionButtons() {
+    override fun hideSelectedItemsActionButtons() {
         requireActivity().runOnUiThread {
             editSelectedItemButton.visibility = View.GONE
             deleteSelectedItemsButton.visibility = View.GONE
@@ -421,4 +423,22 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
     }
 
+    override fun displayCancelWorkflowButton(onClick: () -> Unit?) {
+        val fab = requireView().findViewById<FloatingActionButton>(R.id.fab_cancel_workflow)
+        fab.visibility = View.VISIBLE
+        fab.setOnClickListener {
+            onClick()
+        }
+    }
+
+    override fun hideCancelWorkflowButton() {
+        val fab = requireView().findViewById<FloatingActionButton>(R.id.fab_cancel_workflow)
+        fab.visibility = View.GONE
+        fab.setOnClickListener { }
+        if(dashboardItemAdapter.selectedItems().isEmpty()) {
+            fabExpand.visibility = View.VISIBLE
+        } else {
+            showSelectedItemsActionButtons()
+        }
+    }
 }

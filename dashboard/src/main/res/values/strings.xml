@@ -43,6 +43,7 @@
     <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
+    <string name="fab_cancel_workflow">Abbrechen</string>
 
     <string name="create_card_type_spinner_content_description">Wähle einen Kartentyp</string>
     <string name="create_card_fab_content_description">Karte speichern</string>

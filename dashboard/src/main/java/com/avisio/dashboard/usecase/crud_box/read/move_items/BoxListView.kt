@@ -5,4 +5,10 @@ interface BoxListView {
     fun setAppBarTitle(titleId: Int)
     fun displayCancelWorkflowMenuItem(displayed: Boolean)
 
+    fun displayCancelWorkflowButton(onClick: () -> Unit?)
+    fun hideCancelWorkflowButton()
+
+    fun showSelectedItemsActionButtons()
+    fun hideSelectedItemsActionButtons()
+
 }

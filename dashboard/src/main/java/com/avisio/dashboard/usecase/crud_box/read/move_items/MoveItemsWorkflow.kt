@@ -5,14 +5,23 @@ import com.avisio.dashboard.usecase.crud_box.read.BoxListWorkflow
 
 class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow() {
 
+    private var isActive = false
+
     fun initWorkflow() {
+        isActive = true
         boxListView.setAppBarTitle(R.string.move_items_title)
         boxListView.displayCancelWorkflowMenuItem(true)
+        boxListView.hideSelectedItemsActionButtons()
+        boxListView.displayCancelWorkflowButton {
+            finishWorkflow()
+        }
     }
 
     fun finishWorkflow() {
+        isActive = false
         boxListView.setAppBarTitle(R.string.main_activity_app_bar_title)
         boxListView.displayCancelWorkflowMenuItem(false)
+        boxListView.hideCancelWorkflowButton()
     }
 
     override fun getDisplayedMenuItems(): Map<Int, Boolean> {
@@ -23,6 +32,10 @@ class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow(
             R.id.action_rename_folder to false,
             R.id.action_delete_folder to false,
         )
+    }
+
+    fun isActive(): Boolean {
+        return isActive
     }
 
 }
