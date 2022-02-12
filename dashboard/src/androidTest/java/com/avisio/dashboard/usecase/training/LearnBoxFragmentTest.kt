@@ -22,8 +22,8 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.card.CardDao
 import com.avisio.dashboard.common.persistence.sm_card_items.SMCardItemDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
-import com.avisio.dashboard.view_actions.IsGoneMatcher
-import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
+import com.avisio.dashboard.view_matchers.IsGoneMatcher
+import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.flexbox.FlexboxLayout
 import org.hamcrest.Matchers.`is`

@@ -1,4 +1,4 @@
-package com.avisio.dashboard.view_actions
+package com.avisio.dashboard.view_matchers
 
 import androidx.test.espresso.Root
 import org.hamcrest.Description

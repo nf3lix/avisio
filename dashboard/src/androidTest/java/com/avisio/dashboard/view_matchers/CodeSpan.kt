@@ -1,18 +1,18 @@
-package com.avisio.dashboard.view_actions
+package com.avisio.dashboard.view_matchers
 
 import android.view.View
 import android.widget.EditText
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.matcher.ViewMatchers
-import io.noties.markwon.core.spans.BlockQuoteSpan
+import io.noties.markwon.core.spans.CodeSpan
 import org.hamcrest.CoreMatchers
 
-class BlockQuoteSpan : ViewAssertion {
+class CodeSpan : ViewAssertion {
 
     companion object {
-        fun hasBlockQuote(): ViewAssertion {
-            return BlockQuoteSpan()
+        fun hasCodeSpan(): ViewAssertion {
+            return CodeSpan()
         }
     }
 
@@ -23,8 +23,8 @@ class BlockQuoteSpan : ViewAssertion {
         if(view !is EditText) {
             throw IllegalStateException()
         }
-        ViewMatchers.assertThat("block quote span",
-            view.editableText.getSpans(0, view.text.length, BlockQuoteSpan::class.java)[0], CoreMatchers.notNullValue())
+        ViewMatchers.assertThat("code span",
+            view.editableText.getSpans(0, view.text.length, CodeSpan::class.java)[0], CoreMatchers.notNullValue())
     }
 
 }

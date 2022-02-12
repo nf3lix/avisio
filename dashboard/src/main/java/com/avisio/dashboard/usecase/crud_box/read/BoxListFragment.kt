@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import android.widget.Toast
@@ -236,6 +235,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             menu.findItem(R.id.action_delete_folder).isVisible = item != null
             menu.findItem(R.id.action_rename_folder).isVisible = item != null
             dashboardBreadCrumb.updateBreadCrumb(item)
+            val currentQuery = requireView().findViewById<SearchView>(R.id.dashboard_list_search).query.toString()
+            dashboardItemAdapter.getFilter().filter(currentQuery)
         }
     }
 

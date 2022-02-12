@@ -14,10 +14,10 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.view_actions.BlockQuoteSpan.Companion.hasBlockQuote
-import com.avisio.dashboard.view_actions.CodeSpan.Companion.hasCodeSpan
-import com.avisio.dashboard.view_actions.HeadingSpan.Companion.hasHeadingSpan
-import com.avisio.dashboard.view_actions.LinkSpan.Companion.hasLinkSpan
+import com.avisio.dashboard.view_matchers.BlockQuoteSpan.Companion.hasBlockQuote
+import com.avisio.dashboard.view_matchers.CodeSpan.Companion.hasCodeSpan
+import com.avisio.dashboard.view_matchers.HeadingSpan.Companion.hasHeadingSpan
+import com.avisio.dashboard.view_matchers.LinkSpan.Companion.hasLinkSpan
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
 import org.junit.After

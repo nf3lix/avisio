@@ -19,7 +19,9 @@ import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import com.google.android.material.textview.MaterialTextView
 import com.squareup.javawriter.JavaWriter.type
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.core.IsNot.not
 import org.junit.After
@@ -180,6 +182,7 @@ class DashboardFragmentFolderTest {
         boxDao.insertBox(AvisioBox(name = "BOX_1", parentFolder = 1))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("BOX_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.box_activity_menu_edit)).perform(click())
@@ -209,14 +212,16 @@ class DashboardFragmentFolderTest {
         onView(withText("FOLDER_1")).perform(click())
 
         for(i in 1..depth) {
-            onView(withText("FOLDER_${i+1}")).check(matches(isDisplayed()))
-            onView(withText("BOX_${i+1}")).check(matches(isDisplayed()))
-            onView(withText("FOLDER_${i+1}")).perform(click())
+            onView(isRoot()).perform(waitFor(800))
+            onView(allOf(withText("FOLDER_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+            onView(allOf(withText("BOX_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
+            onView(allOf(withText("FOLDER_${i+1}"), withClassName(`is`(MaterialTextView::class.java.name)))).perform(click())
         }
 
         for(i in depth + 1 downTo 1) {
             Espresso.pressBack()
-            onView(withText("FOLDER_$i")).check(matches(isDisplayed()))
+            onView(isRoot()).perform(waitFor(800))
+            onView(allOf(withText("FOLDER_$i"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
             onView(withText("BOX_$i")).check(matches(isDisplayed()))
         }
 

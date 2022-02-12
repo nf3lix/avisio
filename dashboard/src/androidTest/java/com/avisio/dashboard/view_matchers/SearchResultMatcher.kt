@@ -1,12 +1,10 @@
-package com.avisio.dashboard.view_actions
+package com.avisio.dashboard.view_matchers
 
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
 import android.view.View
 import android.widget.TextView
-import androidx.core.text.getSpans
-import androidx.core.text.toSpannable
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.matcher.ViewMatchers

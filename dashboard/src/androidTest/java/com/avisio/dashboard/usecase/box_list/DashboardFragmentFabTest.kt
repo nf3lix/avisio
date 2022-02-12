@@ -1,10 +1,8 @@
 package com.avisio.dashboard.usecase.box_list
 
-import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -12,11 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.database.AppDatabase
-import com.avisio.dashboard.common.data.model.box.AvisioBox
-import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.usecase.MainActivity
-import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
+import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

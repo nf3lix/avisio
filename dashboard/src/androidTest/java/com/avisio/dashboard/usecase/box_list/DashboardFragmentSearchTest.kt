@@ -6,11 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
@@ -20,9 +18,9 @@ import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
-import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
-import com.avisio.dashboard.view_actions.SearchResultMatcher.Companion.isSearchResultHighlighted
-import com.avisio.dashboard.view_actions.SearchResultMatcher.Companion.nonMatchingPartIsNotHighlighted
+import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
+import com.avisio.dashboard.view_matchers.SearchResultMatcher.Companion.isSearchResultHighlighted
+import com.avisio.dashboard.view_matchers.SearchResultMatcher.Companion.nonMatchingPartIsNotHighlighted
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.CoreMatchers.allOf
@@ -223,6 +221,41 @@ class DashboardFragmentSearchTest {
         onView(withText("B")).perform(clearText())
         onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.sub_directory_indicator)).check(matches(isGone()))
+    }
+
+    @Test
+    fun continueSearchOnChildFolderOpened() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "A1"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "A2", parentFolder = 1))
+        folderDao.insertFolder(AvisioFolder(id = 3, name = "B2", parentFolder = 1))
+        folderDao.insertFolder(AvisioFolder(id = 4, name = "A3", parentFolder = 2))
+        folderDao.insertFolder(AvisioFolder(id = 5, name = "B3", parentFolder = 2))
+
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("A")
+
+        onView(allOf(withClassName(`is`(MaterialTextView::class.java.name)), withText("A1"))).perform(click())
+        onView(isRoot()).perform(waitFor(800))
+        onView(allOf(withText("A3"), withClassName(`is`(MaterialTextView::class.java.name)))).check(isSearchResultHighlighted(0, 1))
+
+        onView(allOf(withClassName(`is`(MaterialTextView::class.java.name)), withText("A2"))).perform(click())
+        onView(isRoot()).perform(waitFor(800))
+        onView(allOf(withText("A3"), withClassName(`is`(MaterialTextView::class.java.name)))).check(isSearchResultHighlighted(0, 1))
+    }
+
+    @Test
+    fun continueSearchOnParentFolderOpened() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "TEST_1"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "TEST_2", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("TEST_1")).perform(click())
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("TEST")
+        onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("TEST_1")).check(isSearchResultHighlighted(0, 3))
+        onView(withText("TEST_2")).check(isSearchResultHighlighted(0, 3))
     }
 
     private fun typeInSearchView(text: String) {

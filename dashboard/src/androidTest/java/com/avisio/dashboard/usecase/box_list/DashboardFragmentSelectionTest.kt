@@ -18,8 +18,8 @@ import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
-import com.avisio.dashboard.view_actions.BackgroundColorMatcher.Companion.hasBackgroundColor
-import com.avisio.dashboard.view_actions.IsGoneMatcher.Companion.isGone
+import com.avisio.dashboard.view_matchers.BackgroundColorMatcher.Companion.hasBackgroundColor
+import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.CoreMatchers.allOf

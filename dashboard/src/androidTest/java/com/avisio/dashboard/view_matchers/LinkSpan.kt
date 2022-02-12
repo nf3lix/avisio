@@ -1,18 +1,18 @@
-package com.avisio.dashboard.view_actions
+package com.avisio.dashboard.view_matchers
 
 import android.view.View
 import android.widget.EditText
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.matcher.ViewMatchers
-import io.noties.markwon.core.spans.CodeSpan
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.handlers.LinkEditHandler
 import org.hamcrest.CoreMatchers
 
-class CodeSpan : ViewAssertion {
+class LinkSpan : ViewAssertion {
 
     companion object {
-        fun hasCodeSpan(): ViewAssertion {
-            return CodeSpan()
+        fun hasLinkSpan(): ViewAssertion {
+            return LinkSpan()
         }
     }
 
@@ -23,8 +23,8 @@ class CodeSpan : ViewAssertion {
         if(view !is EditText) {
             throw IllegalStateException()
         }
-        ViewMatchers.assertThat("code span",
-            view.editableText.getSpans(0, view.text.length, CodeSpan::class.java)[0], CoreMatchers.notNullValue())
+        ViewMatchers.assertThat("link span",
+            view.editableText.getSpans(0, view.text.length, LinkEditHandler.EditLinkSpan::class.java)[0], CoreMatchers.notNullValue())
     }
 
 }
