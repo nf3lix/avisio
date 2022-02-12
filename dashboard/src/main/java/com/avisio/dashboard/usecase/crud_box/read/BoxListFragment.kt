@@ -116,11 +116,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.updateBreadCrumb(currentFolder)
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
-            val clickedItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
-            if(clickedItem.id == -1L) {
-                openFolder(null)
-            } else {
-                openFolder(clickedItem)
+            if(dashboardItemAdapter.selectedItems().isEmpty()) {
+                val clickedItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
+                if(clickedItem.id == -1L) {
+                    openFolder(null)
+                } else {
+                    openFolder(clickedItem)
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.avisio.dashboard.common.ui.breadcrump
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.HorizontalScrollView
@@ -46,12 +47,9 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     private fun addElementTextView(element: BreadCrumbDirectoryElement) {
         val textView = TextView(context)
         textView.text = element.displayName
-        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params.setMargins(16, 0 , 16, 0)
-        textView.layoutParams = params
+        setElementLayoutParams(textView)
         textView.setOnClickListener {
-            val index = (textView.parent as ViewGroup).indexOfChild(textView) / 2
-            onElementClicked(index)
+            triggerItemClick(it)
         }
         holder.addView(textView)
     }
@@ -59,12 +57,10 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     private fun addElementIcon(element: BreadCrumbDirectoryElement) {
         val iconElement = ImageView(context)
         iconElement.setImageResource(element.iconId!!)
-        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params.setMargins(16, 0 , 16, 0)
-        iconElement.layoutParams = params
+        iconElement.tag = element.iconId
+        setElementLayoutParams(iconElement)
         iconElement.setOnClickListener {
-            val index = (iconElement.parent as ViewGroup).indexOfChild(iconElement) / 2
-            onElementClicked(index)
+            triggerItemClick(it)
         }
         holder.addView(iconElement)
     }
@@ -87,6 +83,17 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
                 scrollTo(width, 0)
             }
         })
+    }
+
+    private fun setElementLayoutParams(view: View) {
+        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.setMargins(16, 0 , 16, 0)
+        view.layoutParams = params
+    }
+
+    private fun triggerItemClick(view: View) {
+        val index = (view.parent as ViewGroup).indexOfChild(view) / 2
+        onElementClicked(index)
     }
 
 }
