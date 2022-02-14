@@ -31,6 +31,7 @@ import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrum
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
+import com.avisio.dashboard.usecase.crud_box.read.move_items.ConfirmMoveItemsDialog
 import com.avisio.dashboard.usecase.crud_box.read.move_items.MoveItemsWorkflow
 import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
@@ -246,8 +247,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
     }
 
-    override fun onMoveItemsToFolderClicked(position: Int) {
-        Log.d(this.javaClass.simpleName, "move items clicked. Pos $position")
+    override fun onMoveItemsToFolderClicked(item: DashboardItem) {
+        ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), item)
     }
 
     private fun openFolder(item: DashboardItem?) {

@@ -22,6 +22,7 @@
     <string name="delete_all_selected_items_confirm_dialog_title">Elemente löschen</string>
     <string name="delete_all_selected_items_confirm_dialog_message">Möchtest Du wirklich alle markierten Elemente löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="move_items_title">Verschieben</string>
+    <string name="move_items_confirm_dialog_message">Möchtest Du %s Element(e) in den Ordner %s verschieben?</string>
 
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>
