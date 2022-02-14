@@ -130,6 +130,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 } else {
                     openFolder(clickedItem)
                 }
+            } else if(moveItemsWorkflow.isActive()) {
+                ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index))
             }
         }
     }

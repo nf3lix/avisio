@@ -20,6 +20,7 @@ import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
 import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.core.AllOf.allOf
 import org.junit.After
 import org.junit.Before
@@ -231,6 +232,22 @@ class DashboardFragmentMoveTest {
         onView(isRoot()).perform(waitFor(200))
         onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_3")))))).perform(click())
         onView(withText("Möchtest Du 2 Element(e) in den Ordner FOLDER_3 verschieben?")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showConfirmDialogOnBreadcrumbClickedInMoveWorkflow() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_2")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_move_all)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("Möchtest Du 1 Element(e) in den Ordner home verschieben?")).check(matches(isDisplayed()))
     }
 
 }
