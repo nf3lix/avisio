@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -243,6 +244,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 }
             }
         }
+    }
+
+    override fun onMoveItemsToFolderClicked(position: Int) {
+        Log.d(this.javaClass.simpleName, "move items clicked. Pos $position")
     }
 
     private fun openFolder(item: DashboardItem?) {

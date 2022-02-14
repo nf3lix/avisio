@@ -72,6 +72,7 @@ class DashboardItemListAdapter(
         suspend fun onClick(index: Int)
         fun onItemSelected(position: Int)
         fun onItemUnselected(position: Int)
+        fun onMoveItemsToFolderClicked(position: Int)
     }
 
     fun updateList(list: List<DashboardItem>?) {
