@@ -183,4 +183,32 @@ class DashboardFragmentMoveTest {
         onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_3")))))).check(matches(isGone()))
     }
 
+    @Test
+    fun hideMoveButtonsOnSelectedItemUnselected() {
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("FOLDER_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_2")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_move_all)).perform(click())
+
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_2")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isDisplayed()))
+
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_3")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isDisplayed()))
+
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_2")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isGone()))
+    }
+
 }

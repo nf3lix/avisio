@@ -7,7 +7,7 @@ class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow(
 
     private var isActive = false
 
-    fun initWorkflow() {
+    override fun initWorkflow() {
         isActive = true
         boxListView.setAppBarTitle(R.string.move_items_title)
         boxListView.displayCancelWorkflowMenuItem(true)
@@ -19,7 +19,7 @@ class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow(
         }
     }
 
-    fun finishWorkflow() {
+    override fun finishWorkflow() {
         isActive = false
         boxListView.setMoveWorkflowActive(false)
         boxListView.updateItemList()

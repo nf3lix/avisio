@@ -237,6 +237,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 fabExpand.visibility = View.VISIBLE
                 dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
+            } else {
+                if(moveItemsWorkflow.isActive()) {
+                    updateItemList()
+                }
             }
         }
     }
