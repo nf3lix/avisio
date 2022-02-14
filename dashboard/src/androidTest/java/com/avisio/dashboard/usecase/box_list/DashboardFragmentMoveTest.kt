@@ -58,6 +58,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showFinishWorkflowFabInMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_move_all)).perform(click())
@@ -248,6 +249,27 @@ class DashboardFragmentMoveTest {
         onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("Möchtest Du 1 Element(e) in den Ordner home verschieben?")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun doNotShowConfirmDialogIfBreadcrumbItemIsNoParentFolder() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withText("FOLDER_1")).perform(longClick())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withId(R.id.btn_move_all)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
+        onView(withText("FOLDER_1")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_2")).perform(longClick())
+        onView(withId(R.id.btn_move_all)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("FOLDER_1")).perform(click())
+        onView(withId(R.id.fab_cancel_workflow)).perform(click())
     }
 
 }

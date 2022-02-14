@@ -123,15 +123,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.updateBreadCrumb(currentFolder)
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
+            val clickedBreadcrumbItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
             if(dashboardItemAdapter.selectedItems().isEmpty()) {
-                val clickedItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
-                if(clickedItem.id == -1L) {
+                if(clickedBreadcrumbItem.id == -1L) {
                     openFolder(null)
                 } else {
-                    openFolder(clickedItem)
+                    openFolder(clickedBreadcrumbItem)
                 }
-            } else if(moveItemsWorkflow.isActive()) {
-                ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index))
+            } else if(isValidParentFolder(clickedBreadcrumbItem)) {
+                ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), clickedBreadcrumbItem)
             }
         }
     }
@@ -470,4 +470,9 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun setMoveWorkflowActive(active: Boolean) {
         dashboardItemAdapter.moveWorkflowActive = false
     }
+
+    private fun isValidParentFolder(item: DashboardItem): Boolean {
+        return moveItemsWorkflow.isActive() && currentFolder != null && currentFolder?.id != item.id
+    }
+
 }
