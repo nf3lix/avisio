@@ -46,7 +46,8 @@ class DashboardItemViewHolder(
         if(listAdapter.moveWorkflowActive && !item.selected && item.type == DashboardItemType.FOLDER) {
             moveItemsButton.visibility = View.VISIBLE
             moveItemsButton.setOnClickListener {
-                onClickListener.onMoveItemsToFolderClicked(item)
+                val selectedItems = listAdapter.selectedItems()
+                onClickListener.onMoveItemsToFolderClicked(adapterPosition, item, selectedItems)
             }
         } else {
             moveItemsButton.visibility = View.GONE

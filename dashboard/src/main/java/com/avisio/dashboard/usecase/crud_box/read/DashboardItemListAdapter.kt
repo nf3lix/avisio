@@ -15,7 +15,7 @@ class DashboardItemListAdapter(
         const val NO_ITEM_SELECTED: Int = -1
     }
 
-    private var initialList = currentList
+    var initialList = currentList
     var selectedItemPos = NO_ITEM_SELECTED
     var moveWorkflowActive = false
 
@@ -27,10 +27,8 @@ class DashboardItemListAdapter(
 
     override fun onBindViewHolder(holder: DashboardItemViewHolder, position: Int) {
         val currentItem = getItem(position)
-        if(position == selectedItemPos) {
+        if(/*position == selectedItemPos && */currentItem.selected) {
             holder.select(currentList[position])
-        } else {
-            // holder.unselect(currentList[position])
         }
         holder.bind(currentItem)
     }
@@ -72,7 +70,7 @@ class DashboardItemListAdapter(
         suspend fun onClick(index: Int)
         fun onItemSelected(position: Int)
         fun onItemUnselected(position: Int)
-        fun onMoveItemsToFolderClicked(item: DashboardItem)
+        fun onMoveItemsToFolderClicked(adapterPosition: Int, item: DashboardItem, selectedItems: List<DashboardItem>)
     }
 
     fun updateList(list: List<DashboardItem>?) {

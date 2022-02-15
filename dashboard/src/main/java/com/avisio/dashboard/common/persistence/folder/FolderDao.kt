@@ -20,6 +20,9 @@ interface FolderDao {
     @Query("UPDATE folder SET parentFolder = :destinationFolder WHERE id = :folderToMove")
     fun moveFolder(folderToMove: Long, destinationFolder: Long)
 
+    @Query("UPDATE folder SET parentFolder = null WHERE id = :folderToMove")
+    fun moveToRootFolder(folderToMove: Long)
+
     @Delete
     fun deleteFolder(folder: AvisioFolder)
 

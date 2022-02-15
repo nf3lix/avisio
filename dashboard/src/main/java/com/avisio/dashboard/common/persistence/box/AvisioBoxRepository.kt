@@ -62,15 +62,18 @@ class AvisioBoxRepository(application: Application) {
         return boxDao.getBoxById(id)
     }
 
-    fun deleteDashboardItem(item: DashboardItem) {
-        return when(item.type) {
-            DashboardItemType.FOLDER -> folderDao.deleteFolder(AvisioFolder(id = item.id))
-            DashboardItemType.BOX -> boxDao.deleteBox(AvisioBox(id = item.id))
-        }
-    }
-
     suspend fun getBoxNameList(): List<String> {
         return boxDao.getBoxNameList()
+    }
+
+    fun moveBox(avisioBox: AvisioBox, destination: DashboardItem) {
+        GlobalScope.launch {
+            if(destination.id == -1L) {
+                boxDao.moveToRootFolder(avisioBox.id)
+            } else {
+                boxDao.moveBox(avisioBox.id, destination.id)
+            }
+        }
     }
 
 }

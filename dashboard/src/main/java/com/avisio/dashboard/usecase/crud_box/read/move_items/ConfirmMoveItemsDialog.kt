@@ -24,7 +24,8 @@ class ConfirmMoveItemsDialog(boxListFragment: BoxListFragment, selectedItems: Li
 
     init {
         confirmDialog.setOnConfirmListener {
-
+            boxListFragment.moveSelectedItems(destination, selectedItems)
+            boxListFragment.finishMoveWorkflow()
         }
     }
 

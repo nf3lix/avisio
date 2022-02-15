@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -249,8 +248,22 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
     }
 
-    override fun onMoveItemsToFolderClicked(item: DashboardItem) {
-        ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), item)
+    override fun onMoveItemsToFolderClicked(adapterPosition: Int, item: DashboardItem, selectedItems: List<DashboardItem>) {
+        ConfirmMoveItemsDialog.showDialog(this, selectedItems, item)
+    }
+
+    fun moveSelectedItems(destination: DashboardItem, selectedItems: List<DashboardItem>) {
+        for(selectedItem in selectedItems) {
+            selectedItem.selected = false
+            when(selectedItem.type) {
+                DashboardItemType.FOLDER -> {
+                    folderRepository.moveFolder(AvisioFolder(id = selectedItem.id), destination)
+                }
+                DashboardItemType.BOX -> {
+                    boxRepository.moveBox(AvisioBox(id = selectedItem.id), destination)
+                }
+            }
+        }
     }
 
     private fun openFolder(item: DashboardItem?) {
@@ -377,6 +390,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         editSelectedItemButton = requireView().findViewById(R.id.btn_edit_item)
         editSelectedItemButton.setOnClickListener {
             val selectedItem = dashboardItemAdapter.selectedItems()[0]
+            selectedItem.selected = false
+            updateItemList()
+            hideSelectedItemsActionButtons()
+            closeFabMenu()
+            fabExpand.visibility = View.VISIBLE
             when(selectedItem.type) {
                 DashboardItemType.FOLDER -> startEditFolderActivity(selectedItem)
                 DashboardItemType.BOX -> startEditBoxActivity(selectedItem)
@@ -473,6 +491,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun isValidParentFolder(item: DashboardItem): Boolean {
         return moveItemsWorkflow.isActive() && currentFolder != null && currentFolder?.id != item.id
+    }
+
+    fun finishMoveWorkflow() {
+        moveItemsWorkflow.finishWorkflow()
     }
 
 }

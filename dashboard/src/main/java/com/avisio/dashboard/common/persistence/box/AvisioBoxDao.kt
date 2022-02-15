@@ -31,4 +31,10 @@ interface AvisioBoxDao {
     @Query("DELETE FROM box WHERE id = :boxId")
     fun deleteBox(boxId: Long)
 
+    @Query("UPDATE box SET folderId = NULL WHERE id = :boxToMove")
+    fun moveToRootFolder(boxToMove: Long)
+
+    @Query("UPDATE box SET folderId = :destinationFolder WHERE id = :boxToMove")
+    fun moveBox(boxToMove: Long, destinationFolder: Long)
+
 }
