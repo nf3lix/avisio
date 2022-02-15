@@ -3,7 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.widget.Filter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
-import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchQueryResultDetails
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_results.SearchQueryResultDetails
 
 class DashboardItemFilter(
     private val adapter: DashboardItemListAdapter,

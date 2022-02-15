@@ -279,7 +279,7 @@ class DashboardFragmentMoveTest {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
         boxDao.insertBox(AvisioBox(name = "BOX_1"))
         boxDao.insertBox(AvisioBox(name = "BOX_2"))
-        onView(isRoot()).perform(waitFor(200))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_2")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withText("FOLDER_3")).perform(click())

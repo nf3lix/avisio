@@ -27,7 +27,7 @@ class DashboardItemListAdapter(
 
     override fun onBindViewHolder(holder: DashboardItemViewHolder, position: Int) {
         val currentItem = getItem(position)
-        if(/*position == selectedItemPos && */currentItem.selected) {
+        if(currentItem.selected) {
             holder.select(currentList[position])
         }
         holder.bind(currentItem)

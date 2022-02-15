@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
-import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchResultViewHolder
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_results.SearchResultViewHolder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

@@ -2,8 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.read.dashboard_item
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.avisio.dashboard.common.data.model.box.AvisioBox
-import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts.SearchQueryResultDetails
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_results.SearchQueryResultDetails
 
 @Entity(primaryKeys = ["id", "type"])
 data class DashboardItem(

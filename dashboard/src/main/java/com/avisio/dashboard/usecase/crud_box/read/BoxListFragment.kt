@@ -29,6 +29,7 @@ import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrum
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.DashboardProcessor
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
 import com.avisio.dashboard.usecase.crud_box.read.move_items.ConfirmMoveItemsDialog
 import com.avisio.dashboard.usecase.crud_box.read.move_items.MoveItemsWorkflow
@@ -37,7 +38,6 @@ import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActi
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.box_list_fragment.*
-import java.lang.IllegalStateException
 import java.lang.IndexOutOfBoundsException
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
@@ -81,13 +81,12 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = requireView().findViewById<Toolbar>(R.id.box_list_app_bar)
         fabCreateBox = requireView().findViewById(R.id.fab_new_box)
         fabCreateFolder = requireView().findViewById(R.id.fab_new_folder)
         fabExpand = requireView().findViewById(R.id.fab_expand)
         folderRepository = AvisioFolderRepository(requireActivity().application)
         boxRepository = AvisioBoxRepository(requireActivity().application)
-        (requireActivity() as MainActivity).setSupportActionBar(toolbar)
+        (requireActivity() as MainActivity).setSupportActionBar(box_list_app_bar)
         (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(R.string.main_activity_app_bar_title)
         setHasOptionsMenu(true)
     }
@@ -339,18 +338,19 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     fun deleteCurrentFolder() {
         if(currentFolder != null) {
-            deleteFolder(currentFolder!!.id)
+            // deleteFolder(currentFolder!!.id)
+            DashboardProcessor.get(this, currentFolder!!).deleteItem()
         }
         openParentFolder()
     }
 
-    private fun deleteFolder(folderId: Long) {
-        folderRepository.deleteFolder(AvisioFolder(id = folderId))
-    }
-
-    private fun deleteBox(boxId: Long) {
-        boxRepository.deleteBox(AvisioBox(id = boxId))
-    }
+    // private fun deleteFolder(folderId: Long) {
+    //     folderRepository.deleteFolder(AvisioFolder(id = folderId))
+    // }
+//
+    // private fun deleteBox(boxId: Long) {
+    //     boxRepository.deleteBox(AvisioBox(id = boxId))
+    // }
 
     private fun setOnBackPressedDispatcher() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -437,10 +437,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     fun deleteAllSelectedItems() {
         for(item in dashboardItemAdapter.selectedItems()) {
-            when(item.type) {
-                DashboardItemType.FOLDER -> deleteFolder(item.id)
-                DashboardItemType.BOX -> deleteBox(item.id)
-            }
+            DashboardProcessor.get(this, item).deleteItem()
+            // when(item.type) {
+            //     DashboardItemType.FOLDER -> deleteFolder(item.id)
+            //     DashboardItemType.BOX -> deleteBox(item.id)
+            // }
         }
         hideSelectedItemsActionButtons()
         fabExpand.visibility = View.VISIBLE
@@ -487,6 +488,14 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun setMoveWorkflowActive(active: Boolean) {
         dashboardItemAdapter.moveWorkflowActive = false
+    }
+
+    override fun getFolderRepository(): AvisioFolderRepository {
+        return folderRepository
+    }
+
+    override fun getBoxRepository(): AvisioBoxRepository {
+        return boxRepository
     }
 
     private fun isValidParentFolder(item: DashboardItem): Boolean {

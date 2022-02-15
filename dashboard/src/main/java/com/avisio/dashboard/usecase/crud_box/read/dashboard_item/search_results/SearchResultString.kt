@@ -1,4 +1,4 @@
-package com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_resuts
+package com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_results
 
 import android.text.SpannableString
 import android.text.style.BackgroundColorSpan
