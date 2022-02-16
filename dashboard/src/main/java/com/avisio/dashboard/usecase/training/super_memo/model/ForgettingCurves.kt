@@ -1,6 +1,6 @@
 package com.avisio.dashboard.usecase.training.super_memo.model
 
-import com.avisio.dashboard.common.data.model.ForgettingCurveEntity
+import com.avisio.dashboard.common.data.model.sm.ForgettingCurveEntity
 import com.avisio.dashboard.usecase.training.super_memo.MalformedForgettingCurves
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_AF

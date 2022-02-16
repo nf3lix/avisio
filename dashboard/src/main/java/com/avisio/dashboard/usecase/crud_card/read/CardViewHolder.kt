@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.usecase.crud_box.read.CardViewHolderItem
 import com.avisio.dashboard.usecase.crud_box.read.due_date.RemainingTime
 import kotlin.math.absoluteValue
 

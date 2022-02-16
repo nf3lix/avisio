@@ -18,8 +18,8 @@ import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_box.common.BoxIcon
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
-import com.avisio.dashboard.view_actions.IndexMatcher
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
+import com.avisio.dashboard.view_matchers.IndexMatcher
 import org.hamcrest.Matchers.*
 import org.hamcrest.core.IsNot
 import org.junit.After
@@ -56,7 +56,7 @@ class EditBoxFragmentCreateModeTest {
     @Test
     fun setBoxIconTest() {
         onView(withId(R.id.box_icon_imageview))
-            .check(matches(withTagValue(equalTo(R.drawable.box_icon_default))))
+            .check(matches(withTagValue(equalTo(R.drawable.dashboard_item_icon_default))))
     }
 
     @Test

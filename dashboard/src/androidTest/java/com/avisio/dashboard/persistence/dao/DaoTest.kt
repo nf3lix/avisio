@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import androidx.lifecycle.Observer
-import com.avisio.dashboard.common.data.model.SMCardItem
 
 open class DaoTest {
 

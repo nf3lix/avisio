@@ -9,7 +9,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.setCardObject
-import com.avisio.dashboard.common.persistence.CardRepository
+import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import java.util.*

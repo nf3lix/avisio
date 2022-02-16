@@ -24,7 +24,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
-import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.card.CardDao
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
 import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.material.chip.Chip

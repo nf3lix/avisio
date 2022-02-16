@@ -25,4 +25,16 @@ interface AvisioBoxDao {
     @Query("SELECT name FROM box")
     fun getBoxNameList(): List<String>
 
+    @Query("SELECT * FROM box WHERE id = :boxId")
+    fun getBoxById(boxId: Long): AvisioBox
+
+    @Query("DELETE FROM box WHERE id = :boxId")
+    fun deleteBox(boxId: Long)
+
+    @Query("UPDATE box SET folderId = NULL WHERE id = :boxToMove")
+    fun moveToRootFolder(boxToMove: Long)
+
+    @Query("UPDATE box SET folderId = :destinationFolder WHERE id = :boxToMove")
+    fun moveBox(boxToMove: Long, destinationFolder: Long)
+
 }

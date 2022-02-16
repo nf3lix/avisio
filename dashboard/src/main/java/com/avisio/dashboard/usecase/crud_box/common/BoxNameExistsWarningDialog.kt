@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_box.common
 
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 
 class BoxNameExistsWarningDialog(fragment: EditBoxFragment) {
 

@@ -4,7 +4,7 @@ import com.avisio.dashboard.R
 
 enum class BoxIcon(val iconId: Int) {
 
-    DEFAULT(R.drawable.box_icon_default),
+    DEFAULT(R.drawable.dashboard_item_icon_default),
     LANGUAGE(R.drawable.box_icon_language);
 
     override fun toString(): String {

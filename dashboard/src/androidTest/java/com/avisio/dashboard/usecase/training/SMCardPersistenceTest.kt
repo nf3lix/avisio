@@ -17,13 +17,11 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.setBoxObject
-import com.avisio.dashboard.common.persistence.CardDao
-import com.avisio.dashboard.common.persistence.ForgettingCurveDao
-import com.avisio.dashboard.common.persistence.SMCardItemDao
+import com.avisio.dashboard.common.persistence.card.CardDao
+import com.avisio.dashboard.common.persistence.sm_card_items.SMCardItemDao
 import com.avisio.dashboard.persistence.dao.DaoTest
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
 import com.avisio.dashboard.view_actions.WaitForView
-import kotlinx.coroutines.runBlocking
 import org.junit.*
 import java.util.*
 import java.util.concurrent.TimeUnit

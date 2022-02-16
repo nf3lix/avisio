@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.box_activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
@@ -12,12 +11,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.*
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
-import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
+import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
@@ -25,11 +22,9 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.IntentKeys
-import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.card.CardDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
-import com.avisio.dashboard.usecase.training.activity.LearnBoxActivity
 import com.avisio.dashboard.view_actions.WaitForView
-import org.hamcrest.core.IsNot.not
 import org.junit.*
 import java.util.concurrent.TimeUnit
 
@@ -99,7 +94,7 @@ class BoxActivityTest {
 
     @Test
     fun cardQueueTest() {
-        for(i in 0 until 5) {
+        for(i in 0 until 4) {
             cardDao.insert(Card(boxId = 1, question = CardQuestion(arrayListOf(QuestionToken(i.toString(), QuestionTokenType.TEXT)))))
         }
         onView(withId(R.id.fab_learn)).perform(click())
@@ -110,7 +105,6 @@ class BoxActivityTest {
         Espresso.pressBack()
         onView(withId(R.id.fab_learn)).perform(click())
         processCard("3")
-        processCard("4")
     }
 
     private fun processCard(cardQuestion: String) {
