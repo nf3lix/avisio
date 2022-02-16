@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_box.read.move_items
 
+import android.content.Context
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 
@@ -20,5 +21,7 @@ interface BoxListView {
 
     fun getFolderRepository(): AvisioFolderRepository
     fun getBoxRepository(): AvisioBoxRepository
+
+    fun context(): Context
 
 }

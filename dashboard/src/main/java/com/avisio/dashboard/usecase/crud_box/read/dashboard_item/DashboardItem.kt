@@ -17,7 +17,7 @@ data class DashboardItem(
     val type: DashboardItemType,
 
     @ColumnInfo(name = "name")
-    val name: String?,
+    var name: String?,
 
     @ColumnInfo(name = "icon")
     var icon: Int,

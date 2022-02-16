@@ -10,4 +10,8 @@ class FolderProcessor(private val item: DashboardItem, private val view: BoxList
         view.getFolderRepository().deleteFolder(AvisioFolder(id = item.id))
     }
 
+    override fun startEditItem() {
+        TODO("Not yet implemented")
+    }
+
 }

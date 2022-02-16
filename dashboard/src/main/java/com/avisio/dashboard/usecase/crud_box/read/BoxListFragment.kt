@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -68,6 +69,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private lateinit var fabCreateFolder: ExtendedFloatingActionButton
     private lateinit var fabExpand: FloatingActionButton
 
+    var isEditingId: Long = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry, requireActivity().application)
@@ -115,6 +118,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun setupBreadCrumb() {
         breadCrumb = requireView().findViewById(R.id.breadCrumb)
+        updateItemList()
         breadCrumbAdapter = DashboardBreadCrumbAdapter()
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
@@ -302,7 +306,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_rename_folder -> {
-                startEditFolderActivity(currentFolder)
+                isEditingId = currentFolder!!.id
+                val folder = currentFolder
+                openParentFolder()
+                startEditFolderActivity(folder)
             }
             R.id.action_stop_workflow -> {
                 dashboardItemAdapter.moveWorkflowActive = false
@@ -475,4 +482,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         moveItemsWorkflow.finishWorkflow()
     }
 
+    override fun context(): Context {
+        return requireContext()
+    }
 }
