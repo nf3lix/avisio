@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
@@ -252,7 +251,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                     folderRepository.moveFolder(AvisioFolder(id = selectedItem.id), destination)
                 }
                 DashboardItemType.BOX -> {
-                    boxRepository.moveBox(AvisioBox(id = selectedItem.id), destination)
+                    folderRepository.moveFolder(AvisioFolder(id = selectedItem.id), destination)
                 }
             }
         }
@@ -437,7 +436,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun setMoveWorkflowActive(active: Boolean) {
-        dashboardItemAdapter.moveWorkflowActive = false
+        dashboardItemAdapter.moveWorkflowActive = active
     }
 
     override fun getFolderRepository(): AvisioFolderRepository {
@@ -452,7 +451,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         return moveItemsWorkflow.isActive() && currentFolder != null && currentFolder?.id != item.id
     }
 
-    fun finishMoveWorkflow() {
+    override fun finishMoveWorkflow() {
         moveItemsWorkflow.finishWorkflow()
     }
 

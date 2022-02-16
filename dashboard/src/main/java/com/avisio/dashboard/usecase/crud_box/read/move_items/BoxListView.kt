@@ -26,6 +26,7 @@ interface BoxListView {
     fun activity(): Activity
     fun refreshBreadcrumb()
     fun setMoveWorkflowActive(active: Boolean)
+    fun finishMoveWorkflow()
 
     fun setCurrentFolder(folder: DashboardItem)
     fun toggleDeleteMenuItem()

@@ -15,10 +15,17 @@ abstract class DashboardProcessor {
             }
         }
 
+        fun moveItems(boxListView: BoxListView, destination: DashboardItem, selectedItems: List<DashboardItem>) {
+            for(item in selectedItems) {
+                get(boxListView, item).moveTo(destination)
+            }
+        }
+
     }
 
     abstract fun deleteItem()
     abstract fun startEditItem()
     abstract suspend fun openItem()
+    abstract fun moveTo(destination: DashboardItem)
 
 }

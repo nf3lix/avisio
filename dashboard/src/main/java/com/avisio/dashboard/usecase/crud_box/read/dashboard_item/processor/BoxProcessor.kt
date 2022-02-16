@@ -13,6 +13,11 @@ class BoxProcessor(private val item: DashboardItem, private val view: BoxListVie
         view.getBoxRepository().deleteBox(AvisioBox(id = item.id))
     }
 
+    override fun moveTo(destination: DashboardItem) {
+        item.selected = false
+        view.getBoxRepository().moveBox(AvisioBox(id = item.id), destination)
+    }
+
     override fun startEditItem() {
         val box = AvisioBox(id = item.id, name = item.name!!, parentFolder = item.parentFolder)
         val intent = Intent(view.context(), EditBoxActivity::class.java)

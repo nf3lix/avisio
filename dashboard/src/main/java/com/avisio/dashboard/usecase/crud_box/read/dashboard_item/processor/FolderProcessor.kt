@@ -13,6 +13,11 @@ class FolderProcessor(private val item: DashboardItem, private val view: BoxList
         view.getFolderRepository().deleteFolder(AvisioFolder(id = item.id))
     }
 
+    override fun moveTo(destination: DashboardItem) {
+        item.selected = false
+        view.getFolderRepository().moveFolder(AvisioFolder(id = item.id), destination)
+    }
+
     override fun startEditItem() {
         val intent = Intent(view.context(), EditFolderActivity::class.java)
         intent.setCurrentFolder(item)
