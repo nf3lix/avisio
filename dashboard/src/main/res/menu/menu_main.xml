@@ -24,8 +24,4 @@
         android:title="@string/action_rename_folder"
         android:orderInCategory="110"
         app:showAsAction="never"/>
-    <item android:id="@+id/action_delete_folder"
-        android:title="@string/action_delete_folder"
-        android:orderInCategory="120"
-        app:showAsAction="never"/>
 </menu>

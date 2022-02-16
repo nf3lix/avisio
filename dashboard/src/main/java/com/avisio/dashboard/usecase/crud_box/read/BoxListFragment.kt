@@ -24,7 +24,6 @@ import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.common.ConfirmDeleteSelectedItemsDialog
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
 import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
-import com.avisio.dashboard.usecase.crud_box.delete_folder.ConfirmDeleteFolderDialog
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumb
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
@@ -203,7 +202,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     fun deleteBox(box: ParcelableAvisioBox) {
         val boxToDelete = dashboardItemAdapter.getDashboardItemById(box.boxId)
-        dashboardItemViewModel.deleteDashboardItem(boxToDelete!!)
+        dashboardItemViewModel.deleteBox(boxToDelete!!)
     }
 
     override suspend fun onClick(index: Int) {
@@ -269,7 +268,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         requireActivity().runOnUiThread {
             currentFolder = item
             dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
-            menu.findItem(R.id.action_delete_folder).isVisible = item != null
             menu.findItem(R.id.action_rename_folder).isVisible = item != null
             dashboardBreadCrumb.updateBreadCrumb(item)
             val currentQuery = requireView().findViewById<SearchView>(R.id.dashboard_list_search).query.toString()
@@ -281,8 +279,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         this.menu = menu
         menu.clear()
         inflater.inflate(R.menu.menu_main, menu)
-        val deleteFolderOption = menu.findItem(R.id.action_delete_folder)
-        deleteFolderOption.isVisible = currentFolder != null
         val renameFolderOption = menu.findItem(R.id.action_rename_folder)
         renameFolderOption.isVisible = currentFolder != null
         val searchItem = menu.findItem(R.id.dashboard_list_search)
@@ -305,9 +301,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_delete_folder -> {
-                deleteFolderOnConfirm()
-            }
             R.id.action_rename_folder -> {
                 startEditFolderActivity(currentFolder)
             }
@@ -317,10 +310,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun deleteFolderOnConfirm() {
-        ConfirmDeleteFolderDialog.showDialog(this)
     }
 
     private fun startEditFolderActivity(folder: DashboardItem?) {
@@ -335,22 +324,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         intent.setBoxObject(box)
         startActivity(intent)
     }
-
-    fun deleteCurrentFolder() {
-        if(currentFolder != null) {
-            // deleteFolder(currentFolder!!.id)
-            DashboardProcessor.get(this, currentFolder!!).deleteItem()
-        }
-        openParentFolder()
-    }
-
-    // private fun deleteFolder(folderId: Long) {
-    //     folderRepository.deleteFolder(AvisioFolder(id = folderId))
-    // }
-//
-    // private fun deleteBox(boxId: Long) {
-    //     boxRepository.deleteBox(AvisioBox(id = boxId))
-    // }
 
     private fun setOnBackPressedDispatcher() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -438,10 +411,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     fun deleteAllSelectedItems() {
         for(item in dashboardItemAdapter.selectedItems()) {
             DashboardProcessor.get(this, item).deleteItem()
-            // when(item.type) {
-            //     DashboardItemType.FOLDER -> deleteFolder(item.id)
-            //     DashboardItemType.BOX -> deleteBox(item.id)
-            // }
         }
         hideSelectedItemsActionButtons()
         fabExpand.visibility = View.VISIBLE

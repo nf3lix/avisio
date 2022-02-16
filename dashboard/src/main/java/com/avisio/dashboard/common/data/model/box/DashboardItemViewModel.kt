@@ -4,13 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
+import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 
 class DashboardItemViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: AvisioBoxRepository = AvisioBoxRepository(application)
-    private val boxList: LiveData<List<AvisioBox>> = repository.getBoxList()
-    private val dashboardItemList: LiveData<List<DashboardItem>> = repository.getDashboardItemList()
+    private val boxRepository: AvisioBoxRepository = AvisioBoxRepository(application)
+    private val folderRepository: AvisioFolderRepository = AvisioFolderRepository(application)
+    private val boxList: LiveData<List<AvisioBox>> = boxRepository.getBoxList()
+    private val dashboardItemList: LiveData<List<DashboardItem>> = boxRepository.getDashboardItemList()
 
     fun getDashboardItemList(): LiveData<List<DashboardItem>> {
         return dashboardItemList
@@ -21,15 +23,19 @@ class DashboardItemViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun insert(box: AvisioBox) {
-        repository.insert(box)
+        boxRepository.insert(box)
     }
 
     fun deleteBox(box: AvisioBox) {
-        repository.deleteBox(box)
+        boxRepository.deleteBox(box)
     }
 
-    fun deleteDashboardItem(item: DashboardItem) {
-        repository.deleteBox(item.id)
+    fun deleteBox(item: DashboardItem) {
+        boxRepository.deleteBox(item.id)
+    }
+
+    fun deleteFolder(item: DashboardItem) {
+        folderRepository.deleteFolder(AvisioFolder(id = item.id))
     }
 
 }

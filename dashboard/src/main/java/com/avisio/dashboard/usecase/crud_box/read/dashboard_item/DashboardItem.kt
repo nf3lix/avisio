@@ -20,7 +20,7 @@ data class DashboardItem(
     val name: String?,
 
     @ColumnInfo(name = "icon")
-    val icon: Int,
+    var icon: Int,
 
     @ColumnInfo(name = "selected")
     var selected: Boolean = false,

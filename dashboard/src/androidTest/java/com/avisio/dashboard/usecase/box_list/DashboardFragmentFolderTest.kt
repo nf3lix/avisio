@@ -59,29 +59,6 @@ class DashboardFragmentFolderTest {
     }
 
     @Test(expected = NoMatchingViewException::class)
-    fun deleteFolderOptionNotVisibleInRootFolder() {
-        onView(withContentDescription("More options")).perform(click())
-        onView(withId(R.id.action_delete_folder)).check(matches(isDisplayed()))
-    }
-
-    @Test(expected = NoMatchingViewException::class)
-    fun deleteFolderOptionNotVisibleOnReturnToRootFolder() {
-        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
-        onView(withText("FOLDER_1")).perform(click())
-        Espresso.pressBack()
-        onView(withContentDescription("More options")).perform(click())
-        onView(withId(R.id.action_delete_folder)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun deleteFolderOptionVisibleInNestedFolders() {
-        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
-        onView(withText("FOLDER_1")).perform(click())
-        onView(withContentDescription("More options")).perform(click())
-        onView(withText(R.string.action_delete_folder)).check(matches(isDisplayed()))
-    }
-
-    @Test(expected = NoMatchingViewException::class)
     fun renameFolderOptionNotVisibleInRootFolder() {
         onView(withContentDescription("More options")).perform(click())
         onView(withId(R.id.action_rename_folder)).check(matches(isDisplayed()))
@@ -140,20 +117,6 @@ class DashboardFragmentFolderTest {
         onView(withId(R.id.folder_name_edit_text)).perform(clearText())
         onView(withId(R.id.fab_edit_folder)).perform(click())
         onView(withText(R.string.no_folder_name_specified)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun cancelDeletionOnCancelClicked() {
-        boxDao.insertBox(AvisioBox(name = "BOX_1"))
-        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
-        boxDao.insertBox(AvisioBox(name = "NESTED_BOX", parentFolder = 1))
-        onView(isRoot()).perform(waitFor(800))
-        onView(withText("FOLDER_1")).perform(click())
-        onView(withContentDescription("More options")).perform(click())
-        onView(withText(R.string.action_delete_folder)).perform(click())
-        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("NESTED_BOX")).check(matches(isDisplayed()))
     }
 
     @Test

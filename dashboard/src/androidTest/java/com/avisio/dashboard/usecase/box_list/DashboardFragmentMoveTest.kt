@@ -99,6 +99,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showSelectionButtonsOnExitMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_move_all)).perform(click())
