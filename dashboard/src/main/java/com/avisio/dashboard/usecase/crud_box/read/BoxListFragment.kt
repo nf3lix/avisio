@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_box.read
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -212,14 +213,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         } catch (ignored: IndexOutOfBoundsException) {
             return
         }
-        return when(clickedItem.type) {
-            DashboardItemType.BOX -> {
-                boxActivityObserver.startBoxActivity(clickedItem)
-            }
-            DashboardItemType.FOLDER -> {
-                openFolder(clickedItem)
-            }
-        }
+        DashboardProcessor.get(this, clickedItem).openItem()
     }
 
     override fun onItemSelected(position: Int) {
@@ -359,10 +353,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             closeFabMenu()
             fabExpand.visibility = View.VISIBLE
             DashboardProcessor.get(this, selectedItem).startEditItem()
-            // when(selectedItem.type) {
-            //     DashboardItemType.FOLDER -> startEditFolderActivity(selectedItem)
-            //     DashboardItemType.BOX -> startEditBoxActivity(selectedItem)
-            // }
         }
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
         deleteSelectedItemsButton.setOnClickListener {
@@ -468,5 +458,34 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun context(): Context {
         return requireContext()
+    }
+
+    override fun activity(): Activity {
+        return requireActivity()
+    }
+
+    override fun setCurrentFolder(folder: DashboardItem) {
+        currentFolder = folder
+        dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
+    }
+
+    override fun toggleDeleteMenuItem() {
+        menu.findItem(R.id.action_rename_folder).isVisible = currentFolder != null
+    }
+
+    override fun searchView(): SearchView {
+        return requireView().findViewById(R.id.dashboard_list_search)
+    }
+
+    override fun setFilterQuery(query: String) {
+        dashboardItemAdapter.getFilter().filter(query)
+    }
+
+    override fun boxActivityObserver(): BoxActivityResultObserver {
+        return boxActivityObserver
+    }
+
+    override fun refreshBreadcrumb() {
+        dashboardBreadCrumb.updateBreadCrumb(currentFolder)
     }
 }

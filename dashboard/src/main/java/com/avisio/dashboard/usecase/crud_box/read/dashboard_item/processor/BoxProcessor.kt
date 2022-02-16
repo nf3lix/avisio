@@ -20,4 +20,7 @@ class BoxProcessor(private val item: DashboardItem, private val view: BoxListVie
         view.context().startActivity(intent)
     }
 
+    override suspend fun openItem() {
+        view.boxActivityObserver().startBoxActivity(item)
+    }
 }

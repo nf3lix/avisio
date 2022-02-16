@@ -19,4 +19,17 @@ class FolderProcessor(private val item: DashboardItem, private val view: BoxList
         view.context().startActivity(intent)
     }
 
+    override suspend fun openItem() {
+        view.activity().runOnUiThread {
+            view.setCurrentFolder(item)
+            view.toggleDeleteMenuItem()
+            view.refreshBreadcrumb()
+            applyPreviousSearch()
+        }
+    }
+
+    private fun applyPreviousSearch() {
+        val previousQuery = view.searchView().query
+        view.setFilterQuery(previousQuery.toString())
+    }
 }
