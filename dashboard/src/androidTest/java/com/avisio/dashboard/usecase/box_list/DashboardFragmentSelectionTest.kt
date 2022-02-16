@@ -209,6 +209,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun showExpandFabMenuButtonOnUnselectLastSelectedItem() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
         onView(withText("F_1")).perform(click())
@@ -218,6 +219,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun showSelectedItemsActionButtonsOnSelectItem() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))
         onView(withId(R.id.btn_delete_all)).check(matches(isDisplayed()))

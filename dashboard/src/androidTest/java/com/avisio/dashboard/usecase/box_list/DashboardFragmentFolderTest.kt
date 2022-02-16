@@ -113,10 +113,15 @@ class DashboardFragmentFolderTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withContentDescription("More options")).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withText(R.string.action_rename_folder)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.folder_name_edit_text)).perform(clearText())
+        onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withText(R.string.no_folder_name_specified)).check(matches(isDisplayed()))
     }
 

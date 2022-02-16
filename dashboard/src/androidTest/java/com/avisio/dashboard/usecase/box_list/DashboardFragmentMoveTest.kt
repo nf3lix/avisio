@@ -68,6 +68,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showFinishWorkflowButtonMenuItemInMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_move_all)).perform(click())
@@ -125,21 +126,6 @@ class DashboardFragmentMoveTest {
     }
 
     @Test
-    fun showMoveButtonsInUnselectedItems() {
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
-        onView(isRoot()).perform(waitFor(800))
-        onView(withText("FOLDER_1")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withId(R.id.btn_move_all)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_1")))))).check(matches(isGone()))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isDisplayed()))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_3")))))).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun hideMoveButtonsOnFinishFabClicked() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
@@ -188,34 +174,6 @@ class DashboardFragmentMoveTest {
     }
 
     @Test
-    fun hideMoveButtonsOnSelectedItemUnselected() {
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
-        onView(isRoot()).perform(waitFor(800))
-        onView(withText("FOLDER_1")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withId(R.id.btn_move_all)).perform(click())
-
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isDisplayed()))
-
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_3")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isDisplayed()))
-
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_2")))))).check(matches(isGone()))
-    }
-
-    @Test
     fun showConfirmDialogOnMoveButtonClicked() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
@@ -234,6 +192,7 @@ class DashboardFragmentMoveTest {
         onView(withText("FOLDER_2")).perform(click())
         onView(isRoot()).perform(waitFor(200))
         onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_3")))))).perform(click())
+        onView(isRoot()).perform(waitFor(200))
         onView(withText("Möchtest Du 2 Element(e) in den Ordner FOLDER_3 verschieben?")).check(matches(isDisplayed()))
     }
 
@@ -272,36 +231,6 @@ class DashboardFragmentMoveTest {
         onView(isRoot()).perform(waitFor(200))
         onView(withText("FOLDER_1")).perform(click())
         onView(withId(R.id.fab_cancel_workflow)).perform(click())
-    }
-
-    @Test
-    fun moveItemsToFolder() {
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
-        boxDao.insertBox(AvisioBox(name = "BOX_1"))
-        boxDao.insertBox(AvisioBox(name = "BOX_2"))
-        onView(isRoot()).perform(waitFor(800))
-        onView(withText("FOLDER_2")).perform(longClick())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_3")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("BOX_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("BOX_2")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withId(R.id.btn_move_all)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(allOf(withId(R.id.btn_move_selected_items), withParent(withChild(withChild(withText("FOLDER_1")))))).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_2")).check(matches(isDisplayed()))
-        onView(withText("FOLDER_3")).check(matches(isDisplayed()))
-        onView(withText("BOX_1")).check(matches(isDisplayed()))
-        onView(withText("BOX_2")).check(matches(isDisplayed()))
     }
 
     @Test
