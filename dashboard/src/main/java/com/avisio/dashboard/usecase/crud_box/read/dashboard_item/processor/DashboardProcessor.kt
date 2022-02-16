@@ -25,6 +25,7 @@ abstract class DashboardProcessor {
 
     abstract fun deleteItem()
     abstract fun startEditItem()
+    abstract fun startCreateChild()
     abstract suspend fun openItem()
     abstract fun moveTo(destination: DashboardItem)
 

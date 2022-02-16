@@ -28,6 +28,7 @@ import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrum
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.BoxProcessor
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.DashboardProcessor
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.FolderProcessor
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
@@ -169,15 +170,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         }
 
         fabCreateBox.setOnClickListener {
-            val intent = Intent(requireContext(), CreateBoxActivity::class.java)
-            intent.setCurrentFolder(currentFolder)
-            startActivity(intent)
+            BoxProcessor(currentFolder, this).startCreateChild()
         }
 
         fabCreateFolder.setOnClickListener {
-            val intent = Intent(requireContext(), CreateFolderActivity::class.java)
-            intent.setCurrentFolder(currentFolder)
-            startActivity(Intent(intent))
+            FolderProcessor(currentFolder, this).startCreateChild()
         }
 
     }
