@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
-import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
-import com.avisio.dashboard.usecase.training.DefaultTrainingStrategy
 import com.avisio.dashboard.usecase.training.QuestionResult
+import com.avisio.dashboard.usecase.training.SM15TrainingStrategy
 import com.avisio.dashboard.usecase.training.TrainingStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.CardTypeLayoutStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTextLayoutStrategy
@@ -36,15 +32,12 @@ class LearnBoxFragment : Fragment(), LearnCardView {
 
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
+    lateinit var progressBar: ProgressBar
     private lateinit var correctAnswerLayoutInput: TextInputLayout
     lateinit var answerEditText: EditText
     lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
-
-    private lateinit var correctChip: QuestionResultChip
-    private lateinit var partiallyChip: QuestionResultChip
-    private lateinit var incorrectChip: QuestionResultChip
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,10 +55,12 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
+        progressBar = requireView().findViewById(R.id.load_card_progressBar)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)
-        setupResultChipGroup()
-        trainingStrategy = DefaultTrainingStrategy(box, requireActivity().application)
+        addAllQuestionResultChips()
+        trainingStrategy = SM15TrainingStrategy(box, requireActivity().application)
         manager = LearnCardManager(this, trainingStrategy)
+        trainingStrategy.initObserver(manager)
         setupFab()
     }
 
@@ -73,23 +68,27 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         return inflater.inflate(R.layout.fragment_learn_box, container, false)
     }
 
-    override fun showCard(card: Card) {
+    override fun onCardLoadSuccess(card: Card) {
+        enableButtons()
+        hideProgressBar()
+        showAnswerEditText()
         currentCard = card
         cardTypeLayoutStrategy = CardTypeLayoutStrategy.getCardTypeStrategy(currentCard, this)
-        requireActivity().runOnUiThread {
-            requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
-            showResolveQuestionButton()
-            answerInputLayout.visibility = View.VISIBLE
-            resultChipGroup.visibility = View.GONE
-            correctAnswerLayoutInput.visibility = View.GONE
-            cardTypeLayoutStrategy.onShowCard()
-        }
+        try {
+            requireActivity().runOnUiThread {
+                requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
+                showResolveQuestionButton()
+                answerInputLayout.visibility = View.VISIBLE
+                resultChipGroup.visibility = View.GONE
+                correctAnswerLayoutInput.visibility = View.GONE
+                cardTypeLayoutStrategy.onShowCard()
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     override fun onCorrectAnswer() {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
-        correctChip.setSuggestedResult()
         cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
@@ -98,7 +97,6 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
-        incorrectChip.setSuggestedResult()
         cardTypeLayoutStrategy.onIncorrectAnswer()
     }
 
@@ -135,6 +133,9 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onCardLoading() {
+        disableButtons()
+        showProgressBar()
+        hideAnswerEditText()
     }
 
     private fun setupFab() {
@@ -158,20 +159,25 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     fun showAnswerEditText() {
-        answerInputLayout.visibility = View.VISIBLE
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.VISIBLE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
     fun hideAnswerEditText() {
-        answerInputLayout.visibility = View.GONE
+        try {
+            requireActivity().runOnUiThread {
+                answerInputLayout.visibility = View.GONE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
-    private fun setupResultChipGroup() {
-        correctChip = QuestionResultChip(this, QuestionResult.CORRECT, requireContext(), null)
-        partiallyChip = QuestionResultChip(this, QuestionResult.PARTIALLY_CORRECT, requireContext(), null)
-        incorrectChip = QuestionResultChip(this, QuestionResult.INCORRECT, requireContext(), null)
-        resultChipGroup.addView(correctChip)
-        resultChipGroup.addView(partiallyChip)
-        resultChipGroup.addView(incorrectChip)
+    private fun addAllQuestionResultChips() {
+        for(questionResult in QuestionResult.values()) {
+            resultChipGroup.addView(QuestionResultChip(this, questionResult, requireContext(), null))
+        }
     }
 
     override fun onResultOptionSelected(result: QuestionResult) {
@@ -188,6 +194,38 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
         }
+    }
+
+    private fun disableButtons() {
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = false
+            }
+        } catch (ignore: IllegalStateException) { }
+    }
+
+    private fun enableButtons() {
+        try {
+            requireActivity().runOnUiThread {
+                resolveQuestionButton.isEnabled = true
+            }
+        } catch (ignore: IllegalStateException) { }
+    }
+
+    private fun hideProgressBar() {
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.GONE
+            }
+        } catch (ignore: IllegalStateException) { }
+    }
+
+    private fun showProgressBar() {
+        try {
+            requireActivity().runOnUiThread {
+                progressBar.visibility = View.VISIBLE
+            }
+        } catch (ignore: IllegalStateException) { }
     }
 
 }

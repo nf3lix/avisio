@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    #
     <color name="primaryColor">#a3bf76</color>
     <color name="primaryLightColor">#d5f2a6</color>
     <color name="primaryDarkColor">#738f49</color>
@@ -11,8 +12,12 @@
     <color name="dividerColor">#D2D2D2</color> <!-- color for dividers, grids etc -->
     <color name="backgroundTintLightColor">#e0e0e0</color> <!-- color for dividers, grids etc -->
     <color name="textColor">#979797</color> <!-- text color on white background -->
-    <color name="success">#4CAF50</color>
     <color name="information">#2196F3</color>
-    <color name="warning">#CC8824</color>
-    <color name="error">#b00022</color> <!-- text color on white background -->
+
+    <color name="white">#fff</color>
+    <color name="error">#b00022</color>
+    <color name="hard">#ff5300</color>
+    <color name="medium">#c6781d</color>
+    <color name="warning">#8c9c3a</color>
+    <color name="success">#4CAF50</color>
 </resources>

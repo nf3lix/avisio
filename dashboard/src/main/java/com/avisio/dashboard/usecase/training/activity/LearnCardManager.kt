@@ -6,7 +6,7 @@ import com.avisio.dashboard.usecase.training.TrainingStrategy
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LearnCardManager(private val view: LearnCardView, private val strategy: TrainingStrategy) {
+class LearnCardManager(private val view: LearnCardView, private val strategy: TrainingStrategy) : TrainStrategyObserver {
 
     private lateinit var currentCard: Card
 
@@ -19,38 +19,44 @@ class LearnCardManager(private val view: LearnCardView, private val strategy: Tr
     }
 
     private fun loadNextCard() {
+        view.onCardLoading()
         GlobalScope.launch {
             val card = strategy.nextCard()
             if(card == null) {
                 view.onTrainingFinished()
             } else {
                 currentCard = card
-                view.showCard(currentCard)
+                view.onCardLoadSuccess(currentCard)
             }
         }
     }
 
     fun onAnswer(result: QuestionResult) {
         when(result) {
-            QuestionResult.CORRECT -> {
+            QuestionResult.EASY -> {
                 view.onCorrectAnswer()
             }
-            QuestionResult.INCORRECT -> {
+            QuestionResult.WRONG -> {
                 view.onIncorrectAnswer()
             }
-            QuestionResult.PARTIALLY_CORRECT -> {
+            else -> {
                 view.onPartiallyCorrectAnswer()
             }
         }
     }
 
     fun onResultOptionSelected(result: QuestionResult) {
-        strategy.onCardResult(result)
+        GlobalScope.launch {
+            strategy.onCardResult(result)
+        }
+    }
+
+    override fun resultOptionSelectionProceeded() {
         if(strategy.hasNextCard()) {
             loadNextCard()
-            return
+        } else {
+            view.onTrainingFinished()
         }
-        view.onTrainingFinished()
     }
 
 }

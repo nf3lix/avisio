@@ -6,6 +6,24 @@
     <string name="first_fragment_label">First Fragment</string>
 
     <string name="title_activity_create_box">Create Box</string>
+
+    <string name="fab_create_box_label">Neue Box</string>
+
+    <string name="fab_create_folder_label">Neuer Ordner</string>
+    <string name="action_delete_folder">Ordner löschen</string>
+    <string name="action_rename_folder">Ordner umbenennen</string>
+    <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
+    <string name="edit_folder">Ordner Bearbeiten</string>
+    <string name="folder_name_hint">Ordnername</string>
+    <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
+    <string name="no_folder_name_specified">Bitte trage einen Namen für den Ordner ein</string>
+    <string name="create_folder_success">Ordner wurde erfolgreich erstellt</string>
+    <string name="edit_folder_success">Ordner wurde erfolgreich umbenannt</string>
+    <string name="delete_all_selected_items_confirm_dialog_title">Elemente löschen</string>
+    <string name="delete_all_selected_items_confirm_dialog_message">Möchtest Du wirklich alle markierten Elemente löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
+    <string name="move_items_title">Verschieben</string>
+    <string name="move_items_confirm_dialog_message">Möchtest Du %s Element(e) in den Ordner %s verschieben?</string>
+
     <string name="main_activity_app_bar_title">Home</string>
     <string name="activity_edit_box">Edit box</string>
 
@@ -26,6 +44,7 @@
     <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
+    <string name="fab_cancel_workflow">Abbrechen</string>
 
     <string name="create_card_type_spinner_content_description">Wähle einen Kartentyp</string>
     <string name="create_card_fab_content_description">Karte speichern</string>
@@ -74,6 +93,58 @@
     <string name="learn_activity_result_button_incorrect">Falsch</string>
     <string name="learn_activity_result_button_partially_correct">Teilweise richtig</string>
     <string name="learn_activity_training_finished">Lernen beendet</string>
-    <string name="search_box_title">search box</string>
+
+    <string name="learn_activity_result_wrong">Falsch</string>
+    <string name="learn_activity_result_hard">Schwer</string>
+    <string name="learn_activity_result_medium">Mittel</string>
+    <string name="learn_activity_result_ok">Ok</string>
+    <string name="learn_activity_result_easy">Einfach</string>
+
+    <string name="search_dashboard_item_title">search box</string>
+    <string name="finish_selection_menu_item">Auswahl beenden</string>
+    <string name="delete_selected_dashboard_items">Löschen</string>
+    <string name="move_selected_dashboard_items">Verschieben</string>
+    <string name="edit_selected_dashboard_items">Bearbeiten</string>
+
+    <string name="remaining_time_minutes_singular">min</string>
+    <string name="remaining_time_hours_singular">h</string>
+    <string name="remaining_time_days_singular">Tag</string>
+    <string name="remaining_time_days_plural">Tagen</string>
+
+    <string name="remaining_time_month_singular">Monat</string>
+    <string name="remaining_time_month_plural">Monaten</string>
+
+    <string name="remaining_time_year_singular">Jahr</string>
+    <string name="remaining_time_year_plural">Jahren</string>
+
+    <plurals name="minutes">
+        <item quantity="one">min</item>
+        <item quantity="other">min</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">h</item>
+        <item quantity="other">h</item>
+    </plurals>
+
+    <plurals name="days">
+        <item quantity="one">Tag</item>
+        <item quantity="other">Tagen</item>
+    </plurals>
+
+    <plurals name="months">
+        <item quantity="one">Monat</item>
+        <item quantity="other">Monaten</item>
+    </plurals>
+
+    <plurals name="years">
+        <item quantity="one">Jahr</item>
+        <item quantity="other">Jahren</item>
+    </plurals>
+
+    <string name="due_date_in_future_displayed_template">Fällig in %s %s</string>
+    <string name="due_date_in_past_displayed_template">Fällig seit %s %s</string>
+
+    <string name="card_not_learned_yet">Noch nicht gelernt</string>
 
 </resources>

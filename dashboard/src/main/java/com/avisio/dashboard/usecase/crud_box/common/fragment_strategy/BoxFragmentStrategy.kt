@@ -5,9 +5,9 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.workflow.CRUD.CREATE
 import com.avisio.dashboard.common.workflow.CRUD.UPDATE
 import com.avisio.dashboard.usecase.crud_box.common.BoxNameExistsWarningDialog
-import com.avisio.dashboard.usecase.crud_box.common.EditBoxFragment
-import com.avisio.dashboard.usecase.crud_box.create.CreateBoxStrategy
-import com.avisio.dashboard.usecase.crud_box.update.EditBoxStrategy
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
+import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxStrategy
+import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxStrategy
 
 abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment, val titleId: Int) {
 

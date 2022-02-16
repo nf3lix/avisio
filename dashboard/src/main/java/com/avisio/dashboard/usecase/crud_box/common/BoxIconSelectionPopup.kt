@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.View
 import android.widget.PopupMenu
 import com.avisio.dashboard.R
+import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 import java.lang.reflect.Method
 
 class BoxIconSelectionPopup(private val fragment: EditBoxFragment, view: View) {

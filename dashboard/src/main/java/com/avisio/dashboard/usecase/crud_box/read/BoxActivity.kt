@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.box.AvisioBox
+import com.avisio.dashboard.common.data.transfer.*
 import com.avisio.dashboard.usecase.crud_card.create.CreateCardActivity
 import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
-import com.avisio.dashboard.usecase.crud_box.update.EditBoxActivity
-import com.avisio.dashboard.common.data.transfer.getBoxObject
-import com.avisio.dashboard.common.data.transfer.setBoxObject
-import com.avisio.dashboard.common.data.transfer.setCardObject
+import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.common.workflow.CRUD.*
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_card.read.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModel
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModelFactory
@@ -114,13 +113,13 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     private fun setupCardViewModel() {
         cardViewModel = ViewModelProvider(this, CardViewModelFactory(application, box)).get(
             CardViewModel::class.java)
-        cardViewModel.getCardList().observe(this) { cardList ->
+        cardViewModel.getCardListWithSMDetails().observe(this) { cardList ->
             cardListAdapter.submitList(cardList)
         }
     }
 
     override fun onClick(index: Int) {
-        startEditCardActivity(UPDATE, cardListAdapter.currentList[index])
+        startEditCardActivity(UPDATE, cardListAdapter.currentList[index].card)
     }
 
     private fun startEditCardActivity(workflow: CRUD, card: Card) {

@@ -7,7 +7,8 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
-import com.avisio.dashboard.usecase.crud_box.create.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
+import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -30,8 +31,16 @@ class MainActivityTest {
 
     @Test
     fun startCreateBoxActivityOnFabClicked() {
+        onView(withId(R.id.fab_expand)).perform(click())
         onView(withId(R.id.fab_new_box)).perform(click())
         intended(hasComponent(CreateBoxActivity::class.java.name))
+    }
+
+    @Test
+    fun startCreateFolderActivityOnFabClicked() {
+        onView(withId(R.id.fab_expand)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        intended(hasComponent(CreateFolderActivity::class.java.name))
     }
 
 }

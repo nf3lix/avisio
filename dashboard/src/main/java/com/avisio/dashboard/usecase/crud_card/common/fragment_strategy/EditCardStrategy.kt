@@ -5,7 +5,7 @@ import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.persistence.CardRepository
+import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 
 class EditCardStrategy(

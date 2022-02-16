@@ -8,7 +8,7 @@ import com.avisio.dashboard.common.data.model.card.*
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
-import com.avisio.dashboard.common.persistence.CardDao
+import com.avisio.dashboard.common.persistence.card.CardDao
 import org.junit.*
 import java.util.*
 

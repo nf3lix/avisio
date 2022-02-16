@@ -20,6 +20,4 @@ open class DaoTest {
         return value
     }
 
-
-
 }
