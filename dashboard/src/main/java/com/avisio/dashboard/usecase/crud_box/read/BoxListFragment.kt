@@ -16,7 +16,6 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.data.transfer.setBoxObject
 import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
@@ -33,12 +32,9 @@ import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.Dashb
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
 import com.avisio.dashboard.usecase.crud_box.read.move_items.ConfirmMoveItemsDialog
 import com.avisio.dashboard.usecase.crud_box.read.move_items.MoveItemsWorkflow
-import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
-import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.box_list_fragment.*
-import java.lang.IndexOutOfBoundsException
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
 
@@ -309,7 +305,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 isEditingId = currentFolder!!.id
                 val folder = currentFolder
                 openParentFolder()
-                startEditFolderActivity(folder)
+                DashboardProcessor.get(this, folder!!).startEditItem()
             }
             R.id.action_stop_workflow -> {
                 dashboardItemAdapter.moveWorkflowActive = false
@@ -317,19 +313,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun startEditFolderActivity(folder: DashboardItem?) {
-        val intent = Intent(requireContext(), EditFolderActivity::class.java)
-        intent.setCurrentFolder(folder)
-        startActivity(intent)
-    }
-
-    private fun startEditBoxActivity(box: DashboardItem) {
-        val box = AvisioBox(id = box.id, name = box.name!!, parentFolder = box.parentFolder)
-        val intent = Intent(requireContext(), EditBoxActivity::class.java)
-        intent.setBoxObject(box)
-        startActivity(intent)
     }
 
     private fun setOnBackPressedDispatcher() {
@@ -375,10 +358,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             hideSelectedItemsActionButtons()
             closeFabMenu()
             fabExpand.visibility = View.VISIBLE
-            when(selectedItem.type) {
-                DashboardItemType.FOLDER -> startEditFolderActivity(selectedItem)
-                DashboardItemType.BOX -> startEditBoxActivity(selectedItem)
-            }
+            DashboardProcessor.get(this, selectedItem).startEditItem()
+            // when(selectedItem.type) {
+            //     DashboardItemType.FOLDER -> startEditFolderActivity(selectedItem)
+            //     DashboardItemType.BOX -> startEditBoxActivity(selectedItem)
+            // }
         }
         deleteSelectedItemsButton = requireView().findViewById(R.id.btn_delete_all)
         deleteSelectedItemsButton.setOnClickListener {

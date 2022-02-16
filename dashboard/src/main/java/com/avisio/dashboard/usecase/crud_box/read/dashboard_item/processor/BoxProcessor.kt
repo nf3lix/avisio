@@ -14,10 +14,10 @@ class BoxProcessor(private val item: DashboardItem, private val view: BoxListVie
     }
 
     override fun startEditItem() {
-        // val box = AvisioBox(id = item.id, name = item.box.name!!, parentFolder = box.parentFolder)
-        // val intent = Intent(view.context(), EditBoxActivity::class.java)
-        // intent.setBoxObject(box)
-        // view.context().startActivity(intent)
+        val box = AvisioBox(id = item.id, name = item.name!!, parentFolder = item.parentFolder)
+        val intent = Intent(view.context(), EditBoxActivity::class.java)
+        intent.setBoxObject(box)
+        view.context().startActivity(intent)
     }
 
 }
