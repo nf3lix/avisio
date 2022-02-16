@@ -18,7 +18,7 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     private var holder: LinearLayout
     private var scrollbarSize = 0
 
-    private var onElementClicked: (Int) -> Unit = { }
+    private var elementClickListener: ElementClickListener? = null
 
     init {
         inflate(context, R.layout.bread_crumb_view, this)
@@ -65,8 +65,8 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
         holder.addView(iconElement)
     }
 
-    fun setOnBreadCrumbElementClickListener(onClick: (itemIndex: Int) -> Unit) {
-        onElementClicked = onClick
+    fun setOnElementClickListener(listener: ElementClickListener) {
+        elementClickListener = listener
     }
 
     private fun addBreadCrumbSeparator() {
@@ -93,7 +93,11 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
 
     private fun triggerItemClick(view: View) {
         val index = (view.parent as ViewGroup).indexOfChild(view) / 2
-        onElementClicked(index)
+        elementClickListener?.onClick(index)
+    }
+
+    interface ElementClickListener {
+        fun onClick(index: Int)
     }
 
 }

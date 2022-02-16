@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
@@ -13,17 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.avisio.dashboard.R
-import com.avisio.dashboard.common.data.model.box.AvisioFolder
 import com.avisio.dashboard.common.data.model.box.DashboardItemViewModel
 import com.avisio.dashboard.common.data.model.box.ParcelableAvisioBox
-import com.avisio.dashboard.common.data.transfer.setCurrentFolder
 import com.avisio.dashboard.common.persistence.box.AvisioBoxRepository
 import com.avisio.dashboard.common.persistence.folder.AvisioFolderRepository
 import com.avisio.dashboard.common.ui.breadcrump.BreadCrumb
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.usecase.crud_box.common.ConfirmDeleteSelectedItemsDialog
-import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxActivity
-import com.avisio.dashboard.usecase.crud_box.create_folder.CreateFolderActivity
+import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.BreadcrumbListener
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumb
 import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrumbAdapter
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
@@ -123,23 +119,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.updateBreadCrumb(currentFolder)
-        breadCrumb.setOnBreadCrumbElementClickListener { index ->
-            val clickedBreadcrumbItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
-            if(dashboardItemAdapter.selectedItems().isEmpty()) {
-                val view = this
-                if(clickedBreadcrumbItem.id == -1L) {
-                    GlobalScope.launch {
-                        FolderProcessor(null, view).openItem()
-                    }
-                } else {
-                    GlobalScope.launch {
-                        FolderProcessor(clickedBreadcrumbItem, view).openItem()
-                    }
-                }
-            } else if(isValidParentFolder(clickedBreadcrumbItem)) {
-                ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), clickedBreadcrumbItem)
-            }
-        }
+        breadCrumb.setOnElementClickListener(BreadcrumbListener(this, dashboardBreadCrumb, moveItemsWorkflow))
     }
 
     private fun setupBoxViewModel() {
@@ -430,10 +410,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         return boxRepository
     }
 
-    private fun isValidParentFolder(item: DashboardItem): Boolean {
-        return moveItemsWorkflow.isActive() && currentFolder != null && currentFolder?.id != item.id
-    }
-
     override fun finishMoveWorkflow() {
         moveItemsWorkflow.finishWorkflow()
     }
@@ -469,5 +445,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun refreshBreadcrumb() {
         dashboardBreadCrumb.updateBreadCrumb(currentFolder)
+    }
+
+    override fun selectedItems(): List<DashboardItem> {
+        return dashboardItemAdapter.selectedItems()
+    }
+
+    override fun currentFolder(): DashboardItem? {
+        return currentFolder
     }
 }

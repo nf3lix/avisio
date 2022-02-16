@@ -29,11 +29,11 @@ interface BoxListView {
     fun finishMoveWorkflow()
 
     fun setCurrentFolder(folder: DashboardItem?)
+    fun currentFolder(): DashboardItem?
     fun toggleDeleteMenuItem()
-
     fun boxActivityObserver(): BoxActivityResultObserver
-
     fun searchView(): SearchView
     fun setFilterQuery(query: String)
+    fun selectedItems(): List<DashboardItem>
 
 }
