@@ -29,12 +29,15 @@ import com.avisio.dashboard.usecase.crud_box.read.bread_crumb.DashboardBreadCrum
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItemType
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.DashboardProcessor
+import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.processor.FolderProcessor
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
 import com.avisio.dashboard.usecase.crud_box.read.move_items.ConfirmMoveItemsDialog
 import com.avisio.dashboard.usecase.crud_box.read.move_items.MoveItemsWorkflow
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.box_list_fragment.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
 
@@ -122,10 +125,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumb.setOnBreadCrumbElementClickListener { index ->
             val clickedBreadcrumbItem = dashboardBreadCrumb.getDashboardItemFromBreadCrumbIndex(index)
             if(dashboardItemAdapter.selectedItems().isEmpty()) {
+                val view = this
                 if(clickedBreadcrumbItem.id == -1L) {
-                    openFolder(null)
+                    GlobalScope.launch {
+                        FolderProcessor(null, view).openItem()
+                    }
                 } else {
-                    openFolder(clickedBreadcrumbItem)
+                    GlobalScope.launch {
+                        FolderProcessor(clickedBreadcrumbItem, view).openItem()
+                    }
                 }
             } else if(isValidParentFolder(clickedBreadcrumbItem)) {
                 ConfirmMoveItemsDialog.showDialog(this, dashboardItemAdapter.selectedItems(), clickedBreadcrumbItem)
@@ -243,31 +251,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         ConfirmMoveItemsDialog.showDialog(this, selectedItems, item)
     }
 
-    fun moveSelectedItems(destination: DashboardItem, selectedItems: List<DashboardItem>) {
-        for(selectedItem in selectedItems) {
-            selectedItem.selected = false
-            when(selectedItem.type) {
-                DashboardItemType.FOLDER -> {
-                    folderRepository.moveFolder(AvisioFolder(id = selectedItem.id), destination)
-                }
-                DashboardItemType.BOX -> {
-                    folderRepository.moveFolder(AvisioFolder(id = selectedItem.id), destination)
-                }
-            }
-        }
-    }
-
-    private fun openFolder(item: DashboardItem?) {
-        requireActivity().runOnUiThread {
-            currentFolder = item
-            dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
-            menu.findItem(R.id.action_rename_folder).isVisible = item != null
-            dashboardBreadCrumb.updateBreadCrumb(item)
-            val currentQuery = requireView().findViewById<SearchView>(R.id.dashboard_list_search).query.toString()
-            dashboardItemAdapter.getFilter().filter(currentQuery)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.menu = menu
         menu.clear()
@@ -328,7 +311,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun openParentFolder() {
         val parentFolder = getParentFolder()
-        openFolder(parentFolder)
+        val view = this
+        GlobalScope.launch {
+            FolderProcessor(parentFolder, view).openItem()
+        }
     }
 
     private fun getParentFolder(): DashboardItem? {
@@ -463,7 +449,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         return requireActivity()
     }
 
-    override fun setCurrentFolder(folder: DashboardItem) {
+    override fun setCurrentFolder(folder: DashboardItem?) {
         currentFolder = folder
         dashboardItemAdapter.updateList(filterItemsOfCurrentFolder(allItems))
     }

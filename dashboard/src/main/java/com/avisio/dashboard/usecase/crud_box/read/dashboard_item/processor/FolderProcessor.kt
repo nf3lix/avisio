@@ -7,14 +7,14 @@ import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_box.read.move_items.BoxListView
 import com.avisio.dashboard.usecase.crud_box.update.update_folder.EditFolderActivity
 
-class FolderProcessor(private val item: DashboardItem, private val view: BoxListView) : DashboardProcessor() {
+class FolderProcessor(private val item: DashboardItem?, private val view: BoxListView) : DashboardProcessor() {
 
     override fun deleteItem() {
-        view.getFolderRepository().deleteFolder(AvisioFolder(id = item.id))
+        view.getFolderRepository().deleteFolder(AvisioFolder(id = item!!.id))
     }
 
     override fun moveTo(destination: DashboardItem) {
-        item.selected = false
+        item!!.selected = false
         view.getFolderRepository().moveFolder(AvisioFolder(id = item.id), destination)
     }
 

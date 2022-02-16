@@ -28,7 +28,7 @@ interface BoxListView {
     fun setMoveWorkflowActive(active: Boolean)
     fun finishMoveWorkflow()
 
-    fun setCurrentFolder(folder: DashboardItem)
+    fun setCurrentFolder(folder: DashboardItem?)
     fun toggleDeleteMenuItem()
 
     fun boxActivityObserver(): BoxActivityResultObserver
