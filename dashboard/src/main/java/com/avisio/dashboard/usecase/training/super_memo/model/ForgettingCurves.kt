@@ -123,7 +123,7 @@ class ForgettingCurves {
             if(graph == null) {
                 graph = ExponentialRegression(points).compute()
             }
-            return max(0.0, graph!!.getX(retention + FORGOTTEN))
+            return max(MIN_AF, graph!!.getX(retention + FORGOTTEN))
         }
 
         fun graph(): ExponentialGraph? {
