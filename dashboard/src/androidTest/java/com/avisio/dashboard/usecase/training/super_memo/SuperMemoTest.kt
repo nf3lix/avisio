@@ -49,9 +49,9 @@ class SuperMemoTest {
         sm.answer(4.0, c2)
         val c3 = sm.queue().nextCard()!!
         sm.answer(5.0, c3)
-        Assert.assertEquals((c1.dueDate().time - c1.previousDate()!!.time).toDouble(), 14427904.0, 10000.0)
-        Assert.assertEquals((c2.dueDate().time - c2.previousDate()!!.time).toDouble(), 14427904.0, 10000.0)
-        Assert.assertEquals((c3.dueDate().time - c3.previousDate()!!.time).toDouble(), 14427904.0, 10000.0)
+        Assert.assertEquals((c1.dueDate().time - c1.previousDate()!!.time).toDouble(), 14808743.0, 10000.0)
+        Assert.assertEquals((c2.dueDate().time - c2.previousDate()!!.time).toDouble(), 14808743.0, 10000.0)
+        Assert.assertEquals((c3.dueDate().time - c3.previousDate()!!.time).toDouble(), 14808743.0, 10000.0)
     }
 
     @Test

@@ -61,10 +61,10 @@ class CardItemTest {
 
     @Test
     fun perfectAnswersInARow() {
-        val interval1 = 14427904 // ~ 4h
-        val interval2 = 17315486 // ~ 4h 45m
-        val interval3 = 89910717 // ~ 25h
-        val interval4 = 381306380 // ~ 4d 10h
+        val interval1 = 14808743
+        val interval2 = 17772492
+        val interval3 = 92244795
+        val interval4 = 390930213
 
         val answer1 = 1600000000000
         val answer2 = nextAnswerDate(answer1, interval1)
@@ -87,10 +87,10 @@ class CardItemTest {
 
     @Test
     fun difficultCorrectAnswersInARow() {
-        val interval1 = 14427905 // ~ 4h
-        val interval2 = 17315486 // ~ 4h 45m
-        val interval3 = 49779504 // ~ 14h
-        val interval4 = 91526291 // ~ 1d 1h 30m
+        val interval1 = 14808743
+        val interval2 = 17772492
+        val interval3 = 51131420
+        val interval4 = 94378263
 
         val answer1 = 1600000000000
         val answer2 = nextAnswerDate(answer1, interval1)
@@ -113,10 +113,10 @@ class CardItemTest {
 
     @Test
     fun wrongAnswersAfterCorrectAnswersInARow() {
-        val interval1 = 14427904 // ~ 4h
-        val interval2 = 17315486 // ~ 4h 45m
-        val interval3 = 89910717 // ~ 25h
-        val interval4 = 15003141 // ~ 4h 15m
+        val interval1 = 14427904
+        val interval2 = 17315486
+        val interval3 = 89910717
+        val interval4 = 15368332
 
         val answer1 = 1600000000000
         val answer2 = nextAnswerDate(answer1, interval1)
@@ -137,7 +137,7 @@ class CardItemTest {
     @Test
     fun correctAnswerAfterWrongAnswersInARow() {
         val interval1 = 10000
-        val interval4 = 16870152 // ~ 4h 40m
+        val interval4 = 17177201
 
         val answer1 = 1600000000000
         val answer2 = nextAnswerDate(answer1, interval1)
