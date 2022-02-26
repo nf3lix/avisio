@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -25,6 +26,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private lateinit var toolbar: CardQuestionInputToolbar
     private var markdownDisabled: Boolean = false
+    private var selectImageObserver: SelectImageObserver? = null
 
     init {
         initToolbar()
@@ -248,6 +250,13 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         toolbar.clozeTextButton.setOnClickListener {
             addClozeChip()
         }
+        toolbar.selectImageButton.setOnClickListener {
+            this.selectImageObserver?.onStartSelect()
+        }
+    }
+
+    fun setSelectImageObserver(selectImageObserver: SelectImageObserver) {
+        this.selectImageObserver = selectImageObserver
     }
 
     override fun resetEditText() { }

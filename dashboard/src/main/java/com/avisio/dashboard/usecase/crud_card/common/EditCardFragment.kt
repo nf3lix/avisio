@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -23,12 +24,13 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBo
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.SelectImageObserver
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler.CardTypeChangeHandler
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class EditCardFragment : Fragment(), CardTypeChangeListener {
+class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
     companion object {
         const val CARD_CRUD_WORKFLOW: String = "CARD_CRUD_WORKFLOW"
@@ -42,6 +44,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     private lateinit var card: Card
     internal lateinit var workflow: CRUD
     private lateinit var fragmentStrategy: CardFragmentStrategy
+    private lateinit var selectImageObserver: SelectImageResultObserver
 
     private lateinit var cardRepository: CardRepository
 
@@ -61,10 +64,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     override fun onStart() {
         super.onStart()
+        selectImageObserver = SelectImageResultObserver(this, requireActivity().activityResultRegistry)
+        lifecycle.addObserver(selectImageObserver)
         setupFab()
         questionInput = requireView().findViewById(R.id.question_flexbox)
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
+        questionInput.setSelectImageObserver(this)
         answerInput.setCardTypeChangeListener(this)
         answerInput.addInitialEditText()
         initTypeSpinner()
@@ -182,6 +188,14 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
                 }
             }
         }
+    }
+
+    override fun onStartSelect() {
+        selectImageObserver.startSelectImageActivity()
+        // val intent = Intent()
+        // intent.type = "image/*"
+        // intent.action = Intent.ACTION_GET_CONTENT
+        // obs
     }
 
 }
