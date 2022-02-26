@@ -1,5 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,8 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -29,6 +33,8 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_edit_card.*
+import java.util.jar.Manifest
 
 class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
@@ -64,7 +70,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     override fun onStart() {
-        Log.d("EditCardFragment", "onStart()")
         super.onStart()
         selectImageObserver = SelectImageResultObserver(this, requireActivity().activityResultRegistry)
         lifecycle.addObserver(selectImageObserver)
@@ -196,7 +201,11 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     override fun onStartSelect() {
-        selectImageObserver.startSelectImageActivity()
+        if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED) {
+            selectImageObserver.startSelectImageActivity()
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf("android.permission.READ_EXTERNAL_STORAGE"), 1)
+        }
     }
 
 }
