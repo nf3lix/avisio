@@ -34,7 +34,7 @@ class SelectImageResultObserver(
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        content.launch(intent)
+        content.launch(Intent.createChooser(intent, "Select Image"))
     }
 
 }

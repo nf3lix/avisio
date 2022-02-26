@@ -1,8 +1,8 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -47,6 +47,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     private lateinit var selectImageObserver: SelectImageResultObserver
 
     private lateinit var cardRepository: CardRepository
+    private var fragmentInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     override fun onStart() {
+        Log.d("EditCardFragment", "onStart()")
         super.onStart()
         selectImageObserver = SelectImageResultObserver(this, requireActivity().activityResultRegistry)
         lifecycle.addObserver(selectImageObserver)
@@ -72,7 +74,9 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         questionInput.setCardTypeChangeListener(this)
         questionInput.setSelectImageObserver(this)
         answerInput.setCardTypeChangeListener(this)
-        answerInput.addInitialEditText()
+        if(!fragmentInitialized) {
+            answerInput.addInitialEditText()
+        }
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
@@ -80,6 +84,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         setOnBackPressedDispatcher()
         setupAppBar()
         fragmentStrategy.fillCardInformation()
+        fragmentInitialized = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -192,10 +197,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
 
     override fun onStartSelect() {
         selectImageObserver.startSelectImageActivity()
-        // val intent = Intent()
-        // intent.type = "image/*"
-        // intent.action = Intent.ACTION_GET_CONTENT
-        // obs
     }
 
 }
