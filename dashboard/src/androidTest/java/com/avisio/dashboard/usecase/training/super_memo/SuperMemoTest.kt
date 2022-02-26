@@ -30,12 +30,12 @@ class SuperMemoTest {
         val card12 = sm.queue().nextCard()!!
         sm.answer(5.0, card12, Date(answer1))
         Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.a, -0.2961760279708177, 1E-3)
-        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.c, 4.842871655888891, 1E-3)
+        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.b, 4.842871655888891, 1E-3)
 
         val card22 = sm.queue().nextCard()!!
         sm.answer(5.0, card22, Date(answer1))
         Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.a, -0.2961760279708177, 1E-3)
-        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.c, 4.842871655888891, 1E-3)
+        Assert.assertEquals(sm.forgettingCurves().curves()[0][0].graph()!!.b, 4.842871655888891, 1E-3)
     }
 
     @Test

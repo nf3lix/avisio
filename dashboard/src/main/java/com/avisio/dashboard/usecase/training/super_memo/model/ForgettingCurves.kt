@@ -7,6 +7,7 @@ import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.MIN_
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.NOTCH_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_AF
 import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.RANGE_REPETITION
+import com.avisio.dashboard.usecase.training.super_memo.SuperMemo.Companion.THRESHOLD_RECALL
 import com.avisio.dashboard.usecase.training.super_memo.regression.ExponentialRegression
 import java.lang.IndexOutOfBoundsException
 import java.util.*
@@ -110,20 +111,21 @@ class ForgettingCurves {
         private var graph: ExponentialGraph? = null
 
         fun registerPoint(grade: Double, uf: Double) {
-            val isRemembered = grade >= SuperMemo.THRESHOLD_RECALL
+            val isRemembered = grade >= THRESHOLD_RECALL
             val yCoord = if(isRemembered) REMEMBERED else FORGOTTEN
             points.addPoint(Point(uf, yCoord.toDouble()))
-            points = points.subSequence(
-                max(0, points.size() - MAX_POINTS_COUNT),
-                points.size())
-            graph = null
+            // points = points.subSequence(
+            //     max(0, points.size() - MAX_POINTS_COUNT),
+            //     points.size())
+            // graph = null
+            graph = ExponentialRegression(points).compute()
         }
 
         fun uf(retention: Double): Double {
             if(graph == null) {
                 graph = ExponentialRegression(points).compute()
             }
-            return max(MIN_AF, graph!!.getX(retention + FORGOTTEN))
+            return max(0.1, graph!!.getX(retention + FORGOTTEN))
         }
 
         fun graph(): ExponentialGraph? {

@@ -25,7 +25,7 @@ class FixedPointPowerLawRegressionTest {
             Point(3.0, 9.0)
         ), Point(1.0, 1.0))
         val m1 = r1.compute()
-        Assert.assertEquals(m1.factor, 1.0, 0.0)
+        Assert.assertEquals(m1.factor, 1.0, 1E-6)
         Assert.assertEquals(m1.power, 2.0, 1E-6)
     }
 
@@ -37,7 +37,7 @@ class FixedPointPowerLawRegressionTest {
             Point(3.0, 2.0 * 3.0.pow(3))
         ), Point(1.0, 2.0 * 1.0.pow(3)))
         val m1 = r1.compute()
-        Assert.assertEquals(m1.factor, 2.0, 0.0)
+        Assert.assertEquals(m1.factor, 2.0, 1E-6)
         Assert.assertEquals(m1.power, 3.0, 1E-6)
     }
 

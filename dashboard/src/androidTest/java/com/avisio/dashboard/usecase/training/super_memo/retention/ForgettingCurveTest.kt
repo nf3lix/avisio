@@ -13,11 +13,11 @@ class ForgettingCurveTest {
         val curve = standardForgettingCurve()
         updateGraph(curve)
         Assert.assertEquals(curve.graph()!!.a, -0.2961760279708177, 1E-3)
-        Assert.assertEquals(curve.graph()!!.c, 4.842871655888891, 1E-3)
+        Assert.assertEquals(curve.graph()!!.b, 4.842871655888891, 1E-3)
         curve.registerPoint(5.0, 1.2)
         updateGraph(curve)
         Assert.assertEquals(curve.graph()!!.a, -0.2994732512960212, 1E-3)
-        Assert.assertEquals(curve.graph()!!.c, 4.860656644621813, 1E-3)
+        Assert.assertEquals(curve.graph()!!.b, 4.860656644621813, 1E-3)
         curve.registerPoint(5.0, 1.3)
         curve.registerPoint(5.0, 2.0)
         curve.registerPoint(5.0, 3.0)
@@ -25,7 +25,7 @@ class ForgettingCurveTest {
         curve.registerPoint(5.0, 5.0)
         updateGraph(curve)
         Assert.assertEquals(curve.graph()!!.a, -0.2935573940825819, 1E-3)
-        Assert.assertEquals(curve.graph()!!.c, 4.954689792331937, 1E-3)
+        Assert.assertEquals(curve.graph()!!.b, 4.954689792331937, 1E-3)
     }
 
     @Test

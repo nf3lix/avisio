@@ -8,14 +8,14 @@ import kotlin.math.ln
  * f(x)=e^(a*x) * e^c
  */
 
-class ExponentialGraph(val a: Double, val c: Double) : Model() {
+class ExponentialGraph(val a: Double, val b: Double) : Model() {
 
     override fun getX(y: Double): Double {
-        return (-c + ln(y)) / a
+        return (-b + ln(y)) / a
     }
 
     override fun getY(x: Double): Double {
-        return exp(a * x) * exp(c)
+        return exp(a * x) * exp(b)
     }
 
 }

@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.training.super_memo.regression
 
 import com.avisio.dashboard.usecase.training.super_memo.model.Point
 import com.avisio.dashboard.usecase.training.super_memo.model.PointSequence
-import com.avisio.dashboard.usecase.training.super_memo.regression.ExponentialRegression
 import org.junit.Assert
 import org.junit.Test
 import kotlin.math.pow
@@ -14,8 +13,8 @@ class ExponentialRegressionTest {
         val r = ExponentialRegression(PointSequence(
             Point(0.0, 1.0), Point(1.0, 1.0), Point(2.0, 1.0)
         )).compute()
-        Assert.assertEquals(r.a, 0.0, 0.0)
-        Assert.assertEquals(r.c, 0.0, 0.0)
+        Assert.assertEquals(r.a, 1.0, 0.0)
+        Assert.assertEquals(r.b, 0.0, 0.0)
     }
 
     @Test
@@ -24,7 +23,7 @@ class ExponentialRegressionTest {
             Point(0.0, 1.0), Point(1.0, Math.E), Point(2.0, Math.E.pow(2))
         )).compute()
         Assert.assertEquals(r.a, 1.0, 0.0)
-        Assert.assertEquals(r.c, 0.0, 0.0)
+        Assert.assertEquals(r.b, 1.0, 0.0)
     }
 
     @Test
@@ -33,7 +32,7 @@ class ExponentialRegressionTest {
             Point(0.0, Math.E), Point(1.0, Math.E.pow(2) * Math.E), Point(2.0, Math.E.pow(4) * Math.E)
         )).compute()
         Assert.assertEquals(r.a, 2.0, 0.0)
-        Assert.assertEquals(r.c, 1.0, 0.0)
+        Assert.assertEquals(r.b, 1.0, 0.0)
     }
 
     @Test
@@ -44,7 +43,7 @@ class ExponentialRegressionTest {
             Point(2.0, Math.E.pow(2 * 3) * Math.E.pow(2))
         )).compute()
         Assert.assertEquals(r.a, 3.0, 0.0)
-        Assert.assertEquals(r.c, 2.0, 0.0)
+        Assert.assertEquals(r.b, 2.0, 0.0)
     }
 
 }
