@@ -36,6 +36,18 @@ class ExponentialRegressionTest {
     }
 
     @Test
+    fun exponentialRegressionTest() { // f(x)=2e*e^(2x)
+        val graph = ExponentialRegression(PointSequence(
+            Point(0.0, 3 * Math.E.pow(2 * 0)),
+            Point(1.0, 3 * Math.E.pow(2 * 1)),
+            Point(2.0, 3 * Math.E.pow(2 * 2)),
+            Point(3.0, 3 * Math.E.pow(2 * 3))
+        )).compute()
+        Assert.assertEquals(graph.a, 3.0, 1e-6)
+        Assert.assertEquals(graph.b, 2.0, 1e-6)
+    }
+
+    @Test
     fun exponentialFunction3() { // f(x)=e^(3x)*e^2
         val r = ExponentialRegression(PointSequence(
             Point(0.0, Math.E.pow(2)),
