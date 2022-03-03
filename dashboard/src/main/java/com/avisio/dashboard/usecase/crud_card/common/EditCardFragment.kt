@@ -1,13 +1,12 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -19,8 +18,9 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.data.model.card.CardType.*
+import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
@@ -37,8 +37,6 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_edit_card.*
-import java.util.jar.Manifest
 
 class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
@@ -213,14 +211,12 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     fun imageSelected(decodedImage: String) {
-        // val base64Bytes = Base64.decode(decodedImage, Base64.DEFAULT)
-        // val decodedImage2 = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
-        // test_image_view.setImageBitmap(decodedImage2)
-        card.question.tokenList.add(QuestionToken(
+        val question = CardQuestion(arrayListOf(QuestionToken(
             content = decodedImage,
             tokenType = QuestionTokenType.IMAGE
+        )
         ))
-        questionInput.setCardQuestion(card.question, decodedImage)
+        questionInput.setCardQuestion(question)
     }
 
 }

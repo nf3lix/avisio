@@ -2,7 +2,6 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -11,27 +10,27 @@ import android.util.Base64
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
-import com.avisio.dashboard.usecase.crud_card.common.CardImageView
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
-import java.io.ByteArrayOutputStream
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     companion object {
         const val TEXT_SIZE = 14F
+        private const val MAX_IMAGE_HEIGHT = 150.0
+        private const val MAX_IMAGE_WIDTH = 200.0
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
@@ -125,12 +124,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 is Chip -> {
                     tokenList.add(QuestionToken(view.text.toString(), QuestionTokenType.QUESTION))
                 }
+                is ImageView -> {
+                     tokenList.add(QuestionToken(view.tag as String, QuestionTokenType.IMAGE))
+                }
             }
         }
         return CardQuestion(tokenList)
     }
 
-    fun setCardQuestion(cardQuestion: CardQuestion, decodedImageString: String = "") {
+    fun setCardQuestion(cardQuestion: CardQuestion) {
         flexbox.removeAllViews()
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
@@ -146,7 +148,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     val base64Bytes = Base64.decode(token.content, Base64.DEFAULT)
                     val decodedImage = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
                     val imageView = getImageView(decodedImage)
-                    flexbox.addView(imageView, index)
+                    imageView.tag = token.content
+                    flexbox.addView(imageView, 0)
                 }
             }
         }
@@ -207,7 +210,14 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         val previousQuestion = getCardQuestion()
         val newQuestionTokenList = arrayListOf<QuestionToken>()
         for(token in previousQuestion.tokenList) {
-            newQuestionTokenList.add(QuestionToken(token.content, QuestionTokenType.TEXT))
+            when(token.tokenType) {
+                QuestionTokenType.IMAGE -> {
+                    newQuestionTokenList.add(QuestionToken(token.content, QuestionTokenType.IMAGE))
+                }
+                else -> {
+                    newQuestionTokenList.add(QuestionToken(token.content, QuestionTokenType.TEXT))
+                }
+            }
         }
         flexbox.removeAllViews()
         setCardQuestion(CardQuestion(newQuestionTokenList))
@@ -251,8 +261,12 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     }
 
     private fun getImageView(bitmap: Bitmap): ImageView {
-        val imageView = CardImageView(context)
-        imageView.setImage(bitmap)
+        val imageView = ImageView(context)
+        val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
+        val params = ViewGroup.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        imageView.layoutParams = params
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.setImageBitmap(bitmap)
         return imageView
     }
 

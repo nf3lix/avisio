@@ -3,13 +3,11 @@ package com.avisio.dashboard.usecase.crud_card.common
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -44,15 +42,6 @@ class SelectImageResultObserver(
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
                     val byte = output.toByteArray()
                     val base64 = Base64.encodeToString(byte, Base64.DEFAULT)
-
-                    // decode:
-                    val base64Bytes = Base64.decode(base64, Base64.DEFAULT)
-                    val decodedImage = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
-                    //Log.d("decodedBitmapBase64", base64)
-                    Log.d("decodedBitmapColor", decodedImage.getColor(100, 100).toString())
-                    Log.d("decodedBitmapWidth", decodedImage.width.toString())
-                    Log.d("base64StringLength", base64.length.toString())
-
                     editCardFragment.imageSelected(base64)
 
                 }
