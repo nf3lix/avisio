@@ -3,20 +3,30 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Base64
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.usecase.crud_card.common.CardImageView
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
+import java.io.ByteArrayOutputStream
 
 class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
@@ -120,7 +130,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         return CardQuestion(tokenList)
     }
 
-    fun setCardQuestion(cardQuestion: CardQuestion) {
+    fun setCardQuestion(cardQuestion: CardQuestion, decodedImageString: String = "") {
         flexbox.removeAllViews()
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
@@ -132,7 +142,12 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     val chip = getClozeChip(token.content.trim())
                     flexbox.addView(chip, index)
                 }
-                QuestionTokenType.IMAGE -> { }
+                QuestionTokenType.IMAGE -> {
+                    val base64Bytes = Base64.decode(token.content, Base64.DEFAULT)
+                    val decodedImage = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
+                    val imageView = getImageView(decodedImage)
+                    flexbox.addView(imageView, index)
+                }
             }
         }
         mergeRemainingEditTexts()
@@ -233,6 +248,12 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             editText.textSize = TEXT_SIZE
         }
         return editText
+    }
+
+    private fun getImageView(bitmap: Bitmap): ImageView {
+        val imageView = CardImageView(context)
+        imageView.setImage(bitmap)
+        return imageView
     }
 
     private fun setEditTextKeyListeners() {

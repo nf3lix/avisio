@@ -2,8 +2,10 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
@@ -19,6 +21,8 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.CardType.*
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
@@ -206,6 +210,17 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         } else {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf("android.permission.READ_EXTERNAL_STORAGE"), 1)
         }
+    }
+
+    fun imageSelected(decodedImage: String) {
+        // val base64Bytes = Base64.decode(decodedImage, Base64.DEFAULT)
+        // val decodedImage2 = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
+        // test_image_view.setImageBitmap(decodedImage2)
+        card.question.tokenList.add(QuestionToken(
+            content = decodedImage,
+            tokenType = QuestionTokenType.IMAGE
+        ))
+        questionInput.setCardQuestion(card.question, decodedImage)
     }
 
 }
