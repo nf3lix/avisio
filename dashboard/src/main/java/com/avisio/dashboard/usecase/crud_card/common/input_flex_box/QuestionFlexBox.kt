@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.ImageView
@@ -19,6 +20,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
+import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -133,22 +135,36 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     fun setCardQuestion(cardQuestion: CardQuestion) {
         flexbox.removeAllViews()
-        for((index, token) in cardQuestion.tokenList.withIndex()) {
+        var count = 0
+        for(token in cardQuestion.tokenList) {
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
-                    flexbox.addView(editText, index)
+                    flexbox.addView(editText, count)
+                    count++
                 }
                 QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(token.content.trim())
-                    flexbox.addView(chip, index)
+                    flexbox.addView(chip, count)
+                    count++
                 }
                 QuestionTokenType.IMAGE -> {
                     val byteArray = context.openFileInput(token.content).readBytes()
                     val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     val imageView = getImageView(decodedImage)
                     imageView.tag = token.content
-                    flexbox.addView(imageView, 0)
+                    val et1 = getEditText("")
+                    val layoutParams1 = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                    et1.layoutParams = layoutParams1
+                    flexbox.addView(et1, count)
+                    count++
+                    flexbox.addView(imageView, count)
+                    count++
+                    val et2 = getEditText("")
+                    val layoutParams2 = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+                    layoutParams2.isWrapBefore = true
+                    et2.layoutParams = layoutParams2
+                    flexbox.addView(et2, count)
                 }
             }
         }
@@ -262,7 +278,9 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     private fun getImageView(bitmap: Bitmap): ImageView {
         val imageView = ImageView(context)
         val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        val params = ViewGroup.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        // val params = ViewGroup.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        params.isWrapBefore = true
         imageView.layoutParams = params
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.setImageBitmap(bitmap)
