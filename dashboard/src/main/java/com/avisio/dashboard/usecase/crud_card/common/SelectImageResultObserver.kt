@@ -1,13 +1,14 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Base64
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
@@ -16,6 +17,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.*
 
 
 class SelectImageResultObserver(
@@ -41,9 +43,13 @@ class SelectImageResultObserver(
                     val output = ByteArrayOutputStream()
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
                     val byte = output.toByteArray()
-                    val base64 = Base64.encodeToString(byte, Base64.DEFAULT)
-                    editCardFragment.imageSelected(base64)
-
+                    val fileName = UUID.randomUUID().toString()
+                    editCardFragment.requireContext().openFileOutput(fileName, Context.MODE_PRIVATE).use {
+                        it.write(byte)
+                    }
+                    val byteArray = editCardFragment.requireContext().openFileInput(fileName).readBytes()
+                    val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                    editCardFragment.imageSelected(fileName, decodedImage)
                 }
             }
             onResult(result)

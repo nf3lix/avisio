@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +38,7 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_edit_card.*
 
 class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
@@ -210,12 +212,14 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         }
     }
 
-    fun imageSelected(decodedImage: String) {
+    fun imageSelected(imagePath: String, loadedBitmap: Bitmap? = null) {
+        if(loadedBitmap != null) {
+            test_image_view.setImageBitmap(loadedBitmap)
+        }
         val question = CardQuestion(arrayListOf(QuestionToken(
-            content = decodedImage,
+            content = imagePath,
             tokenType = QuestionTokenType.IMAGE
-        )
-        ))
+        )))
         questionInput.setCardQuestion(question)
     }
 

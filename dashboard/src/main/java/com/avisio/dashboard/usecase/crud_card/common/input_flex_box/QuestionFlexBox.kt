@@ -6,8 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Base64
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -125,7 +123,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     tokenList.add(QuestionToken(view.text.toString(), QuestionTokenType.QUESTION))
                 }
                 is ImageView -> {
-                     tokenList.add(QuestionToken(view.tag as String, QuestionTokenType.IMAGE))
+                    val tag = view.tag as String
+                    tokenList.add(QuestionToken(tag, QuestionTokenType.IMAGE))
                 }
             }
         }
@@ -145,8 +144,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     flexbox.addView(chip, index)
                 }
                 QuestionTokenType.IMAGE -> {
-                    val base64Bytes = Base64.decode(token.content, Base64.DEFAULT)
-                    val decodedImage = BitmapFactory.decodeByteArray(base64Bytes, 0, base64Bytes.size)
+                    val byteArray = context.openFileInput(token.content).readBytes()
+                    val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     val imageView = getImageView(decodedImage)
                     imageView.tag = token.content
                     flexbox.addView(imageView, 0)
