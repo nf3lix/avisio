@@ -8,7 +8,6 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
@@ -117,7 +116,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         for(view in flexbox.allViews.toList()) {
             when(view) {
                 is EditText -> {
-                    if(view.text.isNotEmpty() || !trimmed) {
+                    if((view.text.isNotEmpty() || !trimmed) && !view.text.contentEquals(" ")) {
                         tokenList.add(QuestionToken(view.text.toString(), QuestionTokenType.TEXT))
                     }
                 }
@@ -278,7 +277,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
     private fun getImageView(bitmap: Bitmap): ImageView {
         val imageView = ImageView(context)
         val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        // val params = ViewGroup.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
         val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
         params.isWrapBefore = true
         imageView.layoutParams = params
