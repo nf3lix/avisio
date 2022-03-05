@@ -47,9 +47,7 @@ class SelectImageResultObserver(
                     editCardFragment.requireContext().openFileOutput(fileName, Context.MODE_PRIVATE).use {
                         it.write(byte)
                     }
-                    val byteArray = editCardFragment.requireContext().openFileInput(fileName).readBytes()
-                    val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-                    editCardFragment.imageSelected(fileName, decodedImage)
+                    editCardFragment.imageSelected(fileName)
                 }
             }
             onResult(result)

@@ -212,10 +212,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         }
     }
 
-    fun imageSelected(imagePath: String, loadedBitmap: Bitmap? = null) {
-        if(loadedBitmap != null) {
-            test_image_view.setImageBitmap(loadedBitmap)
-        }
+    fun imageSelected(imagePath: String) {
         val question = CardQuestion(arrayListOf(QuestionToken(
             content = imagePath,
             tokenType = QuestionTokenType.IMAGE
