@@ -152,18 +152,11 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     val imageView = getImageView(decodedImage)
                     imageView.tag = token.content
-                    val et1 = getEditText("")
-                    val layoutParams1 = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-                    et1.layoutParams = layoutParams1
-                    flexbox.addView(et1, count)
+                    flexbox.addView(getEnclosingEditText(false), count)
                     count++
                     flexbox.addView(imageView, count)
                     count++
-                    val et2 = getEditText("")
-                    val layoutParams2 = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-                    layoutParams2.isWrapBefore = true
-                    et2.layoutParams = layoutParams2
-                    flexbox.addView(et2, count)
+                    flexbox.addView(getEnclosingEditText(true), count)
                 }
             }
         }
@@ -271,6 +264,14 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             editText.textSize = TEXT_SIZE
         }
+        return editText
+    }
+
+    private fun getEnclosingEditText(isWrapBefore: Boolean): EditText {
+        val editText = getEditText("")
+        val params = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+        params.isWrapBefore = isWrapBefore
+        editText.layoutParams = params
         return editText
     }
 
