@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -302,7 +303,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             addClozeChip()
         }
         toolbar.selectImageButton.setOnClickListener {
-            this.selectImageObserver?.onStartSelect()
+            var selectedToken = 0
+            var positionInToken = 0
+            for((index, view) in flexbox.allViews.toList().withIndex()) {
+                if(view is EditText && view.isFocused) {
+                    selectedToken = index
+                    positionInToken = view.selectionEnd
+                }
+            }
+            this.selectImageObserver?.onStartSelect(selectedToken - 1, positionInToken)
         }
     }
 

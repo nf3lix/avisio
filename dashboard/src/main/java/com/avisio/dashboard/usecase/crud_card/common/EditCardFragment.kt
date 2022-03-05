@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -204,7 +205,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         }
     }
 
-    override fun onStartSelect() {
+    override fun onStartSelect(tokenPosition: Int, positionInToken: Int) {
         if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED) {
             selectImageObserver.startSelectImageActivity()
         } else {
