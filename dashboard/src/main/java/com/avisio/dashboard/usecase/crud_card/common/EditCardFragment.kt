@@ -1,28 +1,27 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
-import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
@@ -39,7 +38,6 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_edit_card.*
 
 class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
@@ -205,7 +203,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         }
     }
 
-    override fun onStartSelect(tokenPosition: Int, positionInToken: Int) {
+    override fun onStartSelect() {
         if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED) {
             selectImageObserver.startSelectImageActivity()
         } else {
@@ -214,11 +212,46 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     fun imageSelected(imagePath: String) {
-        val question = CardQuestion(arrayListOf(QuestionToken(
+        var selectedToken = 0
+        var positionInToken = 0
+        for((index, view) in questionInput.flexbox.allViews.toList().withIndex()) {
+            if(view is EditText && view.isFocused) {
+                selectedToken = index - 1
+                positionInToken = view.selectionEnd
+            }
+        }
+        val preTokens = getTokensUntil(selectedToken, positionInToken)
+        val postTokens = getTokensFrom(selectedToken, positionInToken)
+
+        preTokens.add(QuestionToken(
             content = imagePath,
             tokenType = QuestionTokenType.IMAGE
-        )))
-        questionInput.setCardQuestion(question)
+        ))
+        preTokens.addAll(postTokens)
+    }
+
+    private fun getTokensUntil(tokenPos: Int, posInToken: Int): ArrayList<QuestionToken> {
+        val allTokens = questionInput.getCardQuestion(trimmed = false).tokenList
+        val splitTokens = arrayListOf<QuestionToken>()
+        for(i in 0 until tokenPos) {
+            splitTokens.add(allTokens[i])
+        }
+        splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(0, posInToken), allTokens[tokenPos].tokenType))
+        return splitTokens
+    }
+
+    private fun getTokensFrom(tokenPos: Int, posInToken: Int): ArrayList<QuestionToken> {
+        val allTokens = questionInput.getCardQuestion(trimmed = false).tokenList
+        val splitTokens = arrayListOf<QuestionToken>()
+        if(tokenPos + 1 == allTokens.size && posInToken != 0) {
+            splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(posInToken, allTokens[tokenPos].content.length), allTokens[tokenPos].tokenType))
+        } else if(tokenPos + 1 < allTokens.size) {
+            splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(posInToken, allTokens[tokenPos].content.length), allTokens[tokenPos].tokenType))
+            for(i in tokenPos + 1 until allTokens.size) {
+                splitTokens.add(allTokens[i])
+            }
+        }
+        return splitTokens
     }
 
 }

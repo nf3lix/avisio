@@ -118,7 +118,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         for(view in flexbox.allViews.toList()) {
             when(view) {
                 is EditText -> {
-                    if((view.text.isNotEmpty() || !trimmed) && !view.text.contentEquals(" ")) {
+                    if((view.text.isNotEmpty() && !view.text.contentEquals(" ")) || !trimmed) {
                         tokenList.add(QuestionToken(view.text.toString(), QuestionTokenType.TEXT))
                     }
                 }
@@ -303,15 +303,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             addClozeChip()
         }
         toolbar.selectImageButton.setOnClickListener {
-            var selectedToken = 0
-            var positionInToken = 0
-            for((index, view) in flexbox.allViews.toList().withIndex()) {
-                if(view is EditText && view.isFocused) {
-                    selectedToken = index
-                    positionInToken = view.selectionEnd
-                }
-            }
-            this.selectImageObserver?.onStartSelect(selectedToken - 1, positionInToken)
+            this.selectImageObserver?.onStartSelect()
         }
     }
 
