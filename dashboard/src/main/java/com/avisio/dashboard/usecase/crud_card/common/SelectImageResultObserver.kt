@@ -1,10 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -15,7 +12,7 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import java.io.ByteArrayOutputStream
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import java.io.File
 import java.util.*
 
@@ -40,13 +37,9 @@ class SelectImageResultObserver(
                     val selectedImageUri = Uri.fromFile(f)
                     val drawable = Drawable.createFromPath(selectedImageUri.path!!)
                     val bitmap = (drawable as BitmapDrawable).bitmap
-                    val output = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
-                    val byte = output.toByteArray()
                     val fileName = UUID.randomUUID().toString()
-                    editCardFragment.requireContext().openFileOutput(fileName, Context.MODE_PRIVATE).use {
-                        it.write(byte)
-                    }
+                    val imageReader = CardImageStorage(editCardFragment.requireContext())
+                    imageReader.saveBitmap(bitmap, fileName)
                     editCardFragment.imageSelected(fileName)
                 }
             }
