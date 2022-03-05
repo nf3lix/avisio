@@ -38,8 +38,8 @@ class SelectImageResultObserver(
                     val drawable = Drawable.createFromPath(selectedImageUri.path!!)
                     val bitmap = (drawable as BitmapDrawable).bitmap
                     val fileName = UUID.randomUUID().toString()
-                    val imageReader = CardImageStorage(editCardFragment.requireContext())
-                    imageReader.saveBitmap(bitmap, fileName)
+                    val imageStorage = CardImageStorage(editCardFragment.requireContext())
+                    imageStorage.saveBitmap(bitmap, fileName)
                     editCardFragment.imageSelected(fileName)
                 }
             }

@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
@@ -54,9 +55,8 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
                     flexbox.addView(chip, index)
                 }
                 QuestionTokenType.IMAGE -> {
-                    val byteArray = context.openFileInput(token.content).readBytes()
-                    val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-                    val imageView = getImageView(decodedImage)
+                    val image = CardImageStorage(context).loadBitmap(token.content)
+                    val imageView = getImageView(image)
                     flexbox.addView(imageView)
                 }
             }

@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
@@ -148,9 +149,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     count++
                 }
                 QuestionTokenType.IMAGE -> {
-                    val byteArray = context.openFileInput(token.content).readBytes()
-                    val decodedImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-                    val imageView = getImageView(decodedImage)
+                    val image = CardImageStorage(context).loadBitmap(token.content)
+                    val imageView = getImageView(image)
                     imageView.tag = token.content
                     flexbox.addView(getEnclosingEditText(false), count)
                     count++
