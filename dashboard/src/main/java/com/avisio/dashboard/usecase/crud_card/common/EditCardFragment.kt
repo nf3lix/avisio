@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_card.common
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +23,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
@@ -228,6 +230,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
             tokenType = QuestionTokenType.IMAGE
         ))
         preTokens.addAll(postTokens)
+        questionInput.setCardQuestion(CardQuestion(preTokens))
     }
 
     private fun getTokensUntil(tokenPos: Int, posInToken: Int): ArrayList<QuestionToken> {
