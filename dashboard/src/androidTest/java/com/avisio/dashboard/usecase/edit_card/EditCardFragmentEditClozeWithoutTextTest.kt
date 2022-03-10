@@ -56,8 +56,7 @@ class EditCardFragmentEditClozeWithoutTextTest {
     fun showTextIsRequiredWarningOnFabClicked() {
         onView(isRoot()).perform(waitFor(800))
         onView(withClassName(`is`(FloatingActionButton::class.java.name))).perform(click())
-        onView(allOf(withText(R.string.edit_card_cloze_text_is_required), withParent(withParent(
-            withParent(withParent(withParent(withClassName(`is`(QuestionFlexBox::class.java.name))))))))).check(matches(isDisplayed()))
+        onView(withText(R.string.edit_card_cloze_text_is_required)).check(matches(isDisplayed()))
     }
 
 }
