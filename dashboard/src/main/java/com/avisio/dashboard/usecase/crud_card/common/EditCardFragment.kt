@@ -1,5 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
+import android.Manifest.permission
+import android.Manifest.permission.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -206,31 +208,20 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     }
 
     override fun onStartSelect() {
-        if(ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED) {
+        if(ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             selectImageObserver.startSelectImageActivity()
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf("android.permission.READ_EXTERNAL_STORAGE"), 1)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
         }
     }
 
     fun imageSelected(imagePath: String) {
-        var selectedToken = 0
-        var positionInToken = 0
-        for((index, view) in questionInput.flexbox.allViews.toList().withIndex()) {
-            if(view is EditText && view.isFocused) {
-                selectedToken = index - 1
-                positionInToken = view.selectionEnd
-            }
-        }
-        // val preTokens = getTokensUntil(selectedToken, positionInToken)
-        // val postTokens = getTokensFrom(selectedToken, positionInToken)
         val newTokens = questionInput.getCardQuestion(trimmed = false).tokenList
         newTokens.add(QuestionToken(
             content = imagePath,
             tokenType = QuestionTokenType.IMAGE
         ))
         questionInput.setCardQuestion(CardQuestion(newTokens))
-        Log.d("newTokens", newTokens.toString())
     }
 
 }
