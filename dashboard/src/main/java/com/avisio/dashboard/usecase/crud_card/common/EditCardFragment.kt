@@ -222,39 +222,15 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
                 positionInToken = view.selectionEnd
             }
         }
-        val preTokens = getTokensUntil(selectedToken, positionInToken)
-        val postTokens = getTokensFrom(selectedToken, positionInToken)
-
-        preTokens.add(QuestionToken(
+        // val preTokens = getTokensUntil(selectedToken, positionInToken)
+        // val postTokens = getTokensFrom(selectedToken, positionInToken)
+        val newTokens = questionInput.getCardQuestion(trimmed = false).tokenList
+        newTokens.add(QuestionToken(
             content = imagePath,
             tokenType = QuestionTokenType.IMAGE
         ))
-        preTokens.addAll(postTokens)
-        questionInput.setCardQuestion(CardQuestion(preTokens))
-    }
-
-    private fun getTokensUntil(tokenPos: Int, posInToken: Int): ArrayList<QuestionToken> {
-        val allTokens = questionInput.getCardQuestion(trimmed = false).tokenList
-        val splitTokens = arrayListOf<QuestionToken>()
-        for(i in 0 until tokenPos) {
-            splitTokens.add(allTokens[i])
-        }
-        splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(0, posInToken), allTokens[tokenPos].tokenType))
-        return splitTokens
-    }
-
-    private fun getTokensFrom(tokenPos: Int, posInToken: Int): ArrayList<QuestionToken> {
-        val allTokens = questionInput.getCardQuestion(trimmed = false).tokenList
-        val splitTokens = arrayListOf<QuestionToken>()
-        if(tokenPos + 1 == allTokens.size && posInToken != 0) {
-            splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(posInToken, allTokens[tokenPos].content.length), allTokens[tokenPos].tokenType))
-        } else if(tokenPos + 1 < allTokens.size) {
-            splitTokens.add(QuestionToken(allTokens[tokenPos].content.substring(posInToken, allTokens[tokenPos].content.length), allTokens[tokenPos].tokenType))
-            for(i in tokenPos + 1 until allTokens.size) {
-                splitTokens.add(allTokens[i])
-            }
-        }
-        return splitTokens
+        questionInput.setCardQuestion(CardQuestion(newTokens))
+        Log.d("newTokens", newTokens.toString())
     }
 
 }

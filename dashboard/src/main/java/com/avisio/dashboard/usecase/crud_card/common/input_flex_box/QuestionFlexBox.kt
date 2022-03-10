@@ -157,7 +157,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     count++
                     flexbox.addView(imageView, count)
                     count++
-                    flexbox.addView(getEnclosingEditText(true), count)
                 }
             }
         }
