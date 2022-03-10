@@ -136,27 +136,21 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     fun setCardQuestion(cardQuestion: CardQuestion) {
         flexbox.removeAllViews()
-        var count = 0
-        for(token in cardQuestion.tokenList) {
+        for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
-                    flexbox.addView(editText, count)
-                    count++
+                    flexbox.addView(editText, index)
                 }
                 QuestionTokenType.QUESTION -> {
                     val chip = getClozeChip(token.content.trim())
-                    flexbox.addView(chip, count)
-                    count++
+                    flexbox.addView(chip, index)
                 }
                 QuestionTokenType.IMAGE -> {
                     val image = CardImageStorage(context).loadBitmap(token.content)
                     val imageView = getImageView(image)
                     imageView.tag = token.content
-                    flexbox.addView(getEnclosingEditText(false), count)
-                    count++
-                    flexbox.addView(imageView, count)
-                    count++
+                    flexbox.addView(imageView, index)
                 }
             }
         }
