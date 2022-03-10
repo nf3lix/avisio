@@ -39,7 +39,9 @@
                 android:id="@+id/box_name_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine" />
+                android:inputType="text"
+                android:maxLength="40"
+                        />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
