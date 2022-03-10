@@ -1,7 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
-import android.Manifest.permission
-import android.Manifest.permission.*
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -12,13 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -28,6 +25,7 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
@@ -42,6 +40,7 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_edit_card.*
 
 class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
 
@@ -95,7 +94,9 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         setupAppBar()
-        fragmentStrategy.fillCardInformation()
+        if(!fragmentInitialized) {
+            fragmentStrategy.fillCardInformation()
+        }
         fragmentInitialized = true
     }
 
@@ -217,11 +218,19 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
 
     fun imageSelected(imagePath: String) {
         val newTokens = questionInput.getCardQuestion(trimmed = false).tokenList
-        newTokens.add(QuestionToken(
-            content = imagePath,
-            tokenType = QuestionTokenType.IMAGE
-        ))
-        questionInput.setCardQuestion(CardQuestion(newTokens))
+        if(newTokens[newTokens.size - 1].tokenType == QuestionTokenType.IMAGE) {
+            newTokens.removeAt(newTokens.size - 1)
+            newTokens.add(QuestionToken(imagePath, QuestionTokenType.IMAGE))
+            val newCard = CardQuestion(newTokens)
+            questionInput.setCardQuestion(newCard)
+        } else {
+            newTokens.add(QuestionToken(
+                content = imagePath,
+                tokenType = QuestionTokenType.IMAGE
+            ))
+            questionInput.setCardQuestion(CardQuestion(newTokens))
+        }
+
     }
 
 }

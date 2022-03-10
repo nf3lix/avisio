@@ -261,14 +261,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         return editText
     }
 
-    private fun getEnclosingEditText(isWrapBefore: Boolean): EditText {
-        val editText = getEditText("")
-        val params = FlexboxLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        params.isWrapBefore = isWrapBefore
-        editText.layoutParams = params
-        return editText
-    }
-
     private fun getImageView(bitmap: Bitmap): ImageView {
         val imageView = ImageView(context)
         val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
