@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.SM15TrainingStrategy
@@ -28,7 +29,8 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     private lateinit var cardTypeLayoutStrategy: CardTypeLayoutStrategy
     private lateinit var manager: LearnCardManager
     private lateinit var box: AvisioBox
-    private lateinit var currentCard: Card
+    //private
+    lateinit var currentCard: Card
 
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
@@ -87,8 +89,10 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onCorrectAnswer() {
+        correctAnswerLayoutInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
+        correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
@@ -98,6 +102,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         cardTypeLayoutStrategy.onIncorrectAnswer()
+
     }
 
     override fun onPartiallyCorrectAnswer() {
