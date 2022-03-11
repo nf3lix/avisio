@@ -58,7 +58,6 @@ class CreateCardStrategy(
     }
 
     override fun onBackPressed() {
-        Log.d("getAnswer", "onBackPressed")
         if(!TextUtils.isEmpty(questionFlexBox.getCardQuestion().getStringRepresentation()) || !answerFlexBox.getAnswer().answerIsEmpty()) {
             showOnBackPressedWarning()
             return

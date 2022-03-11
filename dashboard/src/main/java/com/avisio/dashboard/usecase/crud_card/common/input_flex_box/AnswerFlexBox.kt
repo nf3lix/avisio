@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.view.allViews
+import androidx.core.view.marginBottom
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.persistence.card.CardImageStorage
+import com.avisio.dashboard.common.ui.card_image.CardImage
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 import com.google.android.flexbox.FlexboxLayout
 import kotlin.math.min
@@ -44,9 +46,8 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     fun getAnswer(): CardAnswer {
-
         val cardAnswer = CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
-        if(flexbox.allViews.toList().size == 3) {
+        if(flexbox.allViews.toList().size == 6) {
             return CardAnswer(cardAnswer.answerList, (flexbox.allViews.toList()[2].tag as String))
         }
         return cardAnswer
@@ -60,6 +61,8 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
             imageView.tag = answer.imagePath
             flexbox.addView(imageView)
         }
+        Log.d("flexbox", flexbox.allViews.toList().toString())
+        Log.d("flexboxSize", flexbox.allViews.toList().size.toString())
     }
 
     fun addInitialEditText() {
@@ -92,15 +95,10 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         this.selectImageObserver = selectImageObserver
     }
 
-    private fun getImageView(bitmap: Bitmap): ImageView {
-        val imageView = ImageView(context)
-        val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
-        params.isWrapBefore = true
-        imageView.layoutParams = params
-        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        imageView.setImageBitmap(bitmap)
-        return imageView
+    private fun getImageView(bitmap: Bitmap): CardImage {
+        val image = CardImage(context)
+        image.setImage(bitmap)
+        return image
     }
 
 }
