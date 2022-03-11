@@ -25,24 +25,19 @@ import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
-import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.SelectImageObserver
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler.CardTypeChangeHandler
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_edit_card.*
 
-class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver {
+class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImageObserver {
 
     companion object {
         const val CARD_CRUD_WORKFLOW: String = "CARD_CRUD_WORKFLOW"
@@ -56,7 +51,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
     private lateinit var card: Card
     internal lateinit var workflow: CRUD
     private lateinit var fragmentStrategy: CardFragmentStrategy
-    private lateinit var selectImageObserver: SelectImageResultObserver
+    private lateinit var selectQuestionImageObserver: SelectQuestionImageResultObserver
+    private lateinit var selectAnswerImageObserver: SelectAnswerImageResultObserver
 
     private lateinit var cardRepository: CardRepository
     private var fragmentInitialized = false
@@ -77,13 +73,25 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
 
     override fun onStart() {
         super.onStart()
-        selectImageObserver = SelectImageResultObserver(this, requireActivity().activityResultRegistry)
-        lifecycle.addObserver(selectImageObserver)
+        selectQuestionImageObserver = SelectQuestionImageResultObserver(this, requireActivity().activityResultRegistry)
+        selectAnswerImageObserver = SelectAnswerImageResultObserver(this, requireActivity().activityResultRegistry)
+        lifecycle.addObserver(selectQuestionImageObserver)
+        lifecycle.addObserver(selectAnswerImageObserver)
         setupFab()
         questionInput = requireView().findViewById(R.id.question_flexbox)
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
         questionInput.setSelectImageObserver(this)
+        answerInput.setSelectImageObserver(object : SelectAnswerImageObserver {
+            override fun onStartSelect() {
+                if(ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectAnswerImageObserver.startSelectImageActivity()
+                } else {
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
+                }
+            }
+
+        })
         answerInput.setCardTypeChangeListener(this)
         if(!fragmentInitialized) {
             answerInput.addInitialEditText()
@@ -210,13 +218,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
 
     override fun onStartSelect() {
         if(ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            selectImageObserver.startSelectImageActivity()
+            selectQuestionImageObserver.startSelectImageActivity()
         } else {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
         }
     }
 
-    fun imageSelected(imagePath: String) {
+    fun questionImageSelected(imagePath: String) {
         val newTokens = questionInput.getCardQuestion(trimmed = false).tokenList
         if(newTokens[newTokens.size - 1].tokenType == QuestionTokenType.IMAGE) {
             newTokens.removeAt(newTokens.size - 1)
@@ -230,7 +238,10 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectImageObserver
             ))
             questionInput.setCardQuestion(CardQuestion(newTokens))
         }
+    }
 
+    fun answerImageSelected(imagePath: String) {
+        Log.d("answerImageSelected", imagePath)
     }
 
 }

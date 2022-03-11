@@ -3,13 +3,10 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.ImageView
@@ -36,7 +33,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private lateinit var toolbar: CardQuestionInputToolbar
     private var markdownDisabled: Boolean = false
-    private var selectImageObserver: SelectImageObserver? = null
+    private var selectImageObserver: SelectQuestionImageObserver? = null
 
     init {
         initToolbar()
@@ -292,7 +289,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
-    fun setSelectImageObserver(selectImageObserver: SelectImageObserver) {
+    fun setSelectImageObserver(selectImageObserver: SelectQuestionImageObserver) {
         this.selectImageObserver = selectImageObserver
     }
 

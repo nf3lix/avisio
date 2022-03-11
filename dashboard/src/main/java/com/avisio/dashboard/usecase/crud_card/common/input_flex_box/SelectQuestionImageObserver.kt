@@ -1,6 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
-interface SelectImageObserver {
+interface SelectQuestionImageObserver {
 
     fun onStartSelect()
 

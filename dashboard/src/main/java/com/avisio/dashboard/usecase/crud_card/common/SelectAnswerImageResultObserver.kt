@@ -16,34 +16,31 @@ import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import java.io.File
 import java.util.*
 
-
-class SelectImageResultObserver(
+class SelectAnswerImageResultObserver(
     private val editCardFragment: EditCardFragment,
-    private val registry: ActivityResultRegistry,
+    private val registry: ActivityResultRegistry
 ) : DefaultLifecycleObserver {
 
     companion object {
-        private const val OBSERVER_REGISTRY_KEY = "SELECT_IMAGE_OBSERVER"
+        private const val OBSERVER_REGISTRY_KEY = "SELECT_ANSWER_IMAGE_OBSERVER"
     }
 
     private lateinit var content: ActivityResultLauncher<Intent>
 
     override fun onCreate(owner: LifecycleOwner) {
         content = registry.register(OBSERVER_REGISTRY_KEY, ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if(result.data?.data != null) {
-                val path = getPathFromURI(result.data!!.data!!)
-                if(path != null) {
-                    val f = File(path)
-                    val selectedImageUri = Uri.fromFile(f)
-                    val drawable = Drawable.createFromPath(selectedImageUri.path!!)
-                    val bitmap = (drawable as BitmapDrawable).bitmap
-                    val fileName = UUID.randomUUID().toString()
-                    val imageStorage = CardImageStorage(editCardFragment.requireContext())
-                    imageStorage.saveBitmap(bitmap, fileName)
-                    editCardFragment.imageSelected(fileName)
-                }
+            if(result.data?.data == null) {
+                return@register
             }
-            onResult(result)
+            val path = getPathFromURI(result.data!!.data!!) ?: return@register
+            val file = File(path)
+            val selectedImageUri = Uri.fromFile(file)
+            val drawable = Drawable.createFromPath(selectedImageUri.path!!)
+            val bitmap = (drawable as BitmapDrawable).bitmap
+            val fileName = UUID.randomUUID().toString()
+            val imageStorage = CardImageStorage(editCardFragment.requireContext())
+            imageStorage.saveBitmap(bitmap, fileName)
+            editCardFragment.answerImageSelected(fileName)
         }
     }
 
@@ -52,14 +49,11 @@ class SelectImageResultObserver(
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor = editCardFragment.requireActivity().contentResolver.query(contentUri, proj, null, null, null)!!
         if (cursor.moveToFirst()) {
-            val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            res = cursor.getString(column_index)
+            val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            res = cursor.getString(columnIndex)
         }
         cursor.close()
         return res
-    }
-
-    private fun onResult(activityResult: ActivityResult) {
     }
 
     fun startSelectImageActivity() {
