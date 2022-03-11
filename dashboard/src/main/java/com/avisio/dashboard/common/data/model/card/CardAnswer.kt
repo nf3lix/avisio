@@ -1,6 +1,6 @@
 package com.avisio.dashboard.common.data.model.card
 
-data class CardAnswer(val answerList: ArrayList<String>, val imagePath: String = "") {
+data class CardAnswer(val answerList: ArrayList<String>, val imagePath: String? = null) {
 
     companion object {
         fun getFromStringRepresentation(representation: String): CardAnswer {
@@ -26,7 +26,7 @@ data class CardAnswer(val answerList: ArrayList<String>, val imagePath: String =
     }
 
     fun hasImage(): Boolean {
-        return imagePath.contentEquals("")
+        return imagePath != null
     }
 
 }

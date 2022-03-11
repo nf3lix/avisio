@@ -188,6 +188,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     }
 
     private fun getUnfulfilledConstraints(input: CardInputFlexBox): List<SaveCardConstraint> {
+        Log.d("getAnswer", "getUnfulfilledConstraints")
         return SaveCardValidator.getTargetSpecificUnfulfilledConstraints(
             Card(answer = answerInput.getAnswer(), question = questionInput.getCardQuestion(), type = getSelectedCardType()),
             input.target)

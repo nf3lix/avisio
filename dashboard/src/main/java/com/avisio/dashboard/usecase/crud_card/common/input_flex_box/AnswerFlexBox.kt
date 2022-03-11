@@ -1,17 +1,30 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardAnswer
-import com.avisio.dashboard.usecase.crud_card.common.SelectAnswerImageResultObserver
+import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
+import com.google.android.flexbox.FlexboxLayout
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
+
+    companion object {
+        private const val MAX_IMAGE_HEIGHT = 150.0
+        private const val MAX_IMAGE_WIDTH = 200.0
+    }
 
     private val answerEditText: EditText = EditText(context)
     private lateinit var toolbar: CardAnswerInputToolbar
@@ -31,11 +44,22 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     fun getAnswer(): CardAnswer {
-        return CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
+
+        val cardAnswer = CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
+        if(flexbox.allViews.toList().size == 3) {
+            return CardAnswer(cardAnswer.answerList, (flexbox.allViews.toList()[2].tag as String))
+        }
+        return cardAnswer
     }
 
     fun setAnswer(answer: CardAnswer) {
         answerEditText.setText(answer.getStringRepresentation())
+        if(answer.hasImage()) {
+            val image = CardImageStorage(context).loadBitmap(answer.imagePath!!)
+            val imageView = getImageView(image)
+            imageView.tag = answer.imagePath
+            flexbox.addView(imageView)
+        }
     }
 
     fun addInitialEditText() {
@@ -43,8 +67,15 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     override fun resetEditText() {
+        val cardAnswer = getAnswer()
         flexbox.removeAllViews()
         setEditTextLayout()
+        if(cardAnswer.hasImage()) {
+            val image = CardImageStorage(context).loadBitmap(cardAnswer.imagePath!!)
+            val imageView = getImageView(image)
+            imageView.tag = cardAnswer.imagePath
+            flexbox.addView(imageView)
+        }
     }
 
     private fun setEditTextLayout() {
@@ -59,6 +90,17 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
 
     fun setSelectImageObserver(selectImageObserver: SelectAnswerImageObserver) {
         this.selectImageObserver = selectImageObserver
+    }
+
+    private fun getImageView(bitmap: Bitmap): ImageView {
+        val imageView = ImageView(context)
+        val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
+        val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        params.isWrapBefore = true
+        imageView.layoutParams = params
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.setImageBitmap(bitmap)
+        return imageView
     }
 
 }

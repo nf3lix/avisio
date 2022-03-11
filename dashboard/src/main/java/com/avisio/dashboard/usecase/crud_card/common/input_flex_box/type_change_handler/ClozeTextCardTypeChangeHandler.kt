@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler
 
+import android.util.Log
 import android.view.View
 import com.avisio.dashboard.R
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment

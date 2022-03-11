@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.avisio.dashboard.R

@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.view.allViews
