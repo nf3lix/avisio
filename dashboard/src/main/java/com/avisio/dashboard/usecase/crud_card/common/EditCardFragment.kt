@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
@@ -241,7 +242,9 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     }
 
     fun answerImageSelected(imagePath: String) {
-        Log.d("answerImageSelected", imagePath)
+        val prevAnswer = answerInput.getAnswer()
+        val newAnswer = CardAnswer(prevAnswer.answerList, imagePath)
+        answerInput.setAnswer(newAnswer)
     }
 
 }
