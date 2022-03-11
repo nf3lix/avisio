@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -13,13 +14,19 @@ import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardCo
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
 
     private val answerEditText: EditText = EditText(context)
+    private lateinit var toolbar: CardAnswerInputToolbar
 
     init {
         setTitle(context.getString(R.string.create_card_answer_text_field_hint))
+        initToolbar()
     }
 
     override fun initToolbar() {
-
+        toolbar = CardAnswerInputToolbar(context)
+        toolbarContainer.addView(toolbar as View)
+        toolbar.selectImageButton.setOnClickListener {
+            Log.d("AnswerFlexBox", "select image clicked")
+        }
     }
 
     fun getAnswer(): CardAnswer {
