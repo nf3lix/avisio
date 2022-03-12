@@ -104,7 +104,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         }
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
-            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
+            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.displayNames(requireContext()))
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         setupAppBar()
@@ -213,7 +213,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     }
 
     fun getSelectedCardType(): CardType {
-        return CardType.valueOf(typeSpinner.selectedItem.toString())
+        return CardType.valueWithDisplayName(typeSpinner.selectedItem.toString(), requireContext())!!
     }
 
     private fun setupAppBar() {
