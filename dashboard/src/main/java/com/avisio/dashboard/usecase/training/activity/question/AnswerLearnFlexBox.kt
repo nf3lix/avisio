@@ -13,6 +13,7 @@ import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputKeyTextWatcher
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
+import com.google.android.flexbox.FlexboxLayout
 
 class AnswerLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, SaveCardConstraint.TargetInput.ANSWER_INPUT) {
 
@@ -31,6 +32,7 @@ class AnswerLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInp
     }
 
     fun setAnswer(answer: CardAnswer) {
+        flexbox.removeAllViews()
         this.cardAnswer = answer
         resetImage()
         setEditTextLayout()
@@ -52,7 +54,7 @@ class AnswerLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInp
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             answerEditText.textSize = TEXT_SIZE
         }
-        answerEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        answerEditText.layoutParams = FlexboxLayout.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
         initMarkdown()
         flexbox.addView(answerEditText as View, 0)

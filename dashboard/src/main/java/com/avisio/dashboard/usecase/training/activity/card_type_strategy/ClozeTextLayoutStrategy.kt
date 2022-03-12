@@ -1,5 +1,6 @@
 package com.avisio.dashboard.usecase.training.activity.card_type_strategy
 
+import android.util.Log
 import android.view.View
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -28,7 +29,10 @@ class ClozeTextLayoutStrategy(private val fragment: LearnBoxFragment) : CardType
 
     override fun onIncorrectAnswer() {
         fragment.questionInputLayout.correctClozeText()
-        fragment.correctAnswerEditText.setText(fragment.questionInputLayout.getQuestion().getStringRepresentation())
+        // fragment.correctAnswerEditText.setText(fragment.questionInputLayout.getQuestion().getStringRepresentation())
+        // fragment.correctAnswerInput.setAnswer(fragment.questionInputLayout.get)
+        Log.d("question",fragment.questionInputLayout.getQuestion().getStringRepresentation())
+        fragment.correctAnswerInput.setAnswer(CardAnswer(arrayListOf(fragment.questionInputLayout.getQuestion().getStringRepresentation())))
     }
 
     override fun onPartiallyCorrectAnswer() {

@@ -38,9 +38,8 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
     lateinit var progressBar: ProgressBar
-    private lateinit var correctAnswerInput: AnswerLearnFlexBox
+    lateinit var correctAnswerInput: AnswerLearnFlexBox
     lateinit var answerEditText: EditText
-    lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
 
@@ -96,7 +95,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         correctAnswerInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
-        correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
+        correctAnswerInput.setAnswer(currentCard.answer)
         cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
@@ -104,7 +103,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         correctAnswerInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
-        correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
+        correctAnswerInput.setAnswer(currentCard.answer)
         cardTypeLayoutStrategy.onIncorrectAnswer()
     }
 
@@ -152,13 +151,6 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resolveQuestionButton.setOnClickListener {
             manager.onAnswer(cardTypeLayoutStrategy.getQuestionResult(currentCard, cardTypeLayoutStrategy.getUserInputAsAnswer()))
         }
-    }
-
-    fun showStandardAnswerTextView() {
-        val textView = requireView().findViewById<TextView>(R.id.standard_answer_text_view)
-        textView.visibility = View.VISIBLE
-        textView.text = currentCard.answer.getStringRepresentation()
-        MarkdownView.enableMarkdown(Markwon.create(requireContext()), textView)
     }
 
     fun hideStandardAnswerTextView() {
