@@ -121,7 +121,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         })
         answerInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
             override fun onClick() {
-                Log.d("delete clicked", "click")
+                val newAnswer = CardAnswer.getFromStringRepresentation(answerInput.getAnswer().getStringRepresentation())
+                answerInput.setAnswer(newAnswer)
             }
 
         })
