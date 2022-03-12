@@ -24,6 +24,7 @@ class CreateCardStrategy(
 
     override fun fillCardInformation() {
         typeSpinner.setSelection(card.type.ordinal)
+        fragment.onCardTypeSet(CardType.values()[card.type.ordinal])
     }
 
     override fun saveCard() {
