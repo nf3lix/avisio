@@ -28,6 +28,7 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
+import com.avisio.dashboard.common.ui.card_image.CardImage
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
@@ -106,6 +107,18 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         if(!fragmentInitialized) {
             fragmentStrategy.fillCardInformation()
         }
+        questionInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
+            override fun onClick() {
+                Log.d("delete clicked", "click")
+            }
+
+        })
+        answerInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
+            override fun onClick() {
+                Log.d("delete clicked", "click")
+            }
+
+        })
         fragmentInitialized = true
     }
 

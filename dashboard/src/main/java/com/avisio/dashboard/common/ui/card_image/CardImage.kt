@@ -19,8 +19,13 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         private const val MAX_WIDTH = 200.0
     }
 
+    private var deleteImageClickListener: DeleteImageClickListener? = null
+
     init {
         inflate(context, R.layout.card_image_view, this)
+        delete_image_btn.setOnClickListener {
+            deleteImageClickListener?.onClick()
+        }
     }
 
     fun setImage(bitmap: Bitmap) {
@@ -34,6 +39,14 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
 
     fun resetImage() {
         card_image_item.setImageDrawable(null)
+    }
+
+    fun setDeleteImageClickListener(listener: DeleteImageClickListener) {
+        deleteImageClickListener = listener
+    }
+
+    interface DeleteImageClickListener {
+        fun onClick()
     }
 
 }

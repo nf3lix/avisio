@@ -93,6 +93,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         titleTextView.text = title
     }
 
+    fun setDeleteImageClickListener(listener: CardImage.DeleteImageClickListener) {
+        cardImage.setDeleteImageClickListener(listener)
+    }
+
     fun setImagePath(path: String) {
         val image = CardImageStorage(context).loadBitmap(path)
         cardImage.visibility = View.VISIBLE
