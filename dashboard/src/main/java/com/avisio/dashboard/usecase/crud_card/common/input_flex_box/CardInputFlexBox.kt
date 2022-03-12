@@ -118,6 +118,14 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         return cardImage.tag as String
     }
 
+    fun setMaxCardImageSize(height: Double, width: Double) {
+        cardImage.setMaxSize(height, width)
+    }
+
+    fun setDeleteImageButtonVisible(visible: Boolean) {
+        cardImage.setDeleteImageButtonVisible(visible)
+    }
+
     fun setCardTypeChangeListener(listener: CardTypeChangeListener) {
         cardChangeListener = listener
     }
