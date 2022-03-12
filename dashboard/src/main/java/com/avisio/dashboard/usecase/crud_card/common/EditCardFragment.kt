@@ -107,18 +107,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         if(!fragmentInitialized) {
             fragmentStrategy.fillCardInformation()
         }
-        questionInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
-            override fun onClick() {
-                val newTokens = arrayListOf<QuestionToken>()
-                for(token in questionInput.getCardQuestion().tokenList) {
-                    if(token.tokenType != QuestionTokenType.IMAGE) {
-                        newTokens.add(token)
-                    }
-                }
-                questionInput.setCardQuestion(CardQuestion(newTokens))
-            }
-
-        })
+        questionInput.setDeleteImageClickListener(DeleteQuestionImageObserver(questionInput))
         answerInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
             override fun onClick() {
                 val newAnswer = CardAnswer.getFromStringRepresentation(answerInput.getAnswer().getStringRepresentation())
