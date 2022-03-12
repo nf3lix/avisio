@@ -4,10 +4,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 
-class CardInputKeyTextWatcher(private val listener: CardTypeChangeListener, private val flexbox: CardInputFlexBox) : TextWatcher {
+class CardInputKeyTextWatcher(private val listener: CardTypeChangeListener?, private val flexbox: CardInputFlexBox) : TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {
-        listener.onFlexboxInputChanged(flexbox)
+        listener?.onFlexboxInputChanged(flexbox)
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

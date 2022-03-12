@@ -31,7 +31,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     internal var markdown: MarkdownEditor = MarkdownEditor(EditText(context), TextView(context))
     private var markdownDisabled: Boolean = false
 
-    var cardChangeListener: CardTypeChangeListener = EditCardFragment()
+    var cardChangeListener: CardTypeChangeListener? = null
     val flexbox: FlexboxLayout
     private val cardImage: CardImage
     val toolbarContainer: FrameLayout

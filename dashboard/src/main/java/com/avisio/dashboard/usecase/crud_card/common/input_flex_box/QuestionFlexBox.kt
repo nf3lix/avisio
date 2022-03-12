@@ -27,8 +27,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     companion object {
         const val TEXT_SIZE = 14F
-        private const val MAX_IMAGE_HEIGHT = 150.0
-        private const val MAX_IMAGE_WIDTH = 200.0
     }
 
     private lateinit var toolbar: CardQuestionInputToolbar
@@ -49,8 +47,8 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         replaceTextEditByChip(selectionEditTextIndex, editTextSelection)
         mergeRemainingEditTexts()
         resetInformation()
-        cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
-        cardChangeListener.onFlexboxInputChanged(this)
+        cardChangeListener?.onCardTypeSet(CardType.CLOZE_TEXT)
+        cardChangeListener?.onFlexboxInputChanged(this)
     }
 
     private fun getSelectedText(): Pair<EditTextSelection, Int> {
@@ -196,7 +194,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 editTextReplacement.setText(chip.text)
                 flexbox.removeView(chip)
                 flexbox.addView(editTextReplacement as View, chipIndex - 1)
-                cardChangeListener.onFlexboxInputChanged(this)
+                cardChangeListener?.onFlexboxInputChanged(this)
             }
             mergeRemainingEditTexts()
             setEditTextKeyListeners()
@@ -220,7 +218,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
         flexbox.removeAllViews()
         setCardQuestion(CardQuestion(newQuestionTokenList))
-        cardChangeListener.onFlexboxInputChanged(this)
+        cardChangeListener?.onFlexboxInputChanged(this)
     }
 
     private fun checkCardType() {
@@ -228,15 +226,15 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         markdownDisabled = false
         for(view in views) {
             if(view is Chip) {
-                cardChangeListener.onCardTypeSet(CardType.CLOZE_TEXT)
+                cardChangeListener?.onCardTypeSet(CardType.CLOZE_TEXT)
                 return
             }
         }
         if(!markdownDisabled && markdown.isEnabled()) {
-            cardChangeListener.onCardTypeSet(CardType.STANDARD)
+            cardChangeListener?.onCardTypeSet(CardType.STANDARD)
             return
         }
-        cardChangeListener.onCardTypeSet(CardType.STRICT)
+        cardChangeListener?.onCardTypeSet(CardType.STRICT)
     }
 
     private fun addInitialEditText(input: String) {
@@ -257,23 +255,6 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             editText.textSize = TEXT_SIZE
         }
         return editText
-    }
-
-    private fun getImageView(bitmap: Bitmap): CardImage {
-        // val imageView = ImageView(context)
-        // val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        // val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
-        // params.isWrapBefore = true
-        // imageView.layoutParams = params
-        // imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        // imageView.setImageBitmap(bitmap)
-        val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
-        //params.isWrapBefore = true
-        val image = CardImage(context)
-        //mage.layoutParams = params
-        image.setImage(bitmap)
-        return image
     }
 
     private fun setEditTextKeyListeners() {

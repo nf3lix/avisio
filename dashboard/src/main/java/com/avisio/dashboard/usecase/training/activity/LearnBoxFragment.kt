@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,29 +14,31 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.training.QuestionResult
 import com.avisio.dashboard.usecase.training.SM15TrainingStrategy
 import com.avisio.dashboard.usecase.training.TrainingStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.CardTypeLayoutStrategy
 import com.avisio.dashboard.usecase.training.activity.card_type_strategy.ClozeTextLayoutStrategy
+import com.avisio.dashboard.usecase.training.activity.question.AnswerLearnFlexBox
 import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import io.noties.markwon.Markwon
 
-class LearnBoxFragment : Fragment(), LearnCardView {
+class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
 
     private lateinit var trainingStrategy: TrainingStrategy
     private lateinit var cardTypeLayoutStrategy: CardTypeLayoutStrategy
     private lateinit var manager: LearnCardManager
     private lateinit var box: AvisioBox
-    //private
     lateinit var currentCard: Card
 
     lateinit var questionInputLayout: QuestionLearnFlexBox
     lateinit var answerInputLayout: TextInputLayout
     lateinit var progressBar: ProgressBar
-    private lateinit var correctAnswerLayoutInput: TextInputLayout
+    private lateinit var correctAnswerInput: AnswerLearnFlexBox
     lateinit var answerEditText: EditText
     lateinit var correctAnswerEditText: EditText
     private lateinit var resolveQuestionButton: Button
@@ -54,8 +57,9 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         questionInputLayout = requireView().findViewById(R.id.question_input_layout)
         answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
-        correctAnswerLayoutInput = requireView().findViewById(R.id.correct_answer_input_layout)
-        correctAnswerEditText = requireView().findViewById(R.id.correct_answer_edit_text)
+        correctAnswerInput = requireView().findViewById(R.id.correct_answer_input_layout)
+        correctAnswerInput.setCardTypeChangeListener(this)
+        correctAnswerInput.setDeleteImageButtonVisible(false)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
         progressBar = requireView().findViewById(R.id.load_card_progressBar)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)
@@ -82,14 +86,14 @@ class LearnBoxFragment : Fragment(), LearnCardView {
                 showResolveQuestionButton()
                 answerInputLayout.visibility = View.VISIBLE
                 resultChipGroup.visibility = View.GONE
-                correctAnswerLayoutInput.visibility = View.GONE
+                correctAnswerInput.visibility = View.GONE
                 cardTypeLayoutStrategy.onShowCard()
             }
         } catch (ignore: IllegalStateException) { }
     }
 
     override fun onCorrectAnswer() {
-        correctAnswerLayoutInput.visibility = View.VISIBLE
+        correctAnswerInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
@@ -97,17 +101,18 @@ class LearnBoxFragment : Fragment(), LearnCardView {
     }
 
     override fun onIncorrectAnswer() {
-        correctAnswerLayoutInput.visibility = View.VISIBLE
+        correctAnswerInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerEditText.setText(currentCard.answer.getStringRepresentation())
         cardTypeLayoutStrategy.onIncorrectAnswer()
-
     }
 
     override fun onPartiallyCorrectAnswer() {
+        correctAnswerInput.visibility = View.VISIBLE
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
+        correctAnswerInput.setAnswer(currentCard.answer)
         cardTypeLayoutStrategy.onPartiallyCorrectAnswer()
     }
 
@@ -117,7 +122,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         val constraintLayout = requireView().findViewById<ConstraintLayout>(R.id.learn_card_constraint_layout)
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
-        constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, R.id.question_input_layout, ConstraintSet.TOP, 0)
+        constraintSet.connect(correctAnswerInput.id, ConstraintSet.TOP, R.id.question_input_layout, ConstraintSet.TOP, 0)
         constraintSet.applyTo(constraintLayout)
     }
 
@@ -127,7 +132,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
         constraintSet.connect(resolveQuestionButton.id, ConstraintSet.TOP, R.id.answer_input_layout, ConstraintSet.TOP, 0)
-        constraintSet.connect(correctAnswerLayoutInput.id, ConstraintSet.TOP, resolveQuestionButton.id, ConstraintSet.TOP, 0)
+        constraintSet.connect(correctAnswerInput.id, ConstraintSet.TOP, resolveQuestionButton.id, ConstraintSet.TOP, 0)
         constraintSet.applyTo(constraintLayout)
     }
 
@@ -195,7 +200,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             Toast.makeText(context, R.string.learn_activity_training_finished, Toast.LENGTH_LONG).show()
             questionInputLayout.visibility = View.GONE
             answerInputLayout.visibility = View.GONE
-            correctAnswerLayoutInput.visibility = View.GONE
+            correctAnswerInput.visibility = View.GONE
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
         }
@@ -232,5 +237,9 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             }
         } catch (ignore: IllegalStateException) { }
     }
+
+    override fun onCardTypeSet(cardType: CardType) {}
+
+    override fun onFlexboxInputChanged(input: CardInputFlexBox) {}
 
 }
