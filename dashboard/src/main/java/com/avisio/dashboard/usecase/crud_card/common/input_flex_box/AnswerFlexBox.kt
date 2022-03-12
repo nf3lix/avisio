@@ -50,6 +50,7 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
 
     fun setAnswer(answer: CardAnswer) {
         flexbox.removeAllViews()
+        resetImage()
         setEditTextLayout()
         answerEditText.setText(answer.getStringRepresentation())
         if(answer.hasImage()) {

@@ -132,6 +132,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     fun setCardQuestion(cardQuestion: CardQuestion) {
         flexbox.removeAllViews()
+        resetImage()
         for((index, token) in cardQuestion.tokenList.withIndex()) {
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
