@@ -32,4 +32,8 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         card_image_item.setImageBitmap(bitmap)
     }
 
+    fun resetImage() {
+        card_image_item.setImageDrawable(null)
+    }
+
 }

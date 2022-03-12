@@ -5,12 +5,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.CardType
@@ -18,6 +16,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardImageStorage
+import com.avisio.dashboard.common.ui.card_image.CardImage
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.chip.Chip
@@ -123,11 +122,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                 is Chip -> {
                     tokenList.add(QuestionToken(view.text.toString(), QuestionTokenType.QUESTION))
                 }
-                is ImageView -> {
-                    val tag = view.tag as String
-                    tokenList.add(QuestionToken(tag, QuestionTokenType.IMAGE))
-                }
             }
+        }
+        if(hasImage()) {
+            tokenList.add(QuestionToken(getImagePath(), QuestionTokenType.IMAGE))
         }
         return CardQuestion(tokenList)
     }
@@ -138,6 +136,10 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
             when(token.tokenType) {
                 QuestionTokenType.TEXT -> {
                     val editText = getEditText(token.content.trim())
+                    if(cardQuestion.tokenList.size > index + 1
+                        && cardQuestion.tokenList[index + 1].tokenType == QuestionTokenType.IMAGE) {
+                        editText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, WRAP_CONTENT)
+                    }
                     flexbox.addView(editText, index)
                 }
                 QuestionTokenType.QUESTION -> {
@@ -145,10 +147,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
                     flexbox.addView(chip, index)
                 }
                 QuestionTokenType.IMAGE -> {
-                    val image = CardImageStorage(context).loadBitmap(token.content)
-                    val imageView = getImageView(image)
-                    imageView.tag = token.content
-                    flexbox.addView(imageView, index)
+                    setImagePath(token.content)
                 }
             }
         }
@@ -259,15 +258,21 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         return editText
     }
 
-    private fun getImageView(bitmap: Bitmap): ImageView {
-        val imageView = ImageView(context)
+    private fun getImageView(bitmap: Bitmap): CardImage {
+        // val imageView = ImageView(context)
+        // val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
+        // val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        // params.isWrapBefore = true
+        // imageView.layoutParams = params
+        // imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        // imageView.setImageBitmap(bitmap)
         val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
         val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
-        params.isWrapBefore = true
-        imageView.layoutParams = params
-        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        imageView.setImageBitmap(bitmap)
-        return imageView
+        //params.isWrapBefore = true
+        val image = CardImage(context)
+        //mage.layoutParams = params
+        image.setImage(bitmap)
+        return image
     }
 
     private fun setEditTextKeyListeners() {

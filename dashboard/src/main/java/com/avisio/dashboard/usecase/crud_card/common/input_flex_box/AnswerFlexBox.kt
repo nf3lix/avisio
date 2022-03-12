@@ -23,11 +23,6 @@ import kotlin.math.roundToInt
 
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
 
-    companion object {
-        private const val MAX_IMAGE_HEIGHT = 150.0
-        private const val MAX_IMAGE_WIDTH = 200.0
-    }
-
     private val answerEditText: EditText = EditText(context)
     private lateinit var toolbar: CardAnswerInputToolbar
     private var selectImageObserver: SelectAnswerImageObserver? = null
@@ -63,8 +58,6 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
             imageView.tag = answer.imagePath
             flexbox.addView(imageView)
         }
-        Log.d("flexbox", flexbox.allViews.toList().toString())
-        Log.d("flexboxSize", flexbox.allViews.toList().size.toString())
     }
 
     fun addInitialEditText() {
