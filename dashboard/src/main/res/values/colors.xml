@@ -19,5 +19,5 @@
     <color name="hard">#ff5300</color>
     <color name="medium">#c6781d</color>
     <color name="warning">#8c9c3a</color>
-    <color name="success">#4CAF50</color>
+    <color name="success">@color/primaryColor</color> <!-- Alter Wert: #4CAF50 -->
 </resources>
