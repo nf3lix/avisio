@@ -4,7 +4,6 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -107,14 +106,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         if(!fragmentInitialized) {
             fragmentStrategy.fillCardInformation()
         }
-        questionInput.setDeleteImageClickListener(DeleteQuestionImageObserver(questionInput))
-        answerInput.setDeleteImageClickListener(object : CardImage.DeleteImageClickListener {
-            override fun onClick() {
-                val newAnswer = CardAnswer.getFromStringRepresentation(answerInput.getAnswer().getStringRepresentation())
-                answerInput.setAnswer(newAnswer)
-            }
-
-        })
+        questionInput.setDeleteImageClickListener(DeleteCardImageObserver.DeleteQuestionImage(questionInput))
+        answerInput.setDeleteImageClickListener(DeleteCardImageObserver.DeleteAnswerImage(answerInput))
         fragmentInitialized = true
     }
 
