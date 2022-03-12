@@ -88,7 +88,7 @@
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/resolve_question_button"
-            app:layout_constraintVertical_bias="0.295"/>
+            app:layout_constraintVertical_bias="0.4"/>
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="wrap_content"
