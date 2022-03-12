@@ -56,9 +56,12 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     private lateinit var fragmentStrategy: CardFragmentStrategy
     private lateinit var selectQuestionImageObserver: SelectQuestionImageResultObserver
     private lateinit var selectAnswerImageObserver: SelectAnswerImageResultObserver
+    private lateinit var deleteQuestionImageObserver: DeleteCardImageObserver.DeleteQuestionImage
+    private lateinit var deleteAnswerImageObserver: DeleteCardImageObserver.DeleteAnswerImage
 
     private lateinit var cardRepository: CardRepository
     private var fragmentInitialized = false
+    private var lastImageSelection = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +111,10 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         if(!fragmentInitialized) {
             fragmentStrategy.fillCardInformation()
         }
-        questionInput.setDeleteImageClickListener(DeleteCardImageObserver.DeleteQuestionImage(questionInput))
-        answerInput.setDeleteImageClickListener(DeleteCardImageObserver.DeleteAnswerImage(answerInput))
+        deleteQuestionImageObserver = DeleteCardImageObserver.DeleteQuestionImage(questionInput)
+        deleteAnswerImageObserver = DeleteCardImageObserver.DeleteAnswerImage(answerInput)
+        questionInput.setDeleteImageClickListener(deleteQuestionImageObserver)
+        answerInput.setDeleteImageClickListener(deleteAnswerImageObserver)
         fragmentInitialized = true
     }
 
@@ -155,8 +160,14 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 val cardQuestion = questionInput.getCardQuestion().tokenList
                 val cardAnswer = answerInput.getAnswer()
-                if(cardQuestion[cardQuestion.size - 1].tokenType != QuestionTokenType.IMAGE && !cardAnswer.hasImage()) {
-                    onCardTypeSet(getSelectedCardType())
+                if(System.currentTimeMillis() - lastImageSelection > 500) {
+                    val selectedType = getSelectedCardType()
+                    onCardTypeSet(selectedType)
+                    if(selectedType != STANDARD && (cardQuestion[cardQuestion.size - 1].tokenType == QuestionTokenType.IMAGE || !cardAnswer.hasImage())) {
+                        removeAllImages()
+                        onFlexboxInputChanged(questionInput)
+                        onFlexboxInputChanged(answerInput)
+                    }
                 } else {
                     onCardTypeSet(STANDARD)
                 }
@@ -250,6 +261,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
             questionInput.setCardQuestion(CardQuestion(newTokens))
         }
         onCardTypeSet(STANDARD)
+        lastImageSelection = System.currentTimeMillis()
     }
 
     fun answerImageSelected(imagePath: String) {
@@ -257,6 +269,12 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         val newAnswer = CardAnswer(prevAnswer.answerList, imagePath)
         answerInput.setAnswer(newAnswer)
         onCardTypeSet(STANDARD)
+        lastImageSelection = System.currentTimeMillis()
+    }
+
+    fun removeAllImages() {
+        deleteQuestionImageObserver.onClick()
+        deleteAnswerImageObserver.onClick()
     }
 
 }

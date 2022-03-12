@@ -18,7 +18,6 @@ class DeleteCardImageObserver()  {
             }
             questionInput.setCardQuestion(CardQuestion(newTokens))
         }
-
     }
 
     class DeleteAnswerImage(private val answerInput: AnswerFlexBox) : CardImage.DeleteImageClickListener {
