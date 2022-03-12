@@ -13,10 +13,12 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/card_image_item"
-        app:layout_constraintTop_toTopOf="@+id/card_image_item"
-        app:srcCompat="@drawable/ic_close" />
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintStart_toEndOf="@+id/card_image_item"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="-2"
+        android:backgroundTint="@color/error"
+        android:background="@drawable/ic_delete_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
