@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 
@@ -22,8 +23,22 @@ class DeleteImagesConfirmDialog(private val fragment: EditCardFragment) {
     )
 
     init {
+        setOnConfirmListener()
+        setOnCancelListener()
+    }
+
+    private fun setOnConfirmListener() {
         confirmDialog.setOnConfirmListener {
             fragment.removeAllImages()
+            fragment.onFlexboxInputChanged(fragment.questionInput)
+            fragment.onFlexboxInputChanged(fragment.answerInput)
+            fragment.onCardTypeSet(fragment.getSelectedCardType())
+        }
+    }
+
+    private fun setOnCancelListener() {
+        confirmDialog.setOnCancelListener {
+            fragment.onCardTypeSet(CardType.STANDARD)
         }
     }
 

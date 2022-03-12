@@ -156,17 +156,15 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
 
     private fun initTypeSpinner() {
         typeSpinner = requireView().findViewById(R.id.card_type_spinner)
+        val fragment = this
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 val cardQuestion = questionInput.getCardQuestion().tokenList
                 val cardAnswer = answerInput.getAnswer()
                 if(System.currentTimeMillis() - lastImageSelection > 500) {
                     val selectedType = getSelectedCardType()
-                    onCardTypeSet(selectedType)
-                    if(selectedType != STANDARD && (cardQuestion[cardQuestion.size - 1].tokenType == QuestionTokenType.IMAGE || !cardAnswer.hasImage())) {
-                        removeAllImages()
-                        onFlexboxInputChanged(questionInput)
-                        onFlexboxInputChanged(answerInput)
+                    if(selectedType != STANDARD && (cardQuestion[cardQuestion.size - 1].tokenType == QuestionTokenType.IMAGE || cardAnswer.hasImage())) {
+                        DeleteImagesConfirmDialog.showDialog(fragment)
                     }
                 } else {
                     onCardTypeSet(STANDARD)
