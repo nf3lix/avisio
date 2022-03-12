@@ -26,8 +26,6 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
     fun setImage(bitmap: Bitmap) {
         val scale = min((MAX_HEIGHT / bitmap.height), (MAX_WIDTH / bitmap.width))
         val params = FlexboxLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
-        Log.d("height", params.height.toString())
-        Log.d("width", params.width.toString())
         params.isWrapBefore = true
         card_image_item.layoutParams = params
         card_image_item.scaleType = ImageView.ScaleType.CENTER_CROP

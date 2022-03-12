@@ -54,6 +54,8 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     fun setAnswer(answer: CardAnswer) {
+        flexbox.removeAllViews()
+        setEditTextLayout()
         answerEditText.setText(answer.getStringRepresentation())
         if(answer.hasImage()) {
             val image = CardImageStorage(context).loadBitmap(answer.imagePath!!)
