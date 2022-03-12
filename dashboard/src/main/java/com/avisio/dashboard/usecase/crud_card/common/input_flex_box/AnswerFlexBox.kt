@@ -42,8 +42,8 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
 
     fun getAnswer(): CardAnswer {
         val cardAnswer = CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
-        if(flexbox.allViews.toList().size == 6) {
-            return CardAnswer(cardAnswer.answerList, (flexbox.allViews.toList()[2].tag as String))
+        if(hasImage()) {
+            return CardAnswer(cardAnswer.answerList, getImagePath())
         }
         return cardAnswer
     }
@@ -53,10 +53,7 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         setEditTextLayout()
         answerEditText.setText(answer.getStringRepresentation())
         if(answer.hasImage()) {
-            val image = CardImageStorage(context).loadBitmap(answer.imagePath!!)
-            val imageView = getImageView(image)
-            imageView.tag = answer.imagePath
-            flexbox.addView(imageView)
+            setImagePath(answer.imagePath!!)
         }
     }
 
@@ -65,15 +62,8 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
     }
 
     override fun resetEditText() {
-        val cardAnswer = getAnswer()
         flexbox.removeAllViews()
         setEditTextLayout()
-        if(cardAnswer.hasImage()) {
-            val image = CardImageStorage(context).loadBitmap(cardAnswer.imagePath!!)
-            val imageView = getImageView(image)
-            imageView.tag = cardAnswer.imagePath
-            flexbox.addView(imageView)
-        }
     }
 
     private fun setEditTextLayout() {
@@ -88,12 +78,6 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
 
     fun setSelectImageObserver(selectImageObserver: SelectAnswerImageObserver) {
         this.selectImageObserver = selectImageObserver
-    }
-
-    private fun getImageView(bitmap: Bitmap): CardImage {
-        val image = CardImage(context)
-        image.setImage(bitmap)
-        return image
     }
 
 }
