@@ -29,9 +29,6 @@ class ClozeTextLayoutStrategy(private val fragment: LearnBoxFragment) : CardType
 
     override fun onIncorrectAnswer() {
         fragment.questionInputLayout.correctClozeText()
-        // fragment.correctAnswerEditText.setText(fragment.questionInputLayout.getQuestion().getStringRepresentation())
-        // fragment.correctAnswerInput.setAnswer(fragment.questionInputLayout.get)
-        Log.d("question",fragment.questionInputLayout.getQuestion().getStringRepresentation())
         fragment.correctAnswerInput.setAnswer(CardAnswer(arrayListOf(fragment.questionInputLayout.getQuestion().getStringRepresentation())))
     }
 

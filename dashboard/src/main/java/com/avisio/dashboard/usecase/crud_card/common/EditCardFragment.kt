@@ -4,6 +4,7 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -21,6 +22,7 @@ import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
+import com.avisio.dashboard.common.data.model.card.CardType.STANDARD
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.common.data.model.card.question.QuestionToken
@@ -151,7 +153,13 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         typeSpinner = requireView().findViewById(R.id.card_type_spinner)
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-                onCardTypeSet(getSelectedCardType())
+                val cardQuestion = questionInput.getCardQuestion().tokenList
+                val cardAnswer = answerInput.getAnswer()
+                if(cardQuestion[cardQuestion.size - 1].tokenType != QuestionTokenType.IMAGE && !cardAnswer.hasImage()) {
+                    onCardTypeSet(getSelectedCardType())
+                } else {
+                    onCardTypeSet(STANDARD)
+                }
             }
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
         }
@@ -241,12 +249,14 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
             ))
             questionInput.setCardQuestion(CardQuestion(newTokens))
         }
+        onCardTypeSet(STANDARD)
     }
 
     fun answerImageSelected(imagePath: String) {
         val prevAnswer = answerInput.getAnswer()
         val newAnswer = CardAnswer(prevAnswer.answerList, imagePath)
         answerInput.setAnswer(newAnswer)
+        onCardTypeSet(STANDARD)
     }
 
 }
