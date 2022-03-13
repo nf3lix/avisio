@@ -28,24 +28,17 @@ class SelectQuestionImageResultObserver(
 
     override fun onCreate(owner: LifecycleOwner) {
         content = registry.register(OBSERVER_REGISTRY_KEY, ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if(result.data?.data == null) {
-                return@register
-            }
-            val path = getPathFromURI(result.data!!.data!!) ?: return@register
-            val file = File(path)
-            val selectedImageUri = Uri.fromFile(file)
-            val drawable = Drawable.createFromPath(selectedImageUri.path!!)
-            val bitmap = (drawable as BitmapDrawable).bitmap
-            val fileName = UUID.randomUUID().toString()
-            val imageStorage = CardImageStorage(editCardFragment.requireContext())
-            imageStorage.saveBitmap(bitmap, fileName)
-            editCardFragment.questionImageSelected(fileName)
+            handleResult(result)
         }
     }
 
     override fun startSelectImageActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         content.launch(Intent.createChooser(intent, "Select Image"))
+    }
+
+    override fun onBitmapSaved(fileName: String) {
+        editCardFragment.questionImageSelected(fileName)
     }
 
 }
