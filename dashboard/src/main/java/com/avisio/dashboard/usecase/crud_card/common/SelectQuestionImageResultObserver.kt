@@ -17,20 +17,8 @@ import java.util.*
 
 class SelectQuestionImageResultObserver(
     private val editCardFragment: EditCardFragment,
-    private val registry: ActivityResultRegistry,
-) : ImageSelectionLifecycleObserver(editCardFragment) {
-
-    companion object {
-        private const val OBSERVER_REGISTRY_KEY = "SELECT_IMAGE_OBSERVER"
-    }
-
-    private lateinit var content: ActivityResultLauncher<Intent>
-
-    override fun onCreate(owner: LifecycleOwner) {
-        content = registry.register(OBSERVER_REGISTRY_KEY, ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            handleResult(result)
-        }
-    }
+    registry: ActivityResultRegistry,
+) : ImageSelectionLifecycleObserver(editCardFragment, registry, observerRegistryKey = "SELECT_IMAGE_OBSERVER") {
 
     override fun startSelectImageActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
