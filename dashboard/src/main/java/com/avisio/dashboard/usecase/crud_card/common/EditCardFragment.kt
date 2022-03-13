@@ -100,22 +100,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
         questionInput.setSelectImageObserver(this)
-        answerInput.setSelectImageObserver(object : SelectAnswerImageObserver {
-            override fun onStartSelect() {
-                when {
-                    ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED -> {
-                        selectAnswerImageObserver.startSelectImageActivity()
-                    }
-                    shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) -> {
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
-                    }
-                    else -> {
-                        requestPermissionAnswerImageLauncher.launch(READ_EXTERNAL_STORAGE)
-                    }
-                }
-            }
-
-        })
+        answerInput.setSelectImageObserver(SelectAnswerImageObserver(this, requestPermissionAnswerImageLauncher, selectAnswerImageObserver))
         answerInput.setCardTypeChangeListener(this)
         if(!fragmentInitialized) {
             answerInput.addInitialEditText()
