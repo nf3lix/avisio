@@ -31,7 +31,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
 
     private lateinit var toolbar: CardQuestionInputToolbar
     private var markdownDisabled: Boolean = false
-    private var selectImageObserver: SelectQuestionImageObserver? = null
+    private var selectImageObserver: SelectImageObserver? = null
 
     init {
         initToolbar()
@@ -277,7 +277,7 @@ class QuestionFlexBox(context: Context, attributeSet: AttributeSet) : CardInputF
         }
     }
 
-    fun setSelectImageObserver(selectImageObserver: SelectQuestionImageObserver) {
+    fun setSelectImageObserver(selectImageObserver: SelectImageObserver) {
         this.selectImageObserver = selectImageObserver
     }
 

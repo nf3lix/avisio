@@ -1,7 +1,5 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.content.pm.PackageManager.*
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +13,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -40,7 +36,7 @@ import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardCo
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImageObserver {
+class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     companion object {
         const val CARD_CRUD_WORKFLOW: String = "CARD_CRUD_WORKFLOW"
@@ -99,8 +95,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         questionInput = requireView().findViewById(R.id.question_flexbox)
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
-        questionInput.setSelectImageObserver(this)
-        answerInput.setSelectImageObserver(SelectAnswerImageObserver(this, requestPermissionAnswerImageLauncher, selectAnswerImageObserver))
+        questionInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionQuestionImageLauncher, selectQuestionImageObserver))
+        answerInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionAnswerImageLauncher, selectAnswerImageObserver))
         answerInput.setCardTypeChangeListener(this)
         if(!fragmentInitialized) {
             answerInput.addInitialEditText()
@@ -237,20 +233,6 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
                         true
                     }
                 }
-            }
-        }
-    }
-
-    override fun onStartSelect() {
-        when {
-            ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED -> {
-                selectQuestionImageObserver.startSelectImageActivity()
-            }
-            shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) -> {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
-            }
-            else -> {
-                requestPermissionQuestionImageLauncher.launch(READ_EXTERNAL_STORAGE)
             }
         }
     }

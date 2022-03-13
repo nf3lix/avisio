@@ -8,9 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.usecase.crud_card.common.ImageSelectionLifecycleObserver
 
-class SelectAnswerImageObserver(private val fragment: Fragment,
-                                         private val launcher: ActivityResultLauncher<String>,
-                                         private val observer: ImageSelectionLifecycleObserver
+class SelectImageObserver(private val fragment: Fragment,
+                          private val launcher: ActivityResultLauncher<String>,
+                          private val observer: ImageSelectionLifecycleObserver
 ) {
 
     fun onStartSelect() {
