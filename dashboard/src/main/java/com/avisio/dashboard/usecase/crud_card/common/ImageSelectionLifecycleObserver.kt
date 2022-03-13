@@ -30,6 +30,11 @@ abstract class ImageSelectionLifecycleObserver(
         }
     }
 
+    fun startSelectImageActivity() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        content.launch(Intent.createChooser(intent, "Select Image"))
+    }
+
     private fun handleResult(result: ActivityResult) {
         if(result.data?.data == null) {
             return
@@ -46,7 +51,6 @@ abstract class ImageSelectionLifecycleObserver(
     }
 
     abstract fun onBitmapSaved(fileName: String)
-    abstract fun startSelectImageActivity()
 
     private fun getPathFromURI(contentUri: Uri): String? {
         var res: String? = null

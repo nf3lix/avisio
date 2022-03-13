@@ -20,11 +20,6 @@ class SelectQuestionImageResultObserver(
     registry: ActivityResultRegistry,
 ) : ImageSelectionLifecycleObserver(editCardFragment, registry, observerRegistryKey = "SELECT_IMAGE_OBSERVER") {
 
-    override fun startSelectImageActivity() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        content.launch(Intent.createChooser(intent, "Select Image"))
-    }
-
     override fun onBitmapSaved(fileName: String) {
         editCardFragment.questionImageSelected(fileName)
     }
