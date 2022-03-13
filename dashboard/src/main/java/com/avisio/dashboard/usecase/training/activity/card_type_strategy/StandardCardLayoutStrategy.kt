@@ -27,7 +27,6 @@ class StandardCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayou
     }
 
     override fun onPartiallyCorrectAnswer() {
-        fragment.showStandardAnswerTextView()
     }
 
 }

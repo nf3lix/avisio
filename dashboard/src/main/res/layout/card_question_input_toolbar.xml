@@ -21,7 +21,7 @@
         android:layout_marginRight="10dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/test_button2"
+        android:id="@+id/button_select_image"
         app:icon="@drawable/ic_attachment"
         app:iconTint="@color/backgroundTintLightColor"
         app:iconPadding="0dp"

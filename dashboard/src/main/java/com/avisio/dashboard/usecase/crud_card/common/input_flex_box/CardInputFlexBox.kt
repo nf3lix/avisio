@@ -1,11 +1,15 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.persistence.card.CardImageStorage
+import com.avisio.dashboard.common.ui.card_image.CardImage
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.MarkdownEditor
@@ -27,8 +31,9 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     internal var markdown: MarkdownEditor = MarkdownEditor(EditText(context), TextView(context))
     private var markdownDisabled: Boolean = false
 
-    var cardChangeListener: CardTypeChangeListener = EditCardFragment()
+    var cardChangeListener: CardTypeChangeListener? = null
     val flexbox: FlexboxLayout
+    private val cardImage: CardImage
     val toolbarContainer: FrameLayout
 
     init {
@@ -40,6 +45,7 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         informationTextView = findViewById(R.id.question_box_information_message)
 
         flexbox = findViewById(R.id.test_flexbox)
+        cardImage = findViewById(R.id.card_input_image)
         toolbarContainer = findViewById(R.id.card_input_frame_layout)
     }
 
@@ -85,6 +91,39 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
 
     fun setTitle(title: String) {
         titleTextView.text = title
+    }
+
+    fun setDeleteImageClickListener(listener: CardImage.DeleteImageClickListener) {
+        cardImage.setDeleteImageClickListener(listener)
+    }
+
+    fun setImagePath(path: String) {
+        val image = CardImageStorage(context).loadBitmap(path)
+        cardImage.visibility = View.VISIBLE
+        cardImage.setImage(image)
+        cardImage.tag = path
+    }
+
+    fun hasImage(): Boolean {
+        return cardImage.visibility == View.VISIBLE
+    }
+
+    fun resetImage() {
+        cardImage.resetImage()
+        cardImage.visibility = View.GONE
+        cardImage.tag = ""
+    }
+
+    fun getImagePath(): String {
+        return cardImage.tag as String
+    }
+
+    fun setMaxCardImageSize(height: Double, width: Double) {
+        cardImage.setMaxSize(height, width)
+    }
+
+    fun setDeleteImageButtonVisible(visible: Boolean) {
+        cardImage.setDeleteImageButtonVisible(visible)
     }
 
     fun setCardTypeChangeListener(listener: CardTypeChangeListener) {

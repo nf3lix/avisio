@@ -75,8 +75,8 @@ class EditCardFragmentCreateModeTest {
     fun showWarningIfCardTypeIsClozeTextAndAnswerInputNotEmpty() {
         typeInAnswerEditText("ANSWER")
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onView(withText(CardType.CLOZE_TEXT.name)).perform(click())
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString(CardType.CLOZE_TEXT.name))))
+        onView(withText(R.string.card_type_cloze_text)).perform(click())
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(containsString("Lückentext"))))
         onView(withText(R.string.edit_card_cloze_text_answer_is_ignored)).check(matches(isDisplayed()))
     }
 

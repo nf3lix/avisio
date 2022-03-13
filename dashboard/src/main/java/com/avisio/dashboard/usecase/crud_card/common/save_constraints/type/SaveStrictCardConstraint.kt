@@ -1,12 +1,12 @@
 package com.avisio.dashboard.usecase.crud_card.common.save_constraints.type
 
-import com.avisio.dashboard.R.string
+import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.Priority.HIGH
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.ANSWER_INPUT
 
-class SaveCustomCardConstraint {
+class SaveStrictCardConstraint {
 
     companion object {
 
@@ -16,7 +16,7 @@ class SaveCustomCardConstraint {
             )
         }
 
-        private val answerIsNotEmpty = object : SaveCardConstraint(string.create_card_empty_answer, ANSWER_INPUT, HIGH) {
+        private val answerIsNotEmpty = object : SaveCardConstraint(R.string.create_card_empty_answer, ANSWER_INPUT, HIGH) {
             override fun isFulfilled(card: Card): Boolean {
                 return !card.answer.answerIsEmpty()
             }

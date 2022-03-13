@@ -63,7 +63,7 @@ class EditCardFragmentEditModeTest {
             assertThat(questionInput.getCardQuestion().getStringRepresentation(), Matchers.`is`("QUESTION_TOKEN"))
             assertThat(answerInput.getAnswer().getStringRepresentation(), Matchers.`is`("ANSWER"))
         }
-        onView(withText(CardType.STANDARD.name)).check(matches(isDisplayed()))
+        onView(withText(R.string.card_type_standard)).check(matches(isDisplayed()))
     }
 
     @Test

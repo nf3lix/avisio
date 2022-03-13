@@ -66,6 +66,11 @@
     <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
     <string name="edit_card_cloze_text_answer_is_ignored">Separete Antwort bei Lückentext nicht möglich</string>
     <string name="edit_card_cloze_text_is_required">Lückentexte brauchen Text</string>
+    <string name="edit_card_set_type_remove_images_title">Bilder entfernen</string>
+    <string name="edit_card_set_type_remove_images_message">Bilder sind bei diesem Kartentyp nicht möglich. Sollen die vorhandenen Bilder entfernt werden?</string>
+    <string name="card_type_standard">Standard</string>
+    <string name="card_type_cloze_text">Lückentext</string>
+    <string name="card_type_strict">Strenge Abfrage</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Abbrechen</string>

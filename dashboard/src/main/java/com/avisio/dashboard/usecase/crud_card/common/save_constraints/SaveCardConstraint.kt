@@ -3,8 +3,8 @@ package com.avisio.dashboard.usecase.crud_card.common.save_constraints
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveClozeTextCardConstraint
-import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveCustomCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveStandardCardConstraint
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.SaveStrictCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.type.UniversalConstraint
 
 abstract class SaveCardConstraint(
@@ -28,13 +28,13 @@ abstract class SaveCardConstraint(
         fun getConstraints(cardType: CardType): List<SaveCardConstraint> {
             val typeSpecificConstraints = when(cardType) {
                 CardType.STRICT -> {
-                    SaveStandardCardConstraint.getConstraints()
+                    SaveStrictCardConstraint.getConstraints()
                 }
                 CardType.CLOZE_TEXT -> {
                     SaveClozeTextCardConstraint.getConstraints()
                 }
                 CardType.STANDARD -> {
-                    SaveCustomCardConstraint.getConstraints()
+                    SaveStandardCardConstraint.getConstraints()
                 }
             }
             return mergeConstraints(typeSpecificConstraints, UniversalConstraint.getConstraints())
