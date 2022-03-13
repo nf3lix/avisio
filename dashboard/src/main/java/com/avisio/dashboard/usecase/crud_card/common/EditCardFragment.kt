@@ -1,10 +1,9 @@
 package com.avisio.dashboard.usecase.crud_card.common
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.*
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +12,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,7 +30,6 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionToken
 import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
-import com.avisio.dashboard.common.ui.card_image.CardImage
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
@@ -58,7 +58,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     private lateinit var selectAnswerImageObserver: SelectAnswerImageResultObserver
     private lateinit var deleteQuestionImageObserver: DeleteCardImageObserver.DeleteQuestionImage
     private lateinit var deleteAnswerImageObserver: DeleteCardImageObserver.DeleteAnswerImage
-
+    private lateinit var requestPermissionQuestionImageLauncher: ActivityResultLauncher<String>
+    private lateinit var requestPermissionAnswerImageLauncher: ActivityResultLauncher<String>
     private lateinit var cardRepository: CardRepository
     private var fragmentInitialized = false
     private var lastImageSelection = 0L
@@ -67,6 +68,17 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         cardRepository = CardRepository(requireActivity().application)
+        requestPermissionQuestionImageLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if(granted) {
+                selectQuestionImageObserver.startSelectImageActivity()
+            }
+        }
+        requestPermissionAnswerImageLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if(granted) {
+                selectAnswerImageObserver.startSelectImageActivity()
+            }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,10 +102,16 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
         questionInput.setSelectImageObserver(this)
         answerInput.setSelectImageObserver(object : SelectAnswerImageObserver {
             override fun onStartSelect() {
-                if(ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectAnswerImageObserver.startSelectImageActivity()
-                } else {
-                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
+                when {
+                    ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED -> {
+                        selectAnswerImageObserver.startSelectImageActivity()
+                    }
+                    shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) -> {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
+                    }
+                    else -> {
+                        requestPermissionAnswerImageLauncher.launch(READ_EXTERNAL_STORAGE)
+                    }
                 }
             }
 
@@ -165,6 +183,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
                     val selectedType = getSelectedCardType()
                     if(selectedType != STANDARD && (cardQuestion[cardQuestion.size - 1].tokenType == QuestionTokenType.IMAGE || cardAnswer.hasImage())) {
                         DeleteImagesConfirmDialog.showDialog(fragment)
+                    } else {
+                        onCardTypeSet(selectedType)
                     }
                 } else {
                     onCardTypeSet(STANDARD)
@@ -237,10 +257,16 @@ class EditCardFragment : Fragment(), CardTypeChangeListener, SelectQuestionImage
     }
 
     override fun onStartSelect() {
-        if(ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            selectQuestionImageObserver.startSelectImageActivity()
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED -> {
+                selectQuestionImageObserver.startSelectImageActivity()
+            }
+            shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) -> {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), 1)
+            }
+            else -> {
+                requestPermissionQuestionImageLauncher.launch(READ_EXTERNAL_STORAGE)
+            }
         }
     }
 
