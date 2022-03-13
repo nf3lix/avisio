@@ -20,7 +20,7 @@ import java.util.*
 class SelectQuestionImageResultObserver(
     private val editCardFragment: EditCardFragment,
     private val registry: ActivityResultRegistry,
-) : DefaultLifecycleObserver {
+) : ImageSelectionLifecycleObserver(editCardFragment) {
 
     companion object {
         private const val OBSERVER_REGISTRY_KEY = "SELECT_IMAGE_OBSERVER"
@@ -43,26 +43,10 @@ class SelectQuestionImageResultObserver(
                     editCardFragment.questionImageSelected(fileName)
                 }
             }
-            onResult(result)
         }
     }
 
-    private fun getPathFromURI(contentUri: Uri): String? {
-        var res: String? = null
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor = editCardFragment.requireActivity().contentResolver.query(contentUri, proj, null, null, null)!!
-        if (cursor.moveToFirst()) {
-            val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            res = cursor.getString(column_index)
-        }
-        cursor.close()
-        return res
-    }
-
-    private fun onResult(activityResult: ActivityResult) {
-    }
-
-    fun startSelectImageActivity() {
+    override fun startSelectImageActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         content.launch(Intent.createChooser(intent, "Select Image"))
     }
