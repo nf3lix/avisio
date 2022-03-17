@@ -9,7 +9,8 @@ import java.util.*
 
 @Entity(
     tableName = "box",
-    foreignKeys = [ForeignKey(entity = AvisioFolder::class,
+    foreignKeys = [ForeignKey(
+        entity = AvisioFolder::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("folderId"),
         onDelete = ForeignKey.CASCADE
