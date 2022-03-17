@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.ui.RoundedCornersBitmap
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -47,11 +48,12 @@ class DeleteImageDialog(
         if(bitmap == null) {
             return
         }
-        val scale = min((MAX_IMAGE_HEIGHT / bitmap.height), (MAX_IMAGE_WIDTH / bitmap.width))
-        val params = LinearLayout.LayoutParams((bitmap.height * scale).roundToInt(), (bitmap.width * scale).roundToInt())
+        val roundedBitmap = RoundedCornersBitmap.withRoundedCorners(bitmap, 40)
+        val scale = min((MAX_IMAGE_HEIGHT / roundedBitmap.height), (MAX_IMAGE_WIDTH / roundedBitmap.width))
+        val params = LinearLayout.LayoutParams((roundedBitmap.height * scale).roundToInt(), (roundedBitmap.width * scale).roundToInt())
         params.gravity = Gravity.CENTER_HORIZONTAL
         viewInflated.findViewById<ImageView>(R.id.card_image_item).layoutParams = params
-        viewInflated.findViewById<ImageView>(R.id.card_image_item).setImageBitmap(bitmap)
+        viewInflated.findViewById<ImageView>(R.id.card_image_item).setImageBitmap(roundedBitmap)
     }
 
 }
