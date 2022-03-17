@@ -3,14 +3,13 @@ package com.avisio.dashboard.common.ui.card_image
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Bitmap
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.ui.RoundedCornersBitmap
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -26,6 +25,9 @@ class DeleteImageDialog(
         private const val MAX_IMAGE_WIDTH = 800.0
     }
 
+    private val scaleGestureDetector: ScaleGestureDetector = ScaleGestureDetector(cardImage.context, ScaleListener())
+    private var scaleFactor = 1F
+
     private val dialogBuilder = AlertDialog.Builder(cardImage.context).create()
     private val viewInflated: View = LayoutInflater.from(cardImage.context).inflate(R.layout.dialog_delete_card_image, view, false)
 
@@ -34,6 +36,7 @@ class DeleteImageDialog(
             .setView(viewInflated)
         dialogBuilder.show()
         setImage()
+        test()
         setDeleteImageButton()
         setDeleteImageClickListener()
     }
@@ -62,6 +65,25 @@ class DeleteImageDialog(
     private fun setDeleteImageButton() {
         if(cardImage.showDeleteButton) {
             viewInflated.findViewById<ImageView>(R.id.dialog_delete_image_btn).visibility = View.VISIBLE
+        }
+    }
+
+    private fun test() {
+        viewInflated.findViewById<ImageView>(R.id.card_image_item).setOnTouchListener { _: View, event: MotionEvent ->
+            scaleGestureDetector.onTouchEvent(event)
+            true
+        }
+    }
+
+    inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector?): Boolean {
+            val imageView = viewInflated.findViewById<ImageView>(R.id.card_image_item)
+            scaleFactor *= scaleGestureDetector.scaleFactor
+            scaleFactor = max(0.6F, min(scaleFactor, 3F))
+            imageView.scaleX = scaleFactor
+            imageView.scaleY = scaleFactor
+            Log.d("scaleFactor", scaleFactor.toString())
+            return super.onScale(detector)
         }
     }
 
