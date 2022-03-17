@@ -26,7 +26,7 @@ data class Card(
     val id: Long = 0,
 
     @ColumnInfo(name = "boxId")
-    val boxId: Long = 0,
+    val boxId: Long? = null,
 
     @ColumnInfo(name = "create_date")
     val createDate: Date = Date(System.currentTimeMillis()),

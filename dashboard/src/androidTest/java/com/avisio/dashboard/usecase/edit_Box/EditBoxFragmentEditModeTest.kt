@@ -50,11 +50,6 @@ class EditBoxFragmentEditModeTest {
     }
 
     @Test
-    fun setBoxIconTest() {
-        onView(withId(R.id.box_icon_imageview)).check(matches(withTagValue(equalTo(R.drawable.box_icon_language))))
-    }
-
-    @Test
     fun clickFabTest() {
         onView(withId(R.id.fab_edit_box)).check(matches(isDisplayed()))
         onView(withId(R.id.fab_edit_box)).perform(click())
@@ -66,20 +61,6 @@ class EditBoxFragmentEditModeTest {
         onView(withId(R.id.box_name_edit_text)).perform(clearText())
         onView(withId(R.id.fab_edit_box)).perform(click())
         onView(withText(R.string.create_box_no_name_specified)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun openPopupOnItemViewClick() {
-        onView(withId(R.id.box_icon_imageview)).perform(click())
-        onView(allOf(withClassName(containsString(MenuPopupWindow.MenuDropDownListView::class.java.simpleName)))).check(matches(
-            isDisplayed()))
-    }
-
-    @Test
-    fun openPopupOnButtonClick() {
-        onView(withId(R.id.select_icon_button)).perform(click())
-        onView(allOf(withClassName(containsString(MenuPopupWindow.MenuDropDownListView::class.java.simpleName)))).check(matches(
-            isDisplayed()))
     }
 
     @Test

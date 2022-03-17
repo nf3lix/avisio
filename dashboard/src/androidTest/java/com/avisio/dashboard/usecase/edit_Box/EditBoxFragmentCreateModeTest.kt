@@ -53,30 +53,8 @@ class EditBoxFragmentCreateModeTest {
             .check(matches(withText("")))
     }
 
-    @Test
-    fun setBoxIconTest() {
-        onView(withId(R.id.box_icon_imageview))
-            .check(matches(withTagValue(equalTo(R.drawable.dashboard_item_icon_default))))
-    }
-
-    @Test
-    fun updateImageIconOnOptionSelected() {
-        onView(withId(R.id.select_icon_button)).perform(click())
-        onView(IndexMatcher(withClassName(containsString(ListMenuItemView::class.java.simpleName)), 1)).perform(click());
-        onView(withId(R.id.box_icon_imageview)).check(matches(withTagValue(equalTo(R.drawable.box_icon_language))))
-    }
-
-    @Test(expected = NoMatchingViewException::class)
-    fun closePopupMenuOnOptionSelected() {
-        onView(withId(R.id.select_icon_button)).perform(click())
-        onView(IndexMatcher(withClassName(containsString(ListMenuItemView::class.java.simpleName)), 1)).perform(click());
-        onView(allOf(withClassName(containsString(MenuPopupWindow.MenuDropDownListView::class.java.simpleName)))).check(
-            matches(isDisplayed()))
-    }
-
     @Test(expected = NoMatchingViewException::class)
     fun showErrorIfBoxNameIsEmpty() {
-        onView(withId(R.id.select_icon_button)).perform(click())
         onView(withText(R.string.create_box_no_name_specified)).check(matches(isDisplayed()))
         onView(withId(R.id.box_name_edit_text)).perform(typeText("NAME"))
         onView(withText(R.string.create_box_no_name_specified)).check(matches(not(isDisplayed())))
