@@ -5,9 +5,11 @@ import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.avisio.dashboard.R
+import com.avisio.dashboard.common.ui.InputDialog
 import com.google.android.flexbox.FlexboxLayout
 import kotlinx.android.synthetic.main.card_image_view.view.*
 import kotlin.math.min
@@ -20,11 +22,15 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
 
     private var deleteImageClickListener: DeleteImageClickListener? = null
     private var currentBitmap: Bitmap? = null
+    private var dialogContext: Context? = null
 
     init {
         inflate(context, R.layout.card_image_view, this)
         delete_image_btn.setOnClickListener {
             deleteImageClickListener?.onClick()
+        }
+        card_image_item.setOnClickListener {
+            showDeleteImageDialog()
         }
     }
 
@@ -65,6 +71,14 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         } else {
             delete_image_btn.visibility = View.GONE
         }
+    }
+
+    fun setRootView(context: Context) {
+        dialogContext = context
+    }
+
+    private fun showDeleteImageDialog() {
+        DeleteImageDialog(context, rootView as? ViewGroup).showDialog()
     }
 
 }

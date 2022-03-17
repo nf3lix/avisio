@@ -1,16 +1,14 @@
 package com.avisio.dashboard.usecase.crud_card.common.input_flex_box
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.allViews
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.persistence.card.CardImageStorage
 import com.avisio.dashboard.common.ui.card_image.CardImage
-import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.MarkdownEditor
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
@@ -50,6 +48,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     }
 
     abstract fun initToolbar()
+
+    fun setDialogContext(context: Context) {
+        cardImage.setRootView(context)
+    }
 
     fun setError(message: String) {
         setInformation(CardInputInformation(message, CardFlexBoxInformationType.ERROR))
