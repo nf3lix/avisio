@@ -13,21 +13,38 @@ import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardCo
 class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, ANSWER_INPUT) {
 
     private val answerEditText: EditText = EditText(context)
+    private lateinit var toolbar: CardAnswerInputToolbar
+    private var selectImageObserver: SelectImageObserver? = null
 
     init {
         setTitle(context.getString(R.string.create_card_answer_text_field_hint))
+        initToolbar()
     }
 
     override fun initToolbar() {
-
+        toolbar = CardAnswerInputToolbar(context)
+        toolbarContainer.addView(toolbar as View)
+        toolbar.selectImageButton.setOnClickListener {
+            selectImageObserver?.onStartSelect()
+        }
     }
 
     fun getAnswer(): CardAnswer {
-        return CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
+        val cardAnswer = CardAnswer.getFromStringRepresentation(answerEditText.text.toString())
+        if(hasImage()) {
+            return CardAnswer(cardAnswer.answerList, getImagePath())
+        }
+        return cardAnswer
     }
 
     fun setAnswer(answer: CardAnswer) {
+        flexbox.removeAllViews()
+        resetImage()
+        setEditTextLayout()
         answerEditText.setText(answer.getStringRepresentation())
+        if(answer.hasImage()) {
+            setImagePath(answer.imagePath!!)
+        }
     }
 
     fun addInitialEditText() {
@@ -47,6 +64,10 @@ class AnswerFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFle
         answerEditText.addTextChangedListener(CardInputKeyTextWatcher(cardChangeListener, this))
         initMarkdown()
         flexbox.addView(answerEditText as View, 0)
+    }
+
+    fun setSelectImageObserver(selectImageObserver: SelectImageObserver) {
+        this.selectImageObserver = selectImageObserver
     }
 
 }

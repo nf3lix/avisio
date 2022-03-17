@@ -9,10 +9,12 @@ import com.avisio.dashboard.R
 class CardQuestionInputToolbar(context: Context, attributeSet: AttributeSet? = null) : LinearLayout(context, attributeSet) {
 
     val clozeTextButton: Button
+    val selectImageButton: Button
 
     init {
         inflate(context, R.layout.card_question_input_toolbar, this)
         clozeTextButton = findViewById(R.id.button_add_cloze)
+        selectImageButton = findViewById(R.id.button_select_image)
     }
 
 }

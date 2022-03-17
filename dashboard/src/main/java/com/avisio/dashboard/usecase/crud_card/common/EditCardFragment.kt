@@ -2,27 +2,35 @@ package com.avisio.dashboard.usecase.crud_card.common
 
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
+import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
-import com.avisio.dashboard.common.data.model.card.CardType.*
+import com.avisio.dashboard.common.data.model.card.CardType.CLOZE_TEXT
+import com.avisio.dashboard.common.data.model.card.CardType.STANDARD
 import com.avisio.dashboard.common.data.model.card.parcelable.ParcelableCard
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBox
+import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
-import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.type_change_handler.CardTypeChangeHandler
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardValidator
@@ -42,13 +50,31 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     private lateinit var card: Card
     internal lateinit var workflow: CRUD
     private lateinit var fragmentStrategy: CardFragmentStrategy
-
+    private lateinit var selectQuestionImageObserver: SelectQuestionImageResultObserver
+    private lateinit var selectAnswerImageObserver: SelectAnswerImageResultObserver
+    private lateinit var deleteQuestionImageObserver: DeleteCardImageObserver.DeleteQuestionImage
+    private lateinit var deleteAnswerImageObserver: DeleteCardImageObserver.DeleteAnswerImage
+    private lateinit var requestPermissionQuestionImageLauncher: ActivityResultLauncher<String>
+    private lateinit var requestPermissionAnswerImageLauncher: ActivityResultLauncher<String>
     private lateinit var cardRepository: CardRepository
+    private var fragmentInitialized = false
+    private var lastImageSelection = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         cardRepository = CardRepository(requireActivity().application)
+        requestPermissionQuestionImageLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if(granted) {
+                selectQuestionImageObserver.startSelectImageActivity()
+            }
+        }
+        requestPermissionAnswerImageLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted: Boolean ->
+            if(granted) {
+                selectAnswerImageObserver.startSelectImageActivity()
+            }
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -61,19 +87,34 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     override fun onStart() {
         super.onStart()
+        selectQuestionImageObserver = SelectQuestionImageResultObserver(this, requireActivity().activityResultRegistry)
+        selectAnswerImageObserver = SelectAnswerImageResultObserver(this, requireActivity().activityResultRegistry)
+        lifecycle.addObserver(selectQuestionImageObserver)
+        lifecycle.addObserver(selectAnswerImageObserver)
         setupFab()
         questionInput = requireView().findViewById(R.id.question_flexbox)
         answerInput = requireView().findViewById(R.id.answer_flex_box)
         questionInput.setCardTypeChangeListener(this)
+        questionInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionQuestionImageLauncher, selectQuestionImageObserver))
+        answerInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionAnswerImageLauncher, selectAnswerImageObserver))
         answerInput.setCardTypeChangeListener(this)
-        answerInput.addInitialEditText()
+        if(!fragmentInitialized) {
+            answerInput.addInitialEditText()
+        }
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
-            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.values())
+            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.displayNames(requireContext()))
         fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         setupAppBar()
-        fragmentStrategy.fillCardInformation()
+        if(!fragmentInitialized) {
+            fragmentStrategy.fillCardInformation()
+        }
+        deleteQuestionImageObserver = DeleteCardImageObserver.DeleteQuestionImage(questionInput)
+        deleteAnswerImageObserver = DeleteCardImageObserver.DeleteAnswerImage(answerInput)
+        questionInput.setDeleteImageClickListener(deleteQuestionImageObserver)
+        answerInput.setDeleteImageClickListener(deleteAnswerImageObserver)
+        fragmentInitialized = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -114,9 +155,21 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     private fun initTypeSpinner() {
         typeSpinner = requireView().findViewById(R.id.card_type_spinner)
+        val fragment = this
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-                onCardTypeSet(getSelectedCardType())
+                val cardQuestion = questionInput.getCardQuestion().tokenList
+                val cardAnswer = answerInput.getAnswer()
+                if(System.currentTimeMillis() - lastImageSelection > 500) {
+                    val selectedType = getSelectedCardType()
+                    if(selectedType != STANDARD && (cardQuestion[cardQuestion.size - 1].tokenType == QuestionTokenType.IMAGE || cardAnswer.hasImage())) {
+                        DeleteImagesConfirmDialog.showDialog(fragment)
+                    } else {
+                        onCardTypeSet(selectedType)
+                    }
+                } else {
+                    onCardTypeSet(STANDARD)
+                }
             }
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
         }
@@ -161,7 +214,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
     }
 
     fun getSelectedCardType(): CardType {
-        return CardType.valueOf(typeSpinner.selectedItem.toString())
+        return CardType.valueWithDisplayName(typeSpinner.selectedItem.toString(), requireContext())!!
     }
 
     private fun setupAppBar() {
@@ -182,6 +235,37 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
                 }
             }
         }
+    }
+
+    fun questionImageSelected(imagePath: String) {
+        val newTokens = questionInput.getCardQuestion(trimmed = false).tokenList
+        if(newTokens[newTokens.size - 1].tokenType == QuestionTokenType.IMAGE) {
+            newTokens.removeAt(newTokens.size - 1)
+            newTokens.add(QuestionToken(imagePath, QuestionTokenType.IMAGE))
+            val newCard = CardQuestion(newTokens)
+            questionInput.setCardQuestion(newCard)
+        } else {
+            newTokens.add(QuestionToken(
+                content = imagePath,
+                tokenType = QuestionTokenType.IMAGE
+            ))
+            questionInput.setCardQuestion(CardQuestion(newTokens))
+        }
+        onCardTypeSet(STANDARD)
+        lastImageSelection = System.currentTimeMillis()
+    }
+
+    fun answerImageSelected(imagePath: String) {
+        val prevAnswer = answerInput.getAnswer()
+        val newAnswer = CardAnswer(prevAnswer.answerList, imagePath)
+        answerInput.setAnswer(newAnswer)
+        onCardTypeSet(STANDARD)
+        lastImageSelection = System.currentTimeMillis()
+    }
+
+    fun removeAllImages() {
+        deleteQuestionImageObserver.onClick()
+        deleteAnswerImageObserver.onClick()
     }
 
 }
