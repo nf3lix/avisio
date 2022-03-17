@@ -14,6 +14,7 @@
     <string name="action_rename_folder">Ordner umbenennen</string>
     <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
+    <string name="create_folder_duplicate_name">Dieser Ordnername wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
     <string name="no_folder_name_specified">Bitte trage einen Namen für den Ordner ein</string>
@@ -41,7 +42,7 @@
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
     <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
-    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
     <string name="fab_cancel_workflow">Abbrechen</string>

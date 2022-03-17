@@ -44,4 +44,7 @@ interface FolderDao {
     @Query("UPDATE folder SET folderName = :folderName WHERE id = :folderId")
     fun updateFolderName(folderId: Long, folderName: String)
 
+    @Query("SELECT folderName from folder")
+    fun getFolderNameList(): List<String>
+
 }
