@@ -1,12 +1,16 @@
-package com.avisio.dashboard.usecase.edit_Box
+package com.avisio.dashboard.usecase.box_list
 
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.avisio.dashboard.R
@@ -19,7 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class UniqueBoxNameTest {
+class UniqueFolderNameTest {
 
     private var intent: Intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
     private lateinit var boxDao: AvisioBoxDao
@@ -48,34 +52,34 @@ class UniqueBoxNameTest {
     }
 
     @Test
-    fun createBoxTest() {
+    fun createFolderTest() {
         onView(withId(R.id.fab_expand)).perform(click())
-        onView(withId(R.id.fab_new_box)).perform(click())
-        onView(withId(R.id.box_name_edit_text)).perform(typeText("TEST"))
-        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("TEST"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
         onView(withId(R.id.fab_expand)).perform(click())
-        onView(withId(R.id.fab_new_box)).perform(click())
-        onView(withId(R.id.box_name_edit_text)).perform(typeText("TEST"))
-        onView(withId(R.id.fab_edit_box)).perform(click())
-        onView(withText(R.string.create_box_duplicate_name_dialog_message)).check(matches(isDisplayed()))
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("TEST"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText(R.string.create_folder_duplicate_name)).check(matches(isDisplayed()))
     }
 
     @Test
     fun editBoxTest() {
         onView(withId(R.id.fab_expand)).perform(click())
-        onView(withId(R.id.fab_new_box)).perform(click())
-        onView(withId(R.id.box_name_edit_text)).perform(typeText("TEST"))
-        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("TEST"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
         onView(withId(R.id.fab_expand)).perform(click())
-        onView(withId(R.id.fab_new_box)).perform(click())
-        onView(withId(R.id.box_name_edit_text)).perform(typeText("TEST_2"))
-        onView(withId(R.id.fab_edit_box)).perform(click())
+        onView(withId(R.id.fab_new_folder)).perform(click())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("TEST_2"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
         onView(withText("TEST_2")).perform(longClick())
         onView(withText(R.string.edit_selected_dashboard_items)).perform(click())
-        onView(withId(R.id.box_name_edit_text)).perform(clearText())
-        onView(withId(R.id.box_name_edit_text)).perform(typeText("TEST"))
-        onView(withId(R.id.fab_edit_box)).perform(click())
-        onView(withText(R.string.create_box_duplicate_name_dialog_message)).check(matches(isDisplayed()))
+        onView(withId(R.id.folder_name_edit_text)).perform(clearText())
+        onView(withId(R.id.folder_name_edit_text)).perform(typeText("TEST"))
+        onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(withText(R.string.create_folder_duplicate_name)).check(matches(isDisplayed()))
     }
 
 }
