@@ -58,7 +58,6 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
         correctAnswerInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerInput.setCardTypeChangeListener(this)
-        correctAnswerInput.setDeleteImageButtonVisible(false)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
         progressBar = requireView().findViewById(R.id.load_card_progressBar)
         resultChipGroup = requireView().findViewById(R.id.chipGroup)

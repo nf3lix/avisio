@@ -25,9 +25,6 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
 
     init {
         inflate(context, R.layout.card_image_view, this)
-        delete_image_btn.setOnClickListener {
-            deleteImageClickListener?.onClick()
-        }
         card_image_item.setOnClickListener {
             showDeleteImageDialog()
         }
@@ -57,14 +54,6 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         this.maxWidth = maxWidth
         if(currentBitmap != null) {
             setImage(currentBitmap!!)
-        }
-    }
-
-    fun setDeleteImageButtonVisible(visible: Boolean) {
-        if(visible) {
-            delete_image_btn.visibility = View.VISIBLE
-        } else {
-            delete_image_btn.visibility = View.GONE
         }
     }
 
