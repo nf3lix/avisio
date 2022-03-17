@@ -49,10 +49,6 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
 
     abstract fun initToolbar()
 
-    fun setDialogContext(context: Context) {
-        cardImage.setRootView(context)
-    }
-
     fun setError(message: String) {
         setInformation(CardInputInformation(message, CardFlexBoxInformationType.ERROR))
     }

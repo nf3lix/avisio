@@ -22,7 +22,6 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
 
     private var deleteImageClickListener: DeleteImageClickListener? = null
     private var currentBitmap: Bitmap? = null
-    private var dialogContext: Context? = null
 
     init {
         inflate(context, R.layout.card_image_view, this)
@@ -53,10 +52,6 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         deleteImageClickListener = listener
     }
 
-    interface DeleteImageClickListener {
-        fun onClick()
-    }
-
     fun setMaxSize(maxHeight: Double, maxWidth: Double) {
         this.maxHeight = maxHeight
         this.maxWidth = maxWidth
@@ -73,12 +68,12 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
         }
     }
 
-    fun setRootView(context: Context) {
-        dialogContext = context
+    private fun showDeleteImageDialog() {
+        DeleteImageDialog(context, deleteImageClickListener, rootView as? ViewGroup).showDialog()
     }
 
-    private fun showDeleteImageDialog() {
-        DeleteImageDialog(context, rootView as? ViewGroup).showDialog()
+    interface DeleteImageClickListener {
+        fun onClick()
     }
 
 }

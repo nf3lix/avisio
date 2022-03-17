@@ -17,6 +17,7 @@
 
         <ImageView
             android:backgroundTint="@color/error"
+            android:id="@+id/dialog_delete_image_btn"
             android:background="@drawable/ic_delete_item"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
