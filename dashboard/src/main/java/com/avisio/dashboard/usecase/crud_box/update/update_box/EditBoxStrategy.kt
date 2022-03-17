@@ -14,7 +14,7 @@ class EditBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrate
 
     override fun fillBoxInformation() {
         fragment.nameInput.setText(fragment.box.name)
-        fragment.updateBoxIcon(fragment.box.icon.iconId)
+//        fragment.updateBoxIcon(fragment.box.icon.iconId)
     }
 
     override fun saveBox() {
@@ -34,7 +34,7 @@ class EditBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrate
         return AvisioBox(
             id = fragment.box.id,
             name = updatedName,
-            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int)
+//            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int)
         )
     }
 
