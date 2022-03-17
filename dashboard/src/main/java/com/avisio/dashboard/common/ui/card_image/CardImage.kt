@@ -69,7 +69,7 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
     }
 
     private fun showDeleteImageDialog() {
-        DeleteImageDialog(context, deleteImageClickListener, rootView as? ViewGroup).showDialog()
+        DeleteImageDialog(context, currentBitmap, deleteImageClickListener, rootView as? ViewGroup).showDialog()
     }
 
     interface DeleteImageClickListener {
