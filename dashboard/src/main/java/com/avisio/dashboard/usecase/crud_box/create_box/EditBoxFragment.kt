@@ -38,7 +38,6 @@ class EditBoxFragment : Fragment() {
     lateinit var boxFragmentStrategy: BoxFragmentStrategy
     internal lateinit var boxNameTextInputLayout: TextInputLayout
     internal lateinit var nameInput: AppCompatEditText
-//    internal lateinit var iconImageView: ImageView
     internal lateinit var boxRepository: AvisioBoxRepository
     internal lateinit var boxNameList: List<String>
 
@@ -75,33 +74,16 @@ class EditBoxFragment : Fragment() {
 
     private fun setupViews() {
         nameInput = requireView().findViewById(R.id.box_name_edit_text)!!
-//        iconImageView = requireView().findViewById(R.id.box_icon_imageview)!!
         boxNameTextInputLayout = requireView().findViewById(R.id.box_name_input_layout)
         nameInput.addTextChangedListener(ResetInputErrorTextWatcher(boxNameTextInputLayout))
         setupFab()
-//        setupSelectIconButton()
     }
 
-//    private fun setupSelectIconButton() {
-//        val onClickListener = View.OnClickListener { showSelectIconPopup() }
-//        requireView().findViewById<Button>(R.id.select_icon_button)?.setOnClickListener(onClickListener)
-//        iconImageView.setOnClickListener(onClickListener)
-//    }
-//
     private fun setupFab() {
         view?.findViewById<FloatingActionButton>(R.id.fab_edit_box)?.setOnClickListener {
             boxFragmentStrategy.handleInput()
         }
     }
-//
-//    private fun showSelectIconPopup() {
-//        BoxIconSelectionPopup.showPopup(this, nameInput)
-//    }
-//
-//    fun updateBoxIcon(boxIconId: Int) {
-//        iconImageView.setImageResource(boxIconId)
-//        iconImageView.tag = boxIconId
-//    }
 
     private fun setTitle() {
         requireView().findViewById<Toolbar>(R.id.box_activity_app_bar).title = requireContext().getString(boxFragmentStrategy.titleId)

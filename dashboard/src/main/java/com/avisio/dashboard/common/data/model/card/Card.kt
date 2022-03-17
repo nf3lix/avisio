@@ -10,15 +10,7 @@ import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Entity(
-    tableName = "card",
-    foreignKeys = [ForeignKey(
-        entity = AvisioBox::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("boxId"),
-        onDelete = CASCADE
-    )]
-)
+@Entity(tableName = "card")
 data class Card(
 
     @PrimaryKey(autoGenerate = true)
@@ -26,7 +18,7 @@ data class Card(
     val id: Long = 0,
 
     @ColumnInfo(name = "boxId")
-    val boxId: Long? = null,
+    val boxId: Long = 0,
 
     @ColumnInfo(name = "create_date")
     val createDate: Date = Date(System.currentTimeMillis()),

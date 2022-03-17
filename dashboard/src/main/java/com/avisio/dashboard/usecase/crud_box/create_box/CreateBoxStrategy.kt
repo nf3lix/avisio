@@ -10,7 +10,6 @@ import java.util.*
 class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStrategy(fragment, R.string.create_box_app_bar_title) {
 
     override fun fillBoxInformation() {
-//        fragment.updateBoxIcon(BoxIcon.DEFAULT.iconId)
     }
 
     override fun saveBox() {
@@ -30,7 +29,6 @@ class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStra
         return AvisioBox(
             name = fragment.nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
-//            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int),
         )
     }
 
@@ -38,7 +36,6 @@ class CreateBoxStrategy(private val fragment: EditBoxFragment) : BoxFragmentStra
         return AvisioBox(
             name = fragment.nameInput.text.toString(),
             createDate = Date(System.currentTimeMillis()),
-//            icon = BoxIcon.getBoxIcon(fragment.iconImageView.tag as Int),
             parentFolder = fragment.currentFolder.id
         )
     }

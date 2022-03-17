@@ -128,6 +128,7 @@ class DashboardFragmentFolderTest {
     @Test
     fun createBoxInNestedFolder() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
         onView(withId(R.id.fab_expand)).perform(click())
         onView(withId(R.id.fab_new_box)).perform(click())
