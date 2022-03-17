@@ -41,7 +41,7 @@
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
     <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
-    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
     <string name="fab_cancel_workflow">Abbrechen</string>
