@@ -142,6 +142,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
         initMarkdown()
     }
 
+    fun setDeleteButtonVisible(visible: Boolean) {
+        cardImage.setDeleteButtonVisible(visible)
+    }
+
     internal fun initMarkdown() {
         if(markdownDisabled) {
             return

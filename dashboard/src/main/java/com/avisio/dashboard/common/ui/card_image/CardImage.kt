@@ -24,6 +24,7 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
 
     private var deleteImageClickListener: DeleteImageClickListener? = null
     private var currentBitmap: Bitmap? = null
+    var showDeleteButton = false
 
     init {
         inflate(context, R.layout.card_image_view, this)
@@ -61,7 +62,11 @@ class CardImage(context: Context, attributeSet: AttributeSet? = null) : Constrai
     }
 
     private fun showDeleteImageDialog() {
-        DeleteImageDialog(context, currentBitmap, deleteImageClickListener, rootView as? ViewGroup).showDialog()
+        DeleteImageDialog(this, currentBitmap, deleteImageClickListener, rootView as? ViewGroup).showDialog()
+    }
+
+    fun setDeleteButtonVisible(visible: Boolean) {
+        showDeleteButton = visible
     }
 
     interface DeleteImageClickListener {

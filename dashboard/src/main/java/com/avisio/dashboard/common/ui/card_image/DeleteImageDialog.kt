@@ -15,7 +15,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class DeleteImageDialog(
-    context: Context,
+    private val cardImage: CardImage,
     private val bitmap: Bitmap?,
     private val deleteImageClickListener: CardImage.DeleteImageClickListener?,
     view: ViewGroup?
@@ -26,21 +26,24 @@ class DeleteImageDialog(
         private const val MAX_IMAGE_WIDTH = 800.0
     }
 
-    private val dialogBuilder = AlertDialog.Builder(context).create()
-    private val viewInflated: View = LayoutInflater.from(context).inflate(R.layout.dialog_delete_card_image, view, false)
+    private val dialogBuilder = AlertDialog.Builder(cardImage.context).create()
+    private val viewInflated: View = LayoutInflater.from(cardImage.context).inflate(R.layout.dialog_delete_card_image, view, false)
 
     fun showDialog() {
         dialogBuilder
             .setView(viewInflated)
         dialogBuilder.show()
         setImage()
+        setDeleteImageButton()
         setDeleteImageClickListener()
     }
 
     private fun setDeleteImageClickListener() {
-        viewInflated.findViewById<ImageView>(R.id.dialog_delete_image_btn).setOnClickListener {
-            deleteImageClickListener?.onClick()
-            dialogBuilder.dismiss()
+        if(cardImage.showDeleteButton) {
+            viewInflated.findViewById<ImageView>(R.id.dialog_delete_image_btn).setOnClickListener {
+                deleteImageClickListener?.onClick()
+                dialogBuilder.dismiss()
+            }
         }
     }
 
@@ -54,6 +57,12 @@ class DeleteImageDialog(
         params.gravity = Gravity.CENTER_HORIZONTAL
         viewInflated.findViewById<ImageView>(R.id.card_image_item).layoutParams = params
         viewInflated.findViewById<ImageView>(R.id.card_image_item).setImageBitmap(roundedBitmap)
+    }
+
+    private fun setDeleteImageButton() {
+        if(cardImage.showDeleteButton) {
+            viewInflated.findViewById<ImageView>(R.id.dialog_delete_image_btn).visibility = View.VISIBLE
+        }
     }
 
 }

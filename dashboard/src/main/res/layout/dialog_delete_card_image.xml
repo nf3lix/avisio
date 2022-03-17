@@ -6,6 +6,7 @@
 
     <LinearLayout
         android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -21,6 +22,7 @@
             android:id="@+id/dialog_delete_image_btn"
             android:background="@drawable/ic_delete_item"
             android:layout_gravity="center_horizontal"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:layout_width="40dp"
             android:layout_height="40dp" />
