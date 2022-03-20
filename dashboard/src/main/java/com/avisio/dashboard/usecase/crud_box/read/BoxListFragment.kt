@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -240,16 +241,39 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         searchItem.actionView = searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(query)
+                filterItemList(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(newText)
+                filterItemList(newText)
                 return false
             }
         })
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun filterItemList(query: String?) {
+        val filter = dashboardItemAdapter.getFilter()
+        filter.setOnSearchResultListener(object : DashboardItemFilter.OnSearchResultListener {
+            override fun onSearchResult(length: Int) {
+                toggleNoMatchingItemHint(length)
+            }
+
+        })
+        filter.filter(query)
+    }
+
+    private fun toggleNoMatchingItemHint(filteredListSize: Int) {
+        requireActivity().runOnUiThread {
+            if(filteredListSize == 0) {
+                no_matching_item_label.visibility = View.VISIBLE
+                box_list_recycler_view.visibility = View.GONE
+            } else {
+                no_matching_item_label.visibility = View.GONE
+                box_list_recycler_view.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

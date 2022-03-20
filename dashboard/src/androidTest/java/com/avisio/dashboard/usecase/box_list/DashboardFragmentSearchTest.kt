@@ -258,6 +258,30 @@ class DashboardFragmentSearchTest {
         onView(withText("TEST_2")).check(isSearchResultHighlighted(0, 3))
     }
 
+    @Test
+    fun displayNoMatchingItemHint() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "BBB"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("C")
+        onView(withText(R.string.box_list_no_matching_item_hint)).check(matches(isDisplayed()))
+    }
+
+    @Test(expected = NoMatchingViewException::class)
+    fun removeNotMatchingItemHint() {
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "BBB"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.dashboard_list_search)).perform(click())
+        typeInSearchView("C")
+        onView(withText(R.string.box_list_no_matching_item_hint)).check(matches(isDisplayed()))
+        onView(withResourceName("search_src_text")).perform(clearText())
+        onView(isRoot()).perform(waitFor(200))
+        onView(withText("AAA")).check(matches(isDisplayed()))
+        onView(withText(R.string.box_list_no_matching_item_hint)).check(matches(isDisplayed()))
+    }
+
     private fun typeInSearchView(text: String) {
         onView(withResourceName("search_src_text"))
             .perform(typeText(text))
