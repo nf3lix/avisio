@@ -7,11 +7,13 @@ import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.search_results.
 
 class DashboardItemFilter(
     private val adapter: DashboardItemListAdapter,
-    private val initialList: List<DashboardItem>,
-    private val allItemsList: List<DashboardItem>) : Filter() {
+    private var initialList: List<DashboardItem>,
+    private var allItemsList: List<DashboardItem>) : Filter() {
 
     private var filteredList: List<DashboardItem> = listOf()
     private var constraints = ""
+    private var filteredListLength = 0
+    private var searchResultListener: OnSearchResultListener? = null
 
     override fun performFiltering(sequence: CharSequence?): FilterResults {
         constraints = sequence.toString()
@@ -22,12 +24,24 @@ class DashboardItemFilter(
             for(items in allItemsList) {
                 items.searchQueryResults = null
             }
+            // Log.d("filtered", "filtered")
+            // Log.d("filteredList", filteredList.size.toString())
+            filteredListLength = filteredList.size
+            searchResultListener?.onSearchResult(filteredList.size)
             return filterResult
         }
         val filteredList = getFilteredList()
         this.filteredList = filteredList
         filterResult.values = filteredList
+        // Log.d("filtered", "filtered")
+        // Log.d("filteredList", filteredList.size.toString())
+        filteredListLength = filteredList.size
+        searchResultListener?.onSearchResult(filteredList.size)
         return filterResult
+    }
+
+    fun filteredListLength(): Int {
+        return filteredListLength
     }
 
     private fun getFilteredList(): List<DashboardItem> {
@@ -104,6 +118,19 @@ class DashboardItemFilter(
         filteredList = results?.values as List<DashboardItem>
         adapter.submitList(filteredList)
         adapter.notifyItemRangeChanged(0, filteredList.count())
+    }
+
+    fun updateItemLists(initialList: List<DashboardItem>, allItems: List<DashboardItem>) {
+        this.initialList = initialList
+        this.allItemsList = allItems
+    }
+
+    fun setOnSearchResultListener(listener: OnSearchResultListener) {
+        this.searchResultListener = listener
+    }
+
+    interface OnSearchResultListener {
+        fun onSearchResult(length: Int)
     }
 
 }
