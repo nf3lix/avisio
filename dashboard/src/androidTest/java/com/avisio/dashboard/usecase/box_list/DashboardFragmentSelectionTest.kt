@@ -332,7 +332,6 @@ class DashboardFragmentSelectionTest {
         onView(withId(R.id.folder_name_edit_text)).perform(typeText("_1"))
         onView(withId(R.id.fab_edit_folder)).perform(click())
         onView(withText("F_1_1")).check(matches(isDisplayed()))
-        onView(withContentDescription("More options")).check(matches(isDisplayed()))
     }
 
     @Test
