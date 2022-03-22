@@ -198,6 +198,7 @@ class LearnBoxFragment : Fragment(), LearnCardView {
             correctAnswerLayoutInput.visibility = View.GONE
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
+            activity?.onBackPressed()
         }
     }
 
