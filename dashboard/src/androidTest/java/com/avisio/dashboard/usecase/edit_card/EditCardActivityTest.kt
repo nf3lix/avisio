@@ -55,7 +55,7 @@ class EditCardActivityTest {
             .perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         Espresso.pressBack()
-        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(isDisplayed()))
+        onView(withText(R.string.create_card_apply_changes)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -66,7 +66,7 @@ class EditCardActivityTest {
             .perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         Espresso.pressBack()
-        onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
+        onView(withText(R.string.create_card_apply_changes_confirm)).perform(click())
         onView(withId(R.id.fab_edit_card)).check(matches(isDisplayed()))
     }
 

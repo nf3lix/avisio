@@ -25,7 +25,7 @@ class EditCardStrategy(
         }
     }
 
-    override fun saveCard() {
+    override fun saveCard(ignoreNextCardCheckBox: Boolean) {
         val updatedQuestion = questionFlexBox.getCardQuestion()
         val updatedAnswer = answerFlexBox.getAnswer()
         val updatedType = fragment.getSelectedCardType()
@@ -50,7 +50,7 @@ class EditCardStrategy(
                 || oldCard.type != newCard.type
     }
 
-    override fun handleValidInput() {
+    override fun handleValidInput(ignoreNextCardCheckBox: Boolean) {
         saveCard()
         Toast.makeText(fragment.requireContext(), R.string.edit_card_successful, Toast.LENGTH_LONG).show()
     }
