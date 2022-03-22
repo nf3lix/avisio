@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dashboard</string>
+    <string name="app_name">Avisio</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="main_activity_label">MainActivity</string>
