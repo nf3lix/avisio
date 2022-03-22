@@ -134,6 +134,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             val filteredList = filterItemsOfCurrentFolder(itemList)
             dashboardItemAdapter.updateAllItemList(itemList)
             dashboardItemAdapter.updateList(filteredList)
+            toggleNoMatchingViewHints(filteredList)
         }
     }
 
@@ -157,7 +158,17 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabCreateFolder.setOnClickListener {
             FolderProcessor(currentFolder, this).startCreateChild()
         }
+    }
 
+    private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
+        Log.d("currentFolder", currentFolder.toString())
+        if(filteredList.isEmpty() && currentFolder == null) {
+            breadCrumb.visibility = View.GONE
+            no_matching_item_label.visibility = View.VISIBLE
+        } else {
+            breadCrumb.visibility = View.VISIBLE
+            no_matching_item_label.visibility = View.GONE
+        }
     }
 
     private fun toggleFabMenu() {

@@ -62,6 +62,7 @@ class DashboardFragmentSearchTest {
     @Test
     fun highlightMatchesInSingleItemInCurrentFolder() {
         folderDao.insertFolder(AvisioFolder(name = "AAA111"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         onView(withText("AAA111")).check(isSearchResultHighlighted(0, 2))
@@ -82,6 +83,7 @@ class DashboardFragmentSearchTest {
     fun highlightMatchesInMultipleItemsInCurrentFolder() {
         folderDao.insertFolder(AvisioFolder(name = "AA11AA"))
         boxDao.insertBox(AvisioBox(name = "BB11BB"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("1")
         onView(withText("AA11AA")).check(isSearchResultHighlighted(2, 3))
@@ -95,6 +97,7 @@ class DashboardFragmentSearchTest {
     fun highlightMatchesInSingleChildItemsIfParentIsNotMatched() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "BBB111CCC", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withText("BBB111CCC")).check(isSearchResultHighlighted(0, 2))
@@ -117,6 +120,7 @@ class DashboardFragmentSearchTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "B2", parentFolder = 1))
         boxDao.insertBox(AvisioBox(name = "B3", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withText("B2, B3")).check(isSearchResultHighlighted(0, 0))
@@ -132,6 +136,7 @@ class DashboardFragmentSearchTest {
     fun highlightMatchesInSingleChildItemsIfParentIsMatched() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "AAA111", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         onView(withText("AAA")).check(isSearchResultHighlighted(0, 2))
@@ -149,6 +154,7 @@ class DashboardFragmentSearchTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "BB"))
         boxDao.insertBox(AvisioBox(name = "BB2", parentFolder = 1))
         boxDao.insertBox(AvisioBox(name = "BB3", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withText("BB2, BB3")).check(isSearchResultHighlighted(0, 1))
@@ -165,6 +171,7 @@ class DashboardFragmentSearchTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "BB"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "BB2", parentFolder = 1))
         folderDao.insertFolder(AvisioFolder(id = 3, name = "BB3", parentFolder = 2))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withText("BB2, BB3")).check(isSearchResultHighlighted(0, 1))
@@ -180,6 +187,7 @@ class DashboardFragmentSearchTest {
     fun resetHighlightingOfItemInCurrentFolder() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "B2"))
         onView(withId(R.id.dashboard_list_search)).perform(click())
+        onView(isRoot()).perform(waitFor(800))
         typeInSearchView("B")
         onView(withText("B2")).check(isSearchResultHighlighted(0, 1))
         onView(withText("B")).perform(clearText())
@@ -206,6 +214,7 @@ class DashboardFragmentSearchTest {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "B2", parentFolder = 1))
         boxDao.insertBox(AvisioBox(name = "B3", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withId(R.id.sub_directory_indicator)).check(matches(isDisplayed()))
@@ -213,9 +222,11 @@ class DashboardFragmentSearchTest {
 
     @Test
     fun hideSubDirectoryResultIndicator() {
+        onView(isRoot()).perform(waitFor(800))
         folderDao.insertFolder(AvisioFolder(id = 1, name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "B2", parentFolder = 1))
         boxDao.insertBox(AvisioBox(name = "B3", parentFolder = 1))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("B")
         onView(withText("B")).perform(clearText())
