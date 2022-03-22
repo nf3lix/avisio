@@ -247,6 +247,7 @@ class DashboardFragmentSelectionTest {
         onView(isRoot()).perform(waitFor(100))
         onView(withId(R.id.btn_delete_all)).perform(click())
         onView(withText(R.string.confirm_dialog_confirm_default)).perform(click())
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).check(matches(isDisplayed()))
     }
 

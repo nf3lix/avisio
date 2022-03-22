@@ -57,11 +57,6 @@ class DashboardFragmentBreadCrumbTest {
     }
 
     @Test
-    fun showRootFolderIconByDefault() {
-        onView(withTagValue(`is`(R.drawable.ic_home))).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun displayCurrentPathInBreadCrumb() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
         folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2", parentFolder = 1))

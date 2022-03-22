@@ -76,6 +76,7 @@ class DashboardFragmentFolderTest {
     @Test
     fun renameFolderOptionVisibleInNestedFolders() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(click())
         onView(withContentDescription("More options")).perform(click())
         onView(withText(R.string.action_rename_folder)).check(matches(isDisplayed()))

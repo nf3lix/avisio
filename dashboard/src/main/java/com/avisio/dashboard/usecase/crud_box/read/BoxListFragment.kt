@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -160,7 +161,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
-        if(filteredList.isEmpty()) {
+        Log.d("currentFolder", currentFolder.toString())
+        if(filteredList.isEmpty() && currentFolder == null) {
             breadCrumb.visibility = View.GONE
             no_matching_item_label.visibility = View.VISIBLE
         } else {
