@@ -3,7 +3,6 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -134,6 +133,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
             val filteredList = filterItemsOfCurrentFolder(itemList)
             dashboardItemAdapter.updateAllItemList(itemList)
             dashboardItemAdapter.updateList(filteredList)
+            toggleNoMatchingViewHints(filteredList)
         }
     }
 
@@ -157,7 +157,16 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabCreateFolder.setOnClickListener {
             FolderProcessor(currentFolder, this).startCreateChild()
         }
+    }
 
+    private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
+        if(filteredList.isEmpty()) {
+            breadCrumb.visibility = View.GONE
+            no_matching_item_label.visibility = View.VISIBLE
+        } else {
+            breadCrumb.visibility = View.VISIBLE
+            no_matching_item_label.visibility = View.GONE
+        }
     }
 
     private fun toggleFabMenu() {
