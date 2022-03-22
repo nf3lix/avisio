@@ -152,4 +152,8 @@
 
     <string name="card_not_learned_yet">Noch nicht gelernt</string>
 
+    <string name="detail_view_creation_date">Erstellungsdatum</string>
+    <string name="detail_view_card_count">Anzahl Karteikarten</string>
+    <string name="detail_view_card_count_not_learned">Noch nicht gelernt</string>
+
 </resources>

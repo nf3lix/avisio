@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".usecase.crud_box.common.BoxDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_activity_appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/Theme.Avisio.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/box_detail_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="339dp"
+        android:layout_height="600dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:gravity="top"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_activity_appbar">
+
+        <TableRow
+            android:id="@+id/detail_view_tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/box_creation_date_detail_view"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/detail_view_creation_date"/>
+
+            <TextView
+                android:id="@+id/box_creation_date_detail_view_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detail_view_tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/box_card_count_detail_view"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/detail_view_card_count"/>
+
+            <TextView
+                android:id="@+id/box_card_count_detail_view_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/detail_view_tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/box_card_open_detail_view"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/detail_view_card_count_not_learned"/>
+
+            <TextView
+                android:id="@+id/box_card_open_detail_view_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
