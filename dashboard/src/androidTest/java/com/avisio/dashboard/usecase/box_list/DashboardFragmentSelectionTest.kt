@@ -219,6 +219,7 @@ class DashboardFragmentSelectionTest {
     @Test
     fun showSelectedItemsActionButtonsOnSelectItem() {
         folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        folderDao.insertFolder(AvisioFolder(id = 2, name = "F_2"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(100))

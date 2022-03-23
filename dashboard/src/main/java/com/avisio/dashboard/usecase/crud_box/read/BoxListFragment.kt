@@ -54,6 +54,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private var currentFolder: DashboardItem? = null
     internal var allItems = listOf<DashboardItem>()
+    private var itemsOfCurrentFolder = listOf<DashboardItem>()
 
     private var fabMenuShown = false
     private lateinit var menu: Menu
@@ -132,6 +133,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardItemViewModel.getDashboardItemList().observe(this) { itemList ->
             allItems = itemList
             val filteredList = filterItemsOfCurrentFolder(itemList)
+            itemsOfCurrentFolder = filteredList
             dashboardItemAdapter.updateAllItemList(itemList)
             dashboardItemAdapter.updateList(filteredList)
             toggleNoMatchingViewHints(filteredList)
@@ -229,6 +231,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
             } else {
+                if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+                    moveSelectedItemsButton.visibility = View.VISIBLE
+                } else {
+                    moveSelectedItemsButton.visibility = View.GONE
+                }
                 if(moveItemsWorkflow.isActive()) {
                     updateItemList()
                 }
@@ -365,7 +372,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun showSelectedItemsActionButtons() {
         toggleEditSelectedItemButtonVisibility()
         deleteSelectedItemsButton.visibility = View.VISIBLE
-        moveSelectedItemsButton.visibility = View.VISIBLE
+        if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+            moveSelectedItemsButton.visibility = View.VISIBLE
+        } else {
+            moveSelectedItemsButton.visibility = View.GONE
+        }
     }
 
     override fun hideSelectedItemsActionButtons() {
@@ -489,4 +500,42 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun currentFolder(): DashboardItem? {
         return currentFolder
     }
+
+    private fun dashboardHasFolder(): Boolean {
+        return amountOfFoldersInDashboard() == 0
+    }
+
+    private fun singleFolderIsAmongSelectedItems(): Boolean {
+        Log.d("check", "check")
+        var count = 0
+        for(item in itemsOfCurrentFolder) {
+            if(item.type == DashboardItemType.FOLDER) {
+                count++
+            }
+        }
+        for(item in itemsOfCurrentFolder) {
+            if(item.type == DashboardItemType.FOLDER) {
+                if(item !in selectedItems()) {
+                    Log.d("false", "false")
+                    return false
+                }
+            }
+            // if(item.type == DashboardItemType.FOLDER) {
+            //     return item in selectedItems()
+            // }
+        }
+        Log.d("true", "true")
+        return true
+    }
+
+    private fun amountOfFoldersInDashboard(): Int {
+        var count = 0
+        for(item in allItems) {
+            if(item.type == DashboardItemType.FOLDER) {
+                count++
+            }
+        }
+        return count
+    }
+
 }
