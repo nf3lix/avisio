@@ -7,9 +7,22 @@
     tools:context=".usecase.training.activity.LearnBoxFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/learn_card_constraint_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:id="@+id/learn_card_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/answer_edit_text2"
+            android:layout_width="319dp"
+            android:layout_height="73dp"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/create_card_answer_text_field_hint"
+            android:inputType="text"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_input_layout" />
 
         <com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
             android:id="@+id/question_input_layout"
@@ -20,25 +33,25 @@
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.03"/>
+            app:layout_constraintVertical_bias="0.03" />
 
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="326dp"
-                android:layout_height="72dp"
-                android:id="@+id/answer_input_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/question_input_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.482"
-                app:layout_constraintVertical_bias="0.3">
+            android:id="@+id/answer_input_layout"
+            android:layout_width="326dp"
+            android:layout_height="72dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/question_input_layout"
+            app:layout_constraintVertical_bias="0.3">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/answer_edit_text"
-                    android:hint="@string/create_card_answer_text_field_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"/>
+                android:id="@+id/answer_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/create_card_answer_text_field_hint"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
@@ -47,24 +60,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/question_input_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintVertical_bias="0.31" />
 
         <TextView
+            android:id="@+id/standard_answer_text_view"
             android:layout_width="326dp"
             android:layout_height="72dp"
-            android:id="@+id/standard_answer_text_view"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/question_input_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
-            app:layout_constraintVertical_bias="0.31"/>
+            app:layout_constraintVertical_bias="0.31" />
 
         <Button
             android:id="@+id/resolve_question_button"
@@ -88,20 +101,19 @@
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/resolve_question_button"
-            app:layout_constraintVertical_bias="0.4"/>
+            app:layout_constraintVertical_bias="0.4" />
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/correct_answer_input_layout"
-            android:id="@+id/chipGroup"
-            android:visibility="gone"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.652" >
-        </com.google.android.material.chip.ChipGroup>
+            app:layout_constraintVertical_bias="0.652"></com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

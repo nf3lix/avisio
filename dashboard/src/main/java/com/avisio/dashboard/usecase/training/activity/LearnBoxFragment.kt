@@ -40,6 +40,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
     lateinit var progressBar: ProgressBar
     lateinit var correctAnswerInput: AnswerLearnFlexBox
     lateinit var answerEditText: EditText
+    lateinit var userAnswerInput: EditText
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
 
@@ -56,6 +57,9 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         questionInputLayout = requireView().findViewById(R.id.question_input_layout)
         answerInputLayout = requireView().findViewById(R.id.answer_input_layout)
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
+
+        userAnswerInput = requireView().findViewById(R.id.answer_edit_text2)
+
         correctAnswerInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerInput.setCardTypeChangeListener(this)
         resolveQuestionButton = requireView().findViewById(R.id.resolve_question_button)
@@ -85,6 +89,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
                 answerInputLayout.visibility = View.VISIBLE
                 resultChipGroup.visibility = View.GONE
                 correctAnswerInput.visibility = View.GONE
+                userAnswerInput.visibility = View.INVISIBLE
                 cardTypeLayoutStrategy.onShowCard()
             }
         } catch (ignore: IllegalStateException) { }
@@ -191,6 +196,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
             Toast.makeText(context, R.string.learn_activity_training_finished, Toast.LENGTH_LONG).show()
             questionInputLayout.visibility = View.GONE
             answerInputLayout.visibility = View.GONE
+            userAnswerInput.visibility = View.GONE
             correctAnswerInput.visibility = View.GONE
             resultChipGroup.visibility = View.GONE
             resolveQuestionButton.visibility = View.GONE
