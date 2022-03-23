@@ -58,6 +58,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showFinishWorkflowFabInMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
@@ -68,6 +69,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showFinishWorkflowButtonMenuItemInMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
@@ -78,6 +80,8 @@ class DashboardFragmentMoveTest {
     @Test(expected = NoMatchingViewException::class)
     fun hideFinishWorkflowButtonsOnExitFabClicked() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_move_all)).perform(click())
@@ -89,6 +93,7 @@ class DashboardFragmentMoveTest {
     @Test(expected = NoMatchingViewException::class)
     fun hideFinishWorkflowButtonsOnExitMenuItemClicked() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
         onView(withId(R.id.btn_move_all)).perform(click())
@@ -100,6 +105,7 @@ class DashboardFragmentMoveTest {
     @Test
     fun showSelectionButtonsOnExitMoveWorkflow() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(isRoot()).perform(waitFor(200))
@@ -114,6 +120,7 @@ class DashboardFragmentMoveTest {
     fun doNotShowEditItemButtonOnExitMoveWorkflowIfMultipleItemsAreSelected() {
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
         folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_3"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
         onView(withText("FOLDER_2")).perform(click())
@@ -190,24 +197,16 @@ class DashboardFragmentMoveTest {
     }
 
     @Test
-    fun doNotShowConfirmDialogIfBreadcrumbItemIsNoParentFolder() {
-        folderDao.insertFolder(AvisioFolder(id = 1, name = "FOLDER_1"))
-        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2", parentFolder = 1))
+    fun doNotShowMoveButtonIfAllFoldersOfRootFolderAreSelected() {
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_1"))
+        folderDao.insertFolder(AvisioFolder(name = "FOLDER_2"))
         onView(isRoot()).perform(waitFor(800))
         onView(withText("FOLDER_1")).perform(longClick())
+        onView(withText("FOLDER_2")).perform(click())
         onView(isRoot()).perform(waitFor(200))
-        onView(withId(R.id.btn_move_all)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
-        onView(withText("FOLDER_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_1")).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_2")).perform(longClick())
-        onView(withId(R.id.btn_move_all)).perform(click())
-        onView(isRoot()).perform(waitFor(200))
-        onView(withText("FOLDER_1")).perform(click())
-        onView(withId(R.id.fab_cancel_workflow)).perform(click())
+        onView(withId(R.id.btn_move_all)).check(matches(isGone()))
+        onView(withText("FOLDER_2")).perform(click())
+        onView(withId(R.id.btn_move_all)).check(matches(isDisplayed()))
     }
 
     @Test
