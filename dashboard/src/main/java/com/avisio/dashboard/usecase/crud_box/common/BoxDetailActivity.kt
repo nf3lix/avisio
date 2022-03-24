@@ -9,22 +9,27 @@ import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import kotlinx.android.synthetic.main.activity_box_detail.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
 class BoxDetailActivity : AppCompatActivity() {
 
     private lateinit var box: AvisioBox
-    private val cardRepository = CardRepository(application)
+    private lateinit var cardRepository: CardRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        cardRepository = CardRepository(application)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_box_detail)
         box = intent.getBoxObject()!!
         actionBarSetup()
 
         box_creation_date_detail_view_content.text = box.createDate.toString() //TODO Format ändern
-        box_card_count_detail_view_content.text = "12" //getCardCount2().toString()
+        GlobalScope.launch {
+            setBoxCardCount()
+        }
         box_card_open_detail_view_content.text = "TODO"
     }
 
@@ -36,7 +41,8 @@ class BoxDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCardCount2(): Int = runBlocking {
-        return@runBlocking cardRepository.getCardsByBox(box.id).count()
+    private suspend fun setBoxCardCount() {
+        box_card_count_detail_view_content.text = cardRepository.getCardsByBox(box.id).count().toString()
     }
+
 }
