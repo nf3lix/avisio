@@ -31,6 +31,10 @@ class CardRepository(application: Application) {
         return dao.getAllWithSMDetails(boxId)
     }
 
+    fun getCardsByBoxIdWithSMDetails(boxId: Long): List<CardViewHolderItem> {
+        return dao.getAllWithSMDetailsAsList(boxId)
+    }
+
     fun insertCard(card: Card) {
         GlobalScope.launch {
             dao.insert(card)

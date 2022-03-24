@@ -36,4 +36,7 @@ interface CardDao {
     @Query("SELECT * FROM card WHERE boxId = :boxId")
     fun getAllWithSMDetails(boxId: Long): LiveData<List<CardViewHolderItem>>
 
+    @Query("SELECT * FROM card WHERE boxId = :boxId")
+    fun getAllWithSMDetailsAsList(boxId: Long): List<CardViewHolderItem>
+
 }

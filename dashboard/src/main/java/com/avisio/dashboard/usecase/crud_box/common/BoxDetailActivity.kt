@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.common
 import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
@@ -29,6 +30,7 @@ class BoxDetailActivity : AppCompatActivity() {
         box_creation_date_detail_view_content.text = box.createDate.toString() //TODO Format ändern
         GlobalScope.launch {
             setBoxCardCount()
+            setOpenCardsCount()
         }
         box_card_open_detail_view_content.text = "TODO"
     }
@@ -43,6 +45,21 @@ class BoxDetailActivity : AppCompatActivity() {
 
     private suspend fun setBoxCardCount() {
         box_card_count_detail_view_content.text = cardRepository.getCardsByBox(box.id).count().toString()
+    }
+
+    private fun setOpenCardsCount() {
+        val allItems = cardRepository.getCardsByBoxIdWithSMDetails(box.id)
+        var count = 0
+        for(item in allItems) {
+            if(item.smCardItem == null) {
+                count++
+                continue
+            }
+            if(item.smCardItem.dueDate.time < System.currentTimeMillis()) {
+                count++
+            }
+        }
+        box_card_open_detail_view_content.text = count.toString()
     }
 
 }
