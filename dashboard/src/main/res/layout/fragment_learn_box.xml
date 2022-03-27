@@ -17,7 +17,7 @@
             android:layout_height="73dp"
             android:layout_marginBottom="16dp"
             android:hint="@string/create_card_answer_text_field_hint"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

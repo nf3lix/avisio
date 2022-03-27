@@ -1,7 +1,6 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ import com.avisio.dashboard.usecase.training.activity.question.AnswerLearnFlexBo
 import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
-import io.noties.markwon.Markwon
 
 class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
 
@@ -100,7 +98,9 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
+        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
         cardTypeLayoutStrategy.onCorrectAnswer()
+
     }
 
     override fun onIncorrectAnswer() {
@@ -108,6 +108,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
+        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error, 0);
         cardTypeLayoutStrategy.onIncorrectAnswer()
     }
 
