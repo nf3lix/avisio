@@ -4,15 +4,24 @@ import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.DEBUG
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.common.persistence.card.CardRepository
+import com.google.gson.internal.bind.util.ISO8601Utils.format
 import kotlinx.android.synthetic.main.activity_box_detail.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.lang.String.format
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class BoxDetailActivity : AppCompatActivity() {
@@ -27,12 +36,19 @@ class BoxDetailActivity : AppCompatActivity() {
         box = intent.getBoxObject()!!
         actionBarSetup()
 
-        box_creation_date_detail_view_content.text = box.createDate.toString() //TODO Format ändern
+        box_creation_date_detail_view_content.text =  dateToString()
+
         GlobalScope.launch {
             setBoxCardCount()
             setOpenCardsCount()
         }
-        box_card_open_detail_view_content.text = "TODO"
+    }
+
+    private fun dateToString(): String {
+        val dateFormatter = SimpleDateFormat("dd.MM.yyyy")
+        Log.d("TEST", box.createDate.toString())
+        Log.d("TEST2", dateFormatter.format(box.createDate))
+        return dateFormatter.format(box.createDate)
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
