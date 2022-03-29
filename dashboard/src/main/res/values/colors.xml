@@ -12,7 +12,7 @@
     <color name="dividerColor">#D2D2D2</color> <!-- color for dividers, grids etc -->
     <color name="backgroundTintLightColor">#e0e0e0</color> <!-- color for dividers, grids etc -->
     <color name="textColor">#757575</color> <!-- text color on white background -->
-    <color name="information">#2196F3</color>
+    <color name="information">@color/secondaryColor</color> <!-- Alter Wert: #2196F3 -->
 
     <color name="white">#fff</color>
     <color name="error">#b00022</color>
