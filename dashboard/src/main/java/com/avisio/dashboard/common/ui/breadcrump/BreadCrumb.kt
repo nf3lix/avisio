@@ -1,7 +1,9 @@
 package com.avisio.dashboard.common.ui.breadcrump
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -9,6 +11,7 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import com.avisio.dashboard.R
 
 class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(context, attrs) {
@@ -35,7 +38,7 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
 
     internal fun addElement(element: BreadCrumbDirectoryElement) {
         elements.add(element)
-        if(element.iconId != null) {
+        if (element.iconId != null) {
             addElementIcon(element)
         } else {
             addElementTextView(element)
@@ -76,7 +79,8 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     }
 
     private fun scrollToEnd() {
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
                 scrollBarSize = scrollbarSize
@@ -86,8 +90,9 @@ class BreadCrumb(context: Context, attrs: AttributeSet) : HorizontalScrollView(c
     }
 
     private fun setElementLayoutParams(view: View) {
-        val params = MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        params.setMargins(16, 0 , 16, 0)
+        val params =
+            MarginLayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.setMargins(16, 0, 16, 0)
         view.layoutParams = params
     }
 
