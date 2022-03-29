@@ -83,13 +83,13 @@
     <string name="delete_box_error_occurred">Fehler: Box konnte nicht gelöscht werden</string>
 
     <string name="box_title">box_title</string>
-    <string name="box_name">Box name</string>
+    <string name="box_name">Boxname</string>
     <string name="erstelldatum">Erstelldatum</string>
     <string name="box_datum">Box_datum</string>
     <string name="karteikarten">Karteikarten</string>
     <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
-    <string name="checkbox_create_new_card">Neue Karte erstellen</string>
+    <string name="checkbox_create_new_card">Im Erstellmodus bleiben</string>
 
     <string name="learn_activity_title">Lernen</string>
     <string name="learn_activity_question_content_description">Frage</string>
