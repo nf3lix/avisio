@@ -77,8 +77,8 @@
 
         <ImageView
             android:id="@+id/btn_move_selected_items"
-            android:layout_width="40dp"
-            android:layout_height="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:visibility="gone"
