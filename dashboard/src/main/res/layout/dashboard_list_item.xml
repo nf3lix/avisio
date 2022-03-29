@@ -43,10 +43,10 @@
                 android:layout_width="233dp"
                 android:layout_height="36dp"
                 android:layout_margin="5dp"
-                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
                 android:text="Text"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textColor="@color/textColor"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
