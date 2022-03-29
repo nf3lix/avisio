@@ -1,21 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.avisio.dashboard.usecase.crud_box.read.BoxActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.avisio.dashboard.usecase.crud_box.read.BoxActivity">
 
-    <item android:id="@+id/menu_edit_box"
-          android:title="@string/box_activity_menu_edit"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-
-    <item android:id="@+id/menu_delete_box"
-          android:title="@string/box_activity_menu_delete"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-
-    <item android:id="@+id/menu_information_box"
-        android:title="@string/box_information"
+    <item
+        android:id="@+id/menu_edit_box"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_box_details"/>
+        android:title="@string/box_activity_menu_edit"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_delete_box"
+        android:orderInCategory="100"
+        android:title="@string/box_activity_menu_delete"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_information_box"
+        android:icon="@drawable/ic_box_details"
+        android:orderInCategory="100"
+        android:title="@string/box_information"
+        app:showAsAction="ifRoom" />
 </menu>
