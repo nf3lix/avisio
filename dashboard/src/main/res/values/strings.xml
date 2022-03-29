@@ -36,7 +36,7 @@
     <string name="box_activity_learn_fab">Lernen</string>
     <string name="box_activity_learn_fab_content_description">Karten in Box lernen</string>
 
-    <string name="create_box_app_bar_title">New box</string>
+    <string name="create_box_app_bar_title">Neue Box</string>
     <string name="create_box_fab_content_description">Box speichern</string>
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
