@@ -24,7 +24,7 @@
     <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="339dp"
-        android:layout_height="600dp"
+        android:layout_height="610dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:gravity="top"
