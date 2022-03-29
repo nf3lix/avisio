@@ -150,8 +150,8 @@
         <item quantity="other">Jahren</item>
     </plurals>
 
-    <string name="due_date_in_future_displayed_template">Fällig in %s %s</string>
-    <string name="due_date_in_past_displayed_template">Fällig seit %s %s</string>
+    <string name="due_date_in_future_displayed_template">Fällig in \n%s %s</string>
+    <string name="due_date_in_past_displayed_template">Fällig seit \n%s %s</string>
 
     <string name="card_not_learned_yet">Noch nicht gelernt</string>
     <string name="box_list_no_matching_item_hint">Keine Boxen und Ordner gefunden</string>

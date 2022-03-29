@@ -62,10 +62,10 @@
 
                 <TextView
                     android:id="@+id/card_due_date"
-                    android:layout_width="67dp"
+                    android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
-                    android:text="Fällig in 4 h"
+                    android:text="Noch nicht gelernt"
                     android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body3"
                     android:textColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
