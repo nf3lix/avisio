@@ -37,11 +37,19 @@ abstract class FolderFragmentStrategy(private val fragment: EditFolderFragment, 
     }
 
     private fun handleInvalidInput() {
-        fragment.folderNameTextInputLayout.error = fragment.requireContext().getString(R.string.no_folder_name_specified)
+        if(folderNameExists()) {
+            fragment.folderNameTextInputLayout.error = fragment.requireContext().getString(R.string.create_folder_duplicate_name)
+        } else {
+            fragment.folderNameTextInputLayout.error = fragment.requireContext().getString(R.string.no_folder_name_specified)
+        }
     }
 
     private fun hasValidInput(): Boolean {
-        return !TextUtils.isEmpty(fragment.nameInput.text)
+        return !TextUtils.isEmpty(fragment.nameInput.text) && !folderNameExists()
+    }
+
+    private fun folderNameExists(): Boolean {
+        return fragment.nameInput.text.toString() in fragment.folderNameList
     }
 
 }

@@ -17,12 +17,21 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.ui.InputDialog
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
-import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
+import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.QUESTION_INPUT
 import com.avisio.dashboard.usecase.training.activity.MarkdownView
 import com.google.android.material.chip.Chip
 import io.noties.markwon.Markwon
 
 class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
+
+    companion object {
+        private const val MAX_IMAGE_HEIGHT = 300.0
+        private const val MAX_IMAGE_WIDTH = 400.0
+    }
+
+    init {
+        setMaxCardImageSize(MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH)
+    }
 
     private var cardQuestion: CardQuestion = CardQuestion(arrayListOf())
     private val markwon = Markwon.create(context)
@@ -41,7 +50,9 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
                     val chip = getClozeChip(getQuestionPlaceholder(token.content.trim()))
                     flexbox.addView(chip, index)
                 }
-                QuestionTokenType.IMAGE -> { }
+                QuestionTokenType.IMAGE -> {
+                    setImagePath(token.content)
+                }
             }
         }
         removeEmptyEditTexts()

@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
@@ -15,6 +16,7 @@ class EditCardStrategy(
 ) : CardFragmentStrategy(fragment, R.string.edit_card_action_bar_title) {
 
     override fun fillCardInformation() {
+        fragment.requireActivity().findViewById<CheckBox>(R.id.checkbox_create_new_card).visibility = View.GONE
         questionFlexBox.setCardQuestion(card.question)
         answerFlexBox.setAnswer(card.answer)
         typeSpinner.setSelection(card.type.ordinal)
@@ -23,7 +25,7 @@ class EditCardStrategy(
         }
     }
 
-    override fun saveCard() {
+    override fun saveCard(ignoreNextCardCheckBox: Boolean) {
         val updatedQuestion = questionFlexBox.getCardQuestion()
         val updatedAnswer = answerFlexBox.getAnswer()
         val updatedType = fragment.getSelectedCardType()
@@ -48,7 +50,7 @@ class EditCardStrategy(
                 || oldCard.type != newCard.type
     }
 
-    override fun handleValidInput() {
+    override fun handleValidInput(ignoreNextCardCheckBox: Boolean) {
         saveCard()
         Toast.makeText(fragment.requireContext(), R.string.edit_card_successful, Toast.LENGTH_LONG).show()
     }

@@ -70,7 +70,7 @@ data class ParcelableCard(
     companion object CREATOR : Parcelable.Creator<ParcelableCard> {
 
         fun createFromEntity(card: Card): ParcelableCard {
-            return ParcelableCard(card.id, card.boxId, card.createDate, card.type, card.question, card.answer)
+            return ParcelableCard(card.id, card.boxId!!, card.createDate, card.type, card.question, card.answer)
         }
 
         fun createEntity(card: ParcelableCard): Card {

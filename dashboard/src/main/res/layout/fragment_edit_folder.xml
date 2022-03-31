@@ -34,7 +34,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05">
+            app:layout_constraintVertical_bias="0.2">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/folder_name_edit_text"

@@ -75,10 +75,10 @@ class EditCardFragmentEditClozeTextTest {
 
     @Test
     fun replaceClozeTextOnCardTypeChangedManually() {
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.CLOZE_TEXT.name))))
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString("Lückentext"))))
         onView(withId(R.id.card_type_spinner)).perform(click())
-        onView(withText(CardType.STRICT.name)).perform(click())
-        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString(CardType.STRICT.name))))
+        onView(withText(R.string.card_type_strict)).perform(click())
+        onView(withId(R.id.card_type_spinner)).check(matches(withSpinnerText(StringContains.containsString("Strenge Abfrage"))))
         onView(allOf(withClassName(`is`(EditText::class.java.name)), withText("TOKEN_1 TOKEN_2 TOKEN_3"))).check(matches(isDisplayed()))
     }
 
@@ -87,7 +87,7 @@ class EditCardFragmentEditClozeTextTest {
         onView(withText("TOKEN_1")).perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         pressBack()
-        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(isDisplayed()))
+        onView(withText(R.string.create_card_apply_changes)).check(matches(isDisplayed()))
     }
 
     @Test(expected = NoMatchingViewException::class)
@@ -96,7 +96,7 @@ class EditCardFragmentEditClozeTextTest {
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         pressBack()
         onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
-        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(not(isDisplayed())))
+        onView(withText(R.string.create_card_apply_changes)).check(matches(not(isDisplayed())))
     }
 
     @Test(expected = NoActivityResumedException::class)

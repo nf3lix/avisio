@@ -29,8 +29,8 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
     val typeSpinner: Spinner = fragment.requireView().findViewById(R.id.card_type_spinner)
 
     abstract fun fillCardInformation()
-    abstract fun saveCard()
-    abstract fun handleValidInput()
+    abstract fun saveCard(ignoreNextCardCheckBox: Boolean = false)
+    abstract fun handleValidInput(ignoreNextCardCheckBox: Boolean = false)
     abstract fun handleInvalidInput()
     abstract fun onBackPressed()
 
@@ -38,16 +38,20 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
         val confirmDialog = ConfirmDialog(
             fragment.requireContext(),
             fragment.getString(R.string.create_card_cancel_dialog_title),
-            fragment.getString(R.string.create_card_cancel_dialog_message)
+            fragment.getString(R.string.create_card_apply_changes),
+            R.string.create_card_apply_changes_confirm,
+            R.string.create_card_apply_changes_discard
         )
         confirmDialog.setOnConfirmListener {
+            onFabClicked(ignoreNextCardCheckBox = true)
+        }
+        confirmDialog.setOnCancelListener {
             fragment.requireActivity().finish()
-
         }
         confirmDialog.showDialog()
     }
 
-    fun onFabClicked() {
+    fun onFabClicked(ignoreNextCardCheckBox: Boolean = false) {
         val question = questionFlexBox.getCardQuestion(trimmed = true)
         val answer = answerFlexBox.getAnswer()
         val type = fragment.getSelectedCardType()
@@ -55,7 +59,7 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
 
         val unfulfilled = SaveCardValidator.getUnfulfilledConstraints(cardToValidate)
         if(unfulfilled.isEmpty()) {
-            handleValidInput()
+            handleValidInput(ignoreNextCardCheckBox)
             Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             return
         }

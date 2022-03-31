@@ -2,6 +2,7 @@ package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import com.avisio.dashboard.R
@@ -23,9 +24,10 @@ class CreateCardStrategy(
 
     override fun fillCardInformation() {
         typeSpinner.setSelection(card.type.ordinal)
+        fragment.onCardTypeSet(CardType.values()[card.type.ordinal])
     }
 
-    override fun saveCard() {
+    override fun saveCard(ignoreNextCardCheckBox: Boolean) {
         val type = fragment.getSelectedCardType()
         val question = questionFlexBox.getCardQuestion()
         val answer = if(type == CardType.CLOZE_TEXT) CardAnswer.BLANK else answerFlexBox.getAnswer()
@@ -40,15 +42,15 @@ class CreateCardStrategy(
 
         val checkboxView = fragment.requireActivity().findViewById<CheckBox>(R.id.checkbox_create_new_card)
 
-        if(checkboxView.isChecked){
+        if(checkboxView.isChecked && !ignoreNextCardCheckBox) {
             val newIntent = Intent(fragment.requireContext(), CreateCardActivity::class.java)
             newIntent.setCardObject(card)
             fragment.requireContext().startActivity(newIntent)
         }
     }
 
-    override fun handleValidInput() {
-        saveCard()
+    override fun handleValidInput(ignoreNextCardCheckBox: Boolean) {
+        saveCard(ignoreNextCardCheckBox)
         fragment.requireActivity().finish()
         Toast.makeText(fragment.requireContext(), R.string.create_card_successful, Toast.LENGTH_LONG).show()
     }

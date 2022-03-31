@@ -33,6 +33,14 @@ class WaitForView(private val viewMatcher: Matcher<View>, private val descriptio
             )
         }
 
+        fun withId(id: Int, millis: Long): ViewAction {
+            return WaitForView(
+                ViewMatchers.withId(id),
+                "wait for a specific view with id <$id> during $millis millis",
+                millis
+            )
+        }
+
     }
 
     override fun getConstraints(): Matcher<View> {

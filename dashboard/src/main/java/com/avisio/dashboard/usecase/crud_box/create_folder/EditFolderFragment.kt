@@ -17,6 +17,8 @@ import com.avisio.dashboard.usecase.crud_box.common.fragment_strategy.FolderFrag
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class EditFolderFragment : Fragment() {
 
@@ -27,10 +29,14 @@ class EditFolderFragment : Fragment() {
     internal lateinit var folderNameTextInputLayout: TextInputLayout
     internal lateinit var folderRepository: AvisioFolderRepository
     private lateinit var folderFragmentStrategy: FolderFragmentStrategy
+    internal lateinit var folderNameList: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         folderRepository = AvisioFolderRepository(requireActivity().application)
+        GlobalScope.launch {
+            folderNameList = folderRepository.getFolderNameList()
+        }
         arguments?.let {
             dashboardItem = it.getCurrentFolder()!!
             workflow = it.getCRUDWorkflow()

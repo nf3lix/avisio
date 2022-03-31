@@ -1,6 +1,5 @@
 package com.avisio.dashboard.usecase.training.activity.card_type_strategy
 
-import android.view.View
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion

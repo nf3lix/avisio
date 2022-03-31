@@ -4,7 +4,6 @@ import android.text.TextUtils
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.workflow.CRUD.CREATE
 import com.avisio.dashboard.common.workflow.CRUD.UPDATE
-import com.avisio.dashboard.usecase.crud_box.common.BoxNameExistsWarningDialog
 import com.avisio.dashboard.usecase.crud_box.create_box.EditBoxFragment
 import com.avisio.dashboard.usecase.crud_box.create_box.CreateBoxStrategy
 import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxStrategy
@@ -31,11 +30,9 @@ abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment, val ti
     }
 
     private fun handleValidInput() {
-        if(boxNameExists() && boxNameHasChanged()) {
-            BoxNameExistsWarningDialog.showDialog(fragment)
-            return
+        if(boxNameHasChanged()) {
+            saveBox()
         }
-        saveBox()
     }
 
     private fun boxNameExists(): Boolean {
@@ -47,11 +44,15 @@ abstract class BoxFragmentStrategy(private val fragment: EditBoxFragment, val ti
     }
 
     private fun handleInvalidInput() {
-        fragment.boxNameTextInputLayout.error = fragment.requireContext().getString(R.string.create_box_no_name_specified)
+        if(boxNameExists()) {
+            fragment.boxNameTextInputLayout.error = fragment.requireContext().getString(R.string.create_box_duplicate_name_dialog_message)
+        } else {
+            fragment.boxNameTextInputLayout.error = fragment.requireContext().getString(R.string.create_box_no_name_specified)
+        }
     }
 
     private fun hasValidInput(): Boolean {
-        return !TextUtils.isEmpty(fragment.nameInput.text)
+        return !TextUtils.isEmpty(fragment.nameInput.text) && !boxNameExists()
     }
 
 }

@@ -22,6 +22,7 @@ import com.avisio.dashboard.common.data.transfer.IntentKeys
 import com.avisio.dashboard.common.persistence.card.CardDao
 import com.avisio.dashboard.common.persistence.sm_card_items.SMCardItemDao
 import com.avisio.dashboard.usecase.crud_box.read.BoxActivity
+import com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
 import com.avisio.dashboard.view_matchers.IsGoneMatcher
 import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
 import com.avisio.dashboard.view_actions.WaitForView
@@ -87,16 +88,6 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.resolve_question_button)).perform(click())
         onView(withText(R.string.learn_activity_result_easy)).perform(click())
         onView(withId(R.id.question_input_layout)).check(matches(IsGoneMatcher.isGone()))
-    }
-
-    @Test
-    fun resetQuestionTextLayoutOnResultOptionSelected() {
-        onView(withId(R.id.fab_learn)).perform(click())
-        onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
-        onView(withId(R.id.resolve_question_button)).perform(click())
-        onView(withText(R.string.learn_activity_result_easy)).perform(click())
-        onView(withParent(withClassName(`is`(
-            FlexboxLayout::class.java.name)))).check(matches(withText("")))
     }
 
     @Test

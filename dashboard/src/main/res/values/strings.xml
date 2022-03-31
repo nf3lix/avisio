@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dashboard</string>
+    <string name="app_name">Avisio</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="main_activity_label">MainActivity</string>
@@ -14,6 +14,7 @@
     <string name="action_rename_folder">Ordner umbenennen</string>
     <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
+    <string name="create_folder_duplicate_name">Dieser Ordnername wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
     <string name="no_folder_name_specified">Bitte trage einen Namen für den Ordner ein</string>
@@ -41,7 +42,7 @@
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
     <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
-    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
     <string name="fab_cancel_workflow">Abbrechen</string>
@@ -52,7 +53,9 @@
     <string name="create_card_answer_text_field_hint">Antwort</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Erstellung Abbrechen</string>
-    <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
+    <string name="create_card_apply_changes">Sollen die Änderungen an dieser Karte übernommen werden?</string>
+    <string name="create_card_apply_changes_confirm">Übernehmen</string>
+    <string name="create_card_apply_changes_discard">Verwerfen</string>
     <string name="create_card_empty_question">Frage darf nicht leer sein</string>
     <string name="create_card_empty_answer">Antwort darf nicht leer sein</string>
     <string name="create_card_action_bar_title">Neue Karte</string>
@@ -66,6 +69,11 @@
     <string name="edit_card_delete_card_dialog_message">Möchtest du diese Karte wirklich löschen?</string>
     <string name="edit_card_cloze_text_answer_is_ignored">Separete Antwort bei Lückentext nicht möglich</string>
     <string name="edit_card_cloze_text_is_required">Lückentexte brauchen Text</string>
+    <string name="edit_card_set_type_remove_images_title">Bilder entfernen</string>
+    <string name="edit_card_set_type_remove_images_message">Bilder sind bei diesem Kartentyp nicht möglich. Sollen die vorhandenen Bilder entfernt werden?</string>
+    <string name="card_type_standard">Standard</string>
+    <string name="card_type_cloze_text">Lückentext</string>
+    <string name="card_type_strict">Strenge Abfrage</string>
 
     <string name="confirm_dialog_confirm_default">OK</string>
     <string name="confirm_dialog_cancel_default">Abbrechen</string>
@@ -146,5 +154,6 @@
     <string name="due_date_in_past_displayed_template">Fällig seit %s %s</string>
 
     <string name="card_not_learned_yet">Noch nicht gelernt</string>
+    <string name="box_list_no_matching_item_hint">Keine Boxen und Ordner gefunden</string>
 
 </resources>

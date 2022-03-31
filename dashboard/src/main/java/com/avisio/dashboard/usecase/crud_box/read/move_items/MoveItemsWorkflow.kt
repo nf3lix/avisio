@@ -32,7 +32,6 @@ class MoveItemsWorkflow(private val boxListView: BoxListView) : BoxListWorkflow(
         return mapOf(
             R.id.action_stop_workflow to true,
             R.id.dashboard_list_search to false,
-            R.id.action_settings to false,
             R.id.action_rename_folder to false
         )
     }

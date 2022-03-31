@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -53,6 +54,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private var currentFolder: DashboardItem? = null
     internal var allItems = listOf<DashboardItem>()
+    private var itemsOfCurrentFolder = listOf<DashboardItem>()
 
     private var fabMenuShown = false
     private lateinit var menu: Menu
@@ -131,8 +133,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         dashboardItemViewModel.getDashboardItemList().observe(this) { itemList ->
             allItems = itemList
             val filteredList = filterItemsOfCurrentFolder(itemList)
+            itemsOfCurrentFolder = filteredList
             dashboardItemAdapter.updateAllItemList(itemList)
             dashboardItemAdapter.updateList(filteredList)
+            toggleNoMatchingViewHints(filteredList)
         }
     }
 
@@ -156,7 +160,17 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabCreateFolder.setOnClickListener {
             FolderProcessor(currentFolder, this).startCreateChild()
         }
+    }
 
+    private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
+        Log.d("currentFolder", currentFolder.toString())
+        if(filteredList.isEmpty() && currentFolder == null) {
+            breadCrumb.visibility = View.GONE
+            no_matching_item_label.visibility = View.VISIBLE
+        } else {
+            breadCrumb.visibility = View.VISIBLE
+            no_matching_item_label.visibility = View.GONE
+        }
     }
 
     private fun toggleFabMenu() {
@@ -217,6 +231,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
                 dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
             } else {
+                if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+                    moveSelectedItemsButton.visibility = View.VISIBLE
+                } else {
+                    moveSelectedItemsButton.visibility = View.GONE
+                }
                 if(moveItemsWorkflow.isActive()) {
                     updateItemList()
                 }
@@ -240,16 +259,39 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         searchItem.actionView = searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(query)
+                filterItemList(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                dashboardItemAdapter.getFilter().filter(newText)
+                filterItemList(newText)
                 return false
             }
         })
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun filterItemList(query: String?) {
+        val filter = dashboardItemAdapter.getFilter()
+        filter.setOnSearchResultListener(object : DashboardItemFilter.OnSearchResultListener {
+            override fun onSearchResult(length: Int) {
+                toggleNoMatchingItemHint(length)
+            }
+
+        })
+        filter.filter(query)
+    }
+
+    private fun toggleNoMatchingItemHint(filteredListSize: Int) {
+        requireActivity().runOnUiThread {
+            if(filteredListSize == 0) {
+                no_matching_item_label.visibility = View.VISIBLE
+                box_list_recycler_view.visibility = View.GONE
+            } else {
+                no_matching_item_label.visibility = View.GONE
+                box_list_recycler_view.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -330,7 +372,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun showSelectedItemsActionButtons() {
         toggleEditSelectedItemButtonVisibility()
         deleteSelectedItemsButton.visibility = View.VISIBLE
-        moveSelectedItemsButton.visibility = View.VISIBLE
+        if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+            moveSelectedItemsButton.visibility = View.VISIBLE
+        } else {
+            moveSelectedItemsButton.visibility = View.GONE
+        }
     }
 
     override fun hideSelectedItemsActionButtons() {
@@ -454,4 +500,42 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun currentFolder(): DashboardItem? {
         return currentFolder
     }
+
+    private fun dashboardHasFolder(): Boolean {
+        return amountOfFoldersInDashboard() == 0
+    }
+
+    private fun singleFolderIsAmongSelectedItems(): Boolean {
+        Log.d("check", "check")
+        var count = 0
+        for(item in itemsOfCurrentFolder) {
+            if(item.type == DashboardItemType.FOLDER) {
+                count++
+            }
+        }
+        for(item in itemsOfCurrentFolder) {
+            if(item.type == DashboardItemType.FOLDER) {
+                if(item !in selectedItems()) {
+                    Log.d("false", "false")
+                    return false
+                }
+            }
+            // if(item.type == DashboardItemType.FOLDER) {
+            //     return item in selectedItems()
+            // }
+        }
+        Log.d("true", "true")
+        return true
+    }
+
+    private fun amountOfFoldersInDashboard(): Int {
+        var count = 0
+        for(item in allItems) {
+            if(item.type == DashboardItemType.FOLDER) {
+                count++
+            }
+        }
+        return count
+    }
+
 }
