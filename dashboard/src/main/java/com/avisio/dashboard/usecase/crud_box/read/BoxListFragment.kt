@@ -37,7 +37,8 @@ import kotlinx.android.synthetic.main.box_list_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener, BoxListView {
+class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClickListener,
+    BoxListView {
 
     private lateinit var dashboardItemViewModel: DashboardItemViewModel
     private lateinit var dashboardItemAdapter: DashboardItemListAdapter
@@ -71,11 +72,19 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        boxActivityObserver = BoxActivityResultObserver(this, requireActivity().activityResultRegistry, requireActivity().application)
+        boxActivityObserver = BoxActivityResultObserver(
+            this,
+            requireActivity().activityResultRegistry,
+            requireActivity().application
+        )
         lifecycle.addObserver(boxActivityObserver)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.box_list_fragment, container, false)
     }
 
@@ -87,13 +96,15 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         folderRepository = AvisioFolderRepository(requireActivity().application)
         boxRepository = AvisioBoxRepository(requireActivity().application)
         (requireActivity() as MainActivity).setSupportActionBar(box_list_app_bar)
-        (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(R.string.main_activity_app_bar_title)
+        (requireActivity() as MainActivity).supportActionBar?.title =
+            requireContext().getString(R.string.main_activity_app_bar_title)
         setHasOptionsMenu(true)
     }
 
     override fun onStart() {
         super.onStart()
-        requireView().findViewById<Toolbar>(R.id.box_list_app_bar).title = requireContext().getString(R.string.main_activity_app_bar_title)
+        requireView().findViewById<Toolbar>(R.id.box_list_app_bar).title =
+            requireContext().getString(R.string.main_activity_app_bar_title)
         setOnBackPressedDispatcher()
         setupView()
         setupFab()
@@ -108,8 +119,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun setupRecyclerView() {
-        val dashboardItemRecyclerView = view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
-        dashboardItemAdapter = DashboardItemListAdapter(DashboardItemListAdapter.DashboardItemDifference(), this)
+        val dashboardItemRecyclerView =
+            view?.findViewById<RecyclerView>(R.id.box_list_recycler_view)
+        dashboardItemAdapter =
+            DashboardItemListAdapter(DashboardItemListAdapter.DashboardItemDifference(), this)
         dashboardItemRecyclerView?.adapter = dashboardItemAdapter
         dashboardItemRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -121,7 +134,13 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         breadCrumbAdapter.setBreadCrumb(breadCrumb)
         dashboardBreadCrumb = DashboardBreadCrumb(this, breadCrumbAdapter)
         dashboardBreadCrumb.updateBreadCrumb(currentFolder)
-        breadCrumb.setOnElementClickListener(BreadcrumbListener(this, dashboardBreadCrumb, moveItemsWorkflow))
+        breadCrumb.setOnElementClickListener(
+            BreadcrumbListener(
+                this,
+                dashboardBreadCrumb,
+                moveItemsWorkflow
+            )
+        )
     }
 
     private fun setupBoxViewModel() {
@@ -142,8 +161,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun filterItemsOfCurrentFolder(itemList: List<DashboardItem>): List<DashboardItem> {
         val list = arrayListOf<DashboardItem>()
-        for(item in itemList) {
-            if(item.parentFolder == currentFolder?.id) list.add(item)
+        for (item in itemList) {
+            if (item.parentFolder == currentFolder?.id) list.add(item)
         }
         return list
     }
@@ -164,7 +183,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
         Log.d("currentFolder", currentFolder.toString())
-        if(filteredList.isEmpty() && currentFolder == null) {
+        if (filteredList.isEmpty() && currentFolder == null) {
             breadCrumb.visibility = View.GONE
             no_matching_item_label.visibility = View.VISIBLE
         } else {
@@ -174,7 +193,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun toggleFabMenu() {
-        if(!fabMenuShown) {
+        if (!fabMenuShown) {
             showFabMenu()
         } else {
             closeFabMenu()
@@ -186,8 +205,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         fabExpand.setImageResource(R.drawable.ic_close)
         fabCreateBox.visibility = View.VISIBLE
         fabCreateFolder.visibility = View.VISIBLE
-        fabCreateBox.animate().translationY(-resources.getDimension(R.dimen.create_box_fab_position))
-        fabCreateFolder.animate().translationY(-resources.getDimension(R.dimen.create_folder_fab_position))
+        fabCreateBox.animate()
+            .translationY(-resources.getDimension(R.dimen.create_box_fab_position))
+        fabCreateFolder.animate()
+            .translationY(-resources.getDimension(R.dimen.create_folder_fab_position))
     }
 
     private fun closeFabMenu() {
@@ -215,7 +236,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun onItemSelected(position: Int) {
-        if(!moveItemsWorkflow.isActive()) {
+        if (!moveItemsWorkflow.isActive()) {
             closeFabMenu()
             showSelectedItemsActionButtons()
             fabExpand.visibility = View.GONE
@@ -225,25 +246,29 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun onItemUnselected(position: Int) {
         toggleEditSelectedItemButtonVisibility()
         requireActivity().runOnUiThread {
-            if(dashboardItemAdapter.selectedItems().isEmpty()) {
+            if (dashboardItemAdapter.selectedItems().isEmpty()) {
                 hideSelectedItemsActionButtons()
                 fabExpand.visibility = View.VISIBLE
                 dashboardItemAdapter.moveWorkflowActive = false
                 moveItemsWorkflow.finishWorkflow()
             } else {
-                if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+                if (dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
                     moveSelectedItemsButton.visibility = View.VISIBLE
                 } else {
                     moveSelectedItemsButton.visibility = View.GONE
                 }
-                if(moveItemsWorkflow.isActive()) {
+                if (moveItemsWorkflow.isActive()) {
                     updateItemList()
                 }
             }
         }
     }
 
-    override fun onMoveItemsToFolderClicked(adapterPosition: Int, item: DashboardItem, selectedItems: List<DashboardItem>) {
+    override fun onMoveItemsToFolderClicked(
+        adapterPosition: Int,
+        item: DashboardItem,
+        selectedItems: List<DashboardItem>
+    ) {
         ConfirmMoveItemsDialog.showDialog(this, selectedItems, item)
     }
 
@@ -254,9 +279,11 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         val renameFolderOption = menu.findItem(R.id.action_rename_folder)
         renameFolderOption.isVisible = currentFolder != null
         val searchItem = menu.findItem(R.id.dashboard_list_search)
-        val searchView = SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
+        val searchView =
+            SearchView((requireContext() as MainActivity).supportActionBar!!.themedContext)
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         searchItem.actionView = searchView
+        searchView.maxWidth = Int.MAX_VALUE
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 filterItemList(query)
@@ -284,7 +311,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun toggleNoMatchingItemHint(filteredListSize: Int) {
         requireActivity().runOnUiThread {
-            if(filteredListSize == 0) {
+            if (filteredListSize == 0) {
                 no_matching_item_label.visibility = View.VISIBLE
                 box_list_recycler_view.visibility = View.GONE
             } else {
@@ -295,7 +322,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_rename_folder -> {
                 isEditingId = currentFolder!!.id
                 val folder = currentFolder
@@ -311,16 +338,19 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun setOnBackPressedDispatcher() {
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val searchView = requireView().findViewById<SearchView>(R.id.dashboard_list_search)
-                if(!searchView.isIconified) {
-                    closeSearchView(searchView)
-                    return
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val searchView =
+                        requireView().findViewById<SearchView>(R.id.dashboard_list_search)
+                    if (!searchView.isIconified) {
+                        closeSearchView(searchView)
+                        return
+                    }
+                    openParentFolder()
                 }
-                openParentFolder()
-            }
-        })
+            })
     }
 
     private fun closeSearchView(searchView: SearchView) {
@@ -337,10 +367,10 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun getParentFolder(): DashboardItem? {
-        if(currentFolder == null) return null
+        if (currentFolder == null) return null
         val parentFolderId = currentFolder!!.parentFolder
-        for(item in allItems) {
-            if(item.id == parentFolderId && item.type == DashboardItemType.FOLDER) {
+        for (item in allItems) {
+            if (item.id == parentFolderId && item.type == DashboardItemType.FOLDER) {
                 return item
             }
         }
@@ -372,7 +402,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     override fun showSelectedItemsActionButtons() {
         toggleEditSelectedItemButtonVisibility()
         deleteSelectedItemsButton.visibility = View.VISIBLE
-        if(dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
+        if (dashboardHasFolder() || !(singleFolderIsAmongSelectedItems() && currentFolder == null)) {
             moveSelectedItemsButton.visibility = View.VISIBLE
         } else {
             moveSelectedItemsButton.visibility = View.GONE
@@ -389,7 +419,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun toggleEditSelectedItemButtonVisibility() {
         requireActivity().runOnUiThread {
-            if(dashboardItemAdapter.selectedItems().size == 1 && !moveItemsWorkflow.isActive()) {
+            if (dashboardItemAdapter.selectedItems().size == 1 && !moveItemsWorkflow.isActive()) {
                 editSelectedItemButton.visibility = View.VISIBLE
             } else {
                 editSelectedItemButton.visibility = View.GONE
@@ -398,7 +428,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     fun deleteAllSelectedItems() {
-        for(item in dashboardItemAdapter.selectedItems()) {
+        for (item in dashboardItemAdapter.selectedItems()) {
             DashboardProcessor.get(this, item).deleteItem()
         }
         hideSelectedItemsActionButtons()
@@ -407,15 +437,17 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     override fun setAppBarTitle(titleId: Int) {
         requireActivity().runOnUiThread {
-            (requireActivity() as MainActivity).supportActionBar?.title = requireContext().getString(titleId)
+            (requireActivity() as MainActivity).supportActionBar?.title =
+                requireContext().getString(titleId)
         }
     }
 
     override fun displayCancelWorkflowMenuItem(displayed: Boolean) {
         requireActivity().runOnUiThread {
-            if(this::menu.isInitialized) {
-                for(menuItem in moveItemsWorkflow.getDisplayedMenuItems()) {
-                    menu.findItem(menuItem.key).isVisible = if(displayed) menuItem.value else !menuItem.value
+            if (this::menu.isInitialized) {
+                for (menuItem in moveItemsWorkflow.getDisplayedMenuItems()) {
+                    menu.findItem(menuItem.key).isVisible =
+                        if (displayed) menuItem.value else !menuItem.value
                 }
             }
         }
@@ -433,7 +465,7 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         val fab = requireView().findViewById<FloatingActionButton>(R.id.fab_cancel_workflow)
         fab.visibility = View.GONE
         fab.setOnClickListener { }
-        if(dashboardItemAdapter.selectedItems().isEmpty()) {
+        if (dashboardItemAdapter.selectedItems().isEmpty()) {
             fabExpand.visibility = View.VISIBLE
         } else {
             showSelectedItemsActionButtons()
@@ -508,14 +540,14 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     private fun singleFolderIsAmongSelectedItems(): Boolean {
         Log.d("check", "check")
         var count = 0
-        for(item in itemsOfCurrentFolder) {
-            if(item.type == DashboardItemType.FOLDER) {
+        for (item in itemsOfCurrentFolder) {
+            if (item.type == DashboardItemType.FOLDER) {
                 count++
             }
         }
-        for(item in itemsOfCurrentFolder) {
-            if(item.type == DashboardItemType.FOLDER) {
-                if(item !in selectedItems()) {
+        for (item in itemsOfCurrentFolder) {
+            if (item.type == DashboardItemType.FOLDER) {
+                if (item !in selectedItems()) {
                     Log.d("false", "false")
                     return false
                 }
@@ -530,8 +562,8 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
 
     private fun amountOfFoldersInDashboard(): Int {
         var count = 0
-        for(item in allItems) {
-            if(item.type == DashboardItemType.FOLDER) {
+        for (item in allItems) {
+            if (item.type == DashboardItemType.FOLDER) {
                 count++
             }
         }

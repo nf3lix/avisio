@@ -30,21 +30,19 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.03" />
+            app:layout_constraintVertical_bias="0.2"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/answer_input_layout"
-            android:layout_width="326dp"
-            android:layout_height="72dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/question_input_layout"
-            app:layout_constraintVertical_bias="0.3">
+                android:layout_width="320dp"
+                android:layout_height="72dp"
+                android:id="@+id/answer_input_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/question_input_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.25">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/answer_edit_text"
@@ -65,7 +63,7 @@
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/question_input_layout"
-            app:layout_constraintVertical_bias="0.31" />
+            app:layout_constraintVertical_bias="0.37" />
 
         <TextView
             android:id="@+id/standard_answer_text_view"
@@ -77,7 +75,7 @@
             app:layout_constraintHorizontal_bias="0.482"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/question_input_layout"
-            app:layout_constraintVertical_bias="0.31" />
+            app:layout_constraintVertical_bias="0.25"/>
 
         <Button
             android:id="@+id/resolve_question_button"
@@ -86,10 +84,9 @@
             android:text="@string/learn_activity_resolve_button"
             app:layout_constraintBottom_toTopOf="@+id/correct_answer_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/answer_input_layout"
-            app:layout_constraintVertical_bias="1.220" />
+            app:layout_constraintVertical_bias="1.22" />
 
         <com.avisio.dashboard.usecase.training.activity.question.AnswerLearnFlexBox
             android:id="@+id/correct_answer_input_layout"
@@ -98,10 +95,9 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/resolve_question_button"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.25"/>
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
@@ -113,7 +109,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/correct_answer_input_layout"
-            app:layout_constraintVertical_bias="0.652"></com.google.android.material.chip.ChipGroup>
+            app:layout_constraintVertical_bias="0.6" >
+        </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
