@@ -1,7 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
 import android.widget.Spinner
-import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.card.CardRepository
@@ -13,13 +12,13 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBo
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
-abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val titleId: Int) {
+abstract class SaveCardTemplate(private val fragment: EditCardFragment, val titleId: Int) {
 
     companion object {
 
-        fun getStrategy(fragment: EditCardFragment, card: Card, repository: CardRepository): CardFragmentStrategy = when(fragment.workflow) {
-            CRUD.CREATE -> CreateCardStrategy(fragment, card, repository)
-            CRUD.UPDATE -> EditCardStrategy(fragment, card, repository)
+        fun getStrategy(fragment: EditCardFragment, card: Card, repository: CardRepository): SaveCardTemplate = when(fragment.workflow) {
+            CRUD.CREATE -> CreateCardProcedure(fragment, card, repository)
+            CRUD.UPDATE -> EditCardProcedure(fragment, card, repository)
         }
 
     }

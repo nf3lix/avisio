@@ -27,7 +27,7 @@ import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.common.ui.ConfirmDialog
 import com.avisio.dashboard.common.workflow.CRUD
-import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardFragmentStrategy
+import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.SaveCardTemplate
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.*
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardFlexBoxInformationType.*
@@ -49,7 +49,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
 
     private lateinit var card: Card
     internal lateinit var workflow: CRUD
-    private lateinit var fragmentStrategy: CardFragmentStrategy
+    private lateinit var fragmentStrategy: SaveCardTemplate
     private lateinit var selectQuestionImageObserver: SelectQuestionImageResultObserver
     private lateinit var selectAnswerImageObserver: SelectAnswerImageResultObserver
     private lateinit var deleteQuestionImageObserver: DeleteCardImageObserver.DeleteQuestionImage
@@ -106,7 +106,7 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         initTypeSpinner()
         view?.findViewById<Spinner>(R.id.card_type_spinner)!!.adapter =
             ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, CardType.displayNames(requireContext()))
-        fragmentStrategy = CardFragmentStrategy.getStrategy(this, card, cardRepository)
+        fragmentStrategy = SaveCardTemplate.getStrategy(this, card, cardRepository)
         setOnBackPressedDispatcher()
         setupAppBar()
         if(!fragmentInitialized) {
