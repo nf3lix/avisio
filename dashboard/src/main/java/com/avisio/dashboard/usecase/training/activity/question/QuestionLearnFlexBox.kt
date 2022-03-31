@@ -31,7 +31,6 @@ class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardI
 
     init {
         setMaxCardImageSize(MAX_IMAGE_HEIGHT, MAX_IMAGE_WIDTH)
-        setDeleteImageButtonVisible(false)
     }
 
     private var cardQuestion: CardQuestion = CardQuestion(arrayListOf())

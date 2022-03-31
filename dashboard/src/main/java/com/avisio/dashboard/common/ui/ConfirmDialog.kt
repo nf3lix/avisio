@@ -7,7 +7,10 @@ import com.avisio.dashboard.R
 class ConfirmDialog(
     private val context: Context,
     private val dialogTitle: String,
-    private val dialogMessage: String
+    private val dialogMessage: String,
+    private val positiveButtonText: Int = R.string.confirm_dialog_confirm_default,
+    private val negativeButtonText: Int = R.string.confirm_dialog_cancel_default,
+
 ) {
 
     private val dialogBuilder = AlertDialog.Builder(context)
@@ -24,19 +27,19 @@ class ConfirmDialog(
     }
 
     fun setOnConfirmListener(onClick: () -> Unit) {
-        dialogBuilder.setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ ->
+        dialogBuilder.setPositiveButton(context.getText(positiveButtonText)) { _, _ ->
             onClick()
         }
     }
 
     fun setOnCancelListener(onClick: () -> Unit) {
-        dialogBuilder.setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ ->
+        dialogBuilder.setNegativeButton(context.getText(negativeButtonText)) { _, _ ->
             onClick()
         }
     }
 
     private fun setDefaultClickListeners() {
-        dialogBuilder.setNegativeButton(context.getText(R.string.confirm_dialog_cancel_default)) { _, _ -> }
-        dialogBuilder.setPositiveButton(context.getText(R.string.confirm_dialog_confirm_default)) { _, _ -> }
+        dialogBuilder.setNegativeButton(context.getText(negativeButtonText)) { _, _ -> }
+        dialogBuilder.setPositiveButton(context.getText(positiveButtonText)) { _, _ -> }
     }
 }

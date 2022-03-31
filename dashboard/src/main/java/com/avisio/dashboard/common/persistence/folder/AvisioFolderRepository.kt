@@ -40,4 +40,8 @@ class AvisioFolderRepository(application: Application) {
         }
     }
 
+    fun getFolderNameList(): List<String> {
+        return folderDao.getFolderNameList()
+    }
+
 }

@@ -7,8 +7,8 @@ import com.avisio.dashboard.usecase.training.QuestionResult
 
 enum class CardType(val iconId: Int, private val displayNameId: Int) {
 
-    STRICT(R.drawable.card_icon_standard, R.string.card_type_strict),
-    CLOZE_TEXT(R.drawable.card_icon_cloze_text, R.string.card_type_cloze_text),
+    STRICT(R.drawable.card_icon_strict, R.string.card_type_strict),
+    CLOZE_TEXT(R.drawable.card_icon_cloze, R.string.card_type_cloze_text),
     STANDARD(R.drawable.card_icon_custom, R.string.card_type_standard);
 
     companion object {

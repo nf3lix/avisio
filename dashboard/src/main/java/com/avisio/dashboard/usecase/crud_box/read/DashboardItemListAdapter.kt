@@ -18,8 +18,8 @@ class DashboardItemListAdapter(
     var initialList = currentList
     var selectedItemPos = NO_ITEM_SELECTED
     var moveWorkflowActive = false
-
     private var allItems = listOf<DashboardItem>()
+    val itemFilter = DashboardItemFilter(this, initialList, allItems)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardItemViewHolder {
         return DashboardItemViewHolder.create(parent, this, onClickListener)
@@ -62,8 +62,9 @@ class DashboardItemListAdapter(
         return null
     }
 
-    fun getFilter(): Filter {
-        return DashboardItemFilter(this, initialList, allItems)
+    fun getFilter(): DashboardItemFilter {
+        itemFilter.updateItemLists(initialList, allItems)
+        return itemFilter
     }
 
     interface DashboardItemOnClickListener {

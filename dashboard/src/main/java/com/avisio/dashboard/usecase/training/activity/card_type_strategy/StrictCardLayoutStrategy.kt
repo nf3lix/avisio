@@ -1,9 +1,11 @@
 package com.avisio.dashboard.usecase.training.activity.card_type_strategy
 
+import android.view.View
 import com.avisio.dashboard.common.data.model.card.CardAnswer
 import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import com.avisio.dashboard.usecase.training.activity.LearnBoxFragment
+import kotlinx.android.synthetic.main.fragment_learn_box.*
 
 class StrictCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayoutStrategy(CardType.STRICT) {
 
@@ -21,10 +23,14 @@ class StrictCardLayoutStrategy(val fragment: LearnBoxFragment) : CardTypeLayoutS
     }
 
     override fun onCorrectAnswer() {
+        fragment.userAnswerInput.visibility = View.VISIBLE
+        fragment.userAnswerInput.setText(fragment.answerInputLayout.editText?.text.toString())
 
     }
 
     override fun onIncorrectAnswer() {
+        fragment.userAnswerInput.visibility = View.VISIBLE
+        fragment.userAnswerInput.setText(fragment.answerInputLayout.editText?.text.toString())
 
     }
 

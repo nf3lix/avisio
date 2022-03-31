@@ -6,18 +6,18 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/box_activity_appbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Avisio.AppBarOverlay"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:theme="@style/Theme.Avisio.AppBarOverlay">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/box_list_app_bar"
             android:layout_width="match_parent"
-            app:menu="@menu/box_activity_menu"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/box_activity_menu" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -48,19 +48,19 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_learn"
-        android:text="@string/box_activity_learn_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/box_activity_learn_fab_content_description"
+        android:text="@string/box_activity_learn_fab"
+        app:icon="@drawable/dashboard_item_icon_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.989"
-        app:shapeAppearance="@style/ShapeAppearance.avisio.SmallComponent"
-        app:icon="@drawable/dashboard_item_icon_default" />
+        app:shapeAppearance="@style/ShapeAppearance.avisio.SmallComponent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

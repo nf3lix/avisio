@@ -18,6 +18,7 @@ import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
 import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
 import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import com.avisio.dashboard.view_matchers.IsGoneMatcher.Companion.isGone
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.allOf
@@ -53,11 +54,6 @@ class DashboardFragmentBreadCrumbTest {
         boxDao.deleteAll()
         folderDao.deleteAll()
         Intents.release()
-    }
-
-    @Test
-    fun showRootFolderIconByDefault() {
-        onView(withTagValue(`is`(R.drawable.ic_home))).check(matches(isDisplayed()))
     }
 
     @Test
@@ -144,5 +140,19 @@ class DashboardFragmentBreadCrumbTest {
         onView(withText("F_1")).perform(longClick())
         onView(withTagValue(`is`(R.drawable.ic_home))).perform(click())
         onView(withText("F_1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun hideBreadCrumbWhenDashboardIsEmpty() {
+        onView(withId(R.id.breadCrumb)).check(matches(isGone()))
+        onView(withId(R.id.no_matching_item_label)).check(matches(isDisplayed()))
+        folderDao.insertFolder(AvisioFolder(id = 1, name = "F_1"))
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.breadCrumb)).check(matches(isDisplayed()))
+        onView(withId(R.id.no_matching_item_label)).check(matches(isGone()))
+        folderDao.deleteAll()
+        onView(isRoot()).perform(waitFor(800))
+        onView(withId(R.id.breadCrumb)).check(matches(isGone()))
+        onView(withId(R.id.no_matching_item_label)).check(matches(isDisplayed()))
     }
 }

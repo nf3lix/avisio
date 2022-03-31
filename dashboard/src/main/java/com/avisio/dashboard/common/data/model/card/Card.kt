@@ -2,7 +2,10 @@ package com.avisio.dashboard.common.data.model.card
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
+import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.question.CardQuestion
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,4 +31,5 @@ data class Card(
 
     @ColumnInfo(name = "answer")
     val answer: CardAnswer = CardAnswer(ArrayList()),
+
 )

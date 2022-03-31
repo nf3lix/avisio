@@ -98,6 +98,8 @@ class EditCardFragment : Fragment(), CardTypeChangeListener {
         questionInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionQuestionImageLauncher, selectQuestionImageObserver))
         answerInput.setSelectImageObserver(SelectImageObserver(this, requestPermissionAnswerImageLauncher, selectAnswerImageObserver))
         answerInput.setCardTypeChangeListener(this)
+        questionInput.setDeleteButtonVisible(true)
+        answerInput.setDeleteButtonVisible(true)
         if(!fragmentInitialized) {
             answerInput.addInitialEditText()
         }

@@ -18,7 +18,10 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.database.AppDatabase
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.persistence.box.AvisioBoxDao
+import com.avisio.dashboard.common.persistence.folder.FolderDao
 import com.avisio.dashboard.usecase.MainActivity
+import com.avisio.dashboard.view_actions.Wait.Companion.waitFor
+import com.avisio.dashboard.view_actions.WaitForView
 import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.core.AllOf.allOf
 import org.hamcrest.core.Is.`is`
@@ -27,11 +30,13 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class DashboardFragmentBoxTest {
 
     private var intent: Intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
     private lateinit var boxDao: AvisioBoxDao
+    private lateinit var folderDao: FolderDao
     private lateinit var database: AppDatabase
 
     @get:Rule
@@ -43,6 +48,7 @@ class DashboardFragmentBoxTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = AppDatabase(context)
         boxDao = database.boxDao()
+        folderDao = database.folderDao()
         boxDao.deleteAll()
         boxDao.insertBox(AvisioBox(name = "AAA"))
         boxDao.insertBox(AvisioBox(name = "BBB"))
@@ -53,18 +59,24 @@ class DashboardFragmentBoxTest {
     @After
     fun releaseIntents() {
         boxDao.deleteAll()
+        folderDao.deleteAll()
         Intents.release()
     }
 
     @Test
     fun searchViewIsDisplayed() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).check(matches(isDisplayed()))
     }
 
     @Test
     fun findFilteredItems() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
+        onView(isRoot()).perform(waitFor(200))
         onView(allOf(withText("AAA"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
         typeInSearchView("A")
         onView(allOf(withText("AAA"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(isDisplayed()))
@@ -74,6 +86,8 @@ class DashboardFragmentBoxTest {
 
     @Test(expected = NoMatchingViewException::class)
     fun hideNonMatchingItems() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         onView(allOf(withText("BBB"), withClassName(`is`(MaterialTextView::class.java.name)))).check(matches(not(isDisplayed())))
@@ -81,6 +95,8 @@ class DashboardFragmentBoxTest {
 
     @Test
     fun resetFilter() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         resetSearchView()
@@ -91,6 +107,8 @@ class DashboardFragmentBoxTest {
 
     @Test
     fun resetSearchCriteriaOnBackPressed() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         Espresso.pressBack()
@@ -101,6 +119,8 @@ class DashboardFragmentBoxTest {
 
     @Test(expected = NoMatchingViewException::class)
     fun hideSearchAutoCompleteOnBackPressed() {
+        onView(isRoot()).perform(WaitForView.withId(R.id.dashboard_list_search, TimeUnit.SECONDS.toMillis(15)))
+        onView(isRoot()).perform(waitFor(800))
         onView(withId(R.id.dashboard_list_search)).perform(click())
         typeInSearchView("A")
         Espresso.pressBack()
