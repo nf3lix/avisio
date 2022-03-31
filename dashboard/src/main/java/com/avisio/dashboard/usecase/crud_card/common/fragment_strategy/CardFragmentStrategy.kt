@@ -60,7 +60,6 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
         val unfulfilled = SaveCardValidator.getUnfulfilledConstraints(cardToValidate)
         if(unfulfilled.isEmpty()) {
             handleValidInput(ignoreNextCardCheckBox)
-            Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
             return
         }
 
