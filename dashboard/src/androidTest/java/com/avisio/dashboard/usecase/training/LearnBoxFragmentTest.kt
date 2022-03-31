@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -81,7 +82,7 @@ class LearnBoxFragmentTest {
         onView(withId(R.id.chipGroup)).check(matches(isDisplayed()))
     }
 
-    @Test
+    @Test(expected = NoMatchingViewException::class)
     fun hideViewsAfterTrainingFinished() {
         onView(withId(R.id.fab_learn)).perform(click())
         onView(isRoot()).perform(WaitForView.withText("QUESTION_1", TimeUnit.SECONDS.toMillis(15)))
