@@ -109,8 +109,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
-        correctAnswerInput.setError("Falsche Antwort")
-        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error, 0);
+        correctAnswerInput.setTitle(getString(R.string.create_card_answer_text_field_solution))
         cardTypeLayoutStrategy.onIncorrectAnswer()
     }
 

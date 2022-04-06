@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/question_input_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/question_input_layout"
+            app:layout_constraintVertical_bias="0.5"/>
 
         <com.avisio.dashboard.usecase.training.activity.question.QuestionLearnFlexBox
             android:id="@+id/question_input_layout"
@@ -82,11 +83,11 @@
             android:layout_width="326dp"
             android:layout_height="52dp"
             android:text="@string/learn_activity_resolve_button"
-            app:layout_constraintBottom_toTopOf="@+id/correct_answer_input_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/answer_input_layout"
-            app:layout_constraintVertical_bias="1.22" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.92" />
 
         <com.avisio.dashboard.usecase.training.activity.question.AnswerLearnFlexBox
             android:id="@+id/correct_answer_input_layout"
@@ -106,10 +107,9 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/correct_answer_input_layout"
-            app:layout_constraintVertical_bias="0.6" >
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.92" >
         </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
