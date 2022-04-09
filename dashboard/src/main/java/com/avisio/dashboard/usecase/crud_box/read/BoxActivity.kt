@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -76,14 +77,8 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
     }
 
     private fun onBoxDetail() {
-//        var boxName = box.name
-//        var boxCreationDate = box.createDate
-
         val intent = Intent(this, BoxDetailActivity::class.java)
         intent.setBoxObject(box)
-//        intent.putExtra("Box name", boxName)
-//        intent.putExtra("Creation Date", boxCreationDate.toString())
-
         startActivity(intent)
     }
 

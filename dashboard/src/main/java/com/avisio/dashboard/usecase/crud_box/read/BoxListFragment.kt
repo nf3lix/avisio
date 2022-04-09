@@ -182,7 +182,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
     }
 
     private fun toggleNoMatchingViewHints(filteredList: List<DashboardItem>) {
-        Log.d("currentFolder", currentFolder.toString())
         if (filteredList.isEmpty() && currentFolder == null) {
             breadCrumb.visibility = View.GONE
             no_matching_item_label.visibility = View.VISIBLE
@@ -548,7 +547,6 @@ class BoxListFragment : Fragment(), DashboardItemListAdapter.DashboardItemOnClic
         for (item in itemsOfCurrentFolder) {
             if (item.type == DashboardItemType.FOLDER) {
                 if (item !in selectedItems()) {
-                    Log.d("false", "false")
                     return false
                 }
             }

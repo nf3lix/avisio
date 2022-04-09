@@ -34,7 +34,7 @@ class CreateBoxActivity : AppCompatActivity() {
 
     private fun initFragment() {
         val bundle = bundleOf(
-            IntentKeys.BOX_OBJECT to ParcelableAvisioBox(-1, "", BoxIcon.DEFAULT.iconId),
+            IntentKeys.BOX_OBJECT to ParcelableAvisioBox(-1, "", BoxIcon.DEFAULT.iconId, 0L),
             EditBoxFragment.BOX_CRUD_WORKFLOW to CRUD.CREATE.ordinal)
         bundle.setCurrentFolder(dashboardItem)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
