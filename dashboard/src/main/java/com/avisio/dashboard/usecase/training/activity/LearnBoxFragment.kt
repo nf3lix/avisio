@@ -98,10 +98,9 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
-        correctAnswerInput.setSuccess("Richtige Antwort")
+        //correctAnswerInput.setSuccess("Richtige Antwort")
         userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
         cardTypeLayoutStrategy.onCorrectAnswer()
-
     }
 
     override fun onIncorrectAnswer() {
@@ -111,6 +110,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         correctAnswerInput.setAnswer(currentCard.answer)
         correctAnswerInput.setTitle(getString(R.string.create_card_answer_text_field_solution))
         cardTypeLayoutStrategy.onIncorrectAnswer()
+        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
 
     override fun onPartiallyCorrectAnswer() {
