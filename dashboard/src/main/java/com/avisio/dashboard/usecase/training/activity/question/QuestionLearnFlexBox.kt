@@ -22,7 +22,8 @@ import com.avisio.dashboard.usecase.training.activity.MarkdownView
 import com.google.android.material.chip.Chip
 import io.noties.markwon.Markwon
 
-class QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
+class
+QuestionLearnFlexBox(context: Context, attributeSet: AttributeSet) : CardInputFlexBox(context, attributeSet, QUESTION_INPUT) {
 
     companion object {
         private const val MAX_IMAGE_HEIGHT = 300.0

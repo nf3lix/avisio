@@ -13,6 +13,7 @@ import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeC
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.markdown.MarkdownEditor
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.*
 import com.google.android.flexbox.FlexboxLayout
+import kotlinx.android.synthetic.main.box_detail_view.view.*
 
 abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, val target: TargetInput) : LinearLayout(context, attributeSet) {
 
@@ -48,6 +49,10 @@ abstract class CardInputFlexBox(context: Context, attributeSet: AttributeSet, va
     }
 
     abstract fun initToolbar()
+
+    fun setText(text: String){
+        //TODO
+    }
 
     fun setError(message: String) {
         setInformation(CardInputInformation(message, CardFlexBoxInformationType.ERROR))

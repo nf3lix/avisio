@@ -97,6 +97,7 @@
     <string name="learn_activity_answer_content_description">Antwort</string>
     <string name="learn_activity_correct_answer">Richtige Antwort</string>
     <string name="learn_activity_resolve_button">Auflösen</string>
+    <string name="learn_activity_user_input_text">Deine Eingabe</string>
 
     <string name="learn_activity_result_button_correct">Richtig</string>
     <string name="learn_activity_result_button_incorrect">Falsch</string>
