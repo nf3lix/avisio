@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
@@ -101,8 +105,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
-        //correctAnswerInput.setSuccess("Richtige Antwort")
-        //userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
+        userAnswerInput.setQuestion(CardQuestion(arrayListOf(QuestionToken(answerEditText.text.toString(), QuestionTokenType.TEXT))))
         cardTypeLayoutStrategy.onCorrectAnswer()
     }
 
@@ -113,8 +116,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         correctAnswerInput.setAnswer(currentCard.answer)
         correctAnswerInput.setTitle(getString(R.string.create_card_answer_text_field_solution))
         cardTypeLayoutStrategy.onIncorrectAnswer()
-
-        //userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        userAnswerInput.setQuestion(CardQuestion(arrayListOf(QuestionToken(answerEditText.text.toString(), QuestionTokenType.TEXT))))
     }
 
     override fun onPartiallyCorrectAnswer() {
