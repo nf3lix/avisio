@@ -82,7 +82,6 @@ class DeleteImageDialog(
             scaleFactor = max(0.6F, min(scaleFactor, 3F))
             imageView.scaleX = scaleFactor
             imageView.scaleY = scaleFactor
-            Log.d("scaleFactor", scaleFactor.toString())
             return super.onScale(detector)
         }
     }

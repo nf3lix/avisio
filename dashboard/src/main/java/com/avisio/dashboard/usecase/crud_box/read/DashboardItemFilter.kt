@@ -24,8 +24,6 @@ class DashboardItemFilter(
             for(items in allItemsList) {
                 items.searchQueryResults = null
             }
-            // Log.d("filtered", "filtered")
-            // Log.d("filteredList", filteredList.size.toString())
             filteredListLength = filteredList.size
             searchResultListener?.onSearchResult(filteredList.size)
             return filterResult
@@ -33,8 +31,6 @@ class DashboardItemFilter(
         val filteredList = getFilteredList()
         this.filteredList = filteredList
         filterResult.values = filteredList
-        // Log.d("filtered", "filtered")
-        // Log.d("filteredList", filteredList.size.toString())
         filteredListLength = filteredList.size
         searchResultListener?.onSearchResult(filteredList.size)
         return filterResult
