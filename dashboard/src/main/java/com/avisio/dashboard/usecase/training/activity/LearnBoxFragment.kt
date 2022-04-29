@@ -1,6 +1,7 @@
 package com.avisio.dashboard.usecase.training.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.box.AvisioBox
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.data.model.card.CardType
+import com.avisio.dashboard.common.data.model.card.question.CardQuestion
+import com.avisio.dashboard.common.data.model.card.question.QuestionToken
+import com.avisio.dashboard.common.data.model.card.question.QuestionTokenType
 import com.avisio.dashboard.common.data.transfer.getBoxObject
 import com.avisio.dashboard.usecase.crud_card.common.fragment_strategy.CardTypeChangeListener
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.CardInputFlexBox
@@ -38,7 +42,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
     lateinit var progressBar: ProgressBar
     lateinit var correctAnswerInput: AnswerLearnFlexBox
     lateinit var answerEditText: EditText
-    lateinit var userAnswerInput: EditText
+    lateinit var userAnswerInput: QuestionLearnFlexBox
     private lateinit var resolveQuestionButton: Button
     private lateinit var resultChipGroup: ChipGroup
 
@@ -57,6 +61,7 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         answerEditText = requireView().findViewById(R.id.answer_edit_text)
 
         userAnswerInput = requireView().findViewById(R.id.answer_edit_text2)
+        userAnswerInput.setTitle(getString(R.string.learn_activity_user_input_text))
 
         correctAnswerInput = requireView().findViewById(R.id.correct_answer_input_layout)
         correctAnswerInput.setCardTypeChangeListener(this)
@@ -84,7 +89,9 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
             requireActivity().runOnUiThread {
                 requireView().findViewById<QuestionLearnFlexBox>(R.id.question_input_layout).setQuestion(currentCard.question)
                 showResolveQuestionButton()
+                questionInputLayout.visibility = View.VISIBLE
                 answerInputLayout.visibility = View.VISIBLE
+                resolveQuestionButton.visibility = View.VISIBLE
                 resultChipGroup.visibility = View.GONE
                 correctAnswerInput.visibility = View.GONE
                 userAnswerInput.visibility = View.INVISIBLE
@@ -98,10 +105,8 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
-        correctAnswerInput.setSuccess("Richtige Antwort")
-        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check, 0);
+        userAnswerInput.setQuestion(CardQuestion(arrayListOf(QuestionToken(answerEditText.text.toString(), QuestionTokenType.TEXT))))
         cardTypeLayoutStrategy.onCorrectAnswer()
-
     }
 
     override fun onIncorrectAnswer() {
@@ -109,9 +114,9 @@ class LearnBoxFragment : Fragment(), LearnCardView, CardTypeChangeListener {
         resultChipGroup.visibility = View.VISIBLE
         hideResolveQuestionButton()
         correctAnswerInput.setAnswer(currentCard.answer)
-        correctAnswerInput.setError("Falsche Antwort")
-        userAnswerInput.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_error, 0);
+        correctAnswerInput.setTitle(getString(R.string.create_card_answer_text_field_solution))
         cardTypeLayoutStrategy.onIncorrectAnswer()
+        userAnswerInput.setQuestion(CardQuestion(arrayListOf(QuestionToken(answerEditText.text.toString(), QuestionTokenType.TEXT))))
     }
 
     override fun onPartiallyCorrectAnswer() {

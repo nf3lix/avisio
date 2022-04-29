@@ -51,6 +51,7 @@
     <string name="create_card_fab_content_description">Karte speichern</string>
     <string name="create_card_question_text_field_hint">Frage</string>
     <string name="create_card_answer_text_field_hint">Antwort</string>
+    <string name="create_card_answer_text_field_solution">Lösung</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Erstellung Abbrechen</string>
     <string name="create_card_apply_changes">Sollen die Änderungen an dieser Karte übernommen werden?</string>
@@ -96,6 +97,7 @@
     <string name="learn_activity_answer_content_description">Antwort</string>
     <string name="learn_activity_correct_answer">Richtige Antwort</string>
     <string name="learn_activity_resolve_button">Auflösen</string>
+    <string name="learn_activity_user_input_text">Deine Eingabe</string>
 
     <string name="learn_activity_result_button_correct">Richtig</string>
     <string name="learn_activity_result_button_incorrect">Falsch</string>

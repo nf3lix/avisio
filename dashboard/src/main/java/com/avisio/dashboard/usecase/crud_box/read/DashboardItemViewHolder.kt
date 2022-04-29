@@ -40,7 +40,7 @@ class DashboardItemViewHolder(
 
     fun bind(item: DashboardItem) {
         if(!item.selected) {
-            setBackground(R.color.white)
+            setBackground(R.drawable.dashboard_item_background)
         }
 
         if(listAdapter.moveWorkflowActive && !item.selected && item.type == DashboardItemType.FOLDER) {
@@ -98,13 +98,13 @@ class DashboardItemViewHolder(
     }
 
     fun select(item: DashboardItem) {
-        setBackground(R.color.primaryLightColor)
+        setBackground(R.drawable.dashboard_item_background_selected)
         item.selected = true
         onClickListener.onItemSelected(adapterPosition)
     }
 
     private fun unselect(item: DashboardItem) {
-        setBackground(R.color.white)
+        setBackground(R.drawable.dashboard_item_background)
         item.selected = false
         onClickListener.onItemUnselected(adapterPosition)
     }
@@ -116,8 +116,7 @@ class DashboardItemViewHolder(
     }
 
     private fun setBackground(colorId: Int) {
-        val colorFromResources = ResourcesCompat.getColor(itemView.resources, colorId, null)
-        itemView.findViewById<CardView>(R.id.dashboard_item_card_view).setBackgroundColor(colorFromResources)
+        itemView.findViewById<CardView>(R.id.dashboard_item_card_view).setBackgroundResource(colorId)
     }
 
     override fun onClick(v: View?) {
