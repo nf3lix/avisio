@@ -9,11 +9,11 @@ import com.avisio.dashboard.common.data.model.card.CardType
 import com.avisio.dashboard.common.persistence.card.CardRepository
 import com.avisio.dashboard.usecase.crud_card.common.EditCardFragment
 
-class EditCardStrategy(
+class EditCardProcedure(
     private val fragment: EditCardFragment,
     private val card: Card,
     private val repository: CardRepository
-) : CardFragmentStrategy(fragment, R.string.edit_card_action_bar_title) {
+) : SaveCardTemplate(fragment, R.string.edit_card_action_bar_title) {
 
     override fun fillCardInformation() {
         fragment.requireActivity().findViewById<CheckBox>(R.id.checkbox_create_new_card).visibility = View.GONE
@@ -25,7 +25,7 @@ class EditCardStrategy(
         }
     }
 
-    override fun saveCard() {
+    override fun saveCard(ignoreNextCardCheckBox: Boolean) {
         val updatedQuestion = questionFlexBox.getCardQuestion()
         val updatedAnswer = answerFlexBox.getAnswer()
         val updatedType = fragment.getSelectedCardType()
@@ -50,7 +50,7 @@ class EditCardStrategy(
                 || oldCard.type != newCard.type
     }
 
-    override fun handleValidInput() {
+    override fun handleValidInput(ignoreNextCardCheckBox: Boolean) {
         saveCard()
         Toast.makeText(fragment.requireContext(), R.string.edit_card_successful, Toast.LENGTH_LONG).show()
     }

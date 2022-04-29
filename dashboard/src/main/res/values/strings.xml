@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dashboard</string>
+    <string name="app_name">Avisio</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="main_activity_label">MainActivity</string>
@@ -14,6 +14,7 @@
     <string name="action_rename_folder">Ordner umbenennen</string>
     <string name="delete_folder_confirm_message">Möchtest Du diesen Ordner wirklich löschen? Alle darin enthaltenen Elemente werden ebenfalls gelöscht!</string>
     <string name="edit_folder">Ordner Bearbeiten</string>
+    <string name="create_folder_duplicate_name">Dieser Ordnername wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="folder_name_hint">Ordnername</string>
     <string name="parent_folder_spinner_content_description">Übergeordneten Ordner wählen</string>
     <string name="no_folder_name_specified">Bitte trage einen Namen für den Ordner ein</string>
@@ -35,13 +36,13 @@
     <string name="box_activity_learn_fab">Lernen</string>
     <string name="box_activity_learn_fab_content_description">Karten in Box lernen</string>
 
-    <string name="create_box_app_bar_title">New box</string>
+    <string name="create_box_app_bar_title">Neue Box</string>
     <string name="create_box_fab_content_description">Box speichern</string>
     <string name="create_box_select_icon">Select icon</string>
     <string name="create_box_no_name_specified">Bitte trage einen Namen für die Box ein</string>
     <string name="create_box_icon_image_content_description">box icon</string>
     <string name="create_box_duplicate_name_dialog_title">Name vergeben</string>
-    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Soll die Box trotzdem zusätzlich erstellt werden? </string>
+    <string name="create_box_duplicate_name_dialog_message">Dieser Name wird bereits verwendet. Bitte wähle einen anderen Namen.</string>
     <string name="create_box_successful">Box wurde erfolgreich erstellt</string>
     <string name="edit_box_successful">Box wurde erfolgreich geändert</string>
     <string name="fab_cancel_workflow">Abbrechen</string>
@@ -50,9 +51,12 @@
     <string name="create_card_fab_content_description">Karte speichern</string>
     <string name="create_card_question_text_field_hint">Frage</string>
     <string name="create_card_answer_text_field_hint">Antwort</string>
+    <string name="create_card_answer_text_field_solution">Lösung</string>
     <string name="create_card_card_question_input_content_description">Card Question</string>
     <string name="create_card_cancel_dialog_title">Erstellung Abbrechen</string>
-    <string name="create_card_cancel_dialog_message">Möchtest du diese Karte wirklich verwerfen?</string>
+    <string name="create_card_apply_changes">Sollen die Änderungen an dieser Karte übernommen werden?</string>
+    <string name="create_card_apply_changes_confirm">Übernehmen</string>
+    <string name="create_card_apply_changes_discard">Verwerfen</string>
     <string name="create_card_empty_question">Frage darf nicht leer sein</string>
     <string name="create_card_empty_answer">Antwort darf nicht leer sein</string>
     <string name="create_card_action_bar_title">Neue Karte</string>
@@ -80,19 +84,20 @@
     <string name="delete_box_error_occurred">Fehler: Box konnte nicht gelöscht werden</string>
 
     <string name="box_title">box_title</string>
-    <string name="box_name">Box name</string>
+    <string name="box_name">Boxname</string>
     <string name="erstelldatum">Erstelldatum</string>
     <string name="box_datum">Box_datum</string>
     <string name="karteikarten">Karteikarten</string>
     <string name="anzahl_karteikarten">anzahl_karteikarten</string>
     <string name="box_information">Box Information</string>
-    <string name="checkbox_create_new_card">Neue Karte erstellen</string>
+    <string name="checkbox_create_new_card">Im Erstellmodus bleiben</string>
 
     <string name="learn_activity_title">Lernen</string>
     <string name="learn_activity_question_content_description">Frage</string>
     <string name="learn_activity_answer_content_description">Antwort</string>
     <string name="learn_activity_correct_answer">Richtige Antwort</string>
     <string name="learn_activity_resolve_button">Auflösen</string>
+    <string name="learn_activity_user_input_text">Deine Eingabe</string>
 
     <string name="learn_activity_result_button_correct">Richtig</string>
     <string name="learn_activity_result_button_incorrect">Falsch</string>
@@ -147,9 +152,14 @@
         <item quantity="other">Jahren</item>
     </plurals>
 
-    <string name="due_date_in_future_displayed_template">Fällig in %s %s</string>
-    <string name="due_date_in_past_displayed_template">Fällig seit %s %s</string>
+    <string name="due_date_in_future_displayed_template">Fällig in \n%s %s</string>
+    <string name="due_date_in_past_displayed_template">Fällig seit \n%s %s</string>
 
     <string name="card_not_learned_yet">Noch nicht gelernt</string>
+    <string name="box_list_no_matching_item_hint">Keine Boxen und Ordner gefunden</string>
+
+    <string name="detail_view_creation_date">Erstellungsdatum</string>
+    <string name="detail_view_card_count">Anzahl Karteikarten</string>
+    <string name="detail_view_card_count_not_learned">Noch nicht gelernt</string>
 
 </resources>

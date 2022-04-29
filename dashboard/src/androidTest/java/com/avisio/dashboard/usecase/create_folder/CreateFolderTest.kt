@@ -69,6 +69,7 @@ class CreateFolderTest {
         onView(withId(R.id.fab_new_folder)).perform(click())
         onView(withId(R.id.folder_name_edit_text)).perform(typeText("F_1"))
         onView(withId(R.id.fab_edit_folder)).perform(click())
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(click())
         onView(withId(R.id.fab_expand)).perform(click())
         onView(withId(R.id.fab_new_folder)).perform(click())
@@ -83,6 +84,7 @@ class CreateFolderTest {
         onView(withText("F_2")).check(matches(isDisplayed()))
         onView(withText("F_3")).check(matches(isDisplayed()))
         Espresso.pressBack()
+        onView(isRoot()).perform(waitFor(800))
         onView(withText("F_1")).perform(click())
     }
 

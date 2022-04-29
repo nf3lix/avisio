@@ -1,8 +1,6 @@
 package com.avisio.dashboard.usecase.crud_card.common.fragment_strategy
 
-import android.util.Log
 import android.widget.Spinner
-import android.widget.Toast
 import com.avisio.dashboard.R
 import com.avisio.dashboard.common.data.model.card.Card
 import com.avisio.dashboard.common.persistence.card.CardRepository
@@ -14,13 +12,13 @@ import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.AnswerFlexBo
 import com.avisio.dashboard.usecase.crud_card.common.input_flex_box.QuestionFlexBox
 import com.avisio.dashboard.usecase.crud_card.common.save_constraints.SaveCardConstraint.TargetInput.*
 
-abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val titleId: Int) {
+abstract class SaveCardTemplate(private val fragment: EditCardFragment, val titleId: Int) {
 
     companion object {
 
-        fun getStrategy(fragment: EditCardFragment, card: Card, repository: CardRepository): CardFragmentStrategy = when(fragment.workflow) {
-            CRUD.CREATE -> CreateCardStrategy(fragment, card, repository)
-            CRUD.UPDATE -> EditCardStrategy(fragment, card, repository)
+        fun getStrategy(fragment: EditCardFragment, card: Card, repository: CardRepository): SaveCardTemplate = when(fragment.workflow) {
+            CRUD.CREATE -> CreateCardProcedure(fragment, card, repository)
+            CRUD.UPDATE -> EditCardProcedure(fragment, card, repository)
         }
 
     }
@@ -30,8 +28,8 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
     val typeSpinner: Spinner = fragment.requireView().findViewById(R.id.card_type_spinner)
 
     abstract fun fillCardInformation()
-    abstract fun saveCard()
-    abstract fun handleValidInput()
+    abstract fun saveCard(ignoreNextCardCheckBox: Boolean = false)
+    abstract fun handleValidInput(ignoreNextCardCheckBox: Boolean = false)
     abstract fun handleInvalidInput()
     abstract fun onBackPressed()
 
@@ -39,16 +37,20 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
         val confirmDialog = ConfirmDialog(
             fragment.requireContext(),
             fragment.getString(R.string.create_card_cancel_dialog_title),
-            fragment.getString(R.string.create_card_cancel_dialog_message)
+            fragment.getString(R.string.create_card_apply_changes),
+            R.string.create_card_apply_changes_confirm,
+            R.string.create_card_apply_changes_discard
         )
         confirmDialog.setOnConfirmListener {
+            onFabClicked(ignoreNextCardCheckBox = true)
+        }
+        confirmDialog.setOnCancelListener {
             fragment.requireActivity().finish()
-
         }
         confirmDialog.showDialog()
     }
 
-    fun onFabClicked() {
+    fun onFabClicked(ignoreNextCardCheckBox: Boolean = false) {
         val question = questionFlexBox.getCardQuestion(trimmed = true)
         val answer = answerFlexBox.getAnswer()
         val type = fragment.getSelectedCardType()
@@ -56,8 +58,7 @@ abstract class CardFragmentStrategy(private val fragment: EditCardFragment, val 
 
         val unfulfilled = SaveCardValidator.getUnfulfilledConstraints(cardToValidate)
         if(unfulfilled.isEmpty()) {
-            handleValidInput()
-            Toast.makeText(fragment.requireContext(), "Karte wurde erfolgreich geändert", Toast.LENGTH_LONG).show()
+            handleValidInput(ignoreNextCardCheckBox)
             return
         }
 

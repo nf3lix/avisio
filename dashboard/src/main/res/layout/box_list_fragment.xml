@@ -28,7 +28,7 @@
     <com.avisio.dashboard.common.ui.breadcrump.BreadCrumb
         android:id="@+id/breadCrumb"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_activity_appbar"
@@ -44,6 +44,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/breadCrumb"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/no_matching_item_label"
+        android:text="@string/box_list_no_matching_item_hint"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/breadCrumb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_new_box"

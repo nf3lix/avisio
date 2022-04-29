@@ -87,7 +87,7 @@ class EditCardFragmentEditClozeTextTest {
         onView(withText("TOKEN_1")).perform(typeText("TEST"))
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         pressBack()
-        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(isDisplayed()))
+        onView(withText(R.string.create_card_apply_changes)).check(matches(isDisplayed()))
     }
 
     @Test(expected = NoMatchingViewException::class)
@@ -96,7 +96,7 @@ class EditCardFragmentEditClozeTextTest {
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard())
         pressBack()
         onView(withText(R.string.confirm_dialog_cancel_default)).perform(click())
-        onView(withText(R.string.create_card_cancel_dialog_message)).check(matches(not(isDisplayed())))
+        onView(withText(R.string.create_card_apply_changes)).check(matches(not(isDisplayed())))
     }
 
     @Test(expected = NoActivityResumedException::class)

@@ -3,6 +3,7 @@ package com.avisio.dashboard.usecase.crud_box.read
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.avisio.dashboard.usecase.crud_card.update.EditCardActivity
 import com.avisio.dashboard.usecase.crud_box.update.update_box.EditBoxActivity
 import com.avisio.dashboard.common.workflow.CRUD
 import com.avisio.dashboard.common.workflow.CRUD.*
+import com.avisio.dashboard.usecase.crud_box.common.BoxDetailActivity
 import com.avisio.dashboard.usecase.crud_box.read.dashboard_item.DashboardItem
 import com.avisio.dashboard.usecase.crud_card.read.CardListAdapter
 import com.avisio.dashboard.usecase.crud_card.read.CardViewModel
@@ -66,11 +68,18 @@ class BoxActivity : AppCompatActivity(), CardListAdapter.CardListOnClickListener
                 true
             }
             R.id.menu_information_box -> {
-                setContentView(R.layout.box_detail_view)
+                onBoxDetail()
+//               setContentView(R.layout.box_detail_view)
                 true
             }
             else -> false
         }
+    }
+
+    private fun onBoxDetail() {
+        val intent = Intent(this, BoxDetailActivity::class.java)
+        intent.setBoxObject(box)
+        startActivity(intent)
     }
 
     private fun onEditSelected() {
